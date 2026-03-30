@@ -34,8 +34,7 @@ export default function Home() {
           className={styles.loginButton}
           disabled={!acceptedTerms}
           onClick={() => {
-            // signIn("google", { callbackUrl: "/dashboard" })
-            window.location.href = "/dashboard";
+            signIn("google", { callbackUrl: "/dashboard" })
           }}
         >
           {/* Simple Google G icon SVG */}

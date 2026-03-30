@@ -1,0 +1,111 @@
+datasource db {
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+// ─── Auth.js Models ──────────────────────────────────────────
+
+model User {
+  id            String    @id @default(cuid())
+  name          String? // Populated by Auth.js (Google display name)
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+
+  // Extended profile fields
+  firstName String?
+  lastName  String?
+  phone     String?
+  address   String?
+  bio       String?
+
+  // Auth.js relations
+  accounts Account[]
+  sessions Session[]
+
+  // Business relations
+  subscription Subscription?
+  invoices     Invoice[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+// ─── Business Models ─────────────────────────────────────────
+
+model Subscription {
+  id     String @id @default(cuid())
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  planType String @default("FREE") // FREE | PRO | PREMIUM
+  status   String @default("ACTIVE") // ACTIVE | CANCELLED | PAST_DUE | TRIALING
+
+  // Payment provider fields (for future Stripe/LemonSqueezy integration)
+  externalCustomerId     String? @unique
+  externalSubscriptionId String? @unique
+  externalPriceId        String?
+
+  currentPeriodStart DateTime?
+  nextBillingDate    DateTime? // "Next Billing Date"
+  cancelAtPeriodEnd  Boolean   @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Invoice {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  externalInvoiceId String? @unique
+  amount            Int // Amount in kuruş (cents)
+  currency          String  @default("TRY")
+  status            String  @default("PAID") // PAID | PENDING | FAILED
+  description       String?
+  invoiceUrl        String? // Hosted invoice URL
+
+  paidAt    DateTime?
+  createdAt DateTime  @default(now())
+}

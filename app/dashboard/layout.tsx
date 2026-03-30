@@ -18,6 +18,7 @@ export default function DashboardLayout({
     { label: "Ana Sayfa", href: "/dashboard", icon: Home },
     { label: "Robot Vitrini", href: "/dashboard/robots", icon: Bot },
     { label: "Sunucular", href: "/dashboard/servers", icon: Server },
+    { label: "Ayarlar", href: "/dashboard/settings", icon: Settings },
   ];
 
   return (
@@ -75,9 +76,9 @@ export default function DashboardLayout({
             <button className={styles.iconBtn}>
               <Bell size={20} />
             </button>
-            <button className={styles.iconBtn}>
+            <Link href="/dashboard/settings" className={styles.iconBtn}>
               <Settings size={20} />
-            </button>
+            </Link>
           </div>
         </header>
 
