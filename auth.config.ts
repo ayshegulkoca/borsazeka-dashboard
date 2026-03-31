@@ -18,17 +18,16 @@ export default {
   },
   callbacks: {
     authorized: async ({ auth, request: { nextUrl } }) => {
-      // Gerçek Auth kontrolü: Giriş yapılmış mı?
       const isLoggedIn = !!auth?.user
       const isOnDashboard = nextUrl.pathname.startsWith('/dashboard')
       
+      // Dashboard: sadece giriş yapmış kullanıcılara izin ver
       if (isOnDashboard) {
         if (isLoggedIn) return true
-        return false // Giriş yapmayanları login sayfasına at
-      } else if (isLoggedIn) {
-        return Response.redirect(new URL('/dashboard', nextUrl)) // Login olanı dashboard'a at
+        return false // Giriş yapmayanları / sayfasına at
       }
       
+      // Landing page, checkout ve diğer public sayfalar: herkese açık
       return true
     },
   },
