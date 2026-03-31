@@ -3,9 +3,12 @@
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
+import { type PlanType } from "@/lib/plans";
 
-type PlanType = "STARTER" | "PRO" | "ENTERPRISE";
-
+/**
+ * Kullanıcının aboneliğini veritabanına kaydeder (upsert),
+ * ardından /dashboard'a yönlendirir.
+ */
 export async function activateSubscription(planType: PlanType) {
   const session = await auth();
   if (!session?.user?.id) {

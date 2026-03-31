@@ -37,12 +37,14 @@ export default function Navbar() {
 
         {/* Right Actions */}
         <div className={styles.navActions}>
+          {/* Giriş Yap: abone olanı dashboard'a, olmayanı checkout'a yönlendir */}
           <button
             className={styles.btnGhost}
-            onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
+            onClick={() => signIn("google", { callbackUrl: "/api/auth/redirect" })}
           >
             Giriş Yap
           </button>
+          {/* Hemen Başla: yeni kullanıcı, checkout'a yönlendir */}
           <button
             className={styles.btnSolid}
             onClick={() => signIn("google", { callbackUrl: "/checkout" })}
@@ -73,7 +75,7 @@ export default function Navbar() {
           <button
             className={styles.btnGhost}
             style={{ flex: 1, textAlign: "center" }}
-            onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
+            onClick={() => signIn("google", { callbackUrl: "/api/auth/redirect" })}
           >
             Giriş Yap
           </button>

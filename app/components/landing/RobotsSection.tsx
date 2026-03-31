@@ -1,34 +1,27 @@
-import { Bot, TrendingUp, BarChart2, Cpu } from "lucide-react";
+import { Bot, TrendingUp, BarChart2 } from "lucide-react";
 import styles from "./landing.module.css";
 
 const robots = [
   {
     icon: TrendingUp,
-    name: "Trend Takipçi",
-    desc: "Uzun vadeli momentum stratejisi",
+    name: "DarkRoom Self-Service",
+    desc: "Düşük volatilite ortamlarında sessiz ama güçlü momentum stratejisi",
     badge: "Aktif",
     coming: false,
   },
   {
     icon: BarChart2,
-    name: "Scalper Pro",
-    desc: "Kısa vadeli fiyat hareketleri",
+    name: "Highway Self-Service",
+    desc: "Yüksek hacimli piyasalarda trend yakalamayla hızlı pozisyon yönetimi",
     badge: "Aktif",
     coming: false,
   },
   {
     icon: Bot,
-    name: "Arbitraj Botu",
-    desc: "Borsa fiyat farkı stratejisi",
-    badge: "Yakında",
-    coming: true,
-  },
-  {
-    icon: Cpu,
-    name: "Haberdar",
-    desc: "Haber akışı tabanlı işlem",
-    badge: "Yakında",
-    coming: true,
+    name: "TradeMate Self-Service",
+    desc: "Kullanıcı dostu arayüz ile kendi stratejinizi uygulayan esnek robot",
+    badge: "Aktif",
+    coming: false,
   },
 ];
 
@@ -44,19 +37,16 @@ export default function RobotsSection() {
           </p>
         </div>
 
-        <div className={styles.robotGrid}>
+        <div className={styles.robotGrid} style={{ gridTemplateColumns: "repeat(3, 1fr)" }}>
           {robots.map((r) => {
             const Icon = r.icon;
             return (
               <div
                 key={r.name}
-                className={`${styles.robotCard} ${r.coming ? styles.robotComingSoon : ""}`}
+                className={styles.robotCard}
               >
                 <div className={styles.robotIconWrap}>
-                  <Icon
-                    size={26}
-                    color={r.coming ? "var(--text-muted)" : "var(--accent-primary)"}
-                  />
+                  <Icon size={26} color="var(--accent-primary)" />
                 </div>
                 <div className={styles.robotName}>{r.name}</div>
                 <div className={styles.robotDesc}>{r.desc}</div>

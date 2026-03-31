@@ -1,6 +1,7 @@
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
+import { PLAN_LABELS } from "@/lib/plans";
 import DashboardShell from "./DashboardShell";
 
 export default async function DashboardLayout({
@@ -14,19 +15,14 @@ export default async function DashboardLayout({
     redirect("/");
   }
 
-  // Fetch subscription for the plan badge
+  // Abonelik bilgisini çek
   const subscription = await prisma.subscription.findUnique({
     where: { userId: session.user.id },
   });
 
-  const planLabel =
-    subscription?.planType === "PRO"
-      ? "Pro"
-      : subscription?.planType === "ENTERPRISE"
-      ? "Kurumsal"
-      : subscription?.planType === "STARTER"
-      ? "Başlangıç"
-      : "Ücretsiz";
+  const planLabel = subscription?.planType
+    ? (PLAN_LABELS[subscription.planType] ?? subscription.planType)
+    : "Ücretsiz";
 
   return (
     <DashboardShell

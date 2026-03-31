@@ -3,24 +3,36 @@
 import { useSearchParams } from "next/navigation";
 import { useTransition, Suspense } from "react";
 import { activateSubscription } from "@/app/actions/subscription";
+import { PLAN_LABELS, PLAN_PRICES, VALID_PLAN_IDS, type PlanType } from "@/lib/plans";
 import { Activity, CheckCircle, CreditCard, Lock, Zap } from "lucide-react";
 import styles from "./checkout.module.css";
 
-type PlanType = "STARTER" | "PRO" | "ENTERPRISE";
 
-const PLAN_INFO: Record<PlanType, { name: string; price: string; robots: string; color: string }> = {
-  STARTER: { name: "Başlangıç", price: "₺199", robots: "2 Robot", color: "#64748b" },
-  PRO: { name: "Pro", price: "₺499", robots: "10 Robot", color: "var(--accent-primary)" },
-  ENTERPRISE: { name: "Kurumsal", price: "₺1.499", robots: "Sınırsız Robot", color: "#a78bfa" },
+
+const PLAN_ACCENT: Record<string, string> = {
+  DARKROOM_PREMIUM: "#60a5fa",
+  HIGHWAY_PREMIUM: "#f472b6",
+  TRADEMATE_PREMIUM: "var(--accent-primary)",
+  FABRIKA_PREMIUM: "#a78bfa",
+  BORSAZEKA_CLASSIC: "#fbbf24",
+  STARTER: "#64748b",
+  PRO: "var(--accent-primary)",
+  ENTERPRISE: "#a78bfa",
 };
+
+const VALID_PLANS = VALID_PLAN_IDS as readonly string[];
 
 function CheckoutContent() {
   const searchParams = useSearchParams();
-  const rawPlan = searchParams.get("plan") ?? "PRO";
-  const plan: PlanType = (["STARTER", "PRO", "ENTERPRISE"].includes(rawPlan)
+  const rawPlan = searchParams.get("plan") ?? "TRADEMATE_PREMIUM";
+  const plan: PlanType = (VALID_PLANS.includes(rawPlan as PlanType)
     ? rawPlan
-    : "PRO") as PlanType;
-  const info = PLAN_INFO[plan];
+    : "TRADEMATE_PREMIUM") as PlanType;
+
+  const planName = PLAN_LABELS[plan] ?? plan;
+  const planPrice = PLAN_PRICES[plan] ?? "₺499";
+  const accentColor = PLAN_ACCENT[plan] ?? "var(--accent-primary)";
+
   const [isPending, startTransition] = useTransition();
 
   const handleActivate = () => {
@@ -44,15 +56,18 @@ function CheckoutContent() {
         <p className={styles.subtitle}>Planınızı onaylayın ve hemen robotlarınızı çalıştırın.</p>
 
         {/* Plan Summary */}
-        <div className={styles.planBox} style={{ borderColor: info.color + "44" }}>
+        <div className={styles.planBox} style={{ borderColor: accentColor + "44" }}>
           <div className={styles.planBoxLeft}>
-            <span className={styles.planTag} style={{ color: info.color, background: info.color + "18" }}>
-              {info.name} Planı
+            <span
+              className={styles.planTag}
+              style={{ color: accentColor, background: accentColor + "18" }}
+            >
+              {planName}
             </span>
-            <span className={styles.planRobots}>{info.robots}</span>
+            <span className={styles.planRobots}>14 gün ücretsiz deneme dahil</span>
           </div>
-          <div className={styles.planPrice} style={{ color: info.color }}>
-            {info.price}
+          <div className={styles.planPrice} style={{ color: accentColor }}>
+            {planPrice}
             <span className={styles.planPeriod}> / ay</span>
           </div>
         </div>
@@ -101,19 +116,23 @@ function CheckoutContent() {
           </div>
         </div>
 
-        {/* Simulate Payment Button */}
+        {/* Confirm Button */}
         <button
           className={styles.payButton}
           onClick={handleActivate}
           disabled={isPending}
-          style={{ opacity: isPending ? 0.7 : 1 }}
+          style={{
+            opacity: isPending ? 0.7 : 1,
+            background: accentColor === "var(--accent-primary)" ? "var(--accent-primary)" : accentColor,
+            color: "#fff",
+          }}
         >
           {isPending ? (
-            <>Ödeme Simülasyonu Yapılıyor...</>
+            <>Kaydediliyor...</>
           ) : (
             <>
               <Zap size={18} />
-              Ödemeyi Onayla & Başla ({info.price}/ay)
+              Ödemeyi Onayla & Başla ({planPrice}/ay)
             </>
           )}
         </button>
