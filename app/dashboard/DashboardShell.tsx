@@ -2,7 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { Activity, Home, Bot, Server, LogOut, Bell, Settings } from "lucide-react";
+import { Activity, Home, Bot, Server, LogOut, Bell, Settings, Crown, Zap, Star } from "lucide-react";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
 import styles from "./layout.module.css";
@@ -12,6 +12,56 @@ interface Props {
   userName: string;
   userImage?: string;
   planLabel: string;
+}
+
+// Plan tipine göre rozet rengi ve ikonu
+function PlanBadge({ planLabel }: { planLabel: string }) {
+  const lower = planLabel.toLowerCase();
+
+  let color = "var(--accent-primary)";
+  let bg = "rgba(16,185,129,0.12)";
+  let Icon = Star;
+
+  if (lower.includes("classic") || lower.includes("enterprise")) {
+    color = "#fbbf24";
+    bg = "rgba(251,191,36,0.12)";
+    Icon = Crown;
+  } else if (lower.includes("fabrika")) {
+    color = "#a78bfa";
+    bg = "rgba(167,139,250,0.12)";
+    Icon = Crown;
+  } else if (lower.includes("highway")) {
+    color = "#f472b6";
+    bg = "rgba(244,114,182,0.12)";
+    Icon = Zap;
+  } else if (lower.includes("darkroom")) {
+    color = "#60a5fa";
+    bg = "rgba(96,165,250,0.12)";
+    Icon = Zap;
+  } else if (lower.includes("ücretsiz") || lower.includes("free")) {
+    color = "var(--text-muted)";
+    bg = "rgba(100,116,139,0.12)";
+    Icon = Star;
+  }
+
+  return (
+    <span
+      style={{
+        display: "inline-flex",
+        alignItems: "center",
+        gap: "0.3rem",
+        fontSize: "0.72rem",
+        fontWeight: 600,
+        color,
+        background: bg,
+        padding: "0.2rem 0.55rem",
+        borderRadius: 100,
+      }}
+    >
+      <Icon size={11} />
+      {planLabel}
+    </span>
+  );
 }
 
 export default function DashboardShell({ children, userName, userImage, planLabel }: Props) {
@@ -26,7 +76,7 @@ export default function DashboardShell({ children, userName, userImage, planLabe
 
   return (
     <div className={styles.container}>
-      {/* Sidebar Navigation */}
+      {/* Sidebar */}
       <aside className={styles.sidebar}>
         <div className={styles.logoArea}>
           <div className={styles.logoIcon}>
@@ -52,7 +102,7 @@ export default function DashboardShell({ children, userName, userImage, planLabe
           })}
         </nav>
 
-        {/* User Profile with Dynamic Plan Badge */}
+        {/* Kullanıcı Profili + Plan Rozeti */}
         <div className={styles.userProfile}>
           <div className={styles.avatar}>
             {userImage ? (
@@ -69,34 +119,34 @@ export default function DashboardShell({ children, userName, userImage, planLabe
           </div>
           <div className={styles.userInfo}>
             <span className={styles.userName}>{userName}</span>
-            <span className={styles.userRole} style={{ color: "var(--accent-primary)" }}>
-              {planLabel} Plan
-            </span>
+            <PlanBadge planLabel={planLabel} />
           </div>
-          <button onClick={() => signOut({ callbackUrl: "/" })} style={{ color: "var(--text-muted)" }}>
+          <button
+            onClick={() => signOut({ callbackUrl: "/" })}
+            style={{ color: "var(--text-muted)", background: "none", border: "none", cursor: "pointer" }}
+            aria-label="Çıkış yap"
+          >
             <LogOut size={18} />
           </button>
         </div>
       </aside>
 
-      {/* Main Content Area */}
+      {/* Ana İçerik */}
       <main className={styles.mainContent}>
-        {/* Header */}
         <header className={styles.header}>
           <h2 className={styles.headerTitle}>
             {navItems.find((i) => i.href === pathname)?.label || "Dashboard"}
           </h2>
           <div className={styles.headerActions}>
-            <button className={styles.iconBtn}>
+            <button className={styles.iconBtn} aria-label="Bildirimler">
               <Bell size={20} />
             </button>
-            <Link href="/dashboard/settings" className={styles.iconBtn}>
+            <Link href="/dashboard/settings" className={styles.iconBtn} aria-label="Ayarlar">
               <Settings size={20} />
             </Link>
           </div>
         </header>
 
-        {/* Content Body */}
         <div className={styles.contentBody}>{children}</div>
       </main>
     </div>

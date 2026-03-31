@@ -43,6 +43,11 @@ export type Subscription = $Result.DefaultSelection<Prisma.$SubscriptionPayload>
  * 
  */
 export type Invoice = $Result.DefaultSelection<Prisma.$InvoicePayload>
+/**
+ * Model UserRobot
+ * 
+ */
+export type UserRobot = $Result.DefaultSelection<Prisma.$UserRobotPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -224,6 +229,16 @@ export class PrismaClient<
     * ```
     */
   get invoice(): Prisma.InvoiceDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.userRobot`: Exposes CRUD operations for the **UserRobot** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more UserRobots
+    * const userRobots = await prisma.userRobot.findMany()
+    * ```
+    */
+  get userRobot(): Prisma.UserRobotDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -663,7 +678,8 @@ export namespace Prisma {
     Session: 'Session',
     VerificationToken: 'VerificationToken',
     Subscription: 'Subscription',
-    Invoice: 'Invoice'
+    Invoice: 'Invoice',
+    UserRobot: 'UserRobot'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -679,7 +695,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "account" | "session" | "verificationToken" | "subscription" | "invoice"
+      modelProps: "user" | "account" | "session" | "verificationToken" | "subscription" | "invoice" | "userRobot"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1127,6 +1143,80 @@ export namespace Prisma {
           }
         }
       }
+      UserRobot: {
+        payload: Prisma.$UserRobotPayload<ExtArgs>
+        fields: Prisma.UserRobotFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.UserRobotFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserRobotPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.UserRobotFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserRobotPayload>
+          }
+          findFirst: {
+            args: Prisma.UserRobotFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserRobotPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.UserRobotFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserRobotPayload>
+          }
+          findMany: {
+            args: Prisma.UserRobotFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserRobotPayload>[]
+          }
+          create: {
+            args: Prisma.UserRobotCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserRobotPayload>
+          }
+          createMany: {
+            args: Prisma.UserRobotCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.UserRobotCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserRobotPayload>[]
+          }
+          delete: {
+            args: Prisma.UserRobotDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserRobotPayload>
+          }
+          update: {
+            args: Prisma.UserRobotUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserRobotPayload>
+          }
+          deleteMany: {
+            args: Prisma.UserRobotDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.UserRobotUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.UserRobotUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserRobotPayload>[]
+          }
+          upsert: {
+            args: Prisma.UserRobotUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserRobotPayload>
+          }
+          aggregate: {
+            args: Prisma.UserRobotAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateUserRobot>
+          }
+          groupBy: {
+            args: Prisma.UserRobotGroupByArgs<ExtArgs>
+            result: $Utils.Optional<UserRobotGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.UserRobotCountArgs<ExtArgs>
+            result: $Utils.Optional<UserRobotCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1241,6 +1331,7 @@ export namespace Prisma {
     verificationToken?: VerificationTokenOmit
     subscription?: SubscriptionOmit
     invoice?: InvoiceOmit
+    userRobot?: UserRobotOmit
   }
 
   /* Types for Logging */
@@ -1324,12 +1415,14 @@ export namespace Prisma {
     accounts: number
     sessions: number
     invoices: number
+    robots: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     accounts?: boolean | UserCountOutputTypeCountAccountsArgs
     sessions?: boolean | UserCountOutputTypeCountSessionsArgs
     invoices?: boolean | UserCountOutputTypeCountInvoicesArgs
+    robots?: boolean | UserCountOutputTypeCountRobotsArgs
   }
 
   // Custom InputTypes
@@ -1362,6 +1455,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountInvoicesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: InvoiceWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountRobotsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserRobotWhereInput
   }
 
 
@@ -1593,6 +1693,7 @@ export namespace Prisma {
     sessions?: boolean | User$sessionsArgs<ExtArgs>
     subscription?: boolean | User$subscriptionArgs<ExtArgs>
     invoices?: boolean | User$invoicesArgs<ExtArgs>
+    robots?: boolean | User$robotsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -1647,6 +1748,7 @@ export namespace Prisma {
     sessions?: boolean | User$sessionsArgs<ExtArgs>
     subscription?: boolean | User$subscriptionArgs<ExtArgs>
     invoices?: boolean | User$invoicesArgs<ExtArgs>
+    robots?: boolean | User$robotsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1659,6 +1761,7 @@ export namespace Prisma {
       sessions: Prisma.$SessionPayload<ExtArgs>[]
       subscription: Prisma.$SubscriptionPayload<ExtArgs> | null
       invoices: Prisma.$InvoicePayload<ExtArgs>[]
+      robots: Prisma.$UserRobotPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -2071,6 +2174,7 @@ export namespace Prisma {
     sessions<T extends User$sessionsArgs<ExtArgs> = {}>(args?: Subset<T, User$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     subscription<T extends User$subscriptionArgs<ExtArgs> = {}>(args?: Subset<T, User$subscriptionArgs<ExtArgs>>): Prisma__SubscriptionClient<$Result.GetResult<Prisma.$SubscriptionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     invoices<T extends User$invoicesArgs<ExtArgs> = {}>(args?: Subset<T, User$invoicesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InvoicePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    robots<T extends User$robotsArgs<ExtArgs> = {}>(args?: Subset<T, User$robotsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserRobotPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2593,6 +2697,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: InvoiceScalarFieldEnum | InvoiceScalarFieldEnum[]
+  }
+
+  /**
+   * User.robots
+   */
+  export type User$robotsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserRobot
+     */
+    select?: UserRobotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserRobot
+     */
+    omit?: UserRobotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserRobotInclude<ExtArgs> | null
+    where?: UserRobotWhereInput
+    orderBy?: UserRobotOrderByWithRelationInput | UserRobotOrderByWithRelationInput[]
+    cursor?: UserRobotWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserRobotScalarFieldEnum | UserRobotScalarFieldEnum[]
   }
 
   /**
@@ -8143,6 +8271,1069 @@ export namespace Prisma {
 
 
   /**
+   * Model UserRobot
+   */
+
+  export type AggregateUserRobot = {
+    _count: UserRobotCountAggregateOutputType | null
+    _min: UserRobotMinAggregateOutputType | null
+    _max: UserRobotMaxAggregateOutputType | null
+  }
+
+  export type UserRobotMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    robotId: string | null
+    isActive: boolean | null
+    addedAt: Date | null
+  }
+
+  export type UserRobotMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    robotId: string | null
+    isActive: boolean | null
+    addedAt: Date | null
+  }
+
+  export type UserRobotCountAggregateOutputType = {
+    id: number
+    userId: number
+    robotId: number
+    isActive: number
+    addedAt: number
+    _all: number
+  }
+
+
+  export type UserRobotMinAggregateInputType = {
+    id?: true
+    userId?: true
+    robotId?: true
+    isActive?: true
+    addedAt?: true
+  }
+
+  export type UserRobotMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    robotId?: true
+    isActive?: true
+    addedAt?: true
+  }
+
+  export type UserRobotCountAggregateInputType = {
+    id?: true
+    userId?: true
+    robotId?: true
+    isActive?: true
+    addedAt?: true
+    _all?: true
+  }
+
+  export type UserRobotAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UserRobot to aggregate.
+     */
+    where?: UserRobotWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserRobots to fetch.
+     */
+    orderBy?: UserRobotOrderByWithRelationInput | UserRobotOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: UserRobotWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserRobots from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserRobots.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned UserRobots
+    **/
+    _count?: true | UserRobotCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: UserRobotMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: UserRobotMaxAggregateInputType
+  }
+
+  export type GetUserRobotAggregateType<T extends UserRobotAggregateArgs> = {
+        [P in keyof T & keyof AggregateUserRobot]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateUserRobot[P]>
+      : GetScalarType<T[P], AggregateUserRobot[P]>
+  }
+
+
+
+
+  export type UserRobotGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserRobotWhereInput
+    orderBy?: UserRobotOrderByWithAggregationInput | UserRobotOrderByWithAggregationInput[]
+    by: UserRobotScalarFieldEnum[] | UserRobotScalarFieldEnum
+    having?: UserRobotScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: UserRobotCountAggregateInputType | true
+    _min?: UserRobotMinAggregateInputType
+    _max?: UserRobotMaxAggregateInputType
+  }
+
+  export type UserRobotGroupByOutputType = {
+    id: string
+    userId: string
+    robotId: string
+    isActive: boolean
+    addedAt: Date
+    _count: UserRobotCountAggregateOutputType | null
+    _min: UserRobotMinAggregateOutputType | null
+    _max: UserRobotMaxAggregateOutputType | null
+  }
+
+  type GetUserRobotGroupByPayload<T extends UserRobotGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<UserRobotGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof UserRobotGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], UserRobotGroupByOutputType[P]>
+            : GetScalarType<T[P], UserRobotGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type UserRobotSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    robotId?: boolean
+    isActive?: boolean
+    addedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userRobot"]>
+
+  export type UserRobotSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    robotId?: boolean
+    isActive?: boolean
+    addedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userRobot"]>
+
+  export type UserRobotSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    robotId?: boolean
+    isActive?: boolean
+    addedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userRobot"]>
+
+  export type UserRobotSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    robotId?: boolean
+    isActive?: boolean
+    addedAt?: boolean
+  }
+
+  export type UserRobotOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "robotId" | "isActive" | "addedAt", ExtArgs["result"]["userRobot"]>
+  export type UserRobotInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type UserRobotIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type UserRobotIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $UserRobotPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "UserRobot"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      robotId: string
+      isActive: boolean
+      addedAt: Date
+    }, ExtArgs["result"]["userRobot"]>
+    composites: {}
+  }
+
+  type UserRobotGetPayload<S extends boolean | null | undefined | UserRobotDefaultArgs> = $Result.GetResult<Prisma.$UserRobotPayload, S>
+
+  type UserRobotCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<UserRobotFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: UserRobotCountAggregateInputType | true
+    }
+
+  export interface UserRobotDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['UserRobot'], meta: { name: 'UserRobot' } }
+    /**
+     * Find zero or one UserRobot that matches the filter.
+     * @param {UserRobotFindUniqueArgs} args - Arguments to find a UserRobot
+     * @example
+     * // Get one UserRobot
+     * const userRobot = await prisma.userRobot.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends UserRobotFindUniqueArgs>(args: SelectSubset<T, UserRobotFindUniqueArgs<ExtArgs>>): Prisma__UserRobotClient<$Result.GetResult<Prisma.$UserRobotPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one UserRobot that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {UserRobotFindUniqueOrThrowArgs} args - Arguments to find a UserRobot
+     * @example
+     * // Get one UserRobot
+     * const userRobot = await prisma.userRobot.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends UserRobotFindUniqueOrThrowArgs>(args: SelectSubset<T, UserRobotFindUniqueOrThrowArgs<ExtArgs>>): Prisma__UserRobotClient<$Result.GetResult<Prisma.$UserRobotPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first UserRobot that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserRobotFindFirstArgs} args - Arguments to find a UserRobot
+     * @example
+     * // Get one UserRobot
+     * const userRobot = await prisma.userRobot.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends UserRobotFindFirstArgs>(args?: SelectSubset<T, UserRobotFindFirstArgs<ExtArgs>>): Prisma__UserRobotClient<$Result.GetResult<Prisma.$UserRobotPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first UserRobot that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserRobotFindFirstOrThrowArgs} args - Arguments to find a UserRobot
+     * @example
+     * // Get one UserRobot
+     * const userRobot = await prisma.userRobot.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends UserRobotFindFirstOrThrowArgs>(args?: SelectSubset<T, UserRobotFindFirstOrThrowArgs<ExtArgs>>): Prisma__UserRobotClient<$Result.GetResult<Prisma.$UserRobotPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more UserRobots that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserRobotFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all UserRobots
+     * const userRobots = await prisma.userRobot.findMany()
+     * 
+     * // Get first 10 UserRobots
+     * const userRobots = await prisma.userRobot.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const userRobotWithIdOnly = await prisma.userRobot.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends UserRobotFindManyArgs>(args?: SelectSubset<T, UserRobotFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserRobotPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a UserRobot.
+     * @param {UserRobotCreateArgs} args - Arguments to create a UserRobot.
+     * @example
+     * // Create one UserRobot
+     * const UserRobot = await prisma.userRobot.create({
+     *   data: {
+     *     // ... data to create a UserRobot
+     *   }
+     * })
+     * 
+     */
+    create<T extends UserRobotCreateArgs>(args: SelectSubset<T, UserRobotCreateArgs<ExtArgs>>): Prisma__UserRobotClient<$Result.GetResult<Prisma.$UserRobotPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many UserRobots.
+     * @param {UserRobotCreateManyArgs} args - Arguments to create many UserRobots.
+     * @example
+     * // Create many UserRobots
+     * const userRobot = await prisma.userRobot.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends UserRobotCreateManyArgs>(args?: SelectSubset<T, UserRobotCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many UserRobots and returns the data saved in the database.
+     * @param {UserRobotCreateManyAndReturnArgs} args - Arguments to create many UserRobots.
+     * @example
+     * // Create many UserRobots
+     * const userRobot = await prisma.userRobot.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many UserRobots and only return the `id`
+     * const userRobotWithIdOnly = await prisma.userRobot.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends UserRobotCreateManyAndReturnArgs>(args?: SelectSubset<T, UserRobotCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserRobotPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a UserRobot.
+     * @param {UserRobotDeleteArgs} args - Arguments to delete one UserRobot.
+     * @example
+     * // Delete one UserRobot
+     * const UserRobot = await prisma.userRobot.delete({
+     *   where: {
+     *     // ... filter to delete one UserRobot
+     *   }
+     * })
+     * 
+     */
+    delete<T extends UserRobotDeleteArgs>(args: SelectSubset<T, UserRobotDeleteArgs<ExtArgs>>): Prisma__UserRobotClient<$Result.GetResult<Prisma.$UserRobotPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one UserRobot.
+     * @param {UserRobotUpdateArgs} args - Arguments to update one UserRobot.
+     * @example
+     * // Update one UserRobot
+     * const userRobot = await prisma.userRobot.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends UserRobotUpdateArgs>(args: SelectSubset<T, UserRobotUpdateArgs<ExtArgs>>): Prisma__UserRobotClient<$Result.GetResult<Prisma.$UserRobotPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more UserRobots.
+     * @param {UserRobotDeleteManyArgs} args - Arguments to filter UserRobots to delete.
+     * @example
+     * // Delete a few UserRobots
+     * const { count } = await prisma.userRobot.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends UserRobotDeleteManyArgs>(args?: SelectSubset<T, UserRobotDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UserRobots.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserRobotUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many UserRobots
+     * const userRobot = await prisma.userRobot.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends UserRobotUpdateManyArgs>(args: SelectSubset<T, UserRobotUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UserRobots and returns the data updated in the database.
+     * @param {UserRobotUpdateManyAndReturnArgs} args - Arguments to update many UserRobots.
+     * @example
+     * // Update many UserRobots
+     * const userRobot = await prisma.userRobot.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more UserRobots and only return the `id`
+     * const userRobotWithIdOnly = await prisma.userRobot.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends UserRobotUpdateManyAndReturnArgs>(args: SelectSubset<T, UserRobotUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserRobotPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one UserRobot.
+     * @param {UserRobotUpsertArgs} args - Arguments to update or create a UserRobot.
+     * @example
+     * // Update or create a UserRobot
+     * const userRobot = await prisma.userRobot.upsert({
+     *   create: {
+     *     // ... data to create a UserRobot
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the UserRobot we want to update
+     *   }
+     * })
+     */
+    upsert<T extends UserRobotUpsertArgs>(args: SelectSubset<T, UserRobotUpsertArgs<ExtArgs>>): Prisma__UserRobotClient<$Result.GetResult<Prisma.$UserRobotPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of UserRobots.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserRobotCountArgs} args - Arguments to filter UserRobots to count.
+     * @example
+     * // Count the number of UserRobots
+     * const count = await prisma.userRobot.count({
+     *   where: {
+     *     // ... the filter for the UserRobots we want to count
+     *   }
+     * })
+    **/
+    count<T extends UserRobotCountArgs>(
+      args?: Subset<T, UserRobotCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], UserRobotCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a UserRobot.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserRobotAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends UserRobotAggregateArgs>(args: Subset<T, UserRobotAggregateArgs>): Prisma.PrismaPromise<GetUserRobotAggregateType<T>>
+
+    /**
+     * Group by UserRobot.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserRobotGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends UserRobotGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: UserRobotGroupByArgs['orderBy'] }
+        : { orderBy?: UserRobotGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, UserRobotGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUserRobotGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the UserRobot model
+   */
+  readonly fields: UserRobotFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for UserRobot.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__UserRobotClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the UserRobot model
+   */
+  interface UserRobotFieldRefs {
+    readonly id: FieldRef<"UserRobot", 'String'>
+    readonly userId: FieldRef<"UserRobot", 'String'>
+    readonly robotId: FieldRef<"UserRobot", 'String'>
+    readonly isActive: FieldRef<"UserRobot", 'Boolean'>
+    readonly addedAt: FieldRef<"UserRobot", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * UserRobot findUnique
+   */
+  export type UserRobotFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserRobot
+     */
+    select?: UserRobotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserRobot
+     */
+    omit?: UserRobotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserRobotInclude<ExtArgs> | null
+    /**
+     * Filter, which UserRobot to fetch.
+     */
+    where: UserRobotWhereUniqueInput
+  }
+
+  /**
+   * UserRobot findUniqueOrThrow
+   */
+  export type UserRobotFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserRobot
+     */
+    select?: UserRobotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserRobot
+     */
+    omit?: UserRobotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserRobotInclude<ExtArgs> | null
+    /**
+     * Filter, which UserRobot to fetch.
+     */
+    where: UserRobotWhereUniqueInput
+  }
+
+  /**
+   * UserRobot findFirst
+   */
+  export type UserRobotFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserRobot
+     */
+    select?: UserRobotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserRobot
+     */
+    omit?: UserRobotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserRobotInclude<ExtArgs> | null
+    /**
+     * Filter, which UserRobot to fetch.
+     */
+    where?: UserRobotWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserRobots to fetch.
+     */
+    orderBy?: UserRobotOrderByWithRelationInput | UserRobotOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserRobots.
+     */
+    cursor?: UserRobotWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserRobots from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserRobots.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserRobots.
+     */
+    distinct?: UserRobotScalarFieldEnum | UserRobotScalarFieldEnum[]
+  }
+
+  /**
+   * UserRobot findFirstOrThrow
+   */
+  export type UserRobotFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserRobot
+     */
+    select?: UserRobotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserRobot
+     */
+    omit?: UserRobotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserRobotInclude<ExtArgs> | null
+    /**
+     * Filter, which UserRobot to fetch.
+     */
+    where?: UserRobotWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserRobots to fetch.
+     */
+    orderBy?: UserRobotOrderByWithRelationInput | UserRobotOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserRobots.
+     */
+    cursor?: UserRobotWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserRobots from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserRobots.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserRobots.
+     */
+    distinct?: UserRobotScalarFieldEnum | UserRobotScalarFieldEnum[]
+  }
+
+  /**
+   * UserRobot findMany
+   */
+  export type UserRobotFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserRobot
+     */
+    select?: UserRobotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserRobot
+     */
+    omit?: UserRobotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserRobotInclude<ExtArgs> | null
+    /**
+     * Filter, which UserRobots to fetch.
+     */
+    where?: UserRobotWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserRobots to fetch.
+     */
+    orderBy?: UserRobotOrderByWithRelationInput | UserRobotOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing UserRobots.
+     */
+    cursor?: UserRobotWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserRobots from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserRobots.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserRobots.
+     */
+    distinct?: UserRobotScalarFieldEnum | UserRobotScalarFieldEnum[]
+  }
+
+  /**
+   * UserRobot create
+   */
+  export type UserRobotCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserRobot
+     */
+    select?: UserRobotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserRobot
+     */
+    omit?: UserRobotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserRobotInclude<ExtArgs> | null
+    /**
+     * The data needed to create a UserRobot.
+     */
+    data: XOR<UserRobotCreateInput, UserRobotUncheckedCreateInput>
+  }
+
+  /**
+   * UserRobot createMany
+   */
+  export type UserRobotCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many UserRobots.
+     */
+    data: UserRobotCreateManyInput | UserRobotCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * UserRobot createManyAndReturn
+   */
+  export type UserRobotCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserRobot
+     */
+    select?: UserRobotSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserRobot
+     */
+    omit?: UserRobotOmit<ExtArgs> | null
+    /**
+     * The data used to create many UserRobots.
+     */
+    data: UserRobotCreateManyInput | UserRobotCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserRobotIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * UserRobot update
+   */
+  export type UserRobotUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserRobot
+     */
+    select?: UserRobotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserRobot
+     */
+    omit?: UserRobotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserRobotInclude<ExtArgs> | null
+    /**
+     * The data needed to update a UserRobot.
+     */
+    data: XOR<UserRobotUpdateInput, UserRobotUncheckedUpdateInput>
+    /**
+     * Choose, which UserRobot to update.
+     */
+    where: UserRobotWhereUniqueInput
+  }
+
+  /**
+   * UserRobot updateMany
+   */
+  export type UserRobotUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update UserRobots.
+     */
+    data: XOR<UserRobotUpdateManyMutationInput, UserRobotUncheckedUpdateManyInput>
+    /**
+     * Filter which UserRobots to update
+     */
+    where?: UserRobotWhereInput
+    /**
+     * Limit how many UserRobots to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * UserRobot updateManyAndReturn
+   */
+  export type UserRobotUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserRobot
+     */
+    select?: UserRobotSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserRobot
+     */
+    omit?: UserRobotOmit<ExtArgs> | null
+    /**
+     * The data used to update UserRobots.
+     */
+    data: XOR<UserRobotUpdateManyMutationInput, UserRobotUncheckedUpdateManyInput>
+    /**
+     * Filter which UserRobots to update
+     */
+    where?: UserRobotWhereInput
+    /**
+     * Limit how many UserRobots to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserRobotIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * UserRobot upsert
+   */
+  export type UserRobotUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserRobot
+     */
+    select?: UserRobotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserRobot
+     */
+    omit?: UserRobotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserRobotInclude<ExtArgs> | null
+    /**
+     * The filter to search for the UserRobot to update in case it exists.
+     */
+    where: UserRobotWhereUniqueInput
+    /**
+     * In case the UserRobot found by the `where` argument doesn't exist, create a new UserRobot with this data.
+     */
+    create: XOR<UserRobotCreateInput, UserRobotUncheckedCreateInput>
+    /**
+     * In case the UserRobot was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<UserRobotUpdateInput, UserRobotUncheckedUpdateInput>
+  }
+
+  /**
+   * UserRobot delete
+   */
+  export type UserRobotDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserRobot
+     */
+    select?: UserRobotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserRobot
+     */
+    omit?: UserRobotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserRobotInclude<ExtArgs> | null
+    /**
+     * Filter which UserRobot to delete.
+     */
+    where: UserRobotWhereUniqueInput
+  }
+
+  /**
+   * UserRobot deleteMany
+   */
+  export type UserRobotDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UserRobots to delete
+     */
+    where?: UserRobotWhereInput
+    /**
+     * Limit how many UserRobots to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * UserRobot without action
+   */
+  export type UserRobotDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserRobot
+     */
+    select?: UserRobotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserRobot
+     */
+    omit?: UserRobotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserRobotInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -8243,6 +9434,17 @@ export namespace Prisma {
   };
 
   export type InvoiceScalarFieldEnum = (typeof InvoiceScalarFieldEnum)[keyof typeof InvoiceScalarFieldEnum]
+
+
+  export const UserRobotScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    robotId: 'robotId',
+    isActive: 'isActive',
+    addedAt: 'addedAt'
+  };
+
+  export type UserRobotScalarFieldEnum = (typeof UserRobotScalarFieldEnum)[keyof typeof UserRobotScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -8360,6 +9562,7 @@ export namespace Prisma {
     sessions?: SessionListRelationFilter
     subscription?: XOR<SubscriptionNullableScalarRelationFilter, SubscriptionWhereInput> | null
     invoices?: InvoiceListRelationFilter
+    robots?: UserRobotListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -8379,6 +9582,7 @@ export namespace Prisma {
     sessions?: SessionOrderByRelationAggregateInput
     subscription?: SubscriptionOrderByWithRelationInput
     invoices?: InvoiceOrderByRelationAggregateInput
+    robots?: UserRobotOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -8401,6 +9605,7 @@ export namespace Prisma {
     sessions?: SessionListRelationFilter
     subscription?: XOR<SubscriptionNullableScalarRelationFilter, SubscriptionWhereInput> | null
     invoices?: InvoiceListRelationFilter
+    robots?: UserRobotListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -8797,6 +10002,62 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"Invoice"> | Date | string
   }
 
+  export type UserRobotWhereInput = {
+    AND?: UserRobotWhereInput | UserRobotWhereInput[]
+    OR?: UserRobotWhereInput[]
+    NOT?: UserRobotWhereInput | UserRobotWhereInput[]
+    id?: StringFilter<"UserRobot"> | string
+    userId?: StringFilter<"UserRobot"> | string
+    robotId?: StringFilter<"UserRobot"> | string
+    isActive?: BoolFilter<"UserRobot"> | boolean
+    addedAt?: DateTimeFilter<"UserRobot"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type UserRobotOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    robotId?: SortOrder
+    isActive?: SortOrder
+    addedAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type UserRobotWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    userId_robotId?: UserRobotUserIdRobotIdCompoundUniqueInput
+    AND?: UserRobotWhereInput | UserRobotWhereInput[]
+    OR?: UserRobotWhereInput[]
+    NOT?: UserRobotWhereInput | UserRobotWhereInput[]
+    userId?: StringFilter<"UserRobot"> | string
+    robotId?: StringFilter<"UserRobot"> | string
+    isActive?: BoolFilter<"UserRobot"> | boolean
+    addedAt?: DateTimeFilter<"UserRobot"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id" | "userId_robotId">
+
+  export type UserRobotOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    robotId?: SortOrder
+    isActive?: SortOrder
+    addedAt?: SortOrder
+    _count?: UserRobotCountOrderByAggregateInput
+    _max?: UserRobotMaxOrderByAggregateInput
+    _min?: UserRobotMinOrderByAggregateInput
+  }
+
+  export type UserRobotScalarWhereWithAggregatesInput = {
+    AND?: UserRobotScalarWhereWithAggregatesInput | UserRobotScalarWhereWithAggregatesInput[]
+    OR?: UserRobotScalarWhereWithAggregatesInput[]
+    NOT?: UserRobotScalarWhereWithAggregatesInput | UserRobotScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"UserRobot"> | string
+    userId?: StringWithAggregatesFilter<"UserRobot"> | string
+    robotId?: StringWithAggregatesFilter<"UserRobot"> | string
+    isActive?: BoolWithAggregatesFilter<"UserRobot"> | boolean
+    addedAt?: DateTimeWithAggregatesFilter<"UserRobot"> | Date | string
+  }
+
   export type UserCreateInput = {
     id?: string
     name?: string | null
@@ -8814,6 +10075,7 @@ export namespace Prisma {
     sessions?: SessionCreateNestedManyWithoutUserInput
     subscription?: SubscriptionCreateNestedOneWithoutUserInput
     invoices?: InvoiceCreateNestedManyWithoutUserInput
+    robots?: UserRobotCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -8833,6 +10095,7 @@ export namespace Prisma {
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     subscription?: SubscriptionUncheckedCreateNestedOneWithoutUserInput
     invoices?: InvoiceUncheckedCreateNestedManyWithoutUserInput
+    robots?: UserRobotUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -8852,6 +10115,7 @@ export namespace Prisma {
     sessions?: SessionUpdateManyWithoutUserNestedInput
     subscription?: SubscriptionUpdateOneWithoutUserNestedInput
     invoices?: InvoiceUpdateManyWithoutUserNestedInput
+    robots?: UserRobotUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -8871,6 +10135,7 @@ export namespace Prisma {
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     subscription?: SubscriptionUncheckedUpdateOneWithoutUserNestedInput
     invoices?: InvoiceUncheckedUpdateManyWithoutUserNestedInput
+    robots?: UserRobotUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -9306,6 +10571,61 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type UserRobotCreateInput = {
+    id?: string
+    robotId: string
+    isActive?: boolean
+    addedAt?: Date | string
+    user: UserCreateNestedOneWithoutRobotsInput
+  }
+
+  export type UserRobotUncheckedCreateInput = {
+    id?: string
+    userId: string
+    robotId: string
+    isActive?: boolean
+    addedAt?: Date | string
+  }
+
+  export type UserRobotUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    robotId?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutRobotsNestedInput
+  }
+
+  export type UserRobotUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    robotId?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserRobotCreateManyInput = {
+    id?: string
+    userId: string
+    robotId: string
+    isActive?: boolean
+    addedAt?: Date | string
+  }
+
+  export type UserRobotUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    robotId?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserRobotUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    robotId?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -9381,6 +10701,12 @@ export namespace Prisma {
     none?: InvoiceWhereInput
   }
 
+  export type UserRobotListRelationFilter = {
+    every?: UserRobotWhereInput
+    some?: UserRobotWhereInput
+    none?: UserRobotWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -9395,6 +10721,10 @@ export namespace Prisma {
   }
 
   export type InvoiceOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type UserRobotOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -9773,6 +11103,35 @@ export namespace Prisma {
     _max?: NestedIntFilter<$PrismaModel>
   }
 
+  export type UserRobotUserIdRobotIdCompoundUniqueInput = {
+    userId: string
+    robotId: string
+  }
+
+  export type UserRobotCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    robotId?: SortOrder
+    isActive?: SortOrder
+    addedAt?: SortOrder
+  }
+
+  export type UserRobotMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    robotId?: SortOrder
+    isActive?: SortOrder
+    addedAt?: SortOrder
+  }
+
+  export type UserRobotMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    robotId?: SortOrder
+    isActive?: SortOrder
+    addedAt?: SortOrder
+  }
+
   export type AccountCreateNestedManyWithoutUserInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -9800,6 +11159,13 @@ export namespace Prisma {
     connect?: InvoiceWhereUniqueInput | InvoiceWhereUniqueInput[]
   }
 
+  export type UserRobotCreateNestedManyWithoutUserInput = {
+    create?: XOR<UserRobotCreateWithoutUserInput, UserRobotUncheckedCreateWithoutUserInput> | UserRobotCreateWithoutUserInput[] | UserRobotUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserRobotCreateOrConnectWithoutUserInput | UserRobotCreateOrConnectWithoutUserInput[]
+    createMany?: UserRobotCreateManyUserInputEnvelope
+    connect?: UserRobotWhereUniqueInput | UserRobotWhereUniqueInput[]
+  }
+
   export type AccountUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -9825,6 +11191,13 @@ export namespace Prisma {
     connectOrCreate?: InvoiceCreateOrConnectWithoutUserInput | InvoiceCreateOrConnectWithoutUserInput[]
     createMany?: InvoiceCreateManyUserInputEnvelope
     connect?: InvoiceWhereUniqueInput | InvoiceWhereUniqueInput[]
+  }
+
+  export type UserRobotUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<UserRobotCreateWithoutUserInput, UserRobotUncheckedCreateWithoutUserInput> | UserRobotCreateWithoutUserInput[] | UserRobotUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserRobotCreateOrConnectWithoutUserInput | UserRobotCreateOrConnectWithoutUserInput[]
+    createMany?: UserRobotCreateManyUserInputEnvelope
+    connect?: UserRobotWhereUniqueInput | UserRobotWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -9895,6 +11268,20 @@ export namespace Prisma {
     deleteMany?: InvoiceScalarWhereInput | InvoiceScalarWhereInput[]
   }
 
+  export type UserRobotUpdateManyWithoutUserNestedInput = {
+    create?: XOR<UserRobotCreateWithoutUserInput, UserRobotUncheckedCreateWithoutUserInput> | UserRobotCreateWithoutUserInput[] | UserRobotUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserRobotCreateOrConnectWithoutUserInput | UserRobotCreateOrConnectWithoutUserInput[]
+    upsert?: UserRobotUpsertWithWhereUniqueWithoutUserInput | UserRobotUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: UserRobotCreateManyUserInputEnvelope
+    set?: UserRobotWhereUniqueInput | UserRobotWhereUniqueInput[]
+    disconnect?: UserRobotWhereUniqueInput | UserRobotWhereUniqueInput[]
+    delete?: UserRobotWhereUniqueInput | UserRobotWhereUniqueInput[]
+    connect?: UserRobotWhereUniqueInput | UserRobotWhereUniqueInput[]
+    update?: UserRobotUpdateWithWhereUniqueWithoutUserInput | UserRobotUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: UserRobotUpdateManyWithWhereWithoutUserInput | UserRobotUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: UserRobotScalarWhereInput | UserRobotScalarWhereInput[]
+  }
+
   export type AccountUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -9945,6 +11332,20 @@ export namespace Prisma {
     update?: InvoiceUpdateWithWhereUniqueWithoutUserInput | InvoiceUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: InvoiceUpdateManyWithWhereWithoutUserInput | InvoiceUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: InvoiceScalarWhereInput | InvoiceScalarWhereInput[]
+  }
+
+  export type UserRobotUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<UserRobotCreateWithoutUserInput, UserRobotUncheckedCreateWithoutUserInput> | UserRobotCreateWithoutUserInput[] | UserRobotUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserRobotCreateOrConnectWithoutUserInput | UserRobotCreateOrConnectWithoutUserInput[]
+    upsert?: UserRobotUpsertWithWhereUniqueWithoutUserInput | UserRobotUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: UserRobotCreateManyUserInputEnvelope
+    set?: UserRobotWhereUniqueInput | UserRobotWhereUniqueInput[]
+    disconnect?: UserRobotWhereUniqueInput | UserRobotWhereUniqueInput[]
+    delete?: UserRobotWhereUniqueInput | UserRobotWhereUniqueInput[]
+    connect?: UserRobotWhereUniqueInput | UserRobotWhereUniqueInput[]
+    update?: UserRobotUpdateWithWhereUniqueWithoutUserInput | UserRobotUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: UserRobotUpdateManyWithWhereWithoutUserInput | UserRobotUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: UserRobotScalarWhereInput | UserRobotScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutAccountsInput = {
@@ -10021,6 +11422,20 @@ export namespace Prisma {
     upsert?: UserUpsertWithoutInvoicesInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutInvoicesInput, UserUpdateWithoutInvoicesInput>, UserUncheckedUpdateWithoutInvoicesInput>
+  }
+
+  export type UserCreateNestedOneWithoutRobotsInput = {
+    create?: XOR<UserCreateWithoutRobotsInput, UserUncheckedCreateWithoutRobotsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutRobotsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutRobotsNestedInput = {
+    create?: XOR<UserCreateWithoutRobotsInput, UserUncheckedCreateWithoutRobotsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutRobotsInput
+    upsert?: UserUpsertWithoutRobotsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutRobotsInput, UserUpdateWithoutRobotsInput>, UserUncheckedUpdateWithoutRobotsInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -10351,6 +11766,30 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type UserRobotCreateWithoutUserInput = {
+    id?: string
+    robotId: string
+    isActive?: boolean
+    addedAt?: Date | string
+  }
+
+  export type UserRobotUncheckedCreateWithoutUserInput = {
+    id?: string
+    robotId: string
+    isActive?: boolean
+    addedAt?: Date | string
+  }
+
+  export type UserRobotCreateOrConnectWithoutUserInput = {
+    where: UserRobotWhereUniqueInput
+    create: XOR<UserRobotCreateWithoutUserInput, UserRobotUncheckedCreateWithoutUserInput>
+  }
+
+  export type UserRobotCreateManyUserInputEnvelope = {
+    data: UserRobotCreateManyUserInput | UserRobotCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
   export type AccountUpsertWithWhereUniqueWithoutUserInput = {
     where: AccountWhereUniqueInput
     update: XOR<AccountUpdateWithoutUserInput, AccountUncheckedUpdateWithoutUserInput>
@@ -10482,6 +11921,33 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Invoice"> | Date | string
   }
 
+  export type UserRobotUpsertWithWhereUniqueWithoutUserInput = {
+    where: UserRobotWhereUniqueInput
+    update: XOR<UserRobotUpdateWithoutUserInput, UserRobotUncheckedUpdateWithoutUserInput>
+    create: XOR<UserRobotCreateWithoutUserInput, UserRobotUncheckedCreateWithoutUserInput>
+  }
+
+  export type UserRobotUpdateWithWhereUniqueWithoutUserInput = {
+    where: UserRobotWhereUniqueInput
+    data: XOR<UserRobotUpdateWithoutUserInput, UserRobotUncheckedUpdateWithoutUserInput>
+  }
+
+  export type UserRobotUpdateManyWithWhereWithoutUserInput = {
+    where: UserRobotScalarWhereInput
+    data: XOR<UserRobotUpdateManyMutationInput, UserRobotUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type UserRobotScalarWhereInput = {
+    AND?: UserRobotScalarWhereInput | UserRobotScalarWhereInput[]
+    OR?: UserRobotScalarWhereInput[]
+    NOT?: UserRobotScalarWhereInput | UserRobotScalarWhereInput[]
+    id?: StringFilter<"UserRobot"> | string
+    userId?: StringFilter<"UserRobot"> | string
+    robotId?: StringFilter<"UserRobot"> | string
+    isActive?: BoolFilter<"UserRobot"> | boolean
+    addedAt?: DateTimeFilter<"UserRobot"> | Date | string
+  }
+
   export type UserCreateWithoutAccountsInput = {
     id?: string
     name?: string | null
@@ -10498,6 +11964,7 @@ export namespace Prisma {
     sessions?: SessionCreateNestedManyWithoutUserInput
     subscription?: SubscriptionCreateNestedOneWithoutUserInput
     invoices?: InvoiceCreateNestedManyWithoutUserInput
+    robots?: UserRobotCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAccountsInput = {
@@ -10516,6 +11983,7 @@ export namespace Prisma {
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     subscription?: SubscriptionUncheckedCreateNestedOneWithoutUserInput
     invoices?: InvoiceUncheckedCreateNestedManyWithoutUserInput
+    robots?: UserRobotUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAccountsInput = {
@@ -10550,6 +12018,7 @@ export namespace Prisma {
     sessions?: SessionUpdateManyWithoutUserNestedInput
     subscription?: SubscriptionUpdateOneWithoutUserNestedInput
     invoices?: InvoiceUpdateManyWithoutUserNestedInput
+    robots?: UserRobotUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAccountsInput = {
@@ -10568,6 +12037,7 @@ export namespace Prisma {
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     subscription?: SubscriptionUncheckedUpdateOneWithoutUserNestedInput
     invoices?: InvoiceUncheckedUpdateManyWithoutUserNestedInput
+    robots?: UserRobotUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutSessionsInput = {
@@ -10586,6 +12056,7 @@ export namespace Prisma {
     accounts?: AccountCreateNestedManyWithoutUserInput
     subscription?: SubscriptionCreateNestedOneWithoutUserInput
     invoices?: InvoiceCreateNestedManyWithoutUserInput
+    robots?: UserRobotCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSessionsInput = {
@@ -10604,6 +12075,7 @@ export namespace Prisma {
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     subscription?: SubscriptionUncheckedCreateNestedOneWithoutUserInput
     invoices?: InvoiceUncheckedCreateNestedManyWithoutUserInput
+    robots?: UserRobotUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSessionsInput = {
@@ -10638,6 +12110,7 @@ export namespace Prisma {
     accounts?: AccountUpdateManyWithoutUserNestedInput
     subscription?: SubscriptionUpdateOneWithoutUserNestedInput
     invoices?: InvoiceUpdateManyWithoutUserNestedInput
+    robots?: UserRobotUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -10656,6 +12129,7 @@ export namespace Prisma {
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     subscription?: SubscriptionUncheckedUpdateOneWithoutUserNestedInput
     invoices?: InvoiceUncheckedUpdateManyWithoutUserNestedInput
+    robots?: UserRobotUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutSubscriptionInput = {
@@ -10674,6 +12148,7 @@ export namespace Prisma {
     accounts?: AccountCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
     invoices?: InvoiceCreateNestedManyWithoutUserInput
+    robots?: UserRobotCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSubscriptionInput = {
@@ -10692,6 +12167,7 @@ export namespace Prisma {
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     invoices?: InvoiceUncheckedCreateNestedManyWithoutUserInput
+    robots?: UserRobotUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSubscriptionInput = {
@@ -10726,6 +12202,7 @@ export namespace Prisma {
     accounts?: AccountUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
     invoices?: InvoiceUpdateManyWithoutUserNestedInput
+    robots?: UserRobotUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSubscriptionInput = {
@@ -10744,6 +12221,7 @@ export namespace Prisma {
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     invoices?: InvoiceUncheckedUpdateManyWithoutUserNestedInput
+    robots?: UserRobotUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutInvoicesInput = {
@@ -10762,6 +12240,7 @@ export namespace Prisma {
     accounts?: AccountCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
     subscription?: SubscriptionCreateNestedOneWithoutUserInput
+    robots?: UserRobotCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutInvoicesInput = {
@@ -10780,6 +12259,7 @@ export namespace Prisma {
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     subscription?: SubscriptionUncheckedCreateNestedOneWithoutUserInput
+    robots?: UserRobotUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutInvoicesInput = {
@@ -10814,6 +12294,7 @@ export namespace Prisma {
     accounts?: AccountUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
     subscription?: SubscriptionUpdateOneWithoutUserNestedInput
+    robots?: UserRobotUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutInvoicesInput = {
@@ -10832,6 +12313,99 @@ export namespace Prisma {
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     subscription?: SubscriptionUncheckedUpdateOneWithoutUserNestedInput
+    robots?: UserRobotUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserCreateWithoutRobotsInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: Date | string | null
+    image?: string | null
+    firstName?: string | null
+    lastName?: string | null
+    phone?: string | null
+    address?: string | null
+    bio?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    subscription?: SubscriptionCreateNestedOneWithoutUserInput
+    invoices?: InvoiceCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutRobotsInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: Date | string | null
+    image?: string | null
+    firstName?: string | null
+    lastName?: string | null
+    phone?: string | null
+    address?: string | null
+    bio?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    subscription?: SubscriptionUncheckedCreateNestedOneWithoutUserInput
+    invoices?: InvoiceUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutRobotsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutRobotsInput, UserUncheckedCreateWithoutRobotsInput>
+  }
+
+  export type UserUpsertWithoutRobotsInput = {
+    update: XOR<UserUpdateWithoutRobotsInput, UserUncheckedUpdateWithoutRobotsInput>
+    create: XOR<UserCreateWithoutRobotsInput, UserUncheckedCreateWithoutRobotsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutRobotsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutRobotsInput, UserUncheckedUpdateWithoutRobotsInput>
+  }
+
+  export type UserUpdateWithoutRobotsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null
+    lastName?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    subscription?: SubscriptionUpdateOneWithoutUserNestedInput
+    invoices?: InvoiceUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutRobotsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null
+    lastName?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    subscription?: SubscriptionUncheckedUpdateOneWithoutUserNestedInput
+    invoices?: InvoiceUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type AccountCreateManyUserInput = {
@@ -10864,6 +12438,13 @@ export namespace Prisma {
     invoiceUrl?: string | null
     paidAt?: Date | string | null
     createdAt?: Date | string
+  }
+
+  export type UserRobotCreateManyUserInput = {
+    id?: string
+    robotId: string
+    isActive?: boolean
+    addedAt?: Date | string
   }
 
   export type AccountUpdateWithoutUserInput = {
@@ -10960,6 +12541,27 @@ export namespace Prisma {
     invoiceUrl?: NullableStringFieldUpdateOperationsInput | string | null
     paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserRobotUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    robotId?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserRobotUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    robotId?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserRobotUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    robotId?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 

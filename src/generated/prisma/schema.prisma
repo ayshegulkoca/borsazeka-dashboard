@@ -30,6 +30,7 @@ model User {
   // Business relations
   subscription Subscription?
   invoices     Invoice[]
+  robots       UserRobot[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -78,7 +79,7 @@ model Subscription {
   userId String @unique
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  planType String @default("FREE") // FREE | PRO | PREMIUM
+  planType String @default("FREE") // FREE | DARKROOM_PREMIUM | HIGHWAY_PREMIUM | TRADEMATE_PREMIUM | FABRIKA_PREMIUM | BORSAZEKA_CLASSIC
   status   String @default("ACTIVE") // ACTIVE | CANCELLED | PAST_DUE | TRIALING
 
   // Payment provider fields (for future Stripe/LemonSqueezy integration)
@@ -108,4 +109,19 @@ model Invoice {
 
   paidAt    DateTime?
   createdAt DateTime  @default(now())
+}
+
+// ─── Robot Market ─────────────────────────────────────────────
+
+model UserRobot {
+  id       String  @id @default(cuid())
+  userId   String
+  robotId  String // "darkroom" | "highway" | "trademate"
+  isActive Boolean @default(true)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  addedAt DateTime @default(now())
+
+  @@unique([userId, robotId])
 }

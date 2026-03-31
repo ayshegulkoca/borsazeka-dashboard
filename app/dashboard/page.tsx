@@ -1,95 +1,44 @@
-"use client";
-
-import { useState } from "react";
+import { auth } from "@/auth";
+import { prisma } from "@/lib/prisma";
+import { redirect } from "next/navigation";
 import { Eye, EyeOff, Bot, ClipboardList, TrendingUp, TrendingDown, ArrowRight, Plus } from "lucide-react";
-import styles from "./page.module.css";
+import { PLAN_LABELS } from "@/lib/plans";
+import { ROBOT_BY_ID } from "@/lib/robots";
 import Link from "next/link";
+import DashboardHomeClient from "./DashboardHomeClient";
+import styles from "./page.module.css";
 
-export default function DashboardHome() {
-  const [showBalance, setShowBalance] = useState(true);
+export default async function DashboardHome() {
+  const session = await auth();
+  if (!session?.user?.id) redirect("/");
+
+  const userId = session.user.id;
+
+  // Gerçek veriler — DB'den çek
+  const [subscription, userRobots] = await Promise.all([
+    prisma.subscription.findUnique({ where: { userId } }),
+    prisma.userRobot.findMany({ where: { userId, isActive: true }, orderBy: { addedAt: "asc" } }),
+  ]);
+
+  const planLabel = subscription?.planType
+    ? (PLAN_LABELS[subscription.planType] ?? subscription.planType)
+    : "Ücretsiz";
+
+  const activeRobotCount = userRobots.length;
+
+  const robotsWithMeta = userRobots.map((ur) => ({
+    ...ur,
+    meta: ROBOT_BY_ID[ur.robotId as keyof typeof ROBOT_BY_ID] ?? null,
+  }));
+
+  const displayName = session.user.name?.split(" ")[0] ?? "Yatırımcı";
 
   return (
-    <div className={styles.container}>
-      <div>
-        <p className={styles.welcomeText}>Hoşgeldin,</p>
-        <h1 className={styles.title}>Ayşegül Koca</h1>
-      </div>
-
-      {/* Main Balance Card */}
-      <div className={styles.balanceCard}>
-        <div className={styles.balanceHeader}>
-          Toplam Tahmini Bakiye
-          <button 
-            onClick={() => setShowBalance(!showBalance)} 
-            className={styles.eyeIcon}
-            aria-label="Bakiyeyi Gizle/Göster"
-          >
-            {showBalance ? <Eye size={16} /> : <EyeOff size={16} />}
-          </button>
-        </div>
-        <div className={styles.balanceValue}>
-          {showBalance ? "₺100.000,00" : "*********"}
-        </div>
-        
-        <div className={styles.pnlPill}>
-          <div className={styles.pnlIconWrapper}>
-            <TrendingUp size={18} />
-          </div>
-          <div>
-            <span className={styles.pnlLabel}>Günlük Kar/Zarar</span>
-            <span className={styles.pnlValue}>+₺1.250 (%0.85)</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Stats Grid */}
-      <div className={styles.statsGrid}>
-        <div className={styles.statCard}>
-          <div className={`${styles.statIconWrapper} ${styles.robotIcon}`}>
-            <Bot size={20} />
-          </div>
-          <span className={styles.statValue}>3</span>
-          <span className={styles.statLabel}>Aktif Robot</span>
-        </div>
-        
-        <div className={styles.statCard}>
-          <div className={`${styles.statIconWrapper} ${styles.orderIcon}`}>
-            <ClipboardList size={20} />
-          </div>
-          <span className={styles.statValue}>2</span>
-          <span className={styles.statLabel}>Bekleyen Emir</span>
-        </div>
-      </div>
-
-      {/* Market Ticker */}
-      <div className={styles.tickerCard}>
-        <div className={styles.tickerInfo}>
-          <div className={styles.tickerIcon}>
-            <TrendingDown size={20} />
-          </div>
-          <div>
-            <div className={styles.tickerName}>BIST 100</div>
-            <div className={styles.tickerPrice}>
-              8.100 <span className={styles.tickerChange}>-0.4%</span>
-            </div>
-          </div>
-        </div>
-        <div className={styles.tickerBadge}>
-          KAPALI
-        </div>
-      </div>
-
-      {/* Quick Actions */}
-      <h3 className={styles.actionsHeader}>Hızlı İşlemler</h3>
-      <Link href="/dashboard/robots">
-        <button className={styles.actionButton}>
-          <div className={styles.actionIcon}>
-            <Plus size={20} />
-            Yeni Robot Bul/Ekle
-          </div>
-          <ArrowRight size={20} />
-        </button>
-      </Link>
-    </div>
+    <DashboardHomeClient
+      displayName={displayName}
+      planLabel={planLabel}
+      activeRobotCount={activeRobotCount}
+      robots={robotsWithMeta}
+    />
   );
 }

@@ -30,6 +30,7 @@ model User {
   // Business relations
   subscription Subscription?
   invoices     Invoice[]
+  robots       UserRobot[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -108,4 +109,19 @@ model Invoice {
 
   paidAt    DateTime?
   createdAt DateTime  @default(now())
+}
+
+// ─── Robot Market ─────────────────────────────────────────────
+
+model UserRobot {
+  id       String  @id @default(cuid())
+  userId   String
+  robotId  String  // "darkroom" | "highway" | "trademate"
+  isActive Boolean @default(true)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  addedAt DateTime @default(now())
+
+  @@unique([userId, robotId])
 }

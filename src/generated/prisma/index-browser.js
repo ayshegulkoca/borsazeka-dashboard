@@ -191,6 +191,14 @@ exports.Prisma.InvoiceScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.UserRobotScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  robotId: 'robotId',
+  isActive: 'isActive',
+  addedAt: 'addedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -213,7 +221,8 @@ exports.Prisma.ModelName = {
   Session: 'Session',
   VerificationToken: 'VerificationToken',
   Subscription: 'Subscription',
-  Invoice: 'Invoice'
+  Invoice: 'Invoice',
+  UserRobot: 'UserRobot'
 };
 
 /**
