@@ -11,18 +11,37 @@ export default async function DashboardLayout({
 }) {
   const session = await auth();
 
-  if (!session?.user?.id) {
+  // Giriş yapılmamışsa landing'e yönlendir
+  if (!session?.user) {
+    redirect("/");
+  }
+
+  // User ID'yi session veya email üzerinden bul
+  // (JWT'de id yoksa email ile kullanıcıyı bul)
+  let userId = session.user.id;
+
+  if (!userId && session.user.email) {
+    const dbUser = await prisma.user.findUnique({
+      where: { email: session.user.email },
+    });
+    userId = dbUser?.id;
+  }
+
+  if (!userId) {
     redirect("/");
   }
 
   // Abonelik bilgisini çek
   const subscription = await prisma.subscription.findUnique({
-    where: { userId: session.user.id },
+    where: { userId },
   });
 
-  const planLabel = subscription?.planType
-    ? (PLAN_LABELS[subscription.planType] ?? subscription.planType)
-    : "Ücretsiz";
+  // Aboneliği yoksa checkout'a yönlendir
+  if (!subscription || subscription.status !== "ACTIVE") {
+    redirect("/checkout");
+  }
+
+  const planLabel = PLAN_LABELS[subscription.planType] ?? subscription.planType;
 
   return (
     <DashboardShell

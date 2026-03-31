@@ -5,28 +5,24 @@ import Google from "next-auth/providers/google"
 export default {
   providers: [
     Google({
-      authorization: {
-        params: {
-          prompt: "select_account", // Her seferinde hesap seçme ekranını zorla
-        },
-      },
+      allowDangerousEmailAccountLinking: true,
     }),
   ],
-  session: { strategy: "jwt" }, // Helps with Edge runtimes/Vercel
+  session: { strategy: "jwt" },
   pages: {
-    signIn: '/', 
+    signIn: '/',
   },
   callbacks: {
     authorized: async ({ auth, request: { nextUrl } }) => {
       const isLoggedIn = !!auth?.user
       const isOnDashboard = nextUrl.pathname.startsWith('/dashboard')
-      
+
       // Dashboard: sadece giriş yapmış kullanıcılara izin ver
       if (isOnDashboard) {
         if (isLoggedIn) return true
         return false // Giriş yapmayanları / sayfasına at
       }
-      
+
       // Landing page, checkout ve diğer public sayfalar: herkese açık
       return true
     },

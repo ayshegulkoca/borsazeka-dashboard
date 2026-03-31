@@ -8,14 +8,24 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   ...authConfig,
   callbacks: {
     ...authConfig.callbacks,
-    // Kullanıcı id'sini JWT token'a ekle
-    async jwt({ token, user }) {
+
+    // JWT token'a user.id ekle (ilk girişte user nesnesi gelir)
+    async jwt({ token, user, account }) {
       if (user?.id) {
         token.id = user.id
       }
+      // Eğer id yoksa ama email varsa DB'den bul (fallback)
+      if (!token.id && token.email) {
+        const dbUser = await prisma.user.findUnique({
+          where: { email: token.email as string },
+          select: { id: true },
+        })
+        if (dbUser) token.id = dbUser.id
+      }
       return token
     },
-    // Session'a user id'yi geçir
+
+    // Session'a user.id geçir
     async session({ session, token }) {
       if (token?.id && session.user) {
         session.user.id = token.id as string
