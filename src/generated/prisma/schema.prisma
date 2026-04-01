@@ -17,11 +17,17 @@ model User {
   image         String?
 
   // Extended profile fields
-  firstName String?
-  lastName  String?
-  phone     String?
-  address   String?
-  bio       String?
+  firstName   String?
+  lastName    String?
+  phone       String?
+  address     String?
+  bio         String?
+  gender      String?
+  zipCode     String?
+  city        String?
+  country     String?
+  companyName String?
+  twitter     String?
 
   // Auth.js relations
   accounts Account[]

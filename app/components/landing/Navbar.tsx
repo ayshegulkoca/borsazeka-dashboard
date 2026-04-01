@@ -32,7 +32,12 @@ export default function Navbar() {
           <li><a href="#features">Özellikler</a></li>
           <li><a href="#robots">Robotlar</a></li>
           <li><a href="#pricing">Fiyatlandırma</a></li>
-          <li><a href="#cta">İletişim</a></li>
+          <li><a href="#contact">İletişim</a></li>
+          <li>
+            <Link href="/surec" className={styles.navLinkHighlight}>
+              Nasıl Çalışır?
+            </Link>
+          </li>
         </ul>
 
         {/* Right Actions */}
@@ -70,7 +75,8 @@ export default function Navbar() {
         <a href="#features" onClick={() => setMobileOpen(false)}>Özellikler</a>
         <a href="#robots" onClick={() => setMobileOpen(false)}>Robotlar</a>
         <a href="#pricing" onClick={() => setMobileOpen(false)}>Fiyatlandırma</a>
-        <a href="#cta" onClick={() => setMobileOpen(false)}>İletişim</a>
+        <a href="#contact" onClick={() => setMobileOpen(false)}>İletişim</a>
+        <Link href="/surec" onClick={() => setMobileOpen(false)} style={{ color: "var(--accent-primary)", fontWeight: 600 }}>Nasıl Çalışır?</Link>
         <div className={styles.mobileActions}>
           <button
             className={styles.btnGhost}

@@ -5,6 +5,7 @@ import FeatureGrid from "./components/landing/FeatureGrid";
 import RobotsSection from "./components/landing/RobotsSection";
 import PricingCards from "./components/landing/PricingCards";
 import BottomCTA from "./components/landing/BottomCTA";
+import ContactSection from "./components/landing/ContactSection";
 
 export const metadata: Metadata = {
   title: "BorsaZeka — Algoritmik Ticaretin Yapay Zeka Gücü",
@@ -21,6 +22,7 @@ export default function LandingPage() {
       <RobotsSection />
       <PricingCards />
       <BottomCTA />
+      <ContactSection />
     </>
   );
 }

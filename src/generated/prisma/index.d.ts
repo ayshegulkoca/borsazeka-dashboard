@@ -1490,6 +1490,12 @@ export namespace Prisma {
     phone: string | null
     address: string | null
     bio: string | null
+    gender: string | null
+    zipCode: string | null
+    city: string | null
+    country: string | null
+    companyName: string | null
+    twitter: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -1505,6 +1511,12 @@ export namespace Prisma {
     phone: string | null
     address: string | null
     bio: string | null
+    gender: string | null
+    zipCode: string | null
+    city: string | null
+    country: string | null
+    companyName: string | null
+    twitter: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -1520,6 +1532,12 @@ export namespace Prisma {
     phone: number
     address: number
     bio: number
+    gender: number
+    zipCode: number
+    city: number
+    country: number
+    companyName: number
+    twitter: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -1537,6 +1555,12 @@ export namespace Prisma {
     phone?: true
     address?: true
     bio?: true
+    gender?: true
+    zipCode?: true
+    city?: true
+    country?: true
+    companyName?: true
+    twitter?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -1552,6 +1576,12 @@ export namespace Prisma {
     phone?: true
     address?: true
     bio?: true
+    gender?: true
+    zipCode?: true
+    city?: true
+    country?: true
+    companyName?: true
+    twitter?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -1567,6 +1597,12 @@ export namespace Prisma {
     phone?: true
     address?: true
     bio?: true
+    gender?: true
+    zipCode?: true
+    city?: true
+    country?: true
+    companyName?: true
+    twitter?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -1655,6 +1691,12 @@ export namespace Prisma {
     phone: string | null
     address: string | null
     bio: string | null
+    gender: string | null
+    zipCode: string | null
+    city: string | null
+    country: string | null
+    companyName: string | null
+    twitter: string | null
     createdAt: Date
     updatedAt: Date
     _count: UserCountAggregateOutputType | null
@@ -1687,6 +1729,12 @@ export namespace Prisma {
     phone?: boolean
     address?: boolean
     bio?: boolean
+    gender?: boolean
+    zipCode?: boolean
+    city?: boolean
+    country?: boolean
+    companyName?: boolean
+    twitter?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     accounts?: boolean | User$accountsArgs<ExtArgs>
@@ -1708,6 +1756,12 @@ export namespace Prisma {
     phone?: boolean
     address?: boolean
     bio?: boolean
+    gender?: boolean
+    zipCode?: boolean
+    city?: boolean
+    country?: boolean
+    companyName?: boolean
+    twitter?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["user"]>
@@ -1723,6 +1777,12 @@ export namespace Prisma {
     phone?: boolean
     address?: boolean
     bio?: boolean
+    gender?: boolean
+    zipCode?: boolean
+    city?: boolean
+    country?: boolean
+    companyName?: boolean
+    twitter?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["user"]>
@@ -1738,11 +1798,17 @@ export namespace Prisma {
     phone?: boolean
     address?: boolean
     bio?: boolean
+    gender?: boolean
+    zipCode?: boolean
+    city?: boolean
+    country?: boolean
+    companyName?: boolean
+    twitter?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "emailVerified" | "image" | "firstName" | "lastName" | "phone" | "address" | "bio" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "emailVerified" | "image" | "firstName" | "lastName" | "phone" | "address" | "bio" | "gender" | "zipCode" | "city" | "country" | "companyName" | "twitter" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     accounts?: boolean | User$accountsArgs<ExtArgs>
     sessions?: boolean | User$sessionsArgs<ExtArgs>
@@ -1774,6 +1840,12 @@ export namespace Prisma {
       phone: string | null
       address: string | null
       bio: string | null
+      gender: string | null
+      zipCode: string | null
+      city: string | null
+      country: string | null
+      companyName: string | null
+      twitter: string | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["user"]>
@@ -2214,6 +2286,12 @@ export namespace Prisma {
     readonly phone: FieldRef<"User", 'String'>
     readonly address: FieldRef<"User", 'String'>
     readonly bio: FieldRef<"User", 'String'>
+    readonly gender: FieldRef<"User", 'String'>
+    readonly zipCode: FieldRef<"User", 'String'>
+    readonly city: FieldRef<"User", 'String'>
+    readonly country: FieldRef<"User", 'String'>
+    readonly companyName: FieldRef<"User", 'String'>
+    readonly twitter: FieldRef<"User", 'String'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
   }
@@ -9358,6 +9436,12 @@ export namespace Prisma {
     phone: 'phone',
     address: 'address',
     bio: 'bio',
+    gender: 'gender',
+    zipCode: 'zipCode',
+    city: 'city',
+    country: 'country',
+    companyName: 'companyName',
+    twitter: 'twitter',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -9556,6 +9640,12 @@ export namespace Prisma {
     phone?: StringNullableFilter<"User"> | string | null
     address?: StringNullableFilter<"User"> | string | null
     bio?: StringNullableFilter<"User"> | string | null
+    gender?: StringNullableFilter<"User"> | string | null
+    zipCode?: StringNullableFilter<"User"> | string | null
+    city?: StringNullableFilter<"User"> | string | null
+    country?: StringNullableFilter<"User"> | string | null
+    companyName?: StringNullableFilter<"User"> | string | null
+    twitter?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     accounts?: AccountListRelationFilter
@@ -9576,6 +9666,12 @@ export namespace Prisma {
     phone?: SortOrderInput | SortOrder
     address?: SortOrderInput | SortOrder
     bio?: SortOrderInput | SortOrder
+    gender?: SortOrderInput | SortOrder
+    zipCode?: SortOrderInput | SortOrder
+    city?: SortOrderInput | SortOrder
+    country?: SortOrderInput | SortOrder
+    companyName?: SortOrderInput | SortOrder
+    twitter?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     accounts?: AccountOrderByRelationAggregateInput
@@ -9599,6 +9695,12 @@ export namespace Prisma {
     phone?: StringNullableFilter<"User"> | string | null
     address?: StringNullableFilter<"User"> | string | null
     bio?: StringNullableFilter<"User"> | string | null
+    gender?: StringNullableFilter<"User"> | string | null
+    zipCode?: StringNullableFilter<"User"> | string | null
+    city?: StringNullableFilter<"User"> | string | null
+    country?: StringNullableFilter<"User"> | string | null
+    companyName?: StringNullableFilter<"User"> | string | null
+    twitter?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     accounts?: AccountListRelationFilter
@@ -9619,6 +9721,12 @@ export namespace Prisma {
     phone?: SortOrderInput | SortOrder
     address?: SortOrderInput | SortOrder
     bio?: SortOrderInput | SortOrder
+    gender?: SortOrderInput | SortOrder
+    zipCode?: SortOrderInput | SortOrder
+    city?: SortOrderInput | SortOrder
+    country?: SortOrderInput | SortOrder
+    companyName?: SortOrderInput | SortOrder
+    twitter?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: UserCountOrderByAggregateInput
@@ -9640,6 +9748,12 @@ export namespace Prisma {
     phone?: StringNullableWithAggregatesFilter<"User"> | string | null
     address?: StringNullableWithAggregatesFilter<"User"> | string | null
     bio?: StringNullableWithAggregatesFilter<"User"> | string | null
+    gender?: StringNullableWithAggregatesFilter<"User"> | string | null
+    zipCode?: StringNullableWithAggregatesFilter<"User"> | string | null
+    city?: StringNullableWithAggregatesFilter<"User"> | string | null
+    country?: StringNullableWithAggregatesFilter<"User"> | string | null
+    companyName?: StringNullableWithAggregatesFilter<"User"> | string | null
+    twitter?: StringNullableWithAggregatesFilter<"User"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
   }
@@ -10069,6 +10183,12 @@ export namespace Prisma {
     phone?: string | null
     address?: string | null
     bio?: string | null
+    gender?: string | null
+    zipCode?: string | null
+    city?: string | null
+    country?: string | null
+    companyName?: string | null
+    twitter?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
@@ -10089,6 +10209,12 @@ export namespace Prisma {
     phone?: string | null
     address?: string | null
     bio?: string | null
+    gender?: string | null
+    zipCode?: string | null
+    city?: string | null
+    country?: string | null
+    companyName?: string | null
+    twitter?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -10109,6 +10235,12 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     address?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    zipCode?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    companyName?: NullableStringFieldUpdateOperationsInput | string | null
+    twitter?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
@@ -10129,6 +10261,12 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     address?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    zipCode?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    companyName?: NullableStringFieldUpdateOperationsInput | string | null
+    twitter?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -10149,6 +10287,12 @@ export namespace Prisma {
     phone?: string | null
     address?: string | null
     bio?: string | null
+    gender?: string | null
+    zipCode?: string | null
+    city?: string | null
+    country?: string | null
+    companyName?: string | null
+    twitter?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -10164,6 +10308,12 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     address?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    zipCode?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    companyName?: NullableStringFieldUpdateOperationsInput | string | null
+    twitter?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -10179,6 +10329,12 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     address?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    zipCode?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    companyName?: NullableStringFieldUpdateOperationsInput | string | null
+    twitter?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -10739,6 +10895,12 @@ export namespace Prisma {
     phone?: SortOrder
     address?: SortOrder
     bio?: SortOrder
+    gender?: SortOrder
+    zipCode?: SortOrder
+    city?: SortOrder
+    country?: SortOrder
+    companyName?: SortOrder
+    twitter?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -10754,6 +10916,12 @@ export namespace Prisma {
     phone?: SortOrder
     address?: SortOrder
     bio?: SortOrder
+    gender?: SortOrder
+    zipCode?: SortOrder
+    city?: SortOrder
+    country?: SortOrder
+    companyName?: SortOrder
+    twitter?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -10769,6 +10937,12 @@ export namespace Prisma {
     phone?: SortOrder
     address?: SortOrder
     bio?: SortOrder
+    gender?: SortOrder
+    zipCode?: SortOrder
+    city?: SortOrder
+    country?: SortOrder
+    companyName?: SortOrder
+    twitter?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -11959,6 +12133,12 @@ export namespace Prisma {
     phone?: string | null
     address?: string | null
     bio?: string | null
+    gender?: string | null
+    zipCode?: string | null
+    city?: string | null
+    country?: string | null
+    companyName?: string | null
+    twitter?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     sessions?: SessionCreateNestedManyWithoutUserInput
@@ -11978,6 +12158,12 @@ export namespace Prisma {
     phone?: string | null
     address?: string | null
     bio?: string | null
+    gender?: string | null
+    zipCode?: string | null
+    city?: string | null
+    country?: string | null
+    companyName?: string | null
+    twitter?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
@@ -12013,6 +12199,12 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     address?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    zipCode?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    companyName?: NullableStringFieldUpdateOperationsInput | string | null
+    twitter?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUpdateManyWithoutUserNestedInput
@@ -12032,6 +12224,12 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     address?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    zipCode?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    companyName?: NullableStringFieldUpdateOperationsInput | string | null
+    twitter?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
@@ -12051,6 +12249,12 @@ export namespace Prisma {
     phone?: string | null
     address?: string | null
     bio?: string | null
+    gender?: string | null
+    zipCode?: string | null
+    city?: string | null
+    country?: string | null
+    companyName?: string | null
+    twitter?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
@@ -12070,6 +12274,12 @@ export namespace Prisma {
     phone?: string | null
     address?: string | null
     bio?: string | null
+    gender?: string | null
+    zipCode?: string | null
+    city?: string | null
+    country?: string | null
+    companyName?: string | null
+    twitter?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -12105,6 +12315,12 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     address?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    zipCode?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    companyName?: NullableStringFieldUpdateOperationsInput | string | null
+    twitter?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
@@ -12124,6 +12340,12 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     address?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    zipCode?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    companyName?: NullableStringFieldUpdateOperationsInput | string | null
+    twitter?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -12143,6 +12365,12 @@ export namespace Prisma {
     phone?: string | null
     address?: string | null
     bio?: string | null
+    gender?: string | null
+    zipCode?: string | null
+    city?: string | null
+    country?: string | null
+    companyName?: string | null
+    twitter?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
@@ -12162,6 +12390,12 @@ export namespace Prisma {
     phone?: string | null
     address?: string | null
     bio?: string | null
+    gender?: string | null
+    zipCode?: string | null
+    city?: string | null
+    country?: string | null
+    companyName?: string | null
+    twitter?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -12197,6 +12431,12 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     address?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    zipCode?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    companyName?: NullableStringFieldUpdateOperationsInput | string | null
+    twitter?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
@@ -12216,6 +12456,12 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     address?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    zipCode?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    companyName?: NullableStringFieldUpdateOperationsInput | string | null
+    twitter?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -12235,6 +12481,12 @@ export namespace Prisma {
     phone?: string | null
     address?: string | null
     bio?: string | null
+    gender?: string | null
+    zipCode?: string | null
+    city?: string | null
+    country?: string | null
+    companyName?: string | null
+    twitter?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
@@ -12254,6 +12506,12 @@ export namespace Prisma {
     phone?: string | null
     address?: string | null
     bio?: string | null
+    gender?: string | null
+    zipCode?: string | null
+    city?: string | null
+    country?: string | null
+    companyName?: string | null
+    twitter?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -12289,6 +12547,12 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     address?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    zipCode?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    companyName?: NullableStringFieldUpdateOperationsInput | string | null
+    twitter?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
@@ -12308,6 +12572,12 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     address?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    zipCode?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    companyName?: NullableStringFieldUpdateOperationsInput | string | null
+    twitter?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -12327,6 +12597,12 @@ export namespace Prisma {
     phone?: string | null
     address?: string | null
     bio?: string | null
+    gender?: string | null
+    zipCode?: string | null
+    city?: string | null
+    country?: string | null
+    companyName?: string | null
+    twitter?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
@@ -12346,6 +12622,12 @@ export namespace Prisma {
     phone?: string | null
     address?: string | null
     bio?: string | null
+    gender?: string | null
+    zipCode?: string | null
+    city?: string | null
+    country?: string | null
+    companyName?: string | null
+    twitter?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -12381,6 +12663,12 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     address?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    zipCode?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    companyName?: NullableStringFieldUpdateOperationsInput | string | null
+    twitter?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
@@ -12400,6 +12688,12 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     address?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    zipCode?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    companyName?: NullableStringFieldUpdateOperationsInput | string | null
+    twitter?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput

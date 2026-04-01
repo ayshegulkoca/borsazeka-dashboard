@@ -63,6 +63,17 @@
   color: var(--text-primary);
 }
 
+.navLinkHighlight {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--accent-primary) !important;
+  transition: opacity 0.2s;
+}
+
+.navLinkHighlight:hover {
+  opacity: 0.8;
+}
+
 .navActions {
   display: flex;
   align-items: center;
@@ -825,6 +836,152 @@
 
 @media (max-width: 480px) {
   .robotGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- Contact Section ---------- */
+.contactSection {
+  background: linear-gradient(to bottom, var(--bg-dark), #050e08);
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.contactGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 3.5rem;
+}
+
+.contactCard {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border: 1px solid;
+  border-radius: 16px;
+  padding: 1.25rem 1.5rem;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.contactCard:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+}
+
+.contactCardIconWrap {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  border: 1px solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.contactCardBody {
+  flex: 1;
+  min-width: 0;
+}
+
+.contactCardLabel {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  margin-bottom: 0.2rem;
+}
+
+.contactCardHandle {
+  font-size: 0.9rem;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.contactCardArrow {
+  color: var(--text-muted);
+  flex-shrink: 0;
+  transition: all 0.2s;
+}
+
+.contactCard:hover .contactCardArrow {
+  color: var(--text-primary);
+  transform: translateX(2px);
+}
+
+.contactApplyWrap {
+  text-align: center;
+  padding: 2.5rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 20px;
+  margin-bottom: 0;
+}
+
+.contactApplyLabel {
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 1.25rem;
+}
+
+.contactApplyButtons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.contactBtnPrimary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 2rem;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  background: var(--accent-primary);
+  color: #022c22;
+  transition: all 0.2s;
+}
+
+.contactBtnPrimary:hover {
+  background: var(--accent-primary-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(16, 185, 129, 0.4);
+}
+
+.contactBtnOutline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 2rem;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  color: var(--accent-primary);
+  background: rgba(16, 185, 129, 0.06);
+  transition: all 0.2s;
+}
+
+.contactBtnOutline:hover {
+  background: rgba(16, 185, 129, 0.12);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 1024px) {
+  .contactGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .contactGrid {
     grid-template-columns: 1fr;
   }
 }
