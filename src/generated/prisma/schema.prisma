@@ -19,15 +19,15 @@ model User {
   // Extended profile fields
   firstName   String?
   lastName    String?
+  gender      String?
   phone       String?
   address     String?
-  bio         String?
-  gender      String?
-  zipCode     String?
+  postalCode  String?
   city        String?
   country     String?
   companyName String?
   twitter     String?
+  bio         String?
 
   // Auth.js relations
   accounts Account[]

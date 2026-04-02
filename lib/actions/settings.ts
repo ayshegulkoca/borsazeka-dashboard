@@ -1,5 +1,6 @@
 'use server'
 
+import { revalidatePath } from 'next/cache'
 import { auth } from '@/auth'
 import { prisma } from '@/lib/prisma'
 import { profileSchema, type ProfileFormState } from '@/lib/validations/settings'
@@ -11,7 +12,7 @@ export async function updateProfile(
   formData: FormData
 ): Promise<ProfileFormState> {
   const session = await auth()
-  
+
   if (!session?.user?.email) {
     return {
       success: false,
@@ -22,11 +23,17 @@ export async function updateProfile(
   const userEmail = session.user.email
 
   const rawData = {
-    firstName: formData.get('firstName') as string,
-    lastName: formData.get('lastName') as string,
-    email: formData.get('email') as string,
-    phone: formData.get('phone') as string,
-    address: formData.get('address') as string,
+    firstName:   formData.get('firstName')   as string,
+    lastName:    formData.get('lastName')    as string,
+    email:       formData.get('email')       as string,
+    gender:      formData.get('gender')      as string,
+    phone:       formData.get('phone')       as string,
+    address:     formData.get('address')     as string,
+    postalCode:  formData.get('postalCode')  as string,
+    city:        formData.get('city')        as string,
+    country:     formData.get('country')     as string,
+    companyName: formData.get('companyName') as string,
+    twitter:     formData.get('twitter')     as string,
   }
 
   const validated = profileSchema.safeParse(rawData)
@@ -43,12 +50,20 @@ export async function updateProfile(
     await prisma.user.update({
       where: { email: userEmail },
       data: {
-        firstName: validated.data.firstName,
-        lastName: validated.data.lastName,
-        phone: validated.data.phone || null,
-        address: validated.data.address || null,
+        firstName:   validated.data.firstName,
+        lastName:    validated.data.lastName,
+        gender:      validated.data.gender      || null,
+        phone:       validated.data.phone       || null,
+        address:     validated.data.address     || null,
+        postalCode:  validated.data.postalCode  || null,
+        city:        validated.data.city        || null,
+        country:     validated.data.country     || null,
+        companyName: validated.data.companyName || null,
+        twitter:     validated.data.twitter     || null,
       },
     })
+
+    revalidatePath('/dashboard/settings')
 
     return {
       success: true,
@@ -74,13 +89,20 @@ export async function getProfileData() {
     const user = await prisma.user.findUnique({
       where: { email: userEmail },
       select: {
-        firstName: true,
-        lastName: true,
-        email: true,
-        phone: true,
-        address: true,
-        name: true,
-        image: true,
+        firstName:   true,
+        lastName:    true,
+        email:       true,
+        gender:      true,
+        phone:       true,
+        address:     true,
+        postalCode:  true,
+        city:        true,
+        country:     true,
+        companyName: true,
+        twitter:     true,
+        name:        true,
+        image:       true,
+        updatedAt:   true,
       },
     })
     return user
@@ -146,7 +168,6 @@ export async function getBillingData(): Promise<BillingData | null> {
     }
   } catch (error) {
     console.error('Failed to fetch billing data:', error)
-    // Return mock data as fallback for development
     return {
       subscription: {
         planType: 'FREE',

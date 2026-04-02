@@ -15,7 +15,19 @@ import {
   CalendarClock,
   ExternalLink,
   Receipt,
+  Building,
+  Globe,
+  Map,
 } from 'lucide-react'
+
+// X (Twitter) logo helper
+function XIcon({ size = 14, color = "currentColor" }: { size?: number; color?: string }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M4 4l11.733 16H20L8.267 4z"/><path d="M4 20l6.768-6.768m2.46-2.46L20 4"/>
+    </svg>
+  );
+}
 import { updateProfile } from '@/lib/actions/settings'
 import type { ProfileFormState } from '@/lib/validations/settings'
 import type { BillingData } from '@/lib/actions/settings'
@@ -24,13 +36,20 @@ import styles from './settings.module.css'
 // ─── Types ───────────────────────────────────────────────────
 
 type ProfileData = {
-  firstName: string | null
-  lastName: string | null
-  email: string | null
-  phone: string | null
-  address: string | null
-  name: string | null
-  image: string | null
+  firstName:   string | null
+  lastName:    string | null
+  email:       string | null
+  gender:      string | null
+  phone:       string | null
+  address:     string | null
+  postalCode:  string | null
+  city:        string | null
+  country:     string | null
+  companyName: string | null
+  twitter:     string | null
+  name:        string | null
+  image:       string | null
+  updatedAt?:  Date | string | null
 } | null
 
 type SettingsPageProps = {
@@ -58,7 +77,7 @@ function SubmitButton() {
       ) : (
         <>
           <Save size={16} />
-          Değişiklikleri Kaydet
+          Kaydet
         </>
       )}
     </button>
@@ -84,13 +103,33 @@ function ProfileTab({
           Hesap bilgilerinizi buradan güncelleyebilirsiniz.
         </p>
 
-        <form action={formAction}>
+        <form action={formAction} key={profile?.updatedAt?.toString() ?? 'initial'}>
           <div className={styles.formGrid}>
+
+            {/* Email (Read-only) — full width */}
+            <div className={`${styles.formGroup} ${styles.fieldFullWidth}`}>
+              <label htmlFor="email" className={styles.label}>
+                <Mail size={14} />
+                Email *
+              </label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                className={`${styles.input} ${styles.inputDisabled}`}
+                defaultValue={profile?.email ?? ''}
+                readOnly
+              />
+              <span style={{ fontSize: '0.6875rem', color: 'var(--text-muted)' }}>
+                E-posta adresi Google hesabınızdan alınır.
+              </span>
+            </div>
+
             {/* First Name */}
             <div className={styles.formGroup}>
               <label htmlFor="firstName" className={styles.label}>
                 <User size={14} />
-                Ad
+                Ad *
               </label>
               <input
                 id="firstName"
@@ -113,7 +152,7 @@ function ProfileTab({
             <div className={styles.formGroup}>
               <label htmlFor="lastName" className={styles.label}>
                 <User size={14} />
-                Soyad
+                Soyad *
               </label>
               <input
                 id="lastName"
@@ -132,30 +171,37 @@ function ProfileTab({
               )}
             </div>
 
-            {/* Email (Read-only) */}
+            {/* Gender */}
             <div className={styles.formGroup}>
-              <label htmlFor="email" className={styles.label}>
-                <Mail size={14} />
-                E-posta
+              <label htmlFor="gender" className={styles.label}>
+                <User size={14} />
+                Cinsiyet
               </label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                className={`${styles.input} ${styles.inputDisabled}`}
-                defaultValue={profile?.email ?? ''}
-                readOnly
-              />
-              <span style={{ fontSize: '0.6875rem', color: 'var(--text-muted)' }}>
-                E-posta adresi Google hesabınızdan alınır.
-              </span>
+              <select
+                id="gender"
+                name="gender"
+                className={styles.input}
+                defaultValue={profile?.gender ?? ''}
+              >
+                <option value="">Seçiniz</option>
+                <option value="Erkek">Erkek</option>
+                <option value="Kadın">Kadın</option>
+                <option value="Diğer">Diğer</option>
+                <option value="Belirtmek istemiyorum">Belirtmek istemiyorum</option>
+              </select>
+              {state.errors?.gender && (
+                <span className={styles.fieldError}>
+                  <AlertCircle size={12} />
+                  {state.errors.gender[0]}
+                </span>
+              )}
             </div>
 
             {/* Phone */}
             <div className={styles.formGroup}>
               <label htmlFor="phone" className={styles.label}>
                 <Phone size={14} />
-                Telefon
+                Telefon *
               </label>
               <input
                 id="phone"
@@ -174,18 +220,18 @@ function ProfileTab({
             </div>
 
             {/* Address */}
-            <div className={`${styles.formGroup} ${styles.fieldFullWidth}`}>
+            <div className={styles.formGroup}>
               <label htmlFor="address" className={styles.label}>
                 <MapPin size={14} />
-                Adres
+                Adres *
               </label>
-              <textarea
+              <input
                 id="address"
                 name="address"
-                className={styles.textarea}
+                type="text"
+                className={styles.input}
                 defaultValue={profile?.address ?? ''}
-                placeholder="Adresinizi girin"
-                rows={3}
+                placeholder="Sokak ve bina bilgisi"
               />
               {state.errors?.address && (
                 <span className={styles.fieldError}>
@@ -194,6 +240,117 @@ function ProfileTab({
                 </span>
               )}
             </div>
+
+            {/* Postal Code */}
+            <div className={styles.formGroup}>
+              <label htmlFor="postalCode" className={styles.label}>
+                <Map size={14} />
+                Posta Kodu
+              </label>
+              <input
+                id="postalCode"
+                name="postalCode"
+                type="text"
+                className={styles.input}
+                defaultValue={profile?.postalCode ?? ''}
+                placeholder="34000"
+              />
+              {state.errors?.postalCode && (
+                <span className={styles.fieldError}>
+                  <AlertCircle size={12} />
+                  {state.errors.postalCode[0]}
+                </span>
+              )}
+            </div>
+
+            {/* City */}
+            <div className={styles.formGroup}>
+              <label htmlFor="city" className={styles.label}>
+                <MapPin size={14} />
+                Şehir *
+              </label>
+              <input
+                id="city"
+                name="city"
+                type="text"
+                className={styles.input}
+                defaultValue={profile?.city ?? ''}
+                placeholder="İstanbul"
+              />
+              {state.errors?.city && (
+                <span className={styles.fieldError}>
+                  <AlertCircle size={12} />
+                  {state.errors.city[0]}
+                </span>
+              )}
+            </div>
+
+            {/* Country */}
+            <div className={styles.formGroup}>
+              <label htmlFor="country" className={styles.label}>
+                <Globe size={14} />
+                Ülke *
+              </label>
+              <input
+                id="country"
+                name="country"
+                type="text"
+                className={styles.input}
+                defaultValue={profile?.country ?? ''}
+                placeholder="Türkiye"
+              />
+              {state.errors?.country && (
+                <span className={styles.fieldError}>
+                  <AlertCircle size={12} />
+                  {state.errors.country[0]}
+                </span>
+              )}
+            </div>
+
+            {/* Company Name — full width */}
+            <div className={`${styles.formGroup} ${styles.fieldFullWidth}`}>
+              <label htmlFor="companyName" className={styles.label}>
+                <Building size={14} />
+                Şirket Adı (varsa)
+              </label>
+              <input
+                id="companyName"
+                name="companyName"
+                type="text"
+                className={styles.input}
+                defaultValue={profile?.companyName ?? ''}
+                placeholder="Şirket adı"
+              />
+              {state.errors?.companyName && (
+                <span className={styles.fieldError}>
+                  <AlertCircle size={12} />
+                  {state.errors.companyName[0]}
+                </span>
+              )}
+            </div>
+
+            {/* Twitter — full width */}
+            <div className={`${styles.formGroup} ${styles.fieldFullWidth}`}>
+              <label htmlFor="twitter" className={styles.label}>
+                <XIcon size={14} />
+                Twitter (varsa)
+              </label>
+              <input
+                id="twitter"
+                name="twitter"
+                type="text"
+                className={styles.input}
+                defaultValue={profile?.twitter ?? ''}
+                placeholder="@kullaniciadi"
+              />
+              {state.errors?.twitter && (
+                <span className={styles.fieldError}>
+                  <AlertCircle size={12} />
+                  {state.errors.twitter[0]}
+                </span>
+              )}
+            </div>
+
           </div>
 
           {/* Form Actions */}
@@ -256,7 +413,6 @@ function BillingTab({ billing }: { billing: BillingData | null }) {
     TRIALING: styles.statusTrialing,
   }
 
-  // Calculate next renewal date
   function formatRenewalDate(isoDate: string | null): string {
     if (!isoDate) return 'Yenileme tarihi yok'
     const date = new Date(isoDate)
@@ -279,7 +435,7 @@ function BillingTab({ billing }: { billing: BillingData | null }) {
   }
 
   function formatAmount(amount: number, currency: string): string {
-    const value = amount / 100 // kuruş to lira
+    const value = amount / 100
     return new Intl.NumberFormat('tr-TR', {
       style: 'currency',
       currency: currency,
@@ -454,7 +610,7 @@ export default function SettingsPage({ profile, billing }: SettingsPageProps) {
           id="tab-billing"
         >
           <CreditCard size={16} />
-          Abonelik & Fatura
+          Abonelik &amp; Fatura
         </button>
       </div>
 

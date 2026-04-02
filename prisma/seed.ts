@@ -12,15 +12,21 @@ async function main() {
 
   console.log('Seeding database with mock data...')
 
-  // Create 5 mock users
+  // Create 5 mock users with full profile
   const mockUsers = [
     {
       name: 'Ali Yılmaz',
       email: 'ali.yilmaz@example.com',
       firstName: 'Ali',
       lastName: 'Yılmaz',
+      gender: 'Erkek',
       phone: '+90 555 123 4567',
-      address: 'Levent, Beşiktaş, İstanbul',
+      address: 'Büyükdere Caddesi No:12',
+      postalCode: '34394',
+      city: 'İstanbul',
+      country: 'Türkiye',
+      companyName: 'Yılmaz Yatırım A.Ş.',
+      twitter: '@aliyilmaz',
       planType: 'PREMIUM',
       status: 'ACTIVE',
     },
@@ -29,8 +35,14 @@ async function main() {
       email: 'ayse.kaya@example.com',
       firstName: 'Ayşe',
       lastName: 'Kaya',
+      gender: 'Kadın',
       phone: '+90 532 987 6543',
-      address: 'Kadıköy, İstanbul',
+      address: 'Bağdat Caddesi No:45',
+      postalCode: '34710',
+      city: 'İstanbul',
+      country: 'Türkiye',
+      companyName: '',
+      twitter: '@aysekaya',
       planType: 'PRO',
       status: 'ACTIVE',
     },
@@ -39,8 +51,14 @@ async function main() {
       email: 'mehmet.demir@example.com',
       firstName: 'Mehmet',
       lastName: 'Demir',
+      gender: 'Erkek',
       phone: '+90 542 333 4455',
-      address: 'Çankaya, Ankara',
+      address: 'Atatürk Bulvarı No:78',
+      postalCode: '06100',
+      city: 'Ankara',
+      country: 'Türkiye',
+      companyName: 'Demir Finans',
+      twitter: '',
       planType: 'FREE',
       status: 'ACTIVE',
     },
@@ -49,8 +67,14 @@ async function main() {
       email: 'elif.sahin@example.com',
       firstName: 'Elif',
       lastName: 'Şahin',
+      gender: 'Kadın',
       phone: '+90 555 999 8877',
-      address: 'Bornova, İzmir',
+      address: 'Alsancak Mah. Cumhuriyet Blv. No:5',
+      postalCode: '35220',
+      city: 'İzmir',
+      country: 'Türkiye',
+      companyName: '',
+      twitter: '@elifsahin',
       planType: 'PRO',
       status: 'PAST_DUE',
     },
@@ -59,28 +83,50 @@ async function main() {
       email: 'burak.ozturk@example.com',
       firstName: 'Burak',
       lastName: 'Öztürk',
+      gender: 'Erkek',
       phone: '+90 536 777 6655',
-      address: 'Nilüfer, Bursa',
+      address: 'Nilüfer Mah. Atatürk Cad. No:22',
+      postalCode: '16110',
+      city: 'Bursa',
+      country: 'Türkiye',
+      companyName: 'Öztürk Holding',
+      twitter: '@burakozturk',
       planType: 'FREE',
       status: 'CANCELLED',
     },
   ]
 
   for (const data of mockUsers) {
-    // Generate a next billing date 30 days from now
     const nextMonth = new Date()
     nextMonth.setDate(nextMonth.getDate() + 30)
 
     const user = await prisma.user.upsert({
       where: { email: data.email },
-      update: {},
+      update: {
+        firstName:   data.firstName,
+        lastName:    data.lastName,
+        gender:      data.gender      || null,
+        phone:       data.phone       || null,
+        address:     data.address     || null,
+        postalCode:  data.postalCode  || null,
+        city:        data.city        || null,
+        country:     data.country     || null,
+        companyName: data.companyName || null,
+        twitter:     data.twitter     || null,
+      },
       create: {
-        name: data.name,
-        email: data.email,
-        firstName: data.firstName,
-        lastName: data.lastName,
-        phone: data.phone,
-        address: data.address,
+        name:        data.name,
+        email:       data.email,
+        firstName:   data.firstName,
+        lastName:    data.lastName,
+        gender:      data.gender      || null,
+        phone:       data.phone       || null,
+        address:     data.address     || null,
+        postalCode:  data.postalCode  || null,
+        city:        data.city        || null,
+        country:     data.country     || null,
+        companyName: data.companyName || null,
+        twitter:     data.twitter     || null,
         subscription: {
           create: {
             planType: data.planType,
@@ -91,20 +137,14 @@ async function main() {
         },
       },
     })
-    console.log(`Created user: ${user.email} with ${data.planType} plan`)
+    console.log(`✓ Upserted user: ${user.email} (${data.planType})`)
   }
 
-  // NOTE: In a real environment with Auth.js, to sign in as one of these users, 
-  // you will need the exact email you use with Google OAuth. 
-  // Make sure you update your own record or sign in and update your own profile.
-
-  console.log('Seeding finished successfully!')
-
+  console.log('\nSeeding finished successfully!')
   await prisma.$disconnect()
 }
 
-main()
-  .catch((e) => {
-    console.error(e)
-    process.exit(1)
-  })
+main().catch((e) => {
+  console.error(e)
+  process.exit(1)
+})

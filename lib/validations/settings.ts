@@ -9,9 +9,12 @@ export const profileSchema = z.object({
     .string()
     .min(2, 'Soyad en az 2 karakter olmalıdır')
     .max(50, 'Soyad en fazla 50 karakter olabilir'),
-  email: z
+  email: z.string().email('Geçerli bir e-posta adresi girin'),
+  gender: z
     .string()
-    .email('Geçerli bir e-posta adresi girin'),
+    .max(20, 'Cinsiyet en fazla 20 karakter olabilir')
+    .optional()
+    .or(z.literal('')),
   phone: z
     .string()
     .max(20, 'Telefon numarası en fazla 20 karakter olabilir')
@@ -20,6 +23,31 @@ export const profileSchema = z.object({
   address: z
     .string()
     .max(200, 'Adres en fazla 200 karakter olabilir')
+    .optional()
+    .or(z.literal('')),
+  postalCode: z
+    .string()
+    .max(20, 'Posta kodu en fazla 20 karakter olabilir')
+    .optional()
+    .or(z.literal('')),
+  city: z
+    .string()
+    .max(100, 'Şehir en fazla 100 karakter olabilir')
+    .optional()
+    .or(z.literal('')),
+  country: z
+    .string()
+    .max(100, 'Ülke en fazla 100 karakter olabilir')
+    .optional()
+    .or(z.literal('')),
+  companyName: z
+    .string()
+    .max(100, 'Şirket adı en fazla 100 karakter olabilir')
+    .optional()
+    .or(z.literal('')),
+  twitter: z
+    .string()
+    .max(100, 'Twitter en fazla 100 karakter olabilir')
     .optional()
     .or(z.literal('')),
 })
@@ -33,7 +61,13 @@ export type ProfileFormState = {
     firstName?: string[]
     lastName?: string[]
     email?: string[]
+    gender?: string[]
     phone?: string[]
     address?: string[]
+    postalCode?: string[]
+    city?: string[]
+    country?: string[]
+    companyName?: string[]
+    twitter?: string[]
   }
 }
