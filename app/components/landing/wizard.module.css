@@ -506,6 +506,33 @@
   border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
+.summaryInfoList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.summaryInfoItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+.summaryInfoLabel {
+  color: var(--text-secondary);
+}
+
+.summaryInfoValue {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.summaryDivider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
 /* Out of range warning */
 .outOfRangeWarn {
   background: rgba(239, 68, 68, 0.05);

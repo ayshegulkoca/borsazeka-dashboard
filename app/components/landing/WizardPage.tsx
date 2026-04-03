@@ -97,6 +97,7 @@ export default function WizardPage() {
     if (submitting || isPaymentBlocked) return;
     setSubmitting(true);
     try {
+      // 1. Lead capture
       await fetch("/api/leads", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -107,11 +108,24 @@ export default function WizardPage() {
           robotName: selectedRobot ? t(selectedRobot.nameKey) : state.robotId,
           budgetValue: state.budgetValue ?? 0,
           budgetCurrency: state.budgetCurrency,
-          ...(pricing ?? {}),
+          budgetLabel: state.budgetLabel,
+          pricing,
+          timestamp: new Date().toISOString(),
         }),
       });
+
+      // 2. Stripe Redirect if link exists
+      if (pricing?.stripeLink && !isPaymentBlocked) {
+        window.location.assign(pricing.stripeLink);
+        return;
+      }
+
       setSubmitDone(true);
-    } catch { /* graceful */ }
+    } catch (err) {
+      console.error("Submit error:", err);
+      // fallback to success message so user isn't stuck
+      setSubmitDone(true);
+    }
     finally { setSubmitting(false); }
   };
 
@@ -362,43 +376,55 @@ export default function WizardPage() {
                       />
                     ) : pricing ? (
                       <div className={s.summaryCard}>
-                        <div className={s.summaryTitle}>Fiyat Detayı</div>
-                        <div className={s.summaryRow}>
-                          <div>
-                            <div className={s.summaryRowLabel}>{t("wizard.step6.setupFee")}</div>
-                            <div className={s.summaryRowNote}>{t("wizard.step6.setupFeeNote")}</div>
+                        <div className={s.summaryTitle}>{t("wizard.step6.title")}</div>
+                        
+                        {/* Dinamik Özet Tablosu */}
+                        <div className={s.summaryInfoList}>
+                          <div className={s.summaryInfoItem}>
+                            <span className={s.summaryInfoLabel}>{t("wizard.step6.summaryRobot")}</span>
+                            <span className={s.summaryInfoValue}>{selectedRobot ? t(selectedRobot.nameKey) : "—"}</span>
                           </div>
-                          <div className={s.summaryRowValue}>{pricing.setupFeeEUR > 0 ? `€${pricing.setupFeeEUR}` : "—"}</div>
+                          <div className={s.summaryInfoItem}>
+                            <span className={s.summaryInfoLabel}>{t("wizard.step6.summaryBudget")}</span>
+                            <span className={s.summaryInfoValue}>{state.budgetLabel ?? "—"}</span>
+                          </div>
+                          <div className={s.summaryInfoItem}>
+                            <span className={s.summaryInfoLabel}>{t("wizard.step6.summaryServer")}</span>
+                            <span className={s.summaryInfoValue} style={{ color: "var(--accent-primary)", fontWeight: "bold" }}>
+                              €{pricing.serverCostEUR}
+                            </span>
+                          </div>
+                          <div className={s.summaryInfoItem}>
+                            <span className={s.summaryInfoLabel}>{t("wizard.step6.summaryProfit")}</span>
+                            <span className={s.summaryInfoValue}>
+                              {pricing.profitSharePercent > 0 ? `%${pricing.profitSharePercent}` : t("wizard.step6.profitShareNA")}
+                            </span>
+                          </div>
                         </div>
-                        <div className={s.summaryRow}>
-                          <div>
-                            <div className={s.summaryRowLabel}>{t("wizard.step6.serverCost")}</div>
-                            <div className={s.summaryRowNote}>{t("wizard.step6.serverCostNote")}</div>
-                          </div>
-                          <div className={s.summaryRowValue}>€{pricing.serverCostDisplay}/ay</div>
-                        </div>
-                        <div className={s.summaryRow}>
-                          <div>
-                            <div className={s.summaryRowLabel}>{t("wizard.step6.profitShare")}</div>
-                            <div className={s.summaryRowNote}>
-                              {pricing.profitSharePercent > 0 ? t("wizard.step6.profitShareNote") : t("wizard.step6.profitShareNA")}
-                            </div>
-                          </div>
-                          <div className={`${s.summaryRowValue} ${s.summaryRowValueAccent}`}>
-                            {pricing.profitSharePercent > 0 ? `%${pricing.profitSharePercent}` : "—"}
-                          </div>
-                        </div>
+
+                        <div className={s.summaryDivider} style={{ margin: "1.5rem 0" }} />
+
                         <div className={s.summaryTotalRow}>
                           <span className={s.summaryTotalLabel}>{t("wizard.step6.totalMonthly")}</span>
                           <span className={s.summaryTotalValue}>€{pricing.serverCostDisplay}/ay</span>
                         </div>
+                        
                         <p className={s.summaryTerms}>{t("wizard.step6.terms")}</p>
+                        
                         <button className={s.btnWizardSubmit}
                           style={{ width: "100%", marginTop: "1rem", justifyContent: "center" }}
                           onClick={handleSubmit} disabled={submitting}>
-                          {submitting ? t("wizard.submitting") : t("wizard.step6.subscribeBtn")}
+                          {submitting ? t("wizard.submitting") : (
+                            pricing.stripeLink ? t("wizard.step6.subscribeBtn") : t("wizard.step6.contactBtn")
+                          )}
                           {!submitting && <ArrowRight size={16} />}
                         </button>
+                        
+                        <p style={{ fontSize: "0.7rem", color: "var(--text-secondary)", textAlign: "center", marginTop: "0.75rem" }}>
+                          {pricing.stripeLink 
+                            ? t("wizard.step6.stripeRedirect") 
+                            : t("wizard.step6.contactRedirect")}
+                        </p>
                       </div>
                     ) : (
                       <div className={s.outOfRangeWarn}>{t("wizard.step6.outOfRange")}</div>

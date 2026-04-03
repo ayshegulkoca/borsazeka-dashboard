@@ -147,6 +147,13 @@
       "notifySubmit": "Beni Haberdar Et",
       "terms": "Tüm fiyatlar Euro (€) cinsinden belirtilmiştir. Kâr paylaşımı aylık olarak hesaplanır; zararlı dönemlerde ücret alınmaz.",
       "subscribeBtn": "Abone Ol Ödemeye Geç",
+      "contactBtn": "Talebi Gönder ve Abone Ol",
+      "stripeRedirect": "Güvenli Stripe ödeme sayfasına yönlendirileceksiniz.",
+      "contactRedirect": "Talebiniz sonrası uzman ekibimiz kurulum için size ulaşacaktır.",
+      "summaryRobot": "Seçilen Robot:",
+      "summaryBudget": "Bütçe Aralığı:",
+      "summaryServer": "Aylık Sunucu Ücreti:",
+      "summaryProfit": "Kâr Paylaşım Oranı:",
       "outOfRange": "Seçtiğiniz bütçe bu robot için uygun değil. Lütfen geri gidin ve farklı bir bütçe seçin."
     },
     "robots": {

@@ -147,6 +147,13 @@
       "notifySubmit": "Notify Me",
       "terms": "All prices are in Euro (€). Profit sharing is calculated monthly; no fees on losing periods.",
       "subscribeBtn": "Subscribe Proceed to Payment",
+      "contactBtn": "Submit Request & Subscribe",
+      "stripeRedirect": "You will be redirected to the secure Stripe payment page.",
+      "contactRedirect": "Our expert team will contact you for setup after your request.",
+      "summaryRobot": "Selected Robot:",
+      "summaryBudget": "Budget Range:",
+      "summaryServer": "Monthly Server Fee:",
+      "summaryProfit": "Profit Sharing Rate:",
       "outOfRange": "Your selected budget is not compatible with this robot. Please go back and select a different budget."
     },
     "robots": {

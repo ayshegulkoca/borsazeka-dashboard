@@ -30,6 +30,7 @@ export interface PricingResult {
   serverTier: ServerTier;
   totalMonthlyCostEUR: number;
   isComingSoon?: boolean;           // hizmet henüz sunulmamış
+  stripeLink?: string;              // opsiyonel ödeme linki
   note?: string;                    // ek bilgi notu
 }
 
@@ -114,6 +115,15 @@ export const KRIPTO_SELF_TIERS: Array<{
   { minUSD: 2500, maxUSD: 5000, monthlyEUR: 67,  annualEUR: 564 },
 ];
 
+// ─── Stripe Ödeme Linkleri ────────────────────────────────────────────────────
+export const STRIPE_LINKS: Record<number, string> = {
+  30: "https://buy.stripe.com/eVq4gzgPlakr8i25Jz8IU01",
+  55: "https://buy.stripe.com/dRmdR99mT507aqa1tj8IU02",
+  95: "https://buy.stripe.com/9B69AT7eL64bfKu1tj8IU03",
+  240: "https://buy.stripe.com/4gM8wPeHddwDgOydc18IU04",
+  320: "https://buy.stripe.com/cNi6oHdD964baqa6ND8IU05",
+};
+
 // ─── Hesaplama Fonksiyonları ─────────────────────────────────────────────────
 export function calcBISTPrice(
   robotId: "DARKROOM" | "HIGHWAY" | "TRADEMATE" | "FABRIKA",
@@ -134,6 +144,7 @@ export function calcBISTPrice(
     profitSharePercent: tier.profitSharePercent,
     serverTier: `${tier.serverCostEUR}EUR` as ServerTier,
     totalMonthlyCostEUR: tier.serverCostEUR,
+    stripeLink: STRIPE_LINKS[tier.serverCostEUR],
   };
 }
 
