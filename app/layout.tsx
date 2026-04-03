@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import React from "react";
+import I18nProvider from "./i18n/I18nProvider";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -21,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="tr">
       <body className={`${inter.variable} min-h-full flex flex-col`}>
-        {children}
+        <I18nProvider>{children}</I18nProvider>
       </body>
     </html>
   );

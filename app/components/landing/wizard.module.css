@@ -1,0 +1,693 @@
+/* ── Coming Soon: visual badge only, still clickable ─────────────────────── */
+.optionCardComingSoon {
+  border-color: rgba(139, 92, 246, 0.2);
+}
+
+.optionCardComingSoon .optionIcon {
+  background: rgba(139, 92, 246, 0.08);
+  border-color: rgba(139, 92, 246, 0.2);
+}
+
+.robotCardComingSoon {
+  border-color: rgba(139, 92, 246, 0.2);
+  background: rgba(139, 92, 246, 0.03);
+}
+
+.robotCardComingSoon:hover {
+  border-color: rgba(139, 92, 246, 0.35);
+  background: rgba(139, 92, 246, 0.06);
+}
+
+/* Budget option coming-soon variant */
+.budgetOptionComingSoon {
+  border-color: rgba(139, 92, 246, 0.2) !important;
+  color: var(--text-muted) !important;
+  position: relative;
+}
+
+.budgetComingSoonTag {
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 0.15rem 0.4rem;
+  border-radius: 100px;
+  background: rgba(139, 92, 246, 0.15);
+  color: #a78bfa;
+  border: 1px solid rgba(139, 92, 246, 0.25);
+  margin-left: 0.5rem;
+  vertical-align: middle;
+}
+
+
+.wizardPage {
+  min-height: 100vh;
+  background: var(--bg-dark);
+  padding-top: 80px; /* navbar height */
+}
+
+.wizardTopBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 2rem;
+  max-width: 56rem;
+  margin: 0 auto;
+}
+
+.wizardBackLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  transition: color 0.2s;
+}
+
+.wizardBackLink:hover {
+  color: var(--accent-primary);
+}
+
+.wizardHeader {
+  max-width: 56rem;
+  margin: 0 auto;
+  padding: 0 2rem 2.5rem;
+  text-align: center;
+}
+
+.wizardTitle {
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
+}
+
+.wizardSubtitle {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* ── Stepper Progress Bar ────────────────────────────────────── */
+.stepper {
+  max-width: 56rem;
+  margin: 0 auto;
+  padding: 0 2rem 2.5rem;
+}
+
+.stepperTrack {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  position: relative;
+}
+
+.stepperItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  position: relative;
+  cursor: default;
+}
+
+.stepperCircle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.12);
+  background: var(--bg-card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 2;
+}
+
+.stepperCircleActive {
+  border-color: var(--accent-primary);
+  background: rgba(16, 185, 129, 0.15);
+  color: var(--accent-primary);
+  box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
+}
+
+.stepperCircleDone {
+  border-color: var(--accent-primary);
+  background: var(--accent-primary);
+  color: #022c22;
+}
+
+.stepperLabel {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  margin-top: 0.4rem;
+  text-align: center;
+  white-space: nowrap;
+  display: none;
+}
+
+.stepperConnector {
+  flex: 1;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.08);
+  position: relative;
+  top: -9px; /* align with circle center */
+  z-index: 1;
+}
+
+.stepperConnectorFilled {
+  background: var(--accent-primary);
+}
+
+/* ── Step Content Card ───────────────────────────────────────── */
+.stepCard {
+  max-width: 56rem;
+  margin: 0 auto;
+  padding: 0 2rem 3rem;
+}
+
+.stepCardInner {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 20px;
+  padding: 2rem;
+  animation: fadeIn 0.25s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.stepTitle {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 1.75rem;
+  letter-spacing: -0.02em;
+}
+
+.stepTag {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent-primary);
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+/* ── Option Grid ─────────────────────────────────────────────── */
+.optionGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.optionGrid3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.optionCard {
+  border: 2px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 1.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: rgba(255, 255, 255, 0.02);
+  position: relative;
+  overflow: hidden;
+}
+
+.optionCard:hover {
+  border-color: rgba(16, 185, 129, 0.3);
+  background: rgba(16, 185, 129, 0.04);
+  transform: translateY(-2px);
+}
+
+.optionCardSelected {
+  border-color: var(--accent-primary) !important;
+  background: rgba(16, 185, 129, 0.08) !important;
+  box-shadow: 0 0 0 1px var(--accent-primary), inset 0 0 30px rgba(16, 185, 129, 0.05);
+}
+
+.optionCardDisabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
+  filter: grayscale(0.4);
+}
+
+.optionCardDisabled:hover {
+  border-color: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.02);
+  transform: none;
+}
+
+.optionIcon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.optionLabel {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.3rem;
+}
+
+.optionDesc {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.optionCheck {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--accent-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.optionCardSelected .optionCheck {
+  opacity: 1;
+}
+
+.comingSoonBadge {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 0.25rem 0.6rem;
+  border-radius: 100px;
+  background: rgba(100, 116, 139, 0.15);
+  color: var(--text-muted);
+  border: 1px solid rgba(100, 116, 139, 0.2);
+}
+
+/* ── Robot Cards (Step 4) ────────────────────────────────────── */
+.robotOptionCard {
+  border: 2px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 1.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: rgba(255, 255, 255, 0.02);
+  position: relative;
+}
+
+.robotOptionCard:hover:not(.optionCardDisabled) {
+  border-color: rgba(16, 185, 129, 0.3);
+  background: rgba(16, 185, 129, 0.04);
+}
+
+.robotOptionCard.optionCardSelected {
+  border-color: var(--accent-primary);
+  background: rgba(16, 185, 129, 0.08);
+  box-shadow: 0 0 0 1px var(--accent-primary);
+}
+
+.robotHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.robotNameWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.robotName {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.robotDesc {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.robotCapacity {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 100px;
+  padding: 0.2rem 0.6rem;
+  white-space: nowrap;
+}
+
+.robotFeatures {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-top: 0.75rem;
+}
+
+.robotFeatures li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+}
+
+/* ── Budget Options (Step 5) ─────────────────────────────────── */
+.budgetGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+}
+
+.budgetOption {
+  border: 2px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-align: left;
+  transition: all 0.2s;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.budgetOption:hover {
+  border-color: rgba(16, 185, 129, 0.25);
+  color: var(--text-primary);
+  background: rgba(16, 185, 129, 0.04);
+}
+
+.budgetOptionSelected {
+  border-color: var(--accent-primary) !important;
+  color: var(--text-primary) !important;
+  background: rgba(16, 185, 129, 0.1) !important;
+  font-weight: 600;
+}
+
+/* ── Summary (Step 6) ────────────────────────────────────────── */
+.summaryGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.summaryCard {
+  background: rgba(16, 185, 129, 0.04);
+  border: 1px solid rgba(16, 185, 129, 0.15);
+  border-radius: 16px;
+  padding: 1.5rem;
+}
+
+.summaryTitle {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-primary);
+  margin-bottom: 1.25rem;
+}
+
+.summaryRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 0.65rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.summaryRow:last-child {
+  border-bottom: none;
+}
+
+.summaryRowLabel {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.summaryRowNote {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  margin-top: 0.15rem;
+}
+
+.summaryRowValue {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  text-align: right;
+}
+
+.summaryRowValueAccent {
+  color: var(--accent-primary);
+}
+
+.summaryTotalRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  border-radius: 10px;
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+.summaryTotalLabel {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.summaryTotalValue {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--accent-primary);
+  letter-spacing: -0.02em;
+}
+
+.summaryTerms {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Out of range warning */
+.outOfRangeWarn {
+  background: rgba(239, 68, 68, 0.05);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: 12px;
+  padding: 1.25rem;
+  color: #fca5a5;
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+/* Coming Soon overlay (step 6) */
+.comingSoonBox {
+  background: rgba(16, 185, 129, 0.04);
+  border: 1px solid rgba(16, 185, 129, 0.15);
+  border-radius: 16px;
+  padding: 2rem;
+  text-align: center;
+}
+
+.comingSoonBoxTitle {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
+}
+
+.comingSoonBoxDesc {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.notifyForm {
+  display: flex;
+  gap: 0.75rem;
+  max-width: 440px;
+  margin: 0 auto;
+}
+
+.notifyInput {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.notifyInput:focus {
+  border-color: var(--accent-primary);
+}
+
+.notifyInput::placeholder {
+  color: var(--text-muted);
+}
+
+.notifyBtn {
+  padding: 0.75rem 1.25rem;
+  border-radius: 10px;
+  background: var(--accent-primary);
+  color: #022c22;
+  font-size: 0.875rem;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+
+.notifyBtn:hover {
+  background: var(--accent-primary-hover);
+}
+
+/* ── Navigation Buttons ──────────────────────────────────────── */
+.wizardNav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1.75rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.btnWizardBack {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 10px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.2s;
+}
+
+.btnWizardBack:hover {
+  border-color: rgba(255, 255, 255, 0.15);
+  color: var(--text-primary);
+}
+
+.btnWizardNext {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 2rem;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  background: var(--accent-primary);
+  color: #022c22;
+  transition: all 0.2s;
+}
+
+.btnWizardNext:hover:not(:disabled) {
+  background: var(--accent-primary-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px rgba(16, 185, 129, 0.35);
+}
+
+.btnWizardNext:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.btnWizardSubmit {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 2.5rem;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  background: var(--accent-primary);
+  color: #022c22;
+  transition: all 0.2s;
+}
+
+.btnWizardSubmit:hover:not(:disabled) {
+  background: var(--accent-primary-hover);
+  box-shadow: 0 6px 25px rgba(16, 185, 129, 0.4);
+  transform: translateY(-1px);
+}
+
+.btnWizardSubmit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ── Responsive ──────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .optionGrid {
+    grid-template-columns: 1fr;
+  }
+  .optionGrid3 {
+    grid-template-columns: 1fr;
+  }
+  .summaryGrid {
+    grid-template-columns: 1fr;
+  }
+  .budgetGrid {
+    grid-template-columns: 1fr;
+  }
+  .notifyForm {
+    flex-direction: column;
+  }
+  .stepperLabel {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .wizardNav {
+    gap: 0.75rem;
+  }
+  .btnWizardBack,
+  .btnWizardNext,
+  .btnWizardSubmit {
+    padding: 0.75rem 1rem;
+    font-size: 0.8rem;
+  }
+}

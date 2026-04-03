@@ -3,14 +3,13 @@ import Navbar from "./components/landing/Navbar";
 import HeroSection from "./components/landing/HeroSection";
 import FeatureGrid from "./components/landing/FeatureGrid";
 import RobotsSection from "./components/landing/RobotsSection";
-import PricingCards from "./components/landing/PricingCards";
-import BottomCTA from "./components/landing/BottomCTA";
+import WizardCTA from "./components/landing/WizardCTA";
 import ContactSection from "./components/landing/ContactSection";
 
 export const metadata: Metadata = {
-  title: "BorsaZeka — Algoritmik Ticaretin Yapay Zeka Gücü",
+  title: "BorsaZeka — Borsa, Yapay Zeka ile Buluştu",
   description:
-    "Yapay zeka destekli trading robotlarıyla borsada kazancınızı optimize edin. 7/24 otomatik işlem, gelişmiş risk yönetimi ve gerçek zamanlı analiz.",
+    "2015'ten beri yapay zeka ile borsa robotları üretiyoruz. DarkRoom, Highway ve TradeMate robotlarıyla 7/24 otomatik ticaret başlıyor.",
 };
 
 export default function LandingPage() {
@@ -20,8 +19,7 @@ export default function LandingPage() {
       <HeroSection />
       <FeatureGrid />
       <RobotsSection />
-      <PricingCards />
-      <BottomCTA />
+      <WizardCTA />
       <ContactSection />
     </>
   );

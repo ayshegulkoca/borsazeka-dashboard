@@ -1,9 +1,9 @@
 "use client";
 
 import { Activity, ExternalLink, Send } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import styles from "./landing.module.css";
 
-// X (Twitter) logo — lucide-react doesn't export Twitter, so we use an inline SVG
 function XIcon({ size = 22, color = "currentColor" }: { size?: number; color?: string }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill={color} aria-hidden="true">
@@ -12,71 +12,61 @@ function XIcon({ size = 22, color = "currentColor" }: { size?: number; color?: s
   );
 }
 
-type Channel = {
-  id: string;
-  label: string;
-  handle: string;
-  url: string;
-  color: string;
-  bg: string;
-  border: string;
-  renderIcon: (color: string) => React.ReactNode;
-};
-
-const CHANNELS: Channel[] = [
-  {
-    id: "twitter",
-    label: "Twitter / X",
-    handle: "@DH_Altin",
-    url: "https://www.x.com/DH_Altin",
-    color: "#1d9bf0",
-    bg: "rgba(29,155,240,0.08)",
-    border: "rgba(29,155,240,0.2)",
-    renderIcon: (color) => <XIcon size={22} color={color} />,
-  },
-  {
-    id: "telegram-dm",
-    label: "Telegram (Özel)",
-    handle: "@semiharslan",
-    url: "https://t.me/semiharslan",
-    color: "#26a5e4",
-    bg: "rgba(38,165,228,0.08)",
-    border: "rgba(38,165,228,0.2)",
-    renderIcon: (color) => <Send size={22} color={color} />,
-  },
-  {
-    id: "telegram-channel",
-    label: "Telegram Kanalı",
-    handle: "@BorsaZekaCom",
-    url: "https://t.me/BorsaZekaCom",
-    color: "#34d399",
-    bg: "rgba(52,211,153,0.08)",
-    border: "rgba(52,211,153,0.2)",
-    renderIcon: (color) => <Send size={22} color={color} />,
-  },
-];
-
 export default function ContactSection() {
+  const { t } = useTranslation("common");
+
+  const channels = [
+    {
+      id: "twitter",
+      labelKey: "contact.twitterLabel",
+      handle: "@DH_Altin",
+      url: "https://www.x.com/DH_Altin",
+      color: "#1d9bf0",
+      bg: "rgba(29,155,240,0.08)",
+      border: "rgba(29,155,240,0.2)",
+      renderIcon: (color: string) => <XIcon size={22} color={color} />,
+    },
+    {
+      id: "telegram-dm",
+      labelKey: "contact.telegramDmLabel",
+      handle: "@semiharslan",
+      url: "https://t.me/semiharslan",
+      color: "#26a5e4",
+      bg: "rgba(38,165,228,0.08)",
+      border: "rgba(38,165,228,0.2)",
+      renderIcon: (color: string) => <Send size={22} color={color} />,
+    },
+    {
+      id: "telegram-channel",
+      labelKey: "contact.telegramChannelLabel",
+      handle: "@BorsaZekaCom",
+      url: "https://t.me/BorsaZekaCom",
+      color: "#34d399",
+      bg: "rgba(52,211,153,0.08)",
+      border: "rgba(52,211,153,0.2)",
+      renderIcon: (color: string) => <Send size={22} color={color} />,
+    },
+  ];
+
   return (
     <section id="contact" className={styles.contactSection}>
       <div className={styles.container}>
         {/* Header */}
         <div className={styles.sectionHeader}>
-          <span className={styles.sectionTag}>İletişim</span>
-          <h2 className={styles.sectionTitle}>Bize Ulaşın</h2>
+          <span className={styles.sectionTag}>{t("contact.sectionTag")}</span>
+          <h2 className={styles.sectionTitle}>{t("contact.sectionTitle")}</h2>
           <p className={styles.sectionSubtitle}>
-            Sorularınız için aşağıdaki kanalları kullanabilirsiniz.
-            Başvuru yapmak istiyorsanız{" "}
+            {t("contact.sectionSubtitle")}{" "}
             <a href="/surec" style={{ color: "var(--accent-primary)", fontWeight: 600 }}>
-              Nasıl Çalışır?
+              {t("contact.howItWorksLink")}
             </a>{" "}
-            sayfasını ziyaret edin.
+            {t("contact.sectionSubtitleEnd")}
           </p>
         </div>
 
         {/* Channel Cards */}
         <div className={styles.contactGrid}>
-          {CHANNELS.map((ch) => (
+          {channels.map((ch) => (
             <a
               key={ch.id}
               href={ch.url}
@@ -92,7 +82,7 @@ export default function ContactSection() {
                 {ch.renderIcon(ch.color)}
               </div>
               <div className={styles.contactCardBody}>
-                <div className={styles.contactCardLabel}>{ch.label}</div>
+                <div className={styles.contactCardLabel}>{t(ch.labelKey)}</div>
                 <div className={styles.contactCardHandle} style={{ color: ch.color }}>
                   {ch.handle}
                 </div>
@@ -111,12 +101,12 @@ export default function ContactSection() {
             BorsaZeka
           </div>
           <ul className={styles.footerLinks}>
-            <li><a href="#features">Özellikler</a></li>
-            <li><a href="#robots">Robotlar</a></li>
-            <li><a href="#pricing">Fiyatlar</a></li>
-            <li><a href="/surec">Nasıl Çalışır?</a></li>
+            <li><a href="#features">{t("footer.features")}</a></li>
+            <li><a href="#robots">{t("footer.robots")}</a></li>
+            <li><a href="#pricing">{t("footer.pricing")}</a></li>
+            <li><a href="/surec">{t("footer.howItWorks")}</a></li>
           </ul>
-          <span className={styles.footerCopy}>© 2025 BorsaZeka. Tüm hakları saklıdır.</span>
+          <span className={styles.footerCopy}>{t("footer.copyright")}</span>
         </div>
       </footer>
     </section>

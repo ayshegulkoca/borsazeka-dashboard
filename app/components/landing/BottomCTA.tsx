@@ -2,33 +2,31 @@
 
 import { signIn } from "next-auth/react";
 import { Rocket, LogIn } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import styles from "./landing.module.css";
 
 export default function BottomCTA() {
+  const { t } = useTranslation("common");
+
   return (
     <section id="cta" className={`${styles.section} ${styles.ctaSection}`}>
       <div className={styles.container}>
-        <h2 className={styles.ctaTitle}>
-          Hemen Robotları Çalıştır
-        </h2>
-        <p className={styles.ctaSubtitle}>
-          Başvuru sürecimiz hakkında bilgi almak veya hemen başlamak için aşağıdaki
-          butonları kullanın. Sorularınız için Telegram üzerinden bize ulaşabilirsiniz.
-        </p>
+        <h2 className={styles.ctaTitle}>{t("cta.title")}</h2>
+        <p className={styles.ctaSubtitle}>{t("cta.subtitle")}</p>
         <div className={styles.ctaButtonGroup}>
           <button
             className={styles.btnCtaPrimary}
             onClick={() => signIn("google", { callbackUrl: "/checkout" })}
           >
             <Rocket size={20} />
-            Hemen Başla
+            {t("cta.getStarted")}
           </button>
           <button
             className={styles.btnCtaSecondary}
             onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
           >
             <LogIn size={18} />
-            Giriş Yap
+            {t("cta.signIn")}
           </button>
         </div>
       </div>

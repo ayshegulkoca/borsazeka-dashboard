@@ -1,57 +1,70 @@
 "use client";
 
 import Image from "next/image";
-import { signIn } from "next-auth/react";
-import { ArrowRight, Play } from "lucide-react";
+import Link from "next/link";
+import { ArrowRight, ChevronRight } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import styles from "./landing.module.css";
 
 export default function HeroSection() {
+  const { t } = useTranslation("common");
+
   return (
     <section className={styles.hero} style={{ padding: "10rem 2rem 8rem" }}>
       <div className={styles.heroInner}>
         {/* Left: Copy */}
         <div>
           <div className={styles.heroBadge}>
-            <span style={{ width: 6, height: 6, background: "var(--accent-primary)", borderRadius: "50%", display: "inline-block" }} />
-            Yeni: GPT-4o Destekli Analiz Motoru
+            <span
+              style={{
+                width: 6,
+                height: 6,
+                background: "var(--accent-primary)",
+                borderRadius: "50%",
+                display: "inline-block",
+              }}
+            />
+            {t("hero.badge")}
           </div>
 
           <h1 className={styles.heroTitle}>
-            Borsa Analizinde{" "}
-            <span className={styles.accent}>Yapay Zeka</span>{" "}
-            Dönemi
+            {t("hero.title")}{" "}
+            <span className={styles.accent}>{t("hero.titleAccent")}</span>
           </h1>
 
-          <p className={styles.heroSubtitle}>
-            Robotlarımız 7/24 piyasayı tarayarak sizin için en karlı pozisyonları tespit eder. Duygusuz, hızlı ve veriye dayalı ticaret artık elinizin altında.
-          </p>
+          <p className={styles.heroSubtitle}>{t("hero.subtitle")}</p>
 
           <div className={styles.heroCTAGroup}>
-            <button
-              className={styles.btnHeroPrimary}
-              onClick={() => signIn("google", { callbackUrl: "/checkout" })}
-            >
-              Ücretsiz Denemeye Başla
+            {/* Primary CTA: Ürün Sihirbazı */}
+            <Link href="/urun-sec" className={styles.btnHeroPrimary}>
+              {t("hero.selectProduct")}
               <ArrowRight size={18} />
-            </button>
-            <a href="#robots" className={styles.btnHeroSecondary}>
-              <Play size={16} />
-              Robotları Keşfet
-            </a>
+            </Link>
+            {/* Secondary CTA: Nasıl Çalışır */}
+            <Link href="/surec" className={styles.btnHeroSecondary}>
+              <ChevronRight size={16} />
+              {t("hero.exploreRobots")}
+            </Link>
           </div>
 
           <div className={styles.heroStats}>
             <div className={styles.heroStat}>
-              <span className={styles.heroStatNumber}>+%34</span>
-              <span className={styles.heroStatLabel}>Ort. Yıllık Getiri</span>
+              <span className={styles.heroStatNumber}>
+                {t("hero.stat1Number")}
+              </span>
+              <span className={styles.heroStatLabel}>{t("hero.stat1Label")}</span>
             </div>
             <div className={styles.heroStat}>
-              <span className={styles.heroStatNumber}>12K+</span>
-              <span className={styles.heroStatLabel}>Aktif Kullanıcı</span>
+              <span className={styles.heroStatNumber}>
+                {t("hero.stat2Number")}
+              </span>
+              <span className={styles.heroStatLabel}>{t("hero.stat2Label")}</span>
             </div>
             <div className={styles.heroStat}>
-              <span className={styles.heroStatNumber}>99.9%</span>
-              <span className={styles.heroStatLabel}>Uptime SLA</span>
+              <span className={styles.heroStatNumber}>
+                {t("hero.stat3Number")}
+              </span>
+              <span className={styles.heroStatLabel}>{t("hero.stat3Label")}</span>
             </div>
           </div>
         </div>
@@ -61,7 +74,7 @@ export default function HeroSection() {
           <div className={styles.heroImageWrap}>
             <Image
               src="/dashboard-mockup.png"
-              alt="BorsaZeka Dashboard Önizleme"
+              alt="BorsaZeka Dashboard Preview"
               width={900}
               height={560}
               priority

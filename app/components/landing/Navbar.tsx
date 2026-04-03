@@ -4,17 +4,24 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Activity } from "lucide-react";
 import { signIn } from "next-auth/react";
+import { useTranslation } from "react-i18next";
 import styles from "./landing.module.css";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { t, i18n } = useTranslation("common");
+  const currentLang = i18n.language?.startsWith("tr") ? "tr" : "en";
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  const changeLanguage = (lang: string) => {
+    i18n.changeLanguage(lang);
+  };
 
   return (
     <>
@@ -29,40 +36,57 @@ export default function Navbar() {
 
         {/* Center Links */}
         <ul className={styles.navLinks}>
-          <li><a href="#features">Özellikler</a></li>
-          <li><a href="#robots">Robotlar</a></li>
-          <li><a href="#pricing">Fiyatlandırma</a></li>
-          <li><a href="#contact">İletişim</a></li>
           <li>
-            <Link href="/surec" className={styles.navLinkHighlight}>
-              Nasıl Çalışır?
-            </Link>
+            <a href="/#features">{t("navbar.features")}</a>
+          </li>
+          <li>
+            <Link href="/urun-sec">{t("navbar.findProduct")}</Link>
+          </li>
+          <li>
+            <Link href="/surec">{t("navbar.howItWorks")}</Link>
+          </li>
+          <li>
+            <Link href="/iletisim">{t("navbar.contact")}</Link>
           </li>
         </ul>
 
         {/* Right Actions */}
         <div className={styles.navActions}>
-          {/* Giriş Yap: abone olanı dashboard'a, olmayanı checkout'a yönlendir */}
+          {/* Language Toggle */}
+          <div className={styles.langToggle}>
+            <button
+              className={`${styles.langBtn} ${currentLang === "tr" ? styles.langBtnActive : ""}`}
+              onClick={() => changeLanguage("tr")}
+              aria-label="Türkçe"
+            >
+              TR
+            </button>
+            <span className={styles.langDivider}>|</span>
+            <button
+              className={`${styles.langBtn} ${currentLang === "en" ? styles.langBtnActive : ""}`}
+              onClick={() => changeLanguage("en")}
+              aria-label="English"
+            >
+              EN
+            </button>
+          </div>
+
           <button
             className={styles.btnGhost}
             onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
           >
-            Giriş Yap
+            {t("navbar.signIn")}
           </button>
-          {/* Hemen Başla: yeni kullanıcı, checkout'a yönlendir */}
-          <button
-            className={styles.btnSolid}
-            onClick={() => signIn("google", { callbackUrl: "/checkout" })}
-          >
-            Hemen Başla
-          </button>
+          <Link href="/urun-sec" className={styles.btnSolid}>
+            {t("navbar.getStarted")}
+          </Link>
         </div>
 
         {/* Hamburger */}
         <button
           className={styles.hamburger}
           onClick={() => setMobileOpen(!mobileOpen)}
-          aria-label="Menüyü aç"
+          aria-label={t("navbar.menuLabel")}
         >
           <span />
           <span />
@@ -72,26 +96,62 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       <div className={`${styles.mobileMenu} ${mobileOpen ? styles.open : ""}`}>
-        <a href="#features" onClick={() => setMobileOpen(false)}>Özellikler</a>
-        <a href="#robots" onClick={() => setMobileOpen(false)}>Robotlar</a>
-        <a href="#pricing" onClick={() => setMobileOpen(false)}>Fiyatlandırma</a>
-        <a href="#contact" onClick={() => setMobileOpen(false)}>İletişim</a>
-        <Link href="/surec" onClick={() => setMobileOpen(false)} style={{ color: "var(--accent-primary)", fontWeight: 600 }}>Nasıl Çalışır?</Link>
+        <a href="/#features" onClick={() => setMobileOpen(false)}>
+          {t("navbar.features")}
+        </a>
+        <Link
+          href="/urun-sec"
+          onClick={() => setMobileOpen(false)}
+          style={{ color: "var(--accent-primary)", fontWeight: 600 }}
+        >
+          {t("navbar.findProduct")}
+        </Link>
+        <Link href="/surec" onClick={() => setMobileOpen(false)}>
+          {t("navbar.howItWorks")}
+        </Link>
+        <Link href="/iletisim" onClick={() => setMobileOpen(false)}>
+          {t("navbar.contact")}
+        </Link>
+
+        {/* Mobile Language Toggle */}
+        <div className={styles.mobileLangToggle}>
+          <button
+            className={`${styles.langBtn} ${currentLang === "tr" ? styles.langBtnActive : ""}`}
+            onClick={() => {
+              changeLanguage("tr");
+              setMobileOpen(false);
+            }}
+          >
+            TR
+          </button>
+          <span className={styles.langDivider}>|</span>
+          <button
+            className={`${styles.langBtn} ${currentLang === "en" ? styles.langBtnActive : ""}`}
+            onClick={() => {
+              changeLanguage("en");
+              setMobileOpen(false);
+            }}
+          >
+            EN
+          </button>
+        </div>
+
         <div className={styles.mobileActions}>
           <button
             className={styles.btnGhost}
             style={{ flex: 1, textAlign: "center" }}
             onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
           >
-            Giriş Yap
+            {t("navbar.signIn")}
           </button>
-          <button
+          <Link
+            href="/urun-sec"
             className={styles.btnSolid}
             style={{ flex: 1, textAlign: "center" }}
-            onClick={() => signIn("google", { callbackUrl: "/checkout" })}
+            onClick={() => setMobileOpen(false)}
           >
-            Hemen Başla
-          </button>
+            {t("navbar.getStarted")}
+          </Link>
         </div>
       </div>
     </>

@@ -2,103 +2,103 @@
 
 import { Check } from "lucide-react";
 import { signIn } from "next-auth/react";
+import { useTranslation } from "react-i18next";
 import styles from "./landing.module.css";
 
-const plans = [
-  {
-    id: "DARKROOM_PREMIUM",
-    name: "DarkRoom Premium",
-    price: "299",
-    robotCount: "DarkRoom Robotu",
-    featured: false,
-    features: [
-      "DarkRoom Self-Service robot erişimi",
-      "Düşük volatilite momentum stratejisi",
-      "Günlük performans raporları",
-      "E-posta bildirimleri",
-      "Topluluk desteği",
-    ],
-  },
-  {
-    id: "HIGHWAY_PREMIUM",
-    name: "Highway Premium",
-    price: "399",
-    robotCount: "Highway Robotu",
-    featured: false,
-    features: [
-      "Highway Self-Service robot erişimi",
-      "Yüksek hacim trend stratejisi",
-      "Gerçek zamanlı sinyal akışı",
-      "SMS + E-posta bildirimleri",
-      "Öncelikli destek",
-    ],
-  },
-  {
-    id: "TRADEMATE_PREMIUM",
-    name: "TradeMate Premium",
-    price: "499",
-    robotCount: "TradeMate Robotu",
-    featured: true,
-    features: [
-      "TradeMate Self-Service robot erişimi",
-      "Kişiselleştirilebilir strateji motoru",
-      "Gelişmiş analitik & raporlar",
-      "SMS + E-posta + Push bildirimleri",
-      "Risk yönetimi katmanı",
-      "7/24 öncelikli destek",
-    ],
-  },
-  {
-    id: "FABRIKA_PREMIUM",
-    name: "Fabrika Premium",
-    price: "899",
-    robotCount: "Tüm Robotlar",
-    featured: false,
-    features: [
-      "DarkRoom + Highway + TradeMate erişimi",
-      "Çoklu robot eş zamanlı çalıştırma",
-      "Portföy otomasyonu & risk yönetimi",
-      "Tüm bildirim kanalları",
-      "Öncelikli teknik destek",
-    ],
-  },
-  {
-    id: "BORSAZEKA_CLASSIC",
-    name: "BorsaZeka Classic",
-    price: "1.499",
-    robotCount: "Sınırsız Erişim",
-    featured: false,
-    features: [
-      "Tüm robotlara sınırsız erişim",
-      "Özel API entegrasyonu",
-      "Beyaz etiket seçeneği",
-      "Dedicated account manager",
-      "SLA garantisi (%99,9)",
-    ],
-  },
-];
-
 export default function PricingCards() {
+  const { t } = useTranslation("common");
+
+  const plans = [
+    {
+      id: "DARKROOM_PREMIUM",
+      nameKey: "pricing.darkroomName",
+      price: "299",
+      robotLabelKey: "pricing.darkroomRobotLabel",
+      featured: false,
+      featureKeys: [
+        "pricing.darkroomFeature1",
+        "pricing.darkroomFeature2",
+        "pricing.darkroomFeature3",
+        "pricing.darkroomFeature4",
+        "pricing.darkroomFeature5",
+      ],
+    },
+    {
+      id: "HIGHWAY_PREMIUM",
+      nameKey: "pricing.highwayName",
+      price: "399",
+      robotLabelKey: "pricing.highwayRobotLabel",
+      featured: false,
+      featureKeys: [
+        "pricing.highwayFeature1",
+        "pricing.highwayFeature2",
+        "pricing.highwayFeature3",
+        "pricing.highwayFeature4",
+        "pricing.highwayFeature5",
+      ],
+    },
+    {
+      id: "TRADEMATE_PREMIUM",
+      nameKey: "pricing.trademateName",
+      price: "499",
+      robotLabelKey: "pricing.trademateRobotLabel",
+      featured: true,
+      featureKeys: [
+        "pricing.trademateFeature1",
+        "pricing.trademateFeature2",
+        "pricing.trademateFeature3",
+        "pricing.trademateFeature4",
+        "pricing.trademateFeature5",
+        "pricing.trademateFeature6",
+      ],
+    },
+    {
+      id: "FABRIKA_PREMIUM",
+      nameKey: "pricing.fabrikaName",
+      price: "899",
+      robotLabelKey: "pricing.fabrikaRobotLabel",
+      featured: false,
+      featureKeys: [
+        "pricing.fabrikaFeature1",
+        "pricing.fabrikaFeature2",
+        "pricing.fabrikaFeature3",
+        "pricing.fabrikaFeature4",
+        "pricing.fabrikaFeature5",
+      ],
+    },
+    {
+      id: "BORSAZEKA_CLASSIC",
+      nameKey: "pricing.classicName",
+      price: "1.499",
+      robotLabelKey: "pricing.classicRobotLabel",
+      featured: false,
+      featureKeys: [
+        "pricing.classicFeature1",
+        "pricing.classicFeature2",
+        "pricing.classicFeature3",
+        "pricing.classicFeature4",
+        "pricing.classicFeature5",
+      ],
+    },
+  ];
+
   return (
     <section id="pricing" className={`${styles.section} ${styles.pricingSection}`}>
       <div className={styles.container}>
         <div className={styles.sectionHeader}>
-          <span className={styles.sectionTag}>Fiyatlandırma</span>
-          <h2 className={styles.sectionTitle}>İhtiyacınıza Uygun Paket</h2>
-          <p className={styles.sectionSubtitle}>
-            Her pakette 14 günlük ücretsiz deneme dahildir. Kredi kartı gerekmez.
-          </p>
+          <span className={styles.sectionTag}>{t("pricing.sectionTag")}</span>
+          <h2 className={styles.sectionTitle}>{t("pricing.sectionTitle")}</h2>
+          <p className={styles.sectionSubtitle}>{t("pricing.sectionSubtitle")}</p>
         </div>
 
-        {/* 5 kart: ilk satır 3, ikinci satır 2 ortada */}
         <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
-          {/* Üst sıra: 3 kart */}
+          {/* Top row: 3 cards */}
           <div className={styles.pricingGrid}>
             {plans.slice(0, 3).map((plan) => (
-              <PlanCard key={plan.id} plan={plan} />
+              <PlanCard key={plan.id} plan={plan} t={t} />
             ))}
           </div>
-          {/* Alt sıra: 2 kart ortada */}
+          {/* Bottom row: 2 cards centered */}
           <div style={{
             display: "grid",
             gridTemplateColumns: "repeat(2, 1fr)",
@@ -108,7 +108,7 @@ export default function PricingCards() {
             width: "100%",
           }}>
             {plans.slice(3).map((plan) => (
-              <PlanCard key={plan.id} plan={plan} />
+              <PlanCard key={plan.id} plan={plan} t={t} />
             ))}
           </div>
         </div>
@@ -117,43 +117,46 @@ export default function PricingCards() {
   );
 }
 
-function PlanCard({ plan }: { plan: typeof plans[0] }) {
+type Plan = {
+  id: string;
+  nameKey: string;
+  price: string;
+  robotLabelKey: string;
+  featured: boolean;
+  featureKeys: string[];
+};
+
+function PlanCard({ plan, t }: { plan: Plan; t: (key: string) => string }) {
   return (
-    <div
-      className={`${styles.pricingCard} ${plan.featured ? styles.pricingCardFeatured : ""}`}
-    >
+    <div className={`${styles.pricingCard} ${plan.featured ? styles.pricingCardFeatured : ""}`}>
       {plan.featured && (
-        <span className={styles.pricingPopularBadge}>🏆 En Çok Tercih Edilen</span>
+        <span className={styles.pricingPopularBadge}>{t("pricing.mostPopular")}</span>
       )}
 
-      <div className={styles.pricingPlanName}>{plan.name}</div>
+      <div className={styles.pricingPlanName}>{t(plan.nameKey)}</div>
 
       <div className={styles.pricingPrice}>
         ₺{plan.price}
         <span> TRY</span>
       </div>
-      <div className={styles.pricingPeriod}>/ ay · {plan.robotCount}</div>
+      <div className={styles.pricingPeriod}>{t("pricing.perMonth")} · {t(plan.robotLabelKey)}</div>
 
       <div className={styles.pricingDivider} />
 
       <ul className={styles.pricingFeatures}>
-        {plan.features.map((feat) => (
-          <li key={feat}>
+        {plan.featureKeys.map((key) => (
+          <li key={key}>
             <Check size={15} color="var(--accent-primary)" />
-            {feat}
+            {t(key)}
           </li>
         ))}
       </ul>
 
       <button
         className={plan.featured ? styles.btnPricingPrimary : styles.btnPricingOutline}
-        onClick={() =>
-          signIn("google", {
-            callbackUrl: `/checkout?plan=${plan.id}`,
-          })
-        }
+        onClick={() => signIn("google", { callbackUrl: `/checkout?plan=${plan.id}` })}
       >
-        Planı Seç
+        {t("pricing.selectPlan")}
       </button>
     </div>
   );
