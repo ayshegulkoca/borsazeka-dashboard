@@ -6,7 +6,6 @@ import { PLAN_LABELS } from "@/lib/plans";
 import { ROBOT_BY_ID } from "@/lib/robots";
 import Link from "next/link";
 import DashboardHomeClient from "./DashboardHomeClient";
-import styles from "./page.module.css";
 
 export default async function DashboardHome() {
   const session = await auth();
