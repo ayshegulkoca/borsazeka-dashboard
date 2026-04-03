@@ -1,6 +1,7 @@
 "use client";
 
 import { Activity, ExternalLink, Send } from "lucide-react";
+import Link from "next/link";
 import { useTranslation } from "react-i18next";
 import styles from "./landing.module.css";
 
@@ -101,10 +102,10 @@ export default function ContactSection() {
             BorsaZeka
           </div>
           <ul className={styles.footerLinks}>
-            <li><a href="#features">{t("footer.features")}</a></li>
-            <li><a href="#robots">{t("footer.robots")}</a></li>
-            <li><a href="#pricing">{t("footer.pricing")}</a></li>
-            <li><a href="/surec">{t("footer.howItWorks")}</a></li>
+            <li><a href="/">{t("footer.home") || "Anasayfa"}</a></li>
+            <li><Link href="/urun-sec">{t("footer.findProduct")}</Link></li>
+            <li><Link href="/surec">{t("footer.howItWorks")}</Link></li>
+            <li><Link href="/iletisim">{t("footer.contact")}</Link></li>
           </ul>
           <span className={styles.footerCopy}>{t("footer.copyright")}</span>
         </div>

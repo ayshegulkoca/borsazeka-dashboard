@@ -71,6 +71,7 @@
     "telegramChannelLabel": "Telegram Channel"
   },
   "footer": {
+    "home": "Home",
     "features": "Features",
     "robots": "Robots",
     "findProduct": "Find Your Robot",

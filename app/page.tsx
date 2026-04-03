@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Navbar from "./components/landing/Navbar";
 import HeroSection from "./components/landing/HeroSection";
 import FeatureGrid from "./components/landing/FeatureGrid";
-import RobotsSection from "./components/landing/RobotsSection";
 import WizardCTA from "./components/landing/WizardCTA";
 import ContactSection from "./components/landing/ContactSection";
 
@@ -18,7 +17,6 @@ export default function LandingPage() {
       <Navbar />
       <HeroSection />
       <FeatureGrid />
-      <RobotsSection />
       <WizardCTA />
       <ContactSection />
     </>

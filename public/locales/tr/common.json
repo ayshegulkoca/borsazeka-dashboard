@@ -71,6 +71,7 @@
     "telegramChannelLabel": "Telegram Kanalı"
   },
   "footer": {
+    "home": "Ana Sayfa",
     "features": "Özellikler",
     "robots": "Robotlar",
     "findProduct": "Ürün Seç",
