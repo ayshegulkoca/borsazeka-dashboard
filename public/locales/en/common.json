@@ -1,6 +1,7 @@
 {
   "navbar": {
     "features": "Features",
+    "ourRobots": "Our Robots",
     "robots": "Robots",
     "findProduct": "Find Your Robot",
     "contact": "Contact",
@@ -11,9 +12,12 @@
   },
   "hero": {
     "badge": "AI-powered stock trading robots since 2015",
+    "mainSlogan": "Where the stock market meets AI:",
     "title": "Where the stock market meets AI:",
     "titleAccent": "BorsaZeka!",
+    "subSlogan": "We have been building AI-powered trading robots since 2015. While you focus on your daily life, our robots monitor the markets 24/7.",
     "subtitle": "We have been building AI-powered trading robots since 2015. While you focus on your daily life, our robots monitor the markets 24/7.",
+    "ctaButton": "Find your perfect robot",
     "selectProduct": "Find Your Robot",
     "exploreRobots": "How It Works",
     "stat1Number": "+34%",
@@ -208,6 +212,22 @@
         "f4": "Server rental is mandatory",
         "f5": "In development — coming soon"
       },
+      "kriptoZeka": {
+        "name": "KriptoZeka",
+        "desc": "Professional crypto management for $5,000+ portfolios — core strategy",
+        "f1": "KriptoZeka core algorithm",
+        "f2": "50% profit sharing model",
+        "f3": "24/7 expert team management",
+        "f4": "Multi-token support"
+      },
+      "kriptoZekaAscent": {
+        "name": "KriptoZeka Ascent",
+        "desc": "Advanced crypto management for $5,000+ portfolios — high performance",
+        "f1": "KriptoZeka Ascent advanced strategy",
+        "f2": "50% profit sharing model",
+        "f3": "24/7 expert team management",
+        "f4": "Priority portfolio management"
+      },
       "kriptoPremium": {
         "name": "KriptoZeka & KriptoZeka Ascent",
         "desc": "Professional crypto management for $5,000+ portfolios",
@@ -233,6 +253,17 @@
         "f4": "Max 25 client capacity"
       }
     }
+  },
+  "robots": {
+    "pageTitle": "Our Robots — BorsaZeka",
+    "sectionTag": "Robot Catalog",
+    "sectionTitle": "Robots That Work for You",
+    "sectionSubtitle": "AI-driven trading robots, each optimized for distinct market conditions and proven strategies — fully automated.",
+    "ctaButton": "Select This Robot",
+    "comingSoon": "Coming Soon",
+    "minBudget": "Min. Budget",
+    "maxCapacity": "Max. Capacity",
+    "profitShare": "Profit Share"
   },
   "iletisim": {
     "pageTitle": "Contact — BorsaZeka",

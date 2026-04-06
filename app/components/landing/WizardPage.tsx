@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import {
   ArrowLeft, ArrowRight, Check, Globe, MapPin,
@@ -39,6 +40,7 @@ const STEP_LABELS = ["Piyasa", "Alt Piyasa", "Yönetim", "Robot", "Bütçe", "Ö
 // ─── Main ────────────────────────────────────────────────────────────────────
 export default function WizardPage() {
   const { t } = useTranslation("common");
+  const searchParams = useSearchParams();
 
   const [state, setState] = useState<WState>({
     step: 1, market: null, subMarket: null, managementType: null,
@@ -50,7 +52,33 @@ export default function WizardPage() {
   const [submitting, setSubmitting] = useState(false);
   const [submitDone, setSubmitDone] = useState(false);
 
-  const patch = (p: Partial<WState>) => setState(prev => ({ ...prev, ...p }));
+  const patch = useCallback((p: Partial<WState>) => setState(prev => ({ ...prev, ...p })), []);
+
+  // ── Pre-select robot from URL query param (?robot=DARKROOM) ─────────────────
+  useEffect(() => {
+    const robotParam = searchParams.get("robot") as RobotId | null;
+    if (!robotParam) return;
+    const found = ROBOTS.find(r => r.id === robotParam);
+    if (!found) return;
+
+    // Determine market and management from robot definition
+    const market = found.market;
+    const subMarket = found.market;
+    const managementType = found.managementType;
+    const budgetCurrency: "TRY" | "USD" = (market === "BIST") ? "TRY" : "USD";
+
+    // Jump to budget step (5) with pre-fills
+    patch({
+      market,
+      subMarket,
+      managementType,
+      robotId: robotParam,
+      budgetCurrency,
+      budgetValue: null,
+      budgetLabel: null,
+      step: 5,
+    });
+  }, [searchParams, patch]);
 
   // ── can proceed? ────────────────────────────────────────────────────────────
   const canNext = () => {
@@ -62,16 +90,34 @@ export default function WizardPage() {
     return true;
   };
 
-  const goNext = () => {
+  const goNext = useCallback(() => {
     if (!canNext()) return;
     if (state.step === 1 && state.market === "BIST") { patch({ subMarket: "BIST", step: 3 }); return; }
     patch({ step: state.step + 1 });
-  };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state]);
 
   const goBack = () => {
     if (state.step === 3 && state.market === "BIST") { patch({ step: 1 }); return; }
     if (state.step === 6 && state.robotId === "CLASSIC") { patch({ step: 4 }); return; }
     patch({ step: state.step - 1 });
+  };
+
+  // ── Auto-advance helper ─────────────────────────────────────────────────────
+  const autoAdvance = (updates: Partial<WState>) => {
+    setState(prev => ({ ...prev, ...updates }));
+    // Use a small delay for smooth transition perception
+    setTimeout(() => {
+      setState(prev => {
+        // compute next step after applying the updates
+        const next = prev.step + 1;
+        // Special BIST shortcut: after step 1 picking BIST, skip to step 3
+        const nextStep = (updates.market === "BIST" && prev.step === 1)
+          ? 3
+          : next;
+        return { ...prev, ...updates, step: nextStep };
+      });
+    }, 220);
   };
 
   // ── derived ─────────────────────────────────────────────────────────────────
@@ -96,43 +142,62 @@ export default function WizardPage() {
   const handleSubmit = async () => {
     if (submitting || isPaymentBlocked) return;
     setSubmitting(true);
+
+    const payload = {
+      market: state.market,
+      subMarket: state.subMarket,
+      managementType: state.managementType,
+      robotId: state.robotId,
+      robotName: selectedRobot ? t(selectedRobot.nameKey) : state.robotId,
+      budgetValue: state.budgetValue ?? 0,
+      budgetCurrency: state.budgetCurrency,
+      budgetLabel: state.budgetLabel,
+      pricing,
+      timestamp: new Date().toISOString(),
+    };
+
     try {
-      // 1. Lead capture
+      // 1. Send to n8n webhook FIRST (if configured)
+      const webhookUrl = process.env.NEXT_PUBLIC_N8N_WEBHOOK_URL;
+      if (webhookUrl) {
+        try {
+          await fetch(webhookUrl, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+          });
+        } catch {
+          // Non-blocking: webhook failure should not stop Stripe redirect
+          console.warn("n8n webhook failed, proceeding to Stripe");
+        }
+      }
+
+      // 2. Also capture internally
       await fetch("/api/leads", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          market: state.market, subMarket: state.subMarket,
-          managementType: state.managementType,
-          robotId: state.robotId,
-          robotName: selectedRobot ? t(selectedRobot.nameKey) : state.robotId,
-          budgetValue: state.budgetValue ?? 0,
-          budgetCurrency: state.budgetCurrency,
-          budgetLabel: state.budgetLabel,
-          pricing,
-          timestamp: new Date().toISOString(),
-        }),
+        body: JSON.stringify(payload),
       });
 
-      // 2. Stripe Redirect if link exists
+      // 3. Stripe redirect via window.location.href
       if (pricing?.stripeLink && !isPaymentBlocked) {
-        window.location.assign(pricing.stripeLink);
+        window.location.href = pricing.stripeLink;
         return;
       }
 
       setSubmitDone(true);
     } catch (err) {
       console.error("Submit error:", err);
-      // fallback to success message so user isn't stuck
+      // Fallback to success message
       setSubmitDone(true);
+    } finally {
+      setSubmitting(false);
     }
-    finally { setSubmitting(false); }
   };
 
   const handleNotify = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!notifyEmail) return;
-    // TODO: POST to leads API with email + robotId
     setNotifyDone(true);
   };
 
@@ -193,37 +258,30 @@ export default function WizardPage() {
                 <OptionCard selected={state.market === "BIST"}
                   icon={<MapPin size={22} color="var(--accent-primary)" />}
                   label={t("wizard.step1.domestic")} desc={t("wizard.step1.domesticDesc")}
-                  onClick={() => {
-                    patch({ market: "BIST", subMarket: "BIST", robotId: null, budgetValue: null });
-                  }} />
+                  onClick={() => autoAdvance({ market: "BIST", subMarket: "BIST", robotId: null, budgetValue: null, managementType: null })} />
                 <OptionCard selected={state.market === "CRYPTO" || state.market === "FOREX"}
                   icon={<Globe size={22} color="var(--accent-primary)" />}
                   label={t("wizard.step1.international")} desc={t("wizard.step1.internationalDesc")}
-                  onClick={() => {
-                    patch({ market: "CRYPTO", subMarket: null, robotId: null, budgetValue: null });
-                  }} />
+                  onClick={() => autoAdvance({ market: "CRYPTO", subMarket: null, robotId: null, budgetValue: null, managementType: null })} />
               </div>
             </>
           )}
 
-          {/* ── STEP 2 ── */}
+          {/* ── STEP 2 ── Kripto / Forex 50/50 */}
           {state.step === 2 && (
             <>
               <span className={s.stepTag}>{t("wizard.stepOf", { current: 2, total: TOTAL })}</span>
               <h2 className={s.stepTitle}>{t("wizard.step2.title")}</h2>
-              <div className={`${s.optionGrid} ${s.optionGrid3}`}>
+              {/* 50/50 split grid */}
+              <div className={s.optionGrid50}>
                 <OptionCard selected={state.subMarket === "CRYPTO"}
                   icon={<Bot size={22} color="var(--accent-primary)" />}
                   label={t("wizard.step2.crypto")} desc={t("wizard.step2.cryptoDesc")}
-                  onClick={() => {
-                    patch({ subMarket: "CRYPTO", market: "CRYPTO", robotId: null, budgetValue: null, budgetCurrency: "USD" });
-                  }} />
+                  onClick={() => autoAdvance({ subMarket: "CRYPTO", market: "CRYPTO", robotId: null, budgetValue: null, budgetCurrency: "USD", managementType: null })} />
                 <OptionCard selected={state.subMarket === "FOREX"}
                   icon={<Globe size={22} color="var(--accent-primary)" />}
                   label={t("wizard.step2.forex")} desc={t("wizard.step2.forexDesc")}
-                  onClick={() => {
-                    patch({ subMarket: "FOREX", market: "FOREX", robotId: null, budgetValue: null, budgetCurrency: "USD" });
-                  }} />
+                  onClick={() => autoAdvance({ subMarket: "FOREX", market: "FOREX", robotId: null, budgetValue: null, budgetCurrency: "USD", managementType: null })} />
               </div>
             </>
           )}
@@ -237,14 +295,13 @@ export default function WizardPage() {
                 <OptionCard selected={state.managementType === "PREMIUM"}
                   icon={<Users size={22} color="var(--accent-primary)" />}
                   label={t("wizard.step3.premium")} desc={t("wizard.step3.premiumDesc")}
-                  onClick={() => {
-                    patch({ managementType: "PREMIUM", robotId: null });
-                  }} />
+                  onClick={() => autoAdvance({ managementType: "PREMIUM", robotId: null })} />
                 <OptionCard selected={state.managementType === "SELF_SERVICE"}
                   icon={<Lock size={22} color="var(--accent-primary)" />}
                   label={t("wizard.step3.selfService")} desc={t("wizard.step3.selfServiceDesc")}
                   comingSoon comingSoonLabel={t("wizard.comingSoonBadge")}
                   onClick={() => {
+                    // Coming soon: select but stay on step (no auto-advance)
                     patch({ managementType: "SELF_SERVICE", robotId: null });
                   }} />
               </div>
@@ -265,7 +322,25 @@ export default function WizardPage() {
                 {availableRobots.map((robot: RobotDefinition) => (
                   <RobotCard key={robot.id} robot={robot}
                     selected={state.robotId === robot.id} t={t}
-                    onClick={() => patch({ robotId: robot.id, budgetValue: null, budgetLabel: null, selectedBudgetComingSoon: false })} />
+                    onClick={() => {
+                      if (robot.comingSoon) {
+                        // Non-clickable for coming soon
+                        return;
+                      }
+                      // Auto advance if not coming soon
+                      const budgetCurrency = robot.market === "BIST" ? "TRY" : "USD";
+                      setState(prev => ({
+                        ...prev,
+                        robotId: robot.id,
+                        budgetValue: null,
+                        budgetLabel: null,
+                        selectedBudgetComingSoon: false,
+                        budgetCurrency,
+                      }));
+                      setTimeout(() => {
+                        setState(prev => ({ ...prev, step: 5 }));
+                      }, 220);
+                    }} />
                 ))}
               </div>
             </>
@@ -302,7 +377,18 @@ export default function WizardPage() {
                         className={`${s.budgetOption}
                           ${state.budgetValue === opt.value ? s.budgetOptionSelected : ""}
                           ${opt.comingSoon ? s.budgetOptionComingSoon : ""}`}
-                        onClick={() => patch({ budgetValue: opt.value, budgetLabel: opt.label, selectedBudgetComingSoon: opt.comingSoon ?? false })}>
+                        disabled={opt.comingSoon}
+                        onClick={() => {
+                          if (opt.comingSoon) return;
+                          setState(prev => ({
+                            ...prev,
+                            budgetValue: opt.value,
+                            budgetLabel: opt.label,
+                            selectedBudgetComingSoon: opt.comingSoon ?? false,
+                          }));
+                          // Auto advance to summary
+                          setTimeout(() => setState(prev => ({ ...prev, step: 6 })), 220);
+                        }}>
                         {opt.label}
                         {opt.comingSoon && <span className={s.budgetComingSoonTag}>Yakında</span>}
                       </button>
@@ -377,8 +463,7 @@ export default function WizardPage() {
                     ) : pricing ? (
                       <div className={s.summaryCard}>
                         <div className={s.summaryTitle}>{t("wizard.step6.title")}</div>
-                        
-                        {/* Dinamik Özet Tablosu */}
+
                         <div className={s.summaryInfoList}>
                           <div className={s.summaryInfoItem}>
                             <span className={s.summaryInfoLabel}>{t("wizard.step6.summaryRobot")}</span>
@@ -408,9 +493,9 @@ export default function WizardPage() {
                           <span className={s.summaryTotalLabel}>{t("wizard.step6.totalMonthly")}</span>
                           <span className={s.summaryTotalValue}>€{pricing.serverCostDisplay}/ay</span>
                         </div>
-                        
+
                         <p className={s.summaryTerms}>{t("wizard.step6.terms")}</p>
-                        
+
                         <button className={s.btnWizardSubmit}
                           style={{ width: "100%", marginTop: "1rem", justifyContent: "center" }}
                           onClick={handleSubmit} disabled={submitting}>
@@ -419,10 +504,10 @@ export default function WizardPage() {
                           )}
                           {!submitting && <ArrowRight size={16} />}
                         </button>
-                        
+
                         <p style={{ fontSize: "0.7rem", color: "var(--text-secondary)", textAlign: "center", marginTop: "0.75rem" }}>
-                          {pricing.stripeLink 
-                            ? t("wizard.step6.stripeRedirect") 
+                          {pricing.stripeLink
+                            ? t("wizard.step6.stripeRedirect")
                             : t("wizard.step6.contactRedirect")}
                         </p>
                       </div>
@@ -435,7 +520,7 @@ export default function WizardPage() {
             </>
           )}
 
-          {/* Navigation */}
+          {/* Navigation — only show back button; no Next button (auto-advance) */}
           {!submitDone && (
             <div className={s.wizardNav}>
               {state.step > 1 ? (
@@ -443,8 +528,14 @@ export default function WizardPage() {
                   <ArrowLeft size={16} /> {t("wizard.back")}
                 </button>
               ) : <div />}
-              {state.step < TOTAL && (
+              {/* Manual next only for step 3 when self-service is selected (can't auto-advance), and step 5 for CLASSIC */}
+              {state.step === 3 && state.managementType === "SELF_SERVICE" && (
                 <button className={s.btnWizardNext} onClick={goNext} disabled={!canNext()}>
+                  {t("wizard.next")} <ArrowRight size={16} />
+                </button>
+              )}
+              {state.step === 5 && state.robotId === "CLASSIC" && (
+                <button className={s.btnWizardNext} onClick={goNext}>
                   {t("wizard.next")} <ArrowRight size={16} />
                 </button>
               )}
@@ -532,11 +623,15 @@ function RobotCard({ robot, selected, t, onClick }: {
   robot: RobotDefinition; selected: boolean;
   t: (k: string) => string; onClick: () => void;
 }) {
+  const isClickable = !robot.comingSoon;
   return (
     <div
       className={`${s.robotOptionCard} ${selected ? s.optionCardSelected : ""} ${robot.comingSoon ? s.robotCardComingSoon : ""}`}
-      onClick={onClick} role="button" tabIndex={0}
-      onKeyDown={e => e.key === "Enter" && onClick()}>
+      onClick={isClickable ? onClick : undefined}
+      role={isClickable ? "button" : undefined}
+      tabIndex={isClickable ? 0 : -1}
+      style={{ cursor: robot.comingSoon ? "not-allowed" : "pointer", opacity: robot.comingSoon ? 0.55 : 1 }}
+      onKeyDown={e => isClickable && e.key === "Enter" && onClick()}>
       {robot.comingSoon && <span className={s.comingSoonBadge}>{t("wizard.comingSoonBadge")}</span>}
       {selected && !robot.comingSoon && (
         <div style={{ position: "absolute", top: "1rem", right: "1rem", width: 22, height: 22, borderRadius: "50%", background: "var(--accent-primary)", display: "flex", alignItems: "center", justifyContent: "center" }}>

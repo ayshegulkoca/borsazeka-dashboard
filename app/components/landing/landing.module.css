@@ -232,7 +232,174 @@
   width: 100%;
 }
 
-/* ---------- Hero ---------- */
+
+/* ---------- Hero Centered (V2) ---------- */
+.heroCentered {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: var(--bg-dark);
+  padding: 8rem 2rem 5rem;
+}
+
+.heroBackground {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.heroChartSvg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.6;
+}
+
+.heroChartLine1 {
+  stroke: rgba(16, 185, 129, 0.25);
+  animation: chartPulse 4s ease-in-out infinite alternate;
+}
+
+.heroChartLine2 {
+  stroke: rgba(16, 185, 129, 0.12);
+  animation: chartPulse 5s ease-in-out 1s infinite alternate;
+}
+
+.heroChartLine3 {
+  stroke: rgba(16, 185, 129, 0.07);
+  animation: chartPulse 6s ease-in-out 2s infinite alternate;
+}
+
+.heroChartDot {
+  animation: dotPulse 2.5s ease-in-out infinite;
+}
+
+@keyframes chartPulse {
+  0% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
+@keyframes dotPulse {
+  0%, 100% { r: 4; opacity: 0.4; }
+  50% { r: 6; opacity: 0.9; }
+}
+
+.heroNeuralNet {
+  position: absolute;
+  inset: 0;
+}
+
+.heroNeuralNode {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(16, 185, 129, 0.35);
+  box-shadow: 0 0 12px rgba(16, 185, 129, 0.4);
+  animation: nodeFloat 3s ease-in-out infinite alternate;
+}
+
+@keyframes nodeFloat {
+  0% { transform: translateY(0) scale(1); opacity: 0.3; }
+  100% { transform: translateY(-6px) scale(1.3); opacity: 0.7; }
+}
+
+.heroGlow1 {
+  position: absolute;
+  top: 20%;
+  left: 20%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.heroGlow2 {
+  position: absolute;
+  bottom: 10%;
+  right: 15%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.heroCenteredInner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 800px;
+  width: 100%;
+}
+
+.heroCenteredTitle {
+  font-size: clamp(2.2rem, 5vw, 4rem);
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+  color: var(--text-primary);
+  margin-bottom: 1.5rem;
+  text-wrap: balance;
+}
+
+.heroCenteredAccent {
+  color: var(--accent-primary);
+  display: inline;
+}
+
+.heroCenteredSubtitle {
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  line-height: 1.75;
+  color: var(--text-secondary);
+  max-width: 560px;
+  margin-bottom: 2.5rem;
+}
+
+.heroCenteredCTA {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 2.75rem;
+  border-radius: 14px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  background: var(--accent-primary);
+  color: #022c22;
+  transition: all 0.25s;
+  margin-bottom: 3.5rem;
+  box-shadow: 0 4px 24px rgba(16, 185, 129, 0.3);
+}
+
+.heroCenteredCTA:hover {
+  background: var(--accent-primary-hover);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(16, 185, 129, 0.5);
+}
+
+.heroCenteredStats {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+  padding: 1.5rem 3rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+}
+
+.heroStatDivider {
+  width: 1px;
+  height: 36px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* ---------- Old hero (keep for reference, removed from page) ---------- */
 .hero {
   padding-top: 10rem;
   padding-bottom: 8rem;
@@ -247,6 +414,7 @@
   gap: 4rem;
   align-items: center;
 }
+
 
 .heroBadge {
   display: inline-flex;
@@ -823,12 +991,29 @@
   }
 }
 
+
 @media (max-width: 768px) {
   .navLinks, .navActions {
     display: none;
   }
   .hamburger {
     display: flex;
+  }
+
+  .heroCentered {
+    padding: 7rem 1.5rem 4rem;
+    min-height: 90vh;
+  }
+
+  .heroCenteredStats {
+    flex-direction: column;
+    gap: 1.25rem;
+    padding: 1.25rem 1.75rem;
+  }
+
+  .heroStatDivider {
+    width: 40px;
+    height: 1px;
   }
 
   .heroInner {

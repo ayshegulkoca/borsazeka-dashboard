@@ -37,7 +37,7 @@ export default function Navbar() {
         {/* Center Links */}
         <ul className={styles.navLinks}>
           <li>
-            <a href="/#features">{t("navbar.features")}</a>
+            <Link href="/robotlar">{t("navbar.ourRobots")}</Link>
           </li>
           <li>
             <Link href="/urun-sec">{t("navbar.findProduct")}</Link>
@@ -96,9 +96,9 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       <div className={`${styles.mobileMenu} ${mobileOpen ? styles.open : ""}`}>
-        <a href="/#features" onClick={() => setMobileOpen(false)}>
-          {t("navbar.features")}
-        </a>
+        <Link href="/robotlar" onClick={() => setMobileOpen(false)}>
+          {t("navbar.ourRobots")}
+        </Link>
         <Link
           href="/urun-sec"
           onClick={() => setMobileOpen(false)}

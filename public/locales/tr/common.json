@@ -1,6 +1,7 @@
 {
   "navbar": {
     "features": "Özellikler",
+    "ourRobots": "Robotlarımız",
     "robots": "Robotlar",
     "findProduct": "Ürün Seç",
     "contact": "İletişim",
@@ -11,9 +12,12 @@
   },
   "hero": {
     "badge": "2015'ten beri yapay zeka ile borsa robotları",
+    "mainSlogan": "Borsa, yapay zeka ile buluştu:",
     "title": "Borsa, yapay zeka ile buluştu:",
     "titleAccent": "BorsaZeka!",
+    "subSlogan": "2015'ten beri yapay zeka ile borsa robotları üretiyoruz. Siz günlük hayatınıza devam ederken, robotlarımız piyasayı 7/24 takip eder.",
     "subtitle": "2015'ten beri yapay zeka ile borsa robotları üretiyoruz. Siz günlük hayatınıza devam ederken, robotlarımız piyasayı 7/24 takip eder.",
+    "ctaButton": "Size uygun robotu bulalım",
     "selectProduct": "Ürünü Seç",
     "exploreRobots": "Nasıl Çalışır?",
     "stat1Number": "+%34",
@@ -208,6 +212,22 @@
         "f4": "Sunucu kiralama zorunlu",
         "f5": "Geliştirme aşamasında — yakında aktif"
       },
+      "kriptoZeka": {
+        "name": "KriptoZeka",
+        "desc": "5.000$+ portföy için profesyonel kripto yönetimi — ana strateji",
+        "f1": "Ana KriptoZeka algoritması",
+        "f2": "%50 kâr paylaşımı modeli",
+        "f3": "7/24 uzman ekip yönetimi",
+        "f4": "Çoklu token desteği"
+      },
+      "kriptoZekaAscent": {
+        "name": "KriptoZeka Ascent",
+        "desc": "5.000$+ portföy için gelişmiş kripto yönetimi — yüksek performans",
+        "f1": "KriptoZeka Ascent gelişmiş stratejisi",
+        "f2": "%50 kâr paylaşımı modeli",
+        "f3": "7/24 uzman ekip yönetimi",
+        "f4": "Öncelikli portföy yönetimi"
+      },
       "kriptoPremium": {
         "name": "KriptoZeka & KriptoZeka Ascent",
         "desc": "5.000$+ portföy için profesyonel kripto yönetimi",
@@ -249,6 +269,17 @@
         "desc": "Kurumsal ölçekli robot — kendi sunucunuzda"
       }
     }
+  },
+  "robots": {
+    "pageTitle": "Robotlarımız — BorsaZeka",
+    "sectionTag": "Robot Kataloğu",
+    "sectionTitle": "Sizin İçin Çalışan Robotlar",
+    "sectionSubtitle": "Farklı piyasa koşullarına göre optimize edilmiş, kanıtlanmış stratejileri otomatik olarak uygulayan yapay zeka robotları.",
+    "ctaButton": "Bu Robotu Seç",
+    "comingSoon": "Pek Yakında",
+    "minBudget": "Min. Bütçe",
+    "maxCapacity": "Max. Kapasite",
+    "profitShare": "Kâr Payı"
   },
   "iletisim": {
     "pageTitle": "İletişim — BorsaZeka",

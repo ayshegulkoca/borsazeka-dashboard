@@ -212,6 +212,13 @@
   grid-template-columns: repeat(3, 1fr);
 }
 
+/* 50/50 split for Kripto / Forex */
+.optionGrid50 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
 .optionCard {
   border: 2px solid rgba(255, 255, 255, 0.08);
   border-radius: 14px;
