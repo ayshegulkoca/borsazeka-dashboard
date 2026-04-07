@@ -49,6 +49,7 @@ export default function WizardPage() {
   });
   const [notifyEmail, setNotifyEmail] = useState("");
   const [notifyDone, setNotifyDone] = useState(false);
+  const [notifySubmitting, setNotifySubmitting] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [submitDone, setSubmitDone] = useState(false);
 
@@ -92,13 +93,20 @@ export default function WizardPage() {
 
   const goNext = useCallback(() => {
     if (!canNext()) return;
+    // BIST → skip sub-market, go to management
     if (state.step === 1 && state.market === "BIST") { patch({ subMarket: "BIST", step: 3 }); return; }
+    // FOREX → skip management step (always Premium), go to robot selection
+    if (state.step === 2 && state.subMarket === "FOREX") { patch({ managementType: "PREMIUM", step: 4 }); return; }
     patch({ step: state.step + 1 });
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state]);
 
   const goBack = () => {
     if (state.step === 3 && state.market === "BIST") { patch({ step: 1 }); return; }
+    // Forex: step 4 → back to step 2 (skip management model step)
+    if (state.step === 4 && state.subMarket === "FOREX") { patch({ step: 2 }); return; }
+    // If at summary step and robot is comingSoon, go back to robot selection (skip budget step)
+    if (state.step === 6 && selectedRobot?.comingSoon) { patch({ step: 4 }); return; }
     if (state.step === 6 && state.robotId === "CLASSIC") { patch({ step: 4 }); return; }
     patch({ step: state.step - 1 });
   };
@@ -106,16 +114,15 @@ export default function WizardPage() {
   // ── Auto-advance helper ─────────────────────────────────────────────────────
   const autoAdvance = (updates: Partial<WState>) => {
     setState(prev => ({ ...prev, ...updates }));
-    // Use a small delay for smooth transition perception
     setTimeout(() => {
       setState(prev => {
-        // compute next step after applying the updates
         const next = prev.step + 1;
-        // Special BIST shortcut: after step 1 picking BIST, skip to step 3
-        const nextStep = (updates.market === "BIST" && prev.step === 1)
-          ? 3
-          : next;
-        return { ...prev, ...updates, step: nextStep };
+        // Special shortcuts
+        const isBIST = updates.market === "BIST" && prev.step === 1;
+        const isForex = updates.subMarket === "FOREX" && prev.step === 2;
+        const nextStep = isBIST ? 3 : isForex ? 4 : next;
+        const extraForex = isForex ? { managementType: "PREMIUM" as ManagementType } : {};
+        return { ...prev, ...updates, ...extraForex, step: nextStep };
       });
     }, 220);
   };
@@ -138,12 +145,13 @@ export default function WizardPage() {
     state.selectedBudgetComingSoon ||
     (pricing?.isComingSoon ?? false);
 
-  // ── submit ──────────────────────────────────────────────────────────────────
+  // ── submit (Stripe ödeme / iletişim yönlendirmesi) ────────────────────────
   const handleSubmit = async () => {
     if (submitting || isPaymentBlocked) return;
     setSubmitting(true);
 
     const payload = {
+      event: "wizard_payment_intent",
       market: state.market,
       subMarket: state.subMarket,
       managementType: state.managementType,
@@ -152,12 +160,19 @@ export default function WizardPage() {
       budgetValue: state.budgetValue ?? 0,
       budgetCurrency: state.budgetCurrency,
       budgetLabel: state.budgetLabel,
-      pricing,
+      pricing: pricing
+        ? {
+            serverCostEUR: pricing.serverCostEUR,
+            profitSharePercent: pricing.profitSharePercent,
+            totalMonthlyCostEUR: pricing.totalMonthlyCostEUR,
+            stripeLink: pricing.stripeLink,
+          }
+        : null,
       timestamp: new Date().toISOString(),
     };
 
     try {
-      // 1. Send to n8n webhook FIRST (if configured)
+      // 1. n8n webhook'una önce gönder
       const webhookUrl = process.env.NEXT_PUBLIC_N8N_WEBHOOK_URL;
       if (webhookUrl) {
         try {
@@ -167,19 +182,18 @@ export default function WizardPage() {
             body: JSON.stringify(payload),
           });
         } catch {
-          // Non-blocking: webhook failure should not stop Stripe redirect
           console.warn("n8n webhook failed, proceeding to Stripe");
         }
       }
 
-      // 2. Also capture internally
+      // 2. Dahili lead kaydı (non-blocking)
       await fetch("/api/leads", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
-      });
+      }).catch(() => {});
 
-      // 3. Stripe redirect via window.location.href
+      // 3. Stripe yönlendirmesi
       if (pricing?.stripeLink && !isPaymentBlocked) {
         window.location.href = pricing.stripeLink;
         return;
@@ -188,17 +202,48 @@ export default function WizardPage() {
       setSubmitDone(true);
     } catch (err) {
       console.error("Submit error:", err);
-      // Fallback to success message
       setSubmitDone(true);
     } finally {
       setSubmitting(false);
     }
   };
 
+  // ── Ön Kayıt — coming soon ürünler için n8n lead toplama ──────────────────
   const handleNotify = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!notifyEmail) return;
-    setNotifyDone(true);
+    if (!notifyEmail || notifySubmitting) return;
+    setNotifySubmitting(true);
+
+    const leadPayload = {
+      event: "wizard_pre_registration",
+      email: notifyEmail,
+      market: state.market,
+      subMarket: state.subMarket,
+      managementType: state.managementType,
+      robotId: state.robotId,
+      robotName: selectedRobot ? t(selectedRobot.nameKey) : state.robotId,
+      budgetLabel: state.budgetLabel,
+      timestamp: new Date().toISOString(),
+    };
+
+    try {
+      const webhookUrl = process.env.NEXT_PUBLIC_N8N_WEBHOOK_URL;
+      if (webhookUrl) {
+        await fetch(webhookUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(leadPayload),
+        }).catch(() => {});
+      }
+      await fetch("/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(leadPayload),
+      }).catch(() => {});
+    } finally {
+      setNotifySubmitting(false);
+      setNotifyDone(true);
+    }
   };
 
   // ── render ──────────────────────────────────────────────────────────────────
@@ -323,12 +368,21 @@ export default function WizardPage() {
                   <RobotCard key={robot.id} robot={robot}
                     selected={state.robotId === robot.id} t={t}
                     onClick={() => {
+                      const budgetCurrency = robot.market === "BIST" ? "TRY" : "USD";
                       if (robot.comingSoon) {
-                        // Non-clickable for coming soon
+                        // Coming soon: select robot and jump directly to lead-capture (step 6)
+                        setState(prev => ({
+                          ...prev,
+                          robotId: robot.id,
+                          budgetValue: null,
+                          budgetLabel: null,
+                          selectedBudgetComingSoon: false,
+                          budgetCurrency,
+                        }));
+                        setTimeout(() => setState(prev => ({ ...prev, step: 6 })), 220);
                         return;
                       }
-                      // Auto advance if not coming soon
-                      const budgetCurrency = robot.market === "BIST" ? "TRY" : "USD";
+                      // Active robot: advance normally to budget step
                       setState(prev => ({
                         ...prev,
                         robotId: robot.id,
@@ -337,14 +391,13 @@ export default function WizardPage() {
                         selectedBudgetComingSoon: false,
                         budgetCurrency,
                       }));
-                      setTimeout(() => {
-                        setState(prev => ({ ...prev, step: 5 }));
-                      }, 220);
+                      setTimeout(() => setState(prev => ({ ...prev, step: 5 })), 220);
                     }} />
                 ))}
               </div>
             </>
           )}
+
 
           {/* ── STEP 5 ── */}
           {state.step === 5 && (
@@ -410,8 +463,8 @@ export default function WizardPage() {
                   <p style={{ color: "var(--text-secondary)", lineHeight: 1.6, marginBottom: "1.5rem" }}>
                     En kısa sürede Telegram veya e-posta ile size ulaşacağız.
                   </p>
-                  <Link href="/iletisim" style={{ color: "var(--accent-primary)", fontWeight: 600 }}>
-                    İletişim sayfasına git →
+                  <Link href="/iletisim" style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem", color: "var(--accent-primary)", fontWeight: 600 }}>
+                    İletişim sayfasına git <ArrowRight size={15} />
                   </Link>
                 </div>
               ) : (
@@ -456,6 +509,7 @@ export default function WizardPage() {
                         robot={selectedRobot}
                         notifyEmail={notifyEmail}
                         notifyDone={notifyDone}
+                        notifySubmitting={notifySubmitting}
                         onEmailChange={setNotifyEmail}
                         onNotify={handleNotify}
                         t={t}
@@ -467,16 +521,23 @@ export default function WizardPage() {
                         <div className={s.summaryInfoList}>
                           <div className={s.summaryInfoItem}>
                             <span className={s.summaryInfoLabel}>{t("wizard.step6.summaryRobot")}</span>
-                            <span className={s.summaryInfoValue}>{selectedRobot ? t(selectedRobot.nameKey) : "—"}</span>
+                            <span className={s.summaryInfoValue}>{selectedRobot ? t(selectedRobot.nameKey) : ""}</span>
                           </div>
                           <div className={s.summaryInfoItem}>
                             <span className={s.summaryInfoLabel}>{t("wizard.step6.summaryBudget")}</span>
-                            <span className={s.summaryInfoValue}>{state.budgetLabel ?? "—"}</span>
+                            <span className={s.summaryInfoValue}>{state.budgetLabel ?? ""}</span>
                           </div>
                           <div className={s.summaryInfoItem}>
                             <span className={s.summaryInfoLabel}>{t("wizard.step6.summaryServer")}</span>
                             <span className={s.summaryInfoValue} style={{ color: "var(--accent-primary)", fontWeight: "bold" }}>
                               €{pricing.serverCostEUR}
+                            </span>
+                          </div>
+                          {/* Ödeme Detayı satırı */}
+                          <div className={s.summaryInfoItem}>
+                            <span className={s.summaryInfoLabel}>{t("wizard.step6.paymentDetail")}</span>
+                            <span className={s.summaryInfoValue} style={{ color: "var(--accent-primary)", fontWeight: 700 }}>
+                              €{pricing.serverCostDisplay} {t("wizard.step6.perMonth")}
                             </span>
                           </div>
                           <div className={s.summaryInfoItem}>
@@ -487,11 +548,18 @@ export default function WizardPage() {
                           </div>
                         </div>
 
+                        {/* KriptoZeka Self-Service: yıllık indirim bilgi notu */}
+                        {state.robotId === "KRIPTTOZEKA_SELF" && pricing.note && (
+                          <div style={{ marginTop: "0.75rem", padding: "0.65rem 0.85rem", borderRadius: 10, background: "rgba(139,92,246,0.07)", border: "1px solid rgba(139,92,246,0.2)", fontSize: "0.79rem", color: "#a78bfa", lineHeight: 1.5 }}>
+                            💡 {t("wizard.step6.kriptoSelfAnnualNote")}
+                          </div>
+                        )}
+
                         <div className={s.summaryDivider} style={{ margin: "1.5rem 0" }} />
 
                         <div className={s.summaryTotalRow}>
                           <span className={s.summaryTotalLabel}>{t("wizard.step6.totalMonthly")}</span>
-                          <span className={s.summaryTotalValue}>€{pricing.serverCostDisplay}/ay</span>
+                          <span className={s.summaryTotalValue}>€{pricing.serverCostDisplay} {t("wizard.step6.perMonth")}</span>
                         </div>
 
                         <p className={s.summaryTerms}>{t("wizard.step6.terms")}</p>
@@ -549,10 +617,11 @@ export default function WizardPage() {
 }
 
 // ─── ComingSoon Panel ─────────────────────────────────────────────────────────
-function ComingSoonPanel({ robot, notifyEmail, notifyDone, onEmailChange, onNotify, t }: {
+function ComingSoonPanel({ robot, notifyEmail, notifyDone, notifySubmitting, onEmailChange, onNotify, t }: {
   robot?: RobotDefinition;
   notifyEmail: string;
   notifyDone: boolean;
+  notifySubmitting?: boolean;
   onEmailChange: (v: string) => void;
   onNotify: (e: React.FormEvent) => void;
   t: (k: string) => string;
@@ -588,11 +657,13 @@ function ComingSoonPanel({ robot, notifyEmail, notifyDone, onEmailChange, onNoti
           <input type="email" className={s.notifyInput}
             placeholder={t("wizard.step6.notifyEmail")}
             value={notifyEmail} onChange={e => onEmailChange(e.target.value)} required />
-          <button type="submit" className={s.notifyBtn}>{t("wizard.step6.notifySubmit")}</button>
+          <button type="submit" className={s.notifyBtn} disabled={notifySubmitting}>
+            {notifySubmitting ? t("wizard.submitting") : t("wizard.step6.preRegisterBtn")}
+          </button>
         </form>
       ) : (
         <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", justifyContent: "center", color: "var(--accent-primary)", fontWeight: 600, fontSize: "0.875rem" }}>
-          <CheckCircle2 size={17} /> Kaydedildi — haberdar edeceğiz!
+          <CheckCircle2 size={17} /> Kaydedildi, en kısa sürede haberdar edeceğiz!
         </div>
       )}
     </div>
@@ -623,32 +694,39 @@ function RobotCard({ robot, selected, t, onClick }: {
   robot: RobotDefinition; selected: boolean;
   t: (k: string) => string; onClick: () => void;
 }) {
-  const isClickable = !robot.comingSoon;
   return (
     <div
       className={`${s.robotOptionCard} ${selected ? s.optionCardSelected : ""} ${robot.comingSoon ? s.robotCardComingSoon : ""}`}
-      onClick={isClickable ? onClick : undefined}
-      role={isClickable ? "button" : undefined}
-      tabIndex={isClickable ? 0 : -1}
-      style={{ cursor: robot.comingSoon ? "not-allowed" : "pointer", opacity: robot.comingSoon ? 0.55 : 1 }}
-      onKeyDown={e => isClickable && e.key === "Enter" && onClick()}>
-      {robot.comingSoon && <span className={s.comingSoonBadge}>{t("wizard.comingSoonBadge")}</span>}
-      {selected && !robot.comingSoon && (
-        <div style={{ position: "absolute", top: "1rem", right: "1rem", width: 22, height: 22, borderRadius: "50%", background: "var(--accent-primary)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-          <Check size={13} color="#022c22" />
-        </div>
-      )}
+      onClick={onClick}
+      role="button"
+      tabIndex={0}
+      style={{ cursor: "pointer", opacity: 1 }}
+      onKeyDown={e => e.key === "Enter" && onClick()}>
+      
       <div className={s.robotHeader}>
         <div className={s.robotNameWrap}>
           <span className={s.robotName}>{t(robot.nameKey)}</span>
           <span className={s.robotDesc}>{t(robot.descKey)}</span>
         </div>
-        {robot.maxCapacity > 0 && (
-          <span className={s.robotCapacity}>
-            {t("wizard.step4.capacity")}: {robot.maxCapacity} {t("wizard.step4.capacityUnit")}
-          </span>
-        )}
+        
+        {/* Right badges — stacked vertically to prevent overlap */}
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "0.5rem", flexShrink: 0 }}>
+          {selected && !robot.comingSoon && (
+            <div style={{ width: 22, height: 22, borderRadius: "50%", background: "var(--accent-primary)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <Check size={13} color="#022c22" />
+            </div>
+          )}
+          {robot.comingSoon && (
+             <span className={s.comingSoonBadge}>{t("wizard.comingSoonBadge")}</span>
+          )}
+          {robot.maxCapacity > 0 && (
+            <span className={s.robotCapacity}>
+              {t("wizard.step4.capacity")}: {robot.maxCapacity} {t("wizard.step4.capacityUnit")}
+            </span>
+          )}
+        </div>
       </div>
+
       <ul className={s.robotFeatures}>
         {robot.features.map((fKey: string) => (
           <li key={fKey}>

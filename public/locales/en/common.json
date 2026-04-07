@@ -34,20 +34,20 @@
     "feature1Title": "AI-Powered Market Analysis",
     "feature1Desc": "Our GPT-4o-based engine interprets live news feeds and technical data in real time, delivering the most accurate entry and exit signals.",
     "feature2Title": "Automated Position Management",
-    "feature2Desc": "Configure stop-loss, take-profit, and trailing stop rules for your robots — your portfolio stays protected around the clock.",
+    "feature2Desc": "Configure stop-loss, take-profit, and trailing stop rules for your robots. Your portfolio stays protected around the clock.",
     "feature3Title": "Multi-Layer Risk Management",
     "feature3Desc": "A built-in risk filter ensures no more than 5% of your account equity is at risk at any given time, preserving your capital.",
     "feature4Title": "Millisecond Order Execution",
     "feature4Desc": "Our exchange infrastructure routes orders directly via API for near-zero latency. Zero delays, zero missed opportunities.",
     "feature5Title": "Detailed Performance Reports",
-    "feature5Desc": "Review each robot's daily, weekly, and monthly performance through interactive dashboards — and let data drive your strategy decisions.",
+    "feature5Desc": "Review each robot's daily, weekly, and monthly performance through interactive dashboards, and let data drive your strategy decisions.",
     "feature6Title": "24/7 Monitoring & Alerts",
     "feature6Desc": "Your robots never sleep. When critical thresholds are breached, you'll receive instant SMS, email, or push notifications."
   },
   "robotsSection": {
     "sectionTag": "Robot Showcase",
     "sectionTitle": "Robots That Work for You",
-    "sectionSubtitle": "AI-driven trading robots, each optimized for distinct market conditions and proven strategies — fully automated.",
+    "sectionSubtitle": "AI-driven trading robots, each optimized for distinct market conditions and proven strategies. Fully automated.",
     "robot1Name": "DarkRoom Premium",
     "robot1Desc": "A quiet yet powerful momentum strategy for low-volatility market environments",
     "robot2Name": "Highway Premium",
@@ -62,7 +62,7 @@
     "title": "Which robot fits you?",
     "subtitle": "Our 6-step wizard calculates the right robot and pricing plan for you in seconds.",
     "button": "Start Product Selection",
-    "note": "Free — no card required"
+    "note": "Free, no card required"
   },
   "contact": {
     "sectionTag": "Contact",
@@ -113,9 +113,9 @@
     },
     "step3": {
       "title": "Choose your management model",
-      "premium": "Premium — We Manage It",
+      "premium": "Premium: We Manage It",
       "premiumDesc": "Our expert team manages the robot on your behalf 24/7. Profit-sharing model.",
-      "selfService": "Self-Service — You Manage It",
+      "selfService": "Self-Service: You Manage It",
       "selfServiceDesc": "You configure and manage the robot yourself.",
       "selfServiceComingSoon": "Self-Service mode is coming soon."
     },
@@ -146,12 +146,12 @@
       "profitShareNote": "Monthly from profit; no fee on losses",
       "profitShareNA": "Fixed monthly fee model",
       "totalMonthly": "Monthly Fixed Cost",
-      "comingSoonTitle": "This Product Is Coming Soon!",
-      "comingSoonDesc": "Self-Service mode is currently in development. Register now and be the first to know when it launches.",
+      "comingSoonTitle": "This Product Is In Development!",
+      "comingSoonDesc": "This product is not yet available. Leave your email and we'll notify you the moment it launches.",
       "notifyEmail": "Enter your email address",
       "notifySubmit": "Notify Me",
       "terms": "All prices are in Euro (€). Profit sharing is calculated monthly; no fees on losing periods.",
-      "subscribeBtn": "Subscribe Proceed to Payment",
+      "subscribeBtn": "Subscribe and Proceed to Payment",
       "contactBtn": "Submit Request & Subscribe",
       "stripeRedirect": "You will be redirected to the secure Stripe payment page.",
       "contactRedirect": "Our expert team will contact you for setup after your request.",
@@ -159,12 +159,17 @@
       "summaryBudget": "Budget Range:",
       "summaryServer": "Monthly Server Fee:",
       "summaryProfit": "Profit Sharing Rate:",
-      "outOfRange": "Your selected budget is not compatible with this robot. Please go back and select a different budget."
+      "outOfRange": "Your selected budget is not compatible with this robot. Please go back and select a different budget.",
+      "paymentDetail": "Payment Detail",
+      "perMonth": "/ month",
+      "preRegisterBtn": "Pre-Register",
+      "kriptoSelfAnnualNote": "Annual payment discount available: €116/yr · €340/yr · €564/yr (4 months free)",
+      "bistSelfAnnualNote": "Server fee varies by selected budget: €50 / €100 / €200 / €500 / €1,000 per month."
     },
     "robots": {
       "darkroom": {
         "name": "DarkRoom Premium",
-        "desc": "Low-volatility momentum strategy — quiet but powerful",
+        "desc": "Low-volatility momentum strategy, quiet but powerful",
         "f1": "Momentum strategy",
         "f2": "Max 40 client capacity",
         "f3": "Daily P&L reporting",
@@ -172,9 +177,9 @@
       },
       "highway": {
         "name": "Highway Premium",
-        "desc": "Speed-focused trend following — built for high-volume markets",
+        "desc": "Speed-focused trend following, built for high-volume markets",
         "f1": "Trend-following algorithm",
-        "f2": "Max 30 clients — exclusive",
+        "f2": "Max 30 clients, exclusive",
         "f3": "Real-time signals",
         "f4": "Live account monitoring"
       },
@@ -190,14 +195,14 @@
         "name": "Fabrika Premium",
         "desc": "Top-tier management model for institutional-scale capital",
         "f1": "Min. ₺5,000,000 starting capital",
-        "f2": "Max 20 clients — ultra exclusive",
+        "f2": "Max 20 clients, ultra exclusive",
         "f3": "Custom portfolio strategy",
         "f4": "iDeal program integration",
         "f5": "Priority account management"
       },
       "classic": {
         "name": "BorsaZeka Classic",
-        "desc": "A next-generation management model — launching very soon",
+        "desc": "A next-generation management model, launching very soon",
         "f1": "Innovative algorithmic management model",
         "f2": "Suitable for a wide range of budgets",
         "f3": "Automated risk control",
@@ -207,14 +212,14 @@
         "name": "Self-Service Package (BIST)",
         "desc": "Manage DarkRoom · TradeMate · Highway · Fabrika robots yourself",
         "f1": "All 4 robots: DarkRoom, TradeMate, Highway, Fabrika",
-        "f2": "No profit sharing — flat monthly fee",
+        "f2": "No profit sharing, flat monthly fee",
         "f3": "Apply your own trading strategy",
         "f4": "Server rental is mandatory",
-        "f5": "In development — coming soon"
+        "f5": "In development, coming soon"
       },
       "kriptoZeka": {
         "name": "KriptoZeka",
-        "desc": "Professional crypto management for $5,000+ portfolios — core strategy",
+        "desc": "Professional crypto management for $5,000+ portfolios, core strategy",
         "f1": "KriptoZeka core algorithm",
         "f2": "50% profit sharing model",
         "f3": "24/7 expert team management",
@@ -222,7 +227,7 @@
       },
       "kriptoZekaAscent": {
         "name": "KriptoZeka Ascent",
-        "desc": "Advanced crypto management for $5,000+ portfolios — high performance",
+        "desc": "Advanced crypto management for $5,000+ portfolios, high performance",
         "f1": "KriptoZeka Ascent advanced strategy",
         "f2": "50% profit sharing model",
         "f3": "24/7 expert team management",
@@ -238,7 +243,7 @@
       },
       "kriptoSelf": {
         "name": "KriptoZeka Ascent Self-Service",
-        "desc": "Manage your own crypto robot — start with a small budget",
+        "desc": "Manage your own crypto robot, start with a small budget",
         "f1": "Robot + mini server package",
         "f2": "Monthly or annual payment option",
         "f3": "4 months free with annual payment",
@@ -247,7 +252,7 @@
       "forexZeka": {
         "name": "ForexZeka",
         "desc": "Scalable algorithmic trading on currency pairs",
-        "f1": "+€10 per additional $500 — flexible pricing",
+        "f1": "+€10 per additional $500, flexible pricing",
         "f2": "Switches to 50% profit share above $5,000",
         "f3": "Currency pair optimization",
         "f4": "Max 25 client capacity"
@@ -258,7 +263,7 @@
     "pageTitle": "Our Robots — BorsaZeka",
     "sectionTag": "Robot Catalog",
     "sectionTitle": "Robots That Work for You",
-    "sectionSubtitle": "AI-driven trading robots, each optimized for distinct market conditions and proven strategies — fully automated.",
+    "sectionSubtitle": "AI-driven trading robots, each optimized for distinct market conditions and proven strategies. Fully automated.",
     "ctaButton": "Select This Robot",
     "comingSoon": "Coming Soon",
     "minBudget": "Min. Budget",

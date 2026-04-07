@@ -6,6 +6,7 @@ import { Activity } from "lucide-react";
 import { signIn } from "next-auth/react";
 import { useTranslation } from "react-i18next";
 import styles from "./landing.module.css";
+import MagneticButton from "./MagneticButton";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -71,15 +72,19 @@ export default function Navbar() {
             </button>
           </div>
 
-          <button
-            className={styles.btnGhost}
-            onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
-          >
-            {t("navbar.signIn")}
-          </button>
-          <Link href="/urun-sec" className={styles.btnSolid}>
-            {t("navbar.getStarted")}
-          </Link>
+          <MagneticButton strength={0.25}>
+            <button
+              className={styles.btnGhost}
+              onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
+            >
+              {t("navbar.signIn")}
+            </button>
+          </MagneticButton>
+          <MagneticButton strength={0.3}>
+            <Link href="/urun-sec" className={`${styles.btnSolid} ${styles.neonBorder}`}>
+              {t("navbar.getStarted")}
+            </Link>
+          </MagneticButton>
         </div>
 
         {/* Hamburger */}

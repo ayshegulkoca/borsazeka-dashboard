@@ -117,13 +117,52 @@ export const KRIPTO_SELF_TIERS: Array<{
   { minUSD: 2500, maxUSD: 5000, monthlyEUR: 67,  annualEUR: 564 },
 ];
 
-// ─── Stripe Ödeme Linkleri ────────────────────────────────────────────────────
+// ─── Stripe Ödeme Linkleri — BIST Premium (Sunucu Kademesine Göre) ────────────
 export const STRIPE_LINKS: Record<number, string> = {
-  30: "https://buy.stripe.com/eVq4gzgPlakr8i25Jz8IU01",
-  55: "https://buy.stripe.com/dRmdR99mT507aqa1tj8IU02",
-  95: "https://buy.stripe.com/9B69AT7eL64bfKu1tj8IU03",
+  // 30€ Power VPS
+  30:  "https://buy.stripe.com/eVq4gzgPlakr8i25Jz8IU01",
+  // 55€ Professional
+  55:  "https://buy.stripe.com/dRmdR99mT507aqa1tj8IU02",
+  // 95€ Expert
+  95:  "https://buy.stripe.com/9B69AT7eL64bfKu1tj8IU03",
+  // 240€ Elite
   240: "https://buy.stripe.com/4gM8wPeHddwDgOydc18IU04",
+  // 320€ Ultimate
   320: "https://buy.stripe.com/cNi6oHdD964baqa6ND8IU05",
+};
+
+// ─── Stripe Ödeme Linkleri — BIST Self-Service (Sunucu Kademesine Göre) ───────
+export const STRIPE_SELF_LINKS: Record<number, string> = {
+  // 0–100k TL → 50€
+  50:   "https://buy.stripe.com/7sYbJ142z8cj0PA1tj8IU06",
+  // 100k–300k TL → 100€
+  100:  "https://buy.stripe.com/6oU00j6aHdwD55Qfk98IU07",
+  // 300k–600k TL → 200€
+  200:  "https://buy.stripe.com/8x23cvbv10JR2XI1tj8IU08",
+  // 600k–3M TL → 500€ (Fabrika)
+  500:  "https://buy.stripe.com/bJe3cv0QnakrdCm6ND8IU09",
+  // 3M–5M TL → 1000€ (Fabrika)
+  1000: "https://buy.stripe.com/7sY3cv7eL3W3gOy0pf8IU0a",
+};
+
+// ─── Stripe Ödeme Linkleri — Forex Premium (Başlangıç Sermayesine Göre) ───────
+// Hazır; ForexZeka aktif edildiğinde calcForexZekaPrice() bu tabloyu kullanır.
+// 4000$+ için link yok → kullanıcı /iletisim'e yönlendirilir.
+export const STRIPE_FOREX_LINKS: Record<number, string> = {
+  // 500$ → 40€
+  500:  "https://buy.stripe.com/aFadR9eHddwD8i27RH8IU0d",
+  // 1000$ → 50€
+  1000: "https://buy.stripe.com/aFa8wP8iPeAHaqa5Jz8IU0e",
+  // 1500$ → 60€
+  1500: "https://buy.stripe.com/dRm6oHbv1bovdCm0pf8IU0f",
+  // 2000$ → 70€
+  2000: "https://buy.stripe.com/cNidR9dD9bov7dYeg58IU0g",
+  // 2500$ → 80€
+  2500: "https://buy.stripe.com/aFa4gzbv1eAH2XI1tj8IU0h",
+  // 3000$ → 90€
+  3000: "https://buy.stripe.com/5kQ4gzaqXgIPcyi3Br8IU0i",
+  // 3500$ → 100€
+  3500: "https://buy.stripe.com/28EaEX7eLakr69Udc18IU0j",
 };
 
 // ─── Hesaplama Fonksiyonları ─────────────────────────────────────────────────
@@ -160,7 +199,8 @@ export function calcBISTSelfPrice(budgetTL: number): PricingResult | null {
     profitSharePercent: 0,
     serverTier: `${tier.serverCostEUR}EUR` as ServerTier,
     totalMonthlyCostEUR: tier.serverCostEUR,
-    isComingSoon: true,
+    // isComingSoon kaldırıldı → BIST Self-Service artık aktif & ödeme alıyor
+    stripeLink: STRIPE_SELF_LINKS[tier.serverCostEUR],
     note: tier.note,
   };
 }
@@ -202,6 +242,9 @@ export function calcForexZekaPrice(budgetUSD: number): PricingResult | null {
     serverTier: tier.isVariable ? "VARIABLE" : `${tier.serverCostEUR}EUR` as ServerTier,
     totalMonthlyCostEUR: tier.serverCostEUR,
     isComingSoon: tier.comingSoon,
+    // Forex linkleri hazır; robot paymentBlocked=true iken ön yükleniyor
+    // 4000$+ için link yok → undefined döner (iletisim formu gösterilir)
+    stripeLink: tier.isVariable ? undefined : STRIPE_FOREX_LINKS[budgetUSD],
     note: tier.isVariable ? "5000$+ bütçede kâr paylaşımı modeline geçilir" : undefined,
   };
 }
@@ -358,24 +401,11 @@ export const ROBOTS: RobotDefinition[] = [
     descKey: "wizard.robots.kriptoZekaAscent.desc",
     market: "CRYPTO",
     managementType: "PREMIUM",
-    comingSoon: false,
-    paymentBlocked: false,
-    maxCapacity: 20,
-    minBudgetUSD: 5000,
-    features: ["wizard.robots.kriptoZekaAscent.f1","wizard.robots.kriptoZekaAscent.f2","wizard.robots.kriptoZekaAscent.f3","wizard.robots.kriptoZekaAscent.f4"],
-  },
-  // ── Kripto Premium: KriptoZeka + Ascent (combined legacy) ─────────────────
-  {
-    id: "KRIPTTOZEKA_PREMIUM",
-    nameKey: "wizard.robots.kriptoPremium.name",
-    descKey: "wizard.robots.kriptoPremium.desc",
-    market: "CRYPTO",
-    managementType: "PREMIUM",
-    comingSoon: true,
+    comingSoon: true,      // Pek Yakında
     paymentBlocked: true,
     maxCapacity: 20,
     minBudgetUSD: 5000,
-    features: ["wizard.robots.kriptoPremium.f1","wizard.robots.kriptoPremium.f2","wizard.robots.kriptoPremium.f3","wizard.robots.kriptoPremium.f4"],
+    features: ["wizard.robots.kriptoZekaAscent.f1","wizard.robots.kriptoZekaAscent.f2","wizard.robots.kriptoZekaAscent.f3","wizard.robots.kriptoZekaAscent.f4"],
   },
   // ── Kripto Self-Service: KriptoZeka Ascent (Pek Yakında, tıklanabilir) ────
   {
@@ -390,15 +420,15 @@ export const ROBOTS: RobotDefinition[] = [
     minBudgetUSD: 0,
     features: ["wizard.robots.kriptoSelf.f1","wizard.robots.kriptoSelf.f2","wizard.robots.kriptoSelf.f3","wizard.robots.kriptoSelf.f4"],
   },
-  // ── Forex Premium: ForexZeka ──────────────────────────────────────────────
+  // ── Forex Premium: ForexZeka (geliştirme aşamasında → Ön Kayıt) ────────────
   {
     id: "FOREXZEKA",
     nameKey: "wizard.robots.forexZeka.name",
     descKey: "wizard.robots.forexZeka.desc",
     market: "FOREX",
     managementType: "PREMIUM",
-    comingSoon: false,
-    paymentBlocked: false,
+    comingSoon: true,
+    paymentBlocked: true,   // Stripe yerine n8n Ön Kayıt
     maxCapacity: 25,
     minBudgetUSD: 500,
     features: ["wizard.robots.forexZeka.f1","wizard.robots.forexZeka.f2","wizard.robots.forexZeka.f3","wizard.robots.forexZeka.f4"],
@@ -477,7 +507,6 @@ export function getBudgetOptionsForRobot(robotId: RobotId | null): BudgetOption[
     case "HIGHWAY_SELF":
     case "TRADEMATE_SELF": return BUDGET_BIST_SELF_SHARED;
     case "FABRIKA_SELF":   return BUDGET_BIST_SELF_FABRIKA;
-    case "KRIPTTOZEKA_PREMIUM": return BUDGET_KRIPTO_PREMIUM;
     case "KRIPTTOZEKA":        return BUDGET_KRIPTO_PREMIUM;
     case "KRIPTTOZEKA_ASCENT": return BUDGET_KRIPTO_PREMIUM;
     case "KRIPTTOZEKA_SELF":    return BUDGET_KRIPTO_SELF;

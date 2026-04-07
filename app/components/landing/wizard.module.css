@@ -171,11 +171,39 @@
 }
 
 .stepCardInner {
-  background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
+  /* Glassmorphism */
+  background: rgba(10, 20, 15, 0.65);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(16, 185, 129, 0.12);
   border-radius: 20px;
   padding: 2rem;
   animation: fadeIn 0.25s ease;
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.35),
+    0 0 0 1px rgba(255, 255, 255, 0.03) inset;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Top-left neon gradient border accent */
+.stepCardInner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  background: linear-gradient(
+    135deg,
+    rgba(0, 255, 157, 0.05) 0%,
+    transparent 40%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.stepCardInner > * {
+  position: relative;
+  z-index: 1;
 }
 
 @keyframes fadeIn {
@@ -234,6 +262,9 @@
   border-color: rgba(16, 185, 129, 0.3);
   background: rgba(16, 185, 129, 0.04);
   transform: translateY(-2px);
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.25),
+    0 0 0 1px rgba(0, 255, 157, 0.08) inset;
 }
 
 .optionCardSelected {
@@ -300,17 +331,16 @@
 }
 
 .comingSoonBadge {
-  position: absolute;
-  top: 0.75rem;
-  right: 0.75rem;
+  position: relative; /* Changed from absolute */
   font-size: 0.65rem;
   font-weight: 700;
   letter-spacing: 0.06em;
   padding: 0.25rem 0.6rem;
   border-radius: 100px;
-  background: rgba(100, 116, 139, 0.15);
+  background: rgba(100, 116, 139, 0.1);
   color: var(--text-muted);
   border: 1px solid rgba(100, 116, 139, 0.2);
+  white-space: nowrap;
 }
 
 /* ── Robot Cards (Step 4) ────────────────────────────────────── */
@@ -327,6 +357,9 @@
 .robotOptionCard:hover:not(.optionCardDisabled) {
   border-color: rgba(16, 185, 129, 0.3);
   background: rgba(16, 185, 129, 0.04);
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.25),
+    0 0 0 1px rgba(0, 255, 157, 0.08) inset;
 }
 
 .robotOptionCard.optionCardSelected {
@@ -430,10 +463,32 @@
 }
 
 .summaryCard {
-  background: rgba(16, 185, 129, 0.04);
-  border: 1px solid rgba(16, 185, 129, 0.15);
+  background: rgba(7, 20, 14, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(16, 185, 129, 0.18);
   border-radius: 16px;
   padding: 1.5rem;
+  box-shadow:
+    0 4px 24px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(0, 255, 157, 0.06) inset;
+  position: relative;
+  overflow: hidden;
+}
+
+.summaryCard::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 60%;
+  background: linear-gradient(to bottom right, rgba(0, 255, 157, 0.04), transparent);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.summaryCard > * {
+  position: relative;
+  z-index: 1;
 }
 
 .summaryTitle {

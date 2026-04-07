@@ -113,9 +113,9 @@
     },
     "step3": {
       "title": "Robot yönetim modelini seçin",
-      "premium": "Premium — Biz Yönetelim",
+      "premium": "Premium: Biz Yönetelim",
       "premiumDesc": "Uzman ekibimiz robotu sizin adınıza 7/24 yönetir. Kâr paylaşımı modeliyle çalışır.",
-      "selfService": "Self-Service — Kendi Yönet",
+      "selfService": "Self-Service: Kendi Yönet",
       "selfServiceDesc": "Robotu kendiniz yapılandırır ve yönetirsiniz.",
       "selfServiceComingSoon": "Self-Service modeli çok yakında geliyor."
     },
@@ -146,12 +146,12 @@
       "profitShareNote": "Aylık kârdan; zararda alınmaz",
       "profitShareNA": "Aylık sabit ücret modeli",
       "totalMonthly": "Aylık Sabit Maliyet",
-      "comingSoonTitle": "Bu Ürün Pek Yakında!",
-      "comingSoonDesc": "Self-Service modeli şu an geliştirme aşamasında. Kayıt olun, yayına girdiğinde ilk siz haberdar olun.",
+      "comingSoonTitle": "Bu Ürün Geliştirme Aşamasında!",
+      "comingSoonDesc": "Bu ürün henüz hazır değil. E-posta adresinizi bırakın, yayına girdiğinde sizi ilk haberdar edelim.",
       "notifyEmail": "E-posta adresinizi girin",
       "notifySubmit": "Beni Haberdar Et",
       "terms": "Tüm fiyatlar Euro (€) cinsinden belirtilmiştir. Kâr paylaşımı aylık olarak hesaplanır; zararlı dönemlerde ücret alınmaz.",
-      "subscribeBtn": "Abone Ol Ödemeye Geç",
+      "subscribeBtn": "Abone Ol, Ödemeye Geç",
       "contactBtn": "Talebi Gönder ve Abone Ol",
       "stripeRedirect": "Güvenli Stripe ödeme sayfasına yönlendirileceksiniz.",
       "contactRedirect": "Talebiniz sonrası uzman ekibimiz kurulum için size ulaşacaktır.",
@@ -159,12 +159,17 @@
       "summaryBudget": "Bütçe Aralığı:",
       "summaryServer": "Aylık Sunucu Ücreti:",
       "summaryProfit": "Kâr Paylaşım Oranı:",
-      "outOfRange": "Seçtiğiniz bütçe bu robot için uygun değil. Lütfen geri gidin ve farklı bir bütçe seçin."
+      "outOfRange": "Seçtiğiniz bütçe bu robot için uygun değil. Lütfen geri gidin ve farklı bir bütçe seçin.",
+      "paymentDetail": "Ödeme Detayı",
+      "perMonth": "/ aylık",
+      "preRegisterBtn": "Ön Kayıt Yaptır",
+      "kriptoSelfAnnualNote": "Yıllık ödeme indirimi mevcut: 116€/yıl · 340€/yıl · 564€/yıl (4 ay bedava)",
+      "bistSelfAnnualNote": "Sunucu ücreti seçtiğiniz bütçeye göre değişir: 50€ / 100€ / 200€ / 500€ / 1.000€ aylık."
     },
     "robots": {
       "darkroom": {
         "name": "DarkRoom Premium",
-        "desc": "Düşük volatilite momentum stratejisi — sakin ama güçlü",
+        "desc": "Düşük volatilite momentum stratejisi, sakin ama güçlü",
         "f1": "Momentum stratejisi",
         "f2": "Max 40 müşteri kapasitesi",
         "f3": "Günlük P&L raporlama",
@@ -172,9 +177,9 @@
       },
       "highway": {
         "name": "Highway Premium",
-        "desc": "Hız odaklı trend takibi — yüksek hacimli piyasalar için",
+        "desc": "Hız odaklı trend takibi, yüksek hacimli piyasalar için",
         "f1": "Trend takip algoritması",
-        "f2": "Max 30 müşteri — eksklusif",
+        "f2": "Max 30 müşteri, eksklusif",
         "f3": "Gerçek zamanlı sinyal",
         "f4": "Anlık hesap takibi"
       },
@@ -190,14 +195,14 @@
         "name": "Fabrika Premium",
         "desc": "Kurumsal ölçekte sermaye için üst segment yönetim modeli",
         "f1": "Min. 5.000.000 ₺ başlangıç sermayesi",
-        "f2": "Max 20 müşteri — ultra eksklusif",
+        "f2": "Max 20 müşteri, ultra eksklusif",
         "f3": "Özel portföy stratejisi",
         "f4": "iDeal program entegrasyonu",
         "f5": "Öncelikli hesap yönetimi"
       },
       "classic": {
         "name": "BorsaZeka Classic",
-        "desc": "Yeni nesil bir yönetim modeli — çok yakında piyasaya çıkıyor",
+        "desc": "Yeni nesil bir yönetim modeli, çok yakında piyasaya çıkıyor",
         "f1": "Yenilikçi algoritmik yönetim modeli",
         "f2": "Geniş bütçe aralığına uygun yapı",
         "f3": "Otomatik risk kontrolü",
@@ -207,14 +212,14 @@
         "name": "Self-Service Paketi (BIST)",
         "desc": "DarkRoom · TradeMate · Highway · Fabrika robotlarını kendiniz yönetin",
         "f1": "DarkRoom, TradeMate, Highway, Fabrika 4 robot birden",
-        "f2": "Kâr paylaşımı yok — sabit aylık ücret",
+        "f2": "Kâr paylaşımı yok, sabit aylık ücret",
         "f3": "Kendi stratejinizi uygulayın",
         "f4": "Sunucu kiralama zorunlu",
-        "f5": "Geliştirme aşamasında — yakında aktif"
+        "f5": "Geliştirme aşamasında, yakında aktif"
       },
       "kriptoZeka": {
         "name": "KriptoZeka",
-        "desc": "5.000$+ portföy için profesyonel kripto yönetimi — ana strateji",
+        "desc": "5.000$+ portföy için profesyonel kripto yönetimi, ana strateji",
         "f1": "Ana KriptoZeka algoritması",
         "f2": "%50 kâr paylaşımı modeli",
         "f3": "7/24 uzman ekip yönetimi",
@@ -222,7 +227,7 @@
       },
       "kriptoZekaAscent": {
         "name": "KriptoZeka Ascent",
-        "desc": "5.000$+ portföy için gelişmiş kripto yönetimi — yüksek performans",
+        "desc": "5.000$+ portföy için gelişmiş kripto yönetimi, yüksek performans",
         "f1": "KriptoZeka Ascent gelişmiş stratejisi",
         "f2": "%50 kâr paylaşımı modeli",
         "f3": "7/24 uzman ekip yönetimi",
@@ -238,7 +243,7 @@
       },
       "kriptoSelf": {
         "name": "KriptoZeka Ascent Self-Service",
-        "desc": "Kendi kripto robotunuzu yönetin — düşük sermayeden başlayın",
+        "desc": "Kendi kripto robotunuzu yönetin, düşük sermayeden başlayın",
         "f1": "Robot + mini sunucu paketi",
         "f2": "Aylık veya yıllık ödeme seçeneği",
         "f3": "Yıllık ödemede 4 ay bedava",
@@ -258,15 +263,15 @@
       },
       "highwaySelf": {
         "name": "Highway (Self-Service)",
-        "desc": "Yüksek hızlı trend takibi — kendi yönetiminizde"
+        "desc": "Yüksek hızlı trend takibi, kendi yönetiminizde"
       },
       "trademateSelf": {
         "name": "TradeMate (Self-Service)",
-        "desc": "Gelişmiş strateji motoru — sabit ücretli model"
+        "desc": "Gelişmiş strateji motoru, sabit ücretli model"
       },
       "fabrikaSelf": {
         "name": "Fabrika (Self-Service)",
-        "desc": "Kurumsal ölçekli robot — kendi sunucunuzda"
+        "desc": "Kurumsal ölçekli robot, kendi sunucunuzda"
       }
     }
   },
