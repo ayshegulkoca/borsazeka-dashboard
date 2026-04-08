@@ -1,0 +1,389 @@
+/* ============================================================
+   GlobalFooter — Premium SaaS/Fintech Footer v2
+   Design: Glassmorphism 2.0 + Neon + Floating cards
+   ============================================================ */
+
+.footer {
+  position: relative;
+  background: #050c08;
+  border-top: 1px solid rgba(0, 255, 157, 0.06);
+  overflow: hidden;
+}
+
+/* ── Ambient top glow ── */
+.footer::before {
+  content: '';
+  position: absolute;
+  top: -180px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 900px;
+  height: 360px;
+  background: radial-gradient(ellipse, rgba(0, 255, 157, 0.05) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Watermark ── */
+.watermark {
+  position: absolute;
+  top: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: clamp(4rem, 14vw, 11rem);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  /* 0.014 ≈ opacity 1.4% — purely decorative, never overlaps cards */
+  color: rgba(255, 255, 255, 0.014);
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+  /* z-index must stay below .inner (z-index: 1) */
+  z-index: 0;
+}
+
+/* ── Content wrapper ── */
+.inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 4rem 2rem 2.5rem;
+}
+
+/* ── Main block: CTA + Cards in one container ── */
+.mainBlock {
+  margin-bottom: 3rem;
+}
+
+/* ── CTA Banner ── */
+.ctaBanner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 1.75rem 2.5rem;
+  margin-bottom: 1.25rem;
+  border-radius: 18px;
+  background: rgba(0, 255, 157, 0.028);
+  border: 1px solid rgba(0, 255, 157, 0.14);
+  box-shadow:
+    0 0 0 1px rgba(0, 255, 157, 0.03) inset,
+    0 0 30px rgba(0, 255, 157, 0.05),
+    0 6px 30px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  flex-wrap: wrap;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Green shimmer line at top of CTA */
+.ctaBanner::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0, 255, 157, 0.4), transparent);
+}
+
+.ctaBannerText {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.ctaBannerLabel {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #00FF9D;
+  opacity: 0.75;
+}
+
+.ctaBannerTitle {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  letter-spacing: -0.01em;
+}
+
+.ctaBannerBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.875rem;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  background: #00FF9D;
+  color: #022c22;
+  white-space: nowrap;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  flex-shrink: 0;
+  box-shadow: 0 4px 20px rgba(0, 255, 157, 0.3);
+  letter-spacing: -0.01em;
+}
+
+.ctaBannerBtn:hover {
+  transform: translateX(5px) translateY(-1px);
+  box-shadow: 0 8px 36px rgba(0, 255, 157, 0.5);
+  background: #00FF9D;
+  filter: brightness(1.08);
+}
+
+/* ── Channel Cards Grid ── */
+.channelGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+/* Mobile carousel */
+@media (max-width: 768px) {
+  .channelGrid {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 0.875rem;
+    padding-bottom: 0.75rem;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .channelGrid::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* ── Single Channel Card ── */
+.channelCard {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem 1.5rem;
+  border-radius: 16px;
+  background: rgba(10, 10, 10, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  box-shadow:
+    0 4px 24px rgba(0, 0, 0, 0.35),
+    0 1px 0 rgba(255, 255, 255, 0.04) inset;
+  overflow: hidden;
+  /* Mobile snap */
+  scroll-snap-align: start;
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .channelCard {
+    min-width: 265px;
+  }
+}
+
+/* Gradient overlay on hover */
+.channelCard::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(0, 255, 157, 0.05) 0%, transparent 65%);
+  pointer-events: none;
+  transition: opacity 0.3s;
+  opacity: 0;
+}
+
+/* Bottom neon glow on hover */
+.channelCard::after {
+  content: '';
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70%;
+  height: 40px;
+  background: radial-gradient(ellipse, rgba(0, 255, 157, 0.35) 0%, transparent 70%);
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+  opacity: 0;
+  filter: blur(8px);
+}
+
+.channelCard:hover {
+  border-color: rgba(0, 255, 157, 0.22);
+  transform: translateY(-5px);
+  box-shadow:
+    0 0 40px rgba(0, 255, 157, 0.12),
+    0 20px 50px rgba(0, 0, 0, 0.5),
+    0 1px 0 rgba(255, 255, 255, 0.06) inset;
+}
+
+.channelCard:hover::before {
+  opacity: 1;
+}
+
+.channelCard:hover::after {
+  opacity: 1;
+}
+
+/* ── Icon container ── */
+.iconWrap {
+  position: relative;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.iconWrapInner {
+  position: absolute;
+  inset: -1px;
+  border-radius: 50%;
+  z-index: -1;
+}
+
+.cardBody {
+  flex: 1;
+  min-width: 0;
+}
+
+.cardLabel {
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: #64748b;
+  margin-bottom: 0.2rem;
+}
+
+.cardHandle {
+  font-size: 1rem;
+  font-weight: 700;
+  font-family: 'SF Mono', 'Fira Code', ui-monospace, monospace;
+  letter-spacing: -0.01em;
+}
+
+.cardArrow {
+  color: #475569;
+  flex-shrink: 0;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.2s;
+}
+
+.channelCard:hover .cardArrow {
+  transform: translate(4px, -4px);
+  color: rgba(0, 255, 157, 0.6);
+}
+
+/* ── Footer bar ── */
+.footerBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Left: logo + legal links together */
+.footerLeft {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #cbd5e1;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.logo:hover {
+  color: #f1f5f9;
+}
+
+.navLinks {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.25rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.navLinks a {
+  font-size: 0.78rem;
+  color: #64748b;
+  transition: color 0.2s;
+}
+
+.navLinks a:hover {
+  color: #94a3b8;
+}
+
+.legalLinks {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.legalLinks a {
+  font-size: 0.78rem;
+  color: rgba(0, 255, 157, 0.55);
+  transition: color 0.2s;
+}
+
+.legalLinks a:hover {
+  color: #00FF9D;
+}
+
+.copyright {
+  font-size: 0.72rem;
+  color: #475569;
+  flex-shrink: 0;
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .ctaBanner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.25rem;
+    padding: 1.5rem;
+  }
+  .ctaBannerBtn {
+    width: 100%;
+    justify-content: center;
+  }
+  .footerBar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.25rem;
+  }
+  .footerLeft {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+}

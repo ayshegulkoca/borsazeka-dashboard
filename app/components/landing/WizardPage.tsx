@@ -7,7 +7,7 @@ import {
   ArrowLeft, ArrowRight, Check, Globe, MapPin,
   Users, Lock, Bot, CheckCircle2, Send, ExternalLink,
 } from "lucide-react";
-import { useTranslation } from "react-i18next";
+import { useTranslation, Trans } from "react-i18next";
 import {
   ROBOTS,
   getBudgetOptionsForRobot,
@@ -572,6 +572,17 @@ export default function WizardPage() {
                           )}
                           {!submitting && <ArrowRight size={16} />}
                         </button>
+
+                        <div style={{ fontSize: "0.75rem", color: "var(--text-muted)", textAlign: "center", marginTop: "1rem" }}>
+                          <Trans
+                            i18nKey="wizard.step6.agreementNote"
+                            t={t}
+                            components={{
+                              linkTerms: <Link href="/kullanim-kosullari" style={{ color: "var(--accent-primary)", textDecoration: "underline" }} />,
+                              linkPrivacy: <Link href="/gizlilik-politikasi" style={{ color: "var(--accent-primary)", textDecoration: "underline" }} />,
+                            }}
+                          />
+                        </div>
 
                         <p style={{ fontSize: "0.7rem", color: "var(--text-secondary)", textAlign: "center", marginTop: "0.75rem" }}>
                           {pricing.stripeLink

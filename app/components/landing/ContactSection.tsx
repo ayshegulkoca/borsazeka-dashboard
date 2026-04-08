@@ -106,6 +106,8 @@ export default function ContactSection() {
             <li><Link href="/urun-sec">{t("footer.findProduct")}</Link></li>
             <li><Link href="/surec">{t("footer.howItWorks")}</Link></li>
             <li><Link href="/iletisim">{t("footer.contact")}</Link></li>
+            <li><Link href="/gizlilik-politikasi">{t("legal.privacy.title")}</Link></li>
+            <li><Link href="/kullanim-kosullari">{t("legal.terms.title")}</Link></li>
           </ul>
           <span className={styles.footerCopy}>{t("footer.copyright")}</span>
         </div>

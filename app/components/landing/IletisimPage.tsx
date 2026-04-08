@@ -1,178 +1,111 @@
 "use client";
 
-import Link from "next/link";
-import { Activity, ExternalLink, Send, ArrowRight } from "lucide-react";
+import { MapPin, ExternalLink } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import styles from "./landing.module.css";
-
-function XIcon({ size = 22, color = "currentColor" }: { size?: number; color?: string }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill={color} aria-hidden="true">
-      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.253 5.622L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z" />
-    </svg>
-  );
-}
+import s from "./iletisim.module.css";
 
 export default function IletisimPage() {
   const { t } = useTranslation("common");
 
-  const channels = [
-    {
-      id: "twitter",
-      labelKey: "iletisim.twitterLabel",
-      handle: "@DH_Altin",
-      url: "https://www.x.com/DH_Altin",
-      color: "#1d9bf0",
-      bg: "rgba(29,155,240,0.08)",
-      border: "rgba(29,155,240,0.2)",
-      renderIcon: (color: string) => <XIcon size={22} color={color} />,
-    },
-    {
-      id: "telegram-dm",
-      labelKey: "iletisim.telegramDmLabel",
-      handle: "@semiharslan",
-      url: "https://t.me/semiharslan",
-      color: "#26a5e4",
-      bg: "rgba(38,165,228,0.08)",
-      border: "rgba(38,165,228,0.2)",
-      renderIcon: (color: string) => <Send size={22} color={color} />,
-    },
-    {
-      id: "telegram-channel",
-      labelKey: "iletisim.telegramChannelLabel",
-      handle: "@BorsaZekaCom",
-      url: "https://t.me/BorsaZekaCom",
-      color: "#34d399",
-      bg: "rgba(52,211,153,0.08)",
-      border: "rgba(52,211,153,0.2)",
-      renderIcon: (color: string) => <Send size={22} color={color} />,
-    },
-  ];
-
-  const reasons = [
-    t("iletisim.reason1"),
-    t("iletisim.reason2"),
-    t("iletisim.reason3"),
-    t("iletisim.reason4"),
-  ];
-
   return (
-    <main style={{ minHeight: "100vh", paddingTop: "80px" }}>
-      {/* Hero */}
-      <section className={styles.section} style={{ paddingBottom: "3rem" }}>
-        <div className={styles.container}>
-          <div className={styles.sectionHeader}>
-            <span className={styles.sectionTag}>{t("iletisim.tag")}</span>
-            <h1 className={styles.sectionTitle}>{t("iletisim.title")}</h1>
-            <p className={styles.sectionSubtitle}>{t("iletisim.subtitle")}</p>
-          </div>
+    <div className={s.container}>
+      <section className={s.hero} aria-label="İletişim">
+        {/* Subtle grid background */}
+        <div className={s.grid} aria-hidden="true" />
+        {/* Ambient glow blob */}
+        <div className={s.glow} aria-hidden="true" />
 
-          {/* Channel Cards */}
-          <div className={styles.contactGrid}>
-            {channels.map((ch) => (
-              <a
-                key={ch.id}
-                href={ch.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.contactCard}
-                style={{ background: ch.bg, borderColor: ch.border }}
-              >
-                <div
-                  className={styles.contactCardIconWrap}
-                  style={{ background: ch.bg, borderColor: ch.border }}
-                >
-                  {ch.renderIcon(ch.color)}
-                </div>
-                <div className={styles.contactCardBody}>
-                  <div className={styles.contactCardLabel}>{t(ch.labelKey)}</div>
-                  <div className={styles.contactCardHandle} style={{ color: ch.color }}>
-                    {ch.handle}
-                  </div>
-                </div>
-                <ExternalLink size={16} className={styles.contactCardArrow} />
+        <div className={s.inner}>
+          {/* ── Left: Text ── */}
+          <div className={s.left}>
+            <span className={s.tag}>{t("iletisim.tag")}</span>
+            <h1 className={s.title}>{t("iletisim.title")}</h1>
+            <p className={s.subtitle}>
+              Sorularınız mı var? Uzman ekibimiz ve topluluğumuzla 7/24 iletişimde kalın.
+            </p>
+
+            {/* Quick-access links */}
+            <div className={s.quickLinks}>
+              <a href="https://www.x.com/DH_Altin" target="_blank" rel="noopener noreferrer" className={s.quickLink}>
+                <span className={s.quickDot} style={{ background: "#1d9bf0" }} />
+                Twitter / X — @DH_Altin
               </a>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Why Contact */}
-      <section className={`${styles.section} ${styles.featuresSection}`} style={{ paddingTop: "3rem" }}>
-        <div className={styles.container}>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "3rem", alignItems: "center" }}>
-            <div>
-              <span className={styles.sectionTag}>{t("iletisim.whyContact")}</span>
-              <h2 className={styles.sectionTitle} style={{ textAlign: "left", marginTop: "0.5rem" }}>
-                {t("iletisim.title")}
-              </h2>
-              <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "0.875rem", marginTop: "1.5rem" }}>
-                {reasons.map((r, i) => (
-                  <li key={i} style={{ display: "flex", alignItems: "flex-start", gap: "0.75rem", fontSize: "0.9rem", color: "var(--text-secondary)" }}>
-                    <span style={{
-                      width: 22, height: 22, borderRadius: "50%",
-                      background: "rgba(16,185,129,0.15)",
-                      border: "1px solid rgba(16,185,129,0.3)",
-                      display: "flex", alignItems: "center", justifyContent: "center",
-                      fontSize: "0.65rem", fontWeight: 700, color: "var(--accent-primary)",
-                      flexShrink: 0, marginTop: 2,
-                    }}>
-                      {i + 1}
-                    </span>
-                    {r}
-                  </li>
-                ))}
-              </ul>
+              <a href="https://t.me/semiharslan" target="_blank" rel="noopener noreferrer" className={s.quickLink}>
+                <span className={s.quickDot} style={{ background: "#26a5e4" }} />
+                Telegram — @semiharslan
+              </a>
+              <a href="https://t.me/BorsaZekaCom" target="_blank" rel="noopener noreferrer" className={s.quickLink}>
+                <span className={s.quickDot} style={{ background: "#00FF9D" }} />
+                Kanal — @BorsaZekaCom
+              </a>
             </div>
+          </div>
 
-            {/* Wizard CTA card */}
-            <div style={{
-              background: "linear-gradient(135deg, #07200f 0%, #0a2d16 100%)",
-              border: "1px solid rgba(16,185,129,0.2)",
-              borderRadius: 20,
-              padding: "2rem",
-              textAlign: "center",
-            }}>
-              <div style={{ fontSize: "2.5rem", marginBottom: "1rem" }}></div>
-              <h3 style={{ fontSize: "1.2rem", fontWeight: 700, color: "var(--text-primary)", marginBottom: "0.75rem" }}>
-                {t("wizardCta.title")}
-              </h3>
-              <p style={{ fontSize: "0.875rem", color: "var(--text-secondary)", lineHeight: 1.6, marginBottom: "1.5rem" }}>
-                {t("wizardCta.subtitle")}
-              </p>
-              <Link
-                href="/urun-sec"
-                style={{
-                  display: "inline-flex", alignItems: "center", gap: "0.5rem",
-                  padding: "0.875rem 1.75rem", borderRadius: 10,
-                  background: "var(--accent-primary)", color: "#022c22",
-                  fontWeight: 700, fontSize: "0.9rem", transition: "all 0.2s",
-                }}
-              >
-                {t("iletisim.wizardCta")}
-                <ArrowRight size={16} />
-              </Link>
+          {/* ── Right: Abstract visual ── */}
+          <div className={s.right} aria-hidden="true">
+            {/* Outer ring */}
+            <div className={s.sphere}>
+              <div className={s.sphereRing1} />
+              <div className={s.sphereRing2} />
+              <div className={s.sphereRing3} />
+              {/* Core */}
+              <div className={s.sphereCore}>
+                <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="rgba(0,255,157,0.85)" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
+                  <polyline points="16 7 22 7 22 13" />
+                </svg>
+              </div>
+              {/* Orbiting dots */}
+              <div className={s.orbit1}><div className={s.orbitDot} /></div>
+              <div className={s.orbit2}><div className={s.orbitDot} style={{ background: "#26a5e4" }} /></div>
+              <div className={s.orbit3}><div className={s.orbitDot} style={{ background: "#1d9bf0" }} /></div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className={styles.footer}>
-        <div className={styles.footerInner}>
-          <div className={styles.footerLogo}>
-            <Activity size={16} color="var(--accent-primary)" />
-            BorsaZeka
+      {/* ── Office Section ── */}
+      <section className={s.officeSection}>
+        {/* Glow behind the map/address */}
+        <div className={s.officeGlow} aria-hidden="true" />
+        
+        <div className={s.officeInner}>
+          <div className={s.addressBlock}>
+            <div className={s.pinIcon}>
+              <MapPin size={32} />
+            </div>
+            <h2 className={s.officeTitle}>{t("iletisim.globalHeadquarters")}</h2>
+            <address className={s.officeAddress}>
+              Harju maakond, Tallinn, Lasnamäe linnaosa,<br />
+              Lõõtsa tn 2a, 11415, ESTONIA
+            </address>
           </div>
-          <ul className={styles.footerLinks}>
-            <li><a href="/#features">{t("footer.features")}</a></li>
-            <li><Link href="/urun-sec">{t("footer.findProduct")}</Link></li>
-            <li><Link href="/surec">{t("footer.howItWorks")}</Link></li>
-            <li><Link href="/iletisim">{t("footer.contact")}</Link></li>
-          </ul>
-          <span className={styles.footerCopy}>{t("footer.copyright")}</span>
+
+          <div className={s.mapFrame}>
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2030.569502934063!2d24.8028!3d59.4218!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4692eb49e2df95e9%3A0xe7a5c898c8c50ac6!2zTMO1w7RzYSAyYSwgMTE0MTUgVGFsbGlubiwgRXN0b255YQ!5e0!3m2!1sen!2str!4v1712570000000!5m2!1sen!2str"
+              width="100%"
+              height="450"
+              style={{ border: 0 }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              className={s.mapIframe}
+              title="BorsaZeka Office Location"
+            ></iframe>
+          </div>
+
+          <a 
+            href="https://maps.google.com/?q=Lõõtsa+tn+2a,+11415+Tallinn,+Estonia" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className={s.enlargeMap}
+          >
+            <ExternalLink size={16} />
+            {t("iletisim.enlargeMap")}
+          </a>
         </div>
-      </footer>
-    </main>
+      </section>
+    </div>
   );
 }

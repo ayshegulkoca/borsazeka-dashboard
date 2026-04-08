@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Navbar from "./components/landing/Navbar";
 import HeroSection from "./components/landing/HeroSection";
 import FeatureGrid from "./components/landing/FeatureGrid";
-import ContactSection from "./components/landing/ContactSection";
 
 export const metadata: Metadata = {
   title: "BorsaZeka — Borsa, Yapay Zeka ile Buluştu",
@@ -16,7 +15,6 @@ export default function LandingPage() {
       <Navbar />
       <HeroSection />
       <FeatureGrid />
-      <ContactSection />
     </>
   );
 }

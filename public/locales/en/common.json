@@ -164,7 +164,8 @@
       "perMonth": "/ month",
       "preRegisterBtn": "Pre-Register",
       "kriptoSelfAnnualNote": "Annual payment discount available: €116/yr · €340/yr · €564/yr (4 months free)",
-      "bistSelfAnnualNote": "Server fee varies by selected budget: €50 / €100 / €200 / €500 / €1,000 per month."
+      "bistSelfAnnualNote": "Server fee varies by selected budget: €50 / €100 / €200 / €500 / €1,000 per month.",
+      "agreementNote": "By subscribing, you agree to the <linkTerms>Terms of Service</linkTerms> and <linkPrivacy>Privacy Policy</linkPrivacy>."
     },
     "robots": {
       "darkroom": {
@@ -283,7 +284,9 @@
     "reason1": "Questions about the product wizard",
     "reason2": "Budget and robot selection consultancy",
     "reason3": "Technical support and issue reporting",
-    "reason4": "Partnership and API inquiries"
+    "reason4": "Partnership and API inquiries",
+    "globalHeadquarters": "Global Headquarters",
+    "enlargeMap": "Enlarge Map"
   },
   "surec": {
     "backLink": "Home",
@@ -380,5 +383,173 @@
     "mockReportTitle": "Daily Report — T2 Overall",
     "mockReportFooter": "Published on Telegram & Twitter",
     "client": "Client"
+  },
+  "legal": {
+    "privacy": {
+      "title": "Privacy Policy",
+      "lastUpdated": "April 7, 2026",
+      "sections": [
+        {
+          "id": "intro",
+          "title": "Introduction",
+          "content": "This Privacy Policy explains how BorsaZeka OÜ (“we”, “us”, or “our”) collects, stores, processes, and protects personal and technical information related to its users (“you”, “Customer”, or “User”) in connection with the use of our algorithmic trading robots, server hosting services, and associated software products (collectively, the “Services”)."
+        },
+        {
+          "id": "sec1",
+          "title": "1. Information We Collect",
+          "content": "We may collect the following categories of information:",
+          "items": [
+            "Account Data: Name, email address, billing information, country of residence.",
+            "Technical Data: IP address, server usage, access logs, API key activity.",
+            "Sensitive Data: Encrypted API keys, authentication tokens (stored securely via Vault infrastructure).",
+            "Communication Data: Emails, support requests, chat records for customer service purposes."
+          ]
+        },
+        {
+          "id": "sec2",
+          "title": "2. How We Use Your Data",
+          "content": "We process your data for the following purposes:",
+          "items": [
+            "Provisioning and maintenance of your server and trading bot access",
+            "Billing, invoicing, and subscription management",
+            "Security, fraud prevention, and abuse detection",
+            "Compliance with legal obligations and audit requirements",
+            "Customer support and technical troubleshooting",
+            "Improving service functionality and performance analytics"
+          ]
+        },
+        {
+          "id": "sec3",
+          "title": "3. Legal Grounds for Processing",
+          "content": "Our data processing activities are based on:",
+          "items": [
+            "Contractual necessity: To deliver the Services you’ve subscribed to",
+            "Legal obligations: Compliance with Estonian and EU regulations",
+            "Legitimate interest: To maintain service integrity and enhance user experience",
+            "Consent: For optional data processing (e.g., email newsletters, surveys)"
+          ]
+        },
+        {
+          "id": "sec4",
+          "title": "4. Data Storage and Retention",
+          "content": "All sensitive data (e.g., API keys) is encrypted and stored using HashiCorp Vault technology. We retain data for the minimum duration necessary to fulfill our contractual or legal duties, typically no longer than 36 months after termination of the service. All infrastructure is hosted within the EU in GDPR-compliant data centers."
+        },
+        {
+          "id": "sec5",
+          "title": "5. Data Sharing and Transfers",
+          "content": "No third-party sales: We do not sell user data to third parties. We may share limited data with trusted infrastructure providers (e.g., Hetzner, Microsoft Azure) strictly under data processing agreements (DPAs). Data may be disclosed to authorities if legally obligated."
+        },
+        {
+          "id": "sec6",
+          "title": "6. Cookies and Analytics",
+          "content": "We may use functional cookies and privacy-focused analytics tools (e.g., Plausible, Matomo) to monitor service performance and prevent abuse. We do not use invasive third-party trackers (e.g., Google Analytics, Facebook Pixel)."
+        },
+        {
+          "id": "sec7",
+          "title": "7. Your Rights Under GDPR",
+          "content": "You have the following rights: Access, Rectification, Erasure, Restriction, Objection, and Portability. You may exercise these rights by emailing us at: legal@borsazeka.com"
+        },
+        {
+          "id": "sec8",
+          "title": "8. Data Protection Measures",
+          "content": "Two-factor authentication (2FA) is used on all admin-level systems. All sensitive records are end-to-end encrypted. We use role-based access control and zero-knowledge vaulting."
+        },
+        {
+          "id": "sec9",
+          "title": "9. Updates to This Policy",
+          "content": "We may revise this Privacy Policy from time to time. All updates will be posted on our website with an updated “Last Updated” date. Your continued use of our services constitutes acceptance of the changes."
+        },
+        {
+          "id": "sec10",
+          "title": "10. Contact",
+          "content": "Legal: legal@borsazeka.com | Address: BorsaZeka OÜ, Tallinn, Estonia | Register No: 16665753 | VAT No: EE102597479"
+        }
+      ]
+    },
+    "terms": {
+      "title": "Terms of Service",
+      "lastUpdated": "April 7, 2026",
+      "sections": [
+        {
+          "id": "intro",
+          "title": "Introduction",
+          "content": "These Terms of Service (“Terms”) constitute a legally binding agreement between you and BorsaZeka OÜ, governing your access to and use of BorsaZeka’s cloud-based server infrastructure and accompanying algorithmic trading solutions (“Services”). By purchasing or using any Service, you agree to be bound by these Terms."
+        },
+        {
+          "id": "scope",
+          "title": "Scope of Services",
+          "content": "Our Services include:",
+          "items": [
+            "Virtual Private Servers (VPS) and Dedicated Servers",
+            "Proprietary trading bots: DarkRoom, BorsaZeka, TradeMate, Highway, Fabrika, KriptoZeka Classic, KriptoZeka Ascent"
+          ]
+        },
+        {
+          "id": "item1",
+          "title": "1. Service Scope",
+          "content": "BorsaZeka provides algorithmic trading robots hosted on virtual or dedicated servers. The customer bears full responsibility for monitoring performance, understanding market risks, and technical requirements."
+        },
+        {
+          "id": "item2",
+          "title": "2. Eligibility",
+          "content": "You affirm that you are at least 18 years of age and possess the legal capacity to enter into this contract."
+        },
+        {
+          "id": "item3",
+          "title": "3. Risk Disclosures",
+          "content": "No Financial Advice: None of the Services constitute investment advice. Market volatility, black swan events, and technology risks may materially affect results. BorsaZeka shall not be held liable for disruptions."
+        },
+        {
+          "id": "item4",
+          "title": "4. Fees and Billing",
+          "content": "Prices are listed in EUR and exclude VAT. Payments are recurring and must be settled before renewal."
+        },
+        {
+          "id": "item5",
+          "title": "5. License and Usage",
+          "content": "Customers receive a limited, non-exclusive, non-transferable license to use BorsaZeka’s algorithmic bots for the duration of their subscription. Reverse engineering is strictly prohibited."
+        },
+        {
+          "id": "item6",
+          "title": "6. Termination",
+          "content": "Either party may terminate the subscription with at least 5 days’ notice before the next billing cycle."
+        },
+        {
+          "id": "item7",
+          "title": "7. Liability",
+          "content": "To the maximum extent permitted by law, BorsaZeka shall not be liable for any indirect, incidental, special, or consequential damages."
+        },
+        {
+          "id": "item8",
+          "title": "8. Data & Privacy",
+          "content": "By using our Services, you consent to the collection and processing of technical and account-level information. We comply with GDPR."
+        },
+        {
+          "id": "item9",
+          "title": "9. Force Majeure",
+          "content": "BorsaZeka shall not be held liable for failure to fulfill its obligations due to events beyond reasonable control, including natural disasters, cyberattacks, or exchange failures."
+        },
+        {
+          "id": "item10",
+          "title": "10. Dispute Resolution",
+          "content": "These Terms are governed by the laws of Estonia. Disputes shall be submitted to the Harju County Court (Tallinn, Estonia)."
+        },
+        {
+          "id": "item11",
+          "title": "11. Legacy Users",
+          "content": "These Terms apply retroactively to all users and customers who have used our Services since the company’s founding (October 24, 2022)."
+        },
+        {
+          "id": "item12",
+          "title": "12. Updates and Revisions",
+          "content": "We may update these Terms from time to time. Continued use of the Service constitutes acceptance of the updated Terms."
+        },
+        {
+          "id": "item13",
+          "title": "13. Disclaimers",
+          "content": "BorsaZeka makes no representations or warranties regarding profitability or uptime guarantees. These Terms supersede all prior agreements."
+        }
+      ]
+    }
   }
 }

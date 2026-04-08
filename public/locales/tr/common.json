@@ -164,7 +164,8 @@
       "perMonth": "/ aylık",
       "preRegisterBtn": "Ön Kayıt Yaptır",
       "kriptoSelfAnnualNote": "Yıllık ödeme indirimi mevcut: 116€/yıl · 340€/yıl · 564€/yıl (4 ay bedava)",
-      "bistSelfAnnualNote": "Sunucu ücreti seçtiğiniz bütçeye göre değişir: 50€ / 100€ / 200€ / 500€ / 1.000€ aylık."
+      "bistSelfAnnualNote": "Sunucu ücreti seçtiğiniz bütçeye göre değişir: 50€ / 100€ / 200€ / 500€ / 1.000€ aylık.",
+      "agreementNote": "Abone olarak <linkTerms>Kullanım Koşullarını</linkTerms> ve <linkPrivacy>Gizlilik Politikasını</linkPrivacy> kabul etmiş sayılırsınız."
     },
     "robots": {
       "darkroom": {
@@ -299,7 +300,9 @@
     "reason1": "Ürün sihirbazı hakkında soru sormak",
     "reason2": "Bütçe ve robot seçimi danışmanlık",
     "reason3": "Teknik destek ve sorun bildirimi",
-    "reason4": "İş ortaklığı ve API sorguları"
+    "reason4": "İş ortaklığı ve API sorguları",
+    "globalHeadquarters": "Şirketimiz",
+    "enlargeMap": "Haritayı Büyüt"
   },
   "surec": {
     "backLink": "Ana Sayfa",
@@ -396,5 +399,173 @@
     "mockReportTitle": "Günlük Rapor — T2 Overall",
     "mockReportFooter": "Telegram'da & Twitter'da paylaşılır",
     "client": "Müşteri"
+  },
+  "legal": {
+    "privacy": {
+      "title": "Gizlilik Politikası",
+      "lastUpdated": "07.04.2026",
+      "sections": [
+        {
+          "id": "intro",
+          "title": "Giriş",
+          "content": "Bu Gizlilik Politikası, BorsaZeka OÜ (“biz”, “şirket” veya “BorsaZeka”) tarafından sunulan sunucu hizmetleri ve algoritmik işlem robotlarının (“Hizmetler”) kullanımı kapsamında, kullanıcılarına ait kişisel ve teknik verilerin nasıl toplandığını, işlendiğini, saklandığını ve korunduğunu açıklamaktadır."
+        },
+        {
+          "id": "sec1",
+          "title": "1. Toplanan Bilgiler",
+          "content": "Toplayabileceğimiz veri kategorileri şunlardır:",
+          "items": [
+            "Hesap Bilgileri: İsim, e-posta, fatura bilgileri, ülke bilgisi",
+            "Teknik Bilgiler: IP adresi, sunucu kullanım istatistikleri, API erişim kayıtları",
+            "Hassas Veriler: Şifrelenmiş API anahtarları, kimlik doğrulama bilgileri (Vault altyapısında saklanır)",
+            "İletişim Verileri: E-posta ve destek mesajları, müşteri temsilcisiyle yapılan görüşmeler"
+          ]
+        },
+        {
+          "id": "sec2",
+          "title": "2. Verilerin Kullanım Amaçları",
+          "content": "Toplanan verileri şu amaçlarla işleriz:",
+          "items": [
+            "Sunucu ve bot erişimi sağlama ve yönetme",
+            "Faturalama ve abonelik işlemlerini yürütme",
+            "Güvenlik ve dolandırıcılık önleme",
+            "Yasal yükümlülüklerin yerine getirilmesi",
+            "Teknik destek ve sorun giderme",
+            "Hizmet performansını analiz etme ve iyileştirme"
+          ]
+        },
+        {
+          "id": "sec3",
+          "title": "3. İşleme Hukuki Dayanakları",
+          "content": "Veriler aşağıdaki yasal dayanaklarla işlenir:",
+          "items": [
+            "Sözleşme gereği: Talep edilen hizmetlerin sunulabilmesi",
+            "Yasal yükümlülükler: Estonya ve AB mevzuatlarına uyum",
+            "Meşru menfaat: Hizmet güvenliğini ve kalitesini sağlamak",
+            "Açık rıza: Bülten gönderimi gibi tercihe bağlı işlemler için"
+          ]
+        },
+        {
+          "id": "sec4",
+          "title": "4. Veri Saklama Süresi",
+          "content": "API anahtarları gibi hassas veriler HashiCorp Vault sistemiyle şifrelenir. Veriler genellikle hizmet sonlandıktan sonra en fazla 36 ay süreyle saklanır. Tüm altyapı, AB içinde GDPR uyumlu veri merkezlerinde barındırılır."
+        },
+        {
+          "id": "sec5",
+          "title": "5. Veri Paylaşımı",
+          "content": "Kullanıcı verileri üçüncü taraflara satılmaz. Sadece Hetzner, Azure gibi hizmet sağlayıcılarla sınırlı ve DPA kapsamında paylaşım yapılabilir. Gerekirse yasal mercilere (örneğin Estonya Vergi Dairesi) veri sağlanabilir."
+        },
+        {
+          "id": "sec6",
+          "title": "6. Çerezler ve Analitik",
+          "content": "Web sitesi kullanıcı deneyimi için yalnızca işlevsel çerezler ve gizlilik dostu analiz araçları (ör. Plausible, Matomo) kullanılır. Google Analytics veya Facebook Pixel gibi izleyiciler kullanılmaz."
+        },
+        {
+          "id": "sec7",
+          "title": "7. GDPR Kapsamında Haklarınız",
+          "content": "Erişim, Düzeltme, Silme, Kısıtlama, İtiraz ve Taşınabilirlik haklarına sahipsiniz. Taleplerinizi legal@borsazeka.com adresine iletebilirsiniz."
+        },
+        {
+          "id": "sec8",
+          "title": "8. Güvenlik Önlemleri",
+          "content": "Tüm sistemlerde iki aşamalı kimlik doğrulama (2FA), şifrelenmiş yedekleme ve erişim denetimi, personel için rol bazlı erişim yönetimi ve sıfır bilgi ilkesine dayalı Vault altyapısı uygulanmaktadır."
+        },
+        {
+          "id": "sec9",
+          "title": "9. Politika Güncellemeleri",
+          "content": "Bu politika zaman zaman güncellenebilir. Güncellemeler web sitemizden yayımlanır ve yeni “Son Güncelleme” tarihiyle duyurulur. Hizmetleri kullanmaya devam etmeniz, bu güncellemeleri kabul ettiğiniz anlamına gelir."
+        },
+        {
+          "id": "sec10",
+          "title": "10. İletişim",
+          "content": "Legal: legal@borsazeka.com | Adres: BorsaZeka OÜ, Tallinn, Estonya | Sicil No: 16665753 | KDV: EE102597479"
+        }
+      ]
+    },
+    "terms": {
+      "title": "Kullanım Koşulları",
+      "lastUpdated": "07.04.2026",
+      "sections": [
+        {
+          "id": "intro",
+          "title": "Giriş",
+          "content": "Bu Kullanım Koşulları (“Koşullar”), Estonya’da kayıtlı bir tüzel kişilik olan BorsaZeka OÜ ile sizin aranızda yasal olarak bağlayıcı bir sözleşmedir. BorsaZeka’dan herhangi bir Hizmet satın alarak bu Koşullara bütünüyle bağlı kalmayı kabul etmiş olursunuz."
+        },
+        {
+          "id": "scope",
+          "title": "Hizmet Kapsamı",
+          "content": "Hizmetlerimiz şunları içerir:",
+          "items": [
+            "Sanal Özel Sunucular (VPS) ve Dedicated Sunucular",
+            "Tescilli alım-satım botları: DarkRoom, BorsaZeka, TradeMate, Highway, Fabrika, KriptoZeka Classic/Ascent"
+          ]
+        },
+        {
+          "id": "item1",
+          "title": "1. Hizmet Detayları",
+          "content": "BorsaZeka, algoritmik alım-satım robotları sağlar. Botların performansının takibi ve piyasa risklerinin anlaşılması tamamen müşterinin sorumluluğundadır."
+        },
+        {
+          "id": "item2",
+          "title": "2. Uygunluk",
+          "content": "En az 18 yaşında olduğunuzu ve bu sözleşmeyi yapabilecek yasal yeterliliğe sahip olduğunuzu beyan edersiniz."
+        },
+        {
+          "id": "item3",
+          "title": "3. Risk Bildirimleri",
+          "content": "Finansal Tavsiye Değildir: Hiçbir Hizmet yatırım tavsiyesi teşkil etmez. Piyasa oynaklığı ve teknoloji riskleri nedeniyle oluşabilecek kayıplarda BorsaZeka sorumlu tutulamaz."
+        },
+        {
+          "id": "item4",
+          "title": "4. Ücretler ve Faturalama",
+          "content": "Fiyatlar EUR cinsindendir ve KDV hariçtir. Ödemeler tekrarlıdır ve yenilemeden önce yapılmalıdır."
+        },
+        {
+          "id": "item5",
+          "title": "5. Lisans ve Kullanım",
+          "content": "Abonelik süresince sınırlı, münhasır olmayan bir lisans alırsınız. Tersine mühendislik veya kod kopyalama kesinlikle yasaktır."
+        },
+        {
+          "id": "item6",
+          "title": "6. Fesih",
+          "content": "Her iki taraf da aboneliği bir sonraki dönemden en az 5 gün önce bildirmek şartıyla sonlandırabilir."
+        },
+        {
+          "id": "item7",
+          "title": "7. Sorumluluk Sınırı",
+          "content": "Yasal olarak izin verilen azami ölçüde, BorsaZeka hiçbir dolaylı veya netice doğurucu zarardan sorumlu tutulamaz."
+        },
+        {
+          "id": "item8",
+          "title": "8. Veri ve Gizlilik",
+          "content": "Hizmetlerimizi kullanarak verilerinizin toplanmasına onay verirsiniz. GDPR’a uygun hareket edilmektedir."
+        },
+        {
+          "id": "item9",
+          "title": "9. Mücbir Sebep",
+          "content": "Doğal afet, siber saldırı veya borsa arızaları gibi kontrol dışı olaylardan doğan aksamalardan BorsaZeka sorumlu tutulamaz."
+        },
+        {
+          "id": "item10",
+          "title": "10. Uyuşmazlık Çözümü",
+          "content": "Bu Koşullar Estonya yasalarına tabidir ve yetkili merci Tallinn (Harju) mahkemeleridir."
+        },
+        {
+          "id": "item11",
+          "title": "11. Önceki Kullanıcılar",
+          "content": "Bu Koşullar, 24 Ekim 2022'den itibaren tüm kullanıcılarımıza geriye dönük olarak uygulanır."
+        },
+        {
+          "id": "item12",
+          "title": "12. Güncellemeler",
+          "content": "Koşullar zaman zaman güncellenebilir. Hizmeti kullanmaya devam etmeniz kabul ettiğiniz anlamına gelir."
+        },
+        {
+          "id": "item13",
+          "title": "13. Son Notlar",
+          "content": "BorsaZeka karlılık garantisi vermez. Bu Koşullar taraflar arasındaki tüm anlaşmaların yerini alır."
+        }
+      ]
+    }
   }
 }
