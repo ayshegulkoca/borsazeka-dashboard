@@ -323,7 +323,15 @@ export default function HeroSection() {
           <div className={styles.heroStatDivider} />
           <CountStat number={t("hero.stat3Number")} label={t("hero.stat3Label")} />
         </div>
+
+        {/* Visual Cue: Downward line for flow */}
+        <div className={styles.heroFlowCue} aria-hidden="true">
+          <div className={styles.heroFlowLine} />
+        </div>
       </div>
+
+      {/* Bottom transition glow */}
+      <div className={styles.heroBottomGlow} aria-hidden="true" />
     </section>
   );
 }

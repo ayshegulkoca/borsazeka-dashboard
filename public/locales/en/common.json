@@ -1,6 +1,5 @@
 {
   "navbar": {
-    "features": "Features",
     "ourRobots": "Our Robots",
     "robots": "Robots",
     "findProduct": "Find Your Robot",
@@ -27,22 +26,6 @@
     "stat3Number": "99.9%",
     "stat3Label": "Uptime SLA"
   },
-  "features": {
-    "sectionTag": "Why BorsaZeka?",
-    "sectionTitle": "Technology Built to Make You Profitable",
-    "sectionSubtitle": "Every feature is designed to bring institutional-grade trading tools within reach of individual investors.",
-    "feature1Title": "AI-Powered Market Analysis",
-    "feature1Desc": "Our GPT-4o-based engine interprets live news feeds and technical data in real time, delivering the most accurate entry and exit signals.",
-    "feature2Title": "Automated Position Management",
-    "feature2Desc": "Configure stop-loss, take-profit, and trailing stop rules for your robots. Your portfolio stays protected around the clock.",
-    "feature3Title": "Multi-Layer Risk Management",
-    "feature3Desc": "A built-in risk filter ensures no more than 5% of your account equity is at risk at any given time, preserving your capital.",
-    "feature4Title": "Millisecond Order Execution",
-    "feature4Desc": "Our exchange infrastructure routes orders directly via API for near-zero latency. Zero delays, zero missed opportunities.",
-    "feature5Title": "Detailed Performance Reports",
-    "feature5Desc": "Review each robot's daily, weekly, and monthly performance through interactive dashboards, and let data drive your strategy decisions.",
-    "feature6Title": "24/7 Monitoring & Alerts",
-    "feature6Desc": "Your robots never sleep. When critical thresholds are breached, you'll receive instant SMS, email, or push notifications."
   },
   "robotsSection": {
     "sectionTag": "Robot Showcase",
@@ -76,7 +59,6 @@
   },
   "footer": {
     "home": "Home",
-    "features": "Features",
     "robots": "Robots",
     "findProduct": "Find Your Robot",
     "howItWorks": "How It Works",
@@ -373,13 +355,14 @@
     "step5Desc": "A server is rented via borsazeka.com. A one-time €50 setup fee is charged. Server provisioning and robot deployment are handled entirely by our team.",
     "step6Title": "Robot Activation & Monitoring",
     "step6Desc": "The robot goes live. Daily P&L reports are broadcast at 09:00 and 12:00. Track your account in real time through the broker's mobile app.",
-    "transparencyTag": "Transparency",
-    "transparencyTitle": "Daily Performance Reporting",
-    "transparencyDesc": "Every day at",
-    "transparencyDescMid": "and",
-    "transparencyDescEnd": "all active robots' daily P&L is published on our Telegram channel and Twitter account. You can monitor your brokerage account in real time at any time via the broker's mobile app.",
-    "reportBadge1": "Daily at 09:00",
-    "reportBadge2": "Daily at 12:00",
+    "transparencyTitle": "Transparency & Reporting",
+    "transparencyDesc": "Our system operates on the principle of transparency at every stage.",
+    "reportTitle": "Daily Reporting",
+    "reportMessage": "Receive status and strategy reports twice daily directly to your device.",
+    "reportTime1": "09:00 — Morning Analysis",
+    "reportTime2": "12:00 — Midday Update",
+    "profitTitle": "Transparent Profit Sharing",
+    "profitContent": "Fair profit distribution based on net profit, deducting server costs and pre-agreed ratios.",
     "mockReportTitle": "Daily Report — T2 Overall",
     "mockReportFooter": "Published on Telegram & Twitter",
     "client": "Client"

@@ -72,50 +72,56 @@ export default function SurecPage() {
         </div>
       </section>
 
-      {/* ── ŞEFFAFLIK ── */}
-      <section className={`${styles.section} ${styles.sectionDark}`}>
+      {/* ── ŞEFFAFLIK & MAHSuPLAŞMA ── */}
+      <section className={`${styles.section} ${styles.sectionDark} ${styles.transparencySection}`}>
+        {/* Ambient background glow */}
+        <div className={styles.processGlow} aria-hidden="true" />
+
         <div className={styles.container}>
-          <div className={styles.transparencyWrap}>
-            <div className={styles.transparencyLeft}>
-              <span className={styles.sectionTag}>{t("surec.transparencyTag")}</span>
-              <h2 className={styles.sectionTitle}>{t("surec.transparencyTitle")}</h2>
-              <p className={styles.sectionDesc}>
-                {t("surec.transparencyDesc")} <strong className={styles.accentText}>09:00</strong>{" "}
-                {t("surec.transparencyDescMid")}{" "}
-                <strong className={styles.accentText}>12:00</strong>{" "}
-                {t("surec.transparencyDescEnd")}
-              </p>
-              <div className={styles.reportingBadges}>
-                <div className={styles.reportingBadge}>
-                  <Clock size={18} color="#10b981" />
-                  <span>{t("surec.reportBadge1")}</span>
+          <div className={styles.transparencyHeader}>
+            <span className={styles.sectionTag}>{t("surec.transparencyTitle")}</span>
+            <h2 className={styles.sectionTitle}>{t("surec.transparencyTitle")}</h2>
+            <p className={styles.sectionSubtitle}>{t("surec.transparencyDesc")}</p>
+          </div>
+
+          <div className={styles.transparencyGridCentered}>
+            {/* Centered Box: Reporting Center */}
+            <div className={`${styles.processCard} ${styles.glassCard} ${styles.centeredCard}`}>
+              <div className={styles.cardHeader}>
+                <div className={styles.cardIconWrap}>
+                  <BarChart2 size={24} color="var(--accent-primary)" />
                 </div>
-                <div className={styles.reportingBadge}>
-                  <Clock size={18} color="#10b981" />
-                  <span>{t("surec.reportBadge2")}</span>
+                <h3 className={styles.cardTitle}>{t("surec.reportTitle")}</h3>
+              </div>
+              <p className={styles.cardInfo}>{t("surec.reportMessage")}</p>
+              
+              <div className={styles.reportTimeline}>
+                <div className={styles.reportTimeItem}>
+                  <div className={styles.timeDot} />
+                  <div className={styles.timeContent}>
+                    <span className={styles.timeLabel}>09:00</span>
+                    <p className={styles.timeDesc}>{t("surec.reportTime1")}</p>
+                  </div>
+                </div>
+                <div className={styles.reportTimeItem}>
+                  <div className={styles.timeDot} />
+                  <div className={styles.timeContent}>
+                    <span className={styles.timeLabel}>12:00</span>
+                    <p className={styles.timeDesc}>{t("surec.reportTime2")}</p>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className={styles.transparencyRight}>
-              <div className={styles.mockReport}>
-                <div className={styles.mockReportHeader}>
-                  <span className={styles.mockReportTitle}>{t("surec.mockReportTitle")}</span>
-                  <span className={styles.mockReportTime}>09:00</span>
-                </div>
-                {MOCK_REPORT.map((row) => (
-                  <div key={row.key} className={styles.mockReportRow}>
-                    <span className={styles.mockReportAccount}>
-                      {t("surec.client")} #{row.key}
-                    </span>
-                    <span
-                      className={styles.mockReportVal}
-                      style={{ color: row.positive ? "#10b981" : "#f87171" }}
-                    >
+
+              {/* Simplified Mock Report Visual */}
+              <div className={styles.miniReport}>
+                {MOCK_REPORT.slice(0, 3).map((row) => (
+                  <div key={row.key} className={styles.miniReportRow}>
+                    <span className={styles.miniAccount}>{t("surec.client")} #{row.key}</span>
+                    <span className={styles.miniValue} style={{ color: row.positive ? "#10b981" : "#f87171" }}>
                       {row.value}
                     </span>
                   </div>
                 ))}
-                <div className={styles.mockReportFooter}>{t("surec.mockReportFooter")}</div>
               </div>
             </div>
           </div>

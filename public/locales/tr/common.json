@@ -1,6 +1,5 @@
 {
   "navbar": {
-    "features": "Özellikler",
     "ourRobots": "Robotlarımız",
     "robots": "Robotlar",
     "findProduct": "Ürün Seç",
@@ -26,23 +25,6 @@
     "stat2Label": "Sektör Deneyimi",
     "stat3Number": "99.9%",
     "stat3Label": "Uptime SLA"
-  },
-  "features": {
-    "sectionTag": "Neden BorsaZeka?",
-    "sectionTitle": "Kazanmanızı Sağlayan Teknoloji",
-    "sectionSubtitle": "Her bir özelliğimiz, kurumsal yatırımcıların kullandığı araçları bireysel yatırımcılar için erişilebilir kılmak amacıyla tasarlandı.",
-    "feature1Title": "Yapay Zeka Destekli Analiz",
-    "feature1Desc": "GPT-4o tabanlı motorumuz haber akışlarını ve teknik verileri gerçek zamanlı olarak yorumlar; size en doğru giriş-çıkış sinyallerini sunar.",
-    "feature2Title": "Otomatik Pozisyon Yönetimi",
-    "feature2Desc": "Stop-loss, take-profit ve trailing stop kurallarını robotlarınıza tanımlayın; portföyünüz 7/24 korunsun.",
-    "feature3Title": "Risk Yönetimi Katmanı",
-    "feature3Desc": "Hesap bakiyenizin maksimum %5'ini riske atmayı garanti eden dahili risk filtresi ile sermayenizi güvende tutun.",
-    "feature4Title": "Milisaniye Hızında Emir",
-    "feature4Desc": "Borsa altyapımız emirleri doğrudan API üzerinden anında iletir. Gecikme sıfır, fırsat kayıpları sıfır.",
-    "feature5Title": "Detaylı Performans Raporları",
-    "feature5Desc": "Her robotun günlük, haftalık ve aylık performansını interaktif grafiklerle inceleyin; strateji kararlarınızı veriye dayandırın.",
-    "feature6Title": "7/24 İzleme & Bildirim",
-    "feature6Desc": "Uyku saatlerinizde bile robotlarınız çalışır. Kritik eşikler aşıldığında anında SMS, e-posta veya push bildirimi alırsınız."
   },
   "robotsSection": {
     "sectionTag": "Robot Vitrini",
@@ -76,7 +58,6 @@
   },
   "footer": {
     "home": "Ana Sayfa",
-    "features": "Özellikler",
     "robots": "Robotlar",
     "findProduct": "Ürün Seç",
     "howItWorks": "Nasıl Çalışır?",
@@ -389,13 +370,14 @@
     "step5Desc": "borsazeka.com'dan sunucu kiralanır. Tek seferlik 50 € kurulum ücreti alınır. Sunucu ve robot kurulumunu biz gerçekleştiririz.",
     "step6Title": "Robot Aktif & Takip",
     "step6Desc": "Robot çalıştırılır. Her gün 09:00 ve 12:00'da raporlama yapılır. Kâr-zarar takibinizi aracı kurum uygulamasından anlık görürsünüz.",
-    "transparencyTag": "Şeffaflık",
-    "transparencyTitle": "Günlük Raporlama",
-    "transparencyDesc": "Her gün saat",
-    "transparencyDescMid": "ve",
-    "transparencyDescEnd": "Telegram kanalımızda ve Twitter hesabımızda tüm aktif robotların günlük performans bilgileri paylaşılır. Hesabınızı aracı kurum mobil uygulamasından istediğiniz zaman anlık takip edebilirsiniz.",
-    "reportBadge1": "Her gün 09:00",
-    "reportBadge2": "Her gün 12:00",
+    "transparencyTitle": "Şeffaflık & Raporlama",
+    "transparencyDesc": "Sistemimiz her aşamada şeffaflık ilkesiyle çalışır.",
+    "reportTitle": "Günlük Raporlama",
+    "reportMessage": "Her gün iki kez güncel durum ve strateji raporları cebinizde.",
+    "reportTime1": "09:00 — Sabah Analizi",
+    "reportTime2": "12:00 — Öğle Güncellemesi",
+    "profitTitle": "Şeffaf Kar Paylaşımı",
+    "profitContent": "Elde edilen net kar üzerinden, sunucu maliyetleri ve önceden belirlenen oranlarla adil kar dağıtımı.",
     "mockReportTitle": "Günlük Rapor — T2 Overall",
     "mockReportFooter": "Telegram'da & Twitter'da paylaşılır",
     "client": "Müşteri"

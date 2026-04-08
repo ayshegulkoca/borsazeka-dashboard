@@ -547,56 +547,39 @@
   background: rgba(255, 255, 255, 0.1);
 }
 
-/* ---------- Features ---------- */
-.featuresSection {
-  background: linear-gradient(to bottom, var(--bg-dark), #0a1710, var(--bg-dark));
+.heroBottomGlow {
+  position: absolute;
+  bottom: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 1200px;
+  height: 200px;
+  background: radial-gradient(ellipse at center, rgba(16, 185, 129, 0.15) 0%, transparent 70%);
+  filter: blur(60px);
+  pointer-events: none;
+  z-index: 0;
 }
 
-.featureGrid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-}
-
-.featureCard {
-  background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
-  border-radius: 16px;
-  padding: 2rem;
-  transition: all 0.3s ease;
-}
-
-.featureCard:hover {
-  border-color: rgba(16, 185, 129, 0.2);
-  background: var(--bg-card-hover);
-  transform: translateY(-4px);
-  box-shadow:
-    var(--shadow-glow),
-    0 0 0 1px rgba(0, 255, 157, 0.12) inset;
-}
-
-.featureIconWrap {
-  width: 48px;
-  height: 48px;
-  background: rgba(16, 185, 129, 0.1);
-  border-radius: 12px;
+.heroFlowCue {
+  margin-top: 4rem;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  margin-bottom: 1.25rem;
+  gap: 1rem;
+  opacity: 0.4;
+  animation: fadeIn 1s ease-out 1.2s both;
 }
 
-.featureTitle {
-  font-size: 1.05rem;
-  font-weight: 600;
-  color: var(--text-primary);
-  margin-bottom: 0.6rem;
+.heroFlowLine {
+  width: 1px;
+  height: 60px;
+  background: linear-gradient(to bottom, var(--accent-primary), transparent);
 }
 
-.featureDesc {
-  font-size: 0.875rem;
-  line-height: 1.65;
-  color: var(--text-secondary);
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 0.4; transform: translateY(0); }
 }
 
 /* ---------- Robots Placeholder ---------- */
