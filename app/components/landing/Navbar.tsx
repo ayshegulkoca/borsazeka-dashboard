@@ -49,6 +49,9 @@ export default function Navbar() {
           <li>
             <Link href="/iletisim">{t("navbar.contact")}</Link>
           </li>
+          <li>
+            <Link href="/kurulum" style={{ color: "var(--accent-primary)", fontWeight: 600 }}>{t("navbar.setup")}</Link>
+          </li>
         </ul>
 
         {/* Right Actions */}
@@ -116,6 +119,13 @@ export default function Navbar() {
         </Link>
         <Link href="/iletisim" onClick={() => setMobileOpen(false)}>
           {t("navbar.contact")}
+        </Link>
+        <Link 
+          href="/kurulum" 
+          onClick={() => setMobileOpen(false)}
+          style={{ color: "var(--accent-primary)", fontWeight: 700 }}
+        >
+          {t("navbar.setup")}
         </Link>
 
         {/* Mobile Language Toggle */}

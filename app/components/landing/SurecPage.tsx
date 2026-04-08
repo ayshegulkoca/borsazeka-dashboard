@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import {
-  Activity, Bot, BarChart2, Lock, Coins, ArrowRight, Clock,
+  Activity, Bot, BarChart2, Lock, Coins, ArrowRight, Clock, Send,
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import Navbar from "./Navbar";
@@ -210,6 +210,25 @@ export default function SurecPage() {
               >
                 {t("hero.ctaButton")}
                 <Activity size={16} />
+              </Link>
+              <Link
+                href="/kurulum"
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "0.5rem",
+                  padding: "0.875rem 2rem",
+                  borderRadius: 12,
+                  fontWeight: 700,
+                  fontSize: "0.95rem",
+                  background: "rgba(255,255,255,0.05)",
+                  border: "1px solid var(--accent-primary)",
+                  color: "var(--accent-primary)",
+                  boxShadow: "0 0 15px rgba(16, 185, 129, 0.2)",
+                }}
+              >
+                {t("kurulum.title")}
+                <Send size={16} />
               </Link>
             </div>
           </div>

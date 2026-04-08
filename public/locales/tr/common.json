@@ -7,6 +7,7 @@
     "howItWorks": "Nasıl Çalışır?",
     "signIn": "Giriş Yap",
     "getStarted": "Ürün Seç",
+    "setup": "Kurulum",
     "menuLabel": "Menüyü aç"
   },
   "hero": {
@@ -381,6 +382,47 @@
     "mockReportTitle": "Günlük Rapor — T2 Overall",
     "mockReportFooter": "Telegram'da & Twitter'da paylaşılır",
     "client": "Müşteri"
+  },
+  "kurulum": {
+    "pageTitle": "Hesap Kurulumu — BorsaZeka",
+    "backHome": "Ana Sayfa",
+    "title": "Borsa Hesabınızı Bağlayın",
+    "subtitle": "Robotlarımızın işlem yapabilmesi için gerekli yetkilendirme adımlarını tamamlayın.",
+    "stepOf": "Adım {{current}} / {{total}}",
+    "back": "Geri",
+    "next": "İleri",
+    "submit": "Formu Gönder",
+    "submitting": "Gönderiliyor...",
+    "step1Title": "Hangi piyasada işlem yapacaksınız?",
+    "step1Desc": "Lütfen kurulum yapmak istediğiniz piyasayı seçin.",
+    "step2Title": "Kişisel / Kurumsal Bilgiler",
+    "step2Desc": "Yasal zorunluluklar gereği bilgilerinizi eksiksiz doldurunuz.",
+    "step3Title": "Teknik Bilgiler & Yetkilendirme",
+    "step3Desc": "Borsa veya aracı kurum bağlantı detaylarını giriniz.",
+    "step4Title": "Onay ve Tamamlama",
+    "step4Desc": "Bilgilerinizin doğruluğunu onaylayın.",
+    "fields": {
+      "firstName": "Ad",
+      "lastName": "Soyad",
+      "tcNo": "TC Kimlik No",
+      "tcNoPlaceholder": "11 haneli TC No",
+      "broker": "Aracı Kurum",
+      "exchange": "Borsa",
+      "amount": "Yatırım Tutarı",
+      "amountPlaceholder": "Örn: 100,000 TL",
+      "apiKey": "API Key",
+      "apiSecret": "Secret Key",
+      "selectBroker": "Aracı Kurum Seçin",
+      "selectExchange": "Borsa Seçin"
+    },
+    "validation": {
+      "required": "Bu alan zorunludur",
+      "tcNoLength": "TC No 11 haneli olmalıdır",
+      "tcNoNumeric": "TC No sadece rakamlardan oluşmalıdır"
+    },
+    "consent": "Verdiğim bilgilerin doğruluğunu, API yetkilerinin sadece okuma ve emir iletimi (çekim yetkisi olmadan) ile sınırlı olduğunu ve kullanım koşullarını kabul ediyorum.",
+    "successTitle": "Kurulum Talebiniz Alındı",
+    "successDesc": "Verileriniz güvenli bir şekilde şifrelenerek iletildi. Kontrollerin ardından robotunuz aktif edilecektir."
   },
   "legal": {
     "privacy": {

@@ -7,6 +7,7 @@
     "howItWorks": "How It Works",
     "signIn": "Sign In",
     "getStarted": "Find Your Robot",
+    "setup": "Setup",
     "menuLabel": "Open menu"
   },
   "hero": {
@@ -366,6 +367,47 @@
     "mockReportTitle": "Daily Report — T2 Overall",
     "mockReportFooter": "Published on Telegram & Twitter",
     "client": "Client"
+  },
+  "kurulum": {
+    "pageTitle": "Account Setup — BorsaZeka",
+    "backHome": "Back Home",
+    "title": "Connect Your Exchange Account",
+    "subtitle": "Complete the authorization steps required for our robots to execute trades.",
+    "stepOf": "Step {{current}} / {{total}}",
+    "back": "Back",
+    "next": "Next",
+    "submit": "Submit Form",
+    "submitting": "Submitting...",
+    "step1Title": "Which market will you trade in?",
+    "step1Desc": "Please select the market you want to set up.",
+    "step2Title": "Personal / Corporate Information",
+    "step2Desc": "Please fill in your information completely as per legal requirements.",
+    "step3Title": "Technical Details & Authorization",
+    "step3Desc": "Enter your exchange or broker connection details.",
+    "step4Title": "Confirmation & Completion",
+    "step4Desc": "Confirm that your information is correct.",
+    "fields": {
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "tcNo": "ID Number / Tax ID",
+      "tcNoPlaceholder": "11-digit ID No",
+      "broker": "Broker",
+      "exchange": "Exchange",
+      "amount": "Investment Amount",
+      "amountPlaceholder": "e.g., 5000 USD",
+      "apiKey": "API Key",
+      "apiSecret": "Secret Key",
+      "selectBroker": "Select Broker",
+      "selectExchange": "Select Exchange"
+    },
+    "validation": {
+      "required": "This field is required",
+      "tcNoLength": "ID number must be 11 digits",
+      "tcNoNumeric": "ID number must be numeric only"
+    },
+    "consent": "I confirm the accuracy of the information provided, that API permissions are limited to read and trade execution only (without withdrawal authority), and I accept the terms of use.",
+    "successTitle": "Setup Request Received",
+    "successDesc": "Your data has been securely encrypted and transmitted. Your robot will be activated after verification."
   },
   "legal": {
     "privacy": {
