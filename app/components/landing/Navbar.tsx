@@ -11,10 +11,12 @@ import MagneticButton from "./MagneticButton";
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const { t, i18n } = useTranslation("common");
   const currentLang = i18n.language?.startsWith("tr") ? "tr" : "en";
 
   useEffect(() => {
+    setMounted(true);
     const onScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
@@ -59,7 +61,7 @@ export default function Navbar() {
           {/* Language Toggle */}
           <div className={styles.langToggle}>
             <button
-              className={`${styles.langBtn} ${currentLang === "tr" ? styles.langBtnActive : ""}`}
+              className={`${styles.langBtn} ${mounted && currentLang === "tr" ? styles.langBtnActive : ""}`}
               onClick={() => changeLanguage("tr")}
               aria-label="Türkçe"
             >
@@ -67,7 +69,7 @@ export default function Navbar() {
             </button>
             <span className={styles.langDivider}>|</span>
             <button
-              className={`${styles.langBtn} ${currentLang === "en" ? styles.langBtnActive : ""}`}
+              className={`${styles.langBtn} ${mounted && currentLang === "en" ? styles.langBtnActive : ""}`}
               onClick={() => changeLanguage("en")}
               aria-label="English"
             >
@@ -131,7 +133,7 @@ export default function Navbar() {
         {/* Mobile Language Toggle */}
         <div className={styles.mobileLangToggle}>
           <button
-            className={`${styles.langBtn} ${currentLang === "tr" ? styles.langBtnActive : ""}`}
+            className={`${styles.langBtn} ${mounted && currentLang === "tr" ? styles.langBtnActive : ""}`}
             onClick={() => {
               changeLanguage("tr");
               setMobileOpen(false);
@@ -141,7 +143,7 @@ export default function Navbar() {
           </button>
           <span className={styles.langDivider}>|</span>
           <button
-            className={`${styles.langBtn} ${currentLang === "en" ? styles.langBtnActive : ""}`}
+            className={`${styles.langBtn} ${mounted && currentLang === "en" ? styles.langBtnActive : ""}`}
             onClick={() => {
               changeLanguage("en");
               setMobileOpen(false);

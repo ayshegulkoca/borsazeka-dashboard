@@ -10,6 +10,15 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: "/checkout",
+        destination: "/robotlar",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

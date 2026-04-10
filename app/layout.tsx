@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import React from "react";
 import I18nProvider from "./i18n/I18nProvider";
+import AuthProvider from "./components/auth/AuthProvider";
 import GlobalFooterConditional from "./components/landing/GlobalFooterConditional";
 
 const inter = Inter({
@@ -23,10 +24,12 @@ export default function RootLayout({
   return (
     <html lang="tr">
       <body className={`${inter.variable} min-h-full flex flex-col`}>
-        <I18nProvider>
-          {children}
-          <GlobalFooterConditional />
-        </I18nProvider>
+        <AuthProvider>
+          <I18nProvider>
+            {children}
+            <GlobalFooterConditional />
+          </I18nProvider>
+        </AuthProvider>
       </body>
     </html>
   );

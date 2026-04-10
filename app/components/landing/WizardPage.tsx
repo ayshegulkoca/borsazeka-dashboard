@@ -8,6 +8,8 @@ import {
   Users, Lock, Bot, CheckCircle2, Send, ExternalLink,
 } from "lucide-react";
 import { useTranslation, Trans } from "react-i18next";
+import { useSession, signIn } from "next-auth/react";
+import { getPrefilledStripeLink } from "@/lib/stripe";
 import {
   ROBOTS,
   getBudgetOptionsForRobot,
@@ -40,6 +42,7 @@ const STEP_LABELS = ["Piyasa", "Alt Piyasa", "Yönetim", "Robot", "Bütçe", "Ö
 // ─── Main ────────────────────────────────────────────────────────────────────
 export default function WizardPage() {
   const { t } = useTranslation("common");
+  const { data: session } = useSession();
   const searchParams = useSearchParams();
 
   const [state, setState] = useState<WState>({
@@ -195,7 +198,15 @@ export default function WizardPage() {
 
       // 3. Stripe yönlendirmesi
       if (pricing?.stripeLink && !isPaymentBlocked) {
-        window.location.href = pricing.stripeLink;
+        // Oturum açılmamışsa giriş sayfasına yönlendir, sonra buraya geri dön
+        if (!session?.user?.email) {
+          signIn("google", { callbackUrl: window.location.href });
+          return;
+        }
+
+        // Oturum açılmışsa e-posta bilgisini Stripe linkine ekle
+        const finalLink = getPrefilledStripeLink(pricing.stripeLink, session.user.email);
+        window.location.href = finalLink;
         return;
       }
 

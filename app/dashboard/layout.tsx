@@ -36,9 +36,9 @@ export default async function DashboardLayout({
     where: { userId },
   });
 
-  // Aboneliği yoksa checkout'a yönlendir
+  // Aboneliği yoksa robotlar kataloğuna yönlendir
   if (!subscription || subscription.status !== "ACTIVE") {
-    redirect("/checkout");
+    redirect("/robotlar");
   }
 
   const planLabel = PLAN_LABELS[subscription.planType] ?? subscription.planType;

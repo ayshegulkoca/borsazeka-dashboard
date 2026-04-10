@@ -26,6 +26,6 @@ export async function GET() {
   if (isSubscribed) {
     redirect("/dashboard");
   } else {
-    redirect("/checkout");
+    redirect("/robotlar");
   }
 }
