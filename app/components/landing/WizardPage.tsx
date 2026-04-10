@@ -548,10 +548,9 @@ export default function WizardPage() {
                           </div>
                         </div>
 
-                        {/* KriptoZeka Self-Service: yıllık indirim bilgi notu */}
                         {state.robotId === "KRIPTTOZEKA_SELF" && pricing.note && (
                           <div style={{ marginTop: "0.75rem", padding: "0.65rem 0.85rem", borderRadius: 10, background: "rgba(139,92,246,0.07)", border: "1px solid rgba(139,92,246,0.2)", fontSize: "0.79rem", color: "#a78bfa", lineHeight: 1.5 }}>
-                            💡 {t("wizard.step6.kriptoSelfAnnualNote")}
+                            {t("wizard.step6.kriptoSelfAnnualNote")}
                           </div>
                         )}
 

@@ -34,9 +34,10 @@ model User {
   sessions Session[]
 
   // Business relations
-  subscription Subscription?
-  invoices     Invoice[]
-  robots       UserRobot[]
+  subscription   Subscription?
+  invoices       Invoice[]
+  robots         UserRobot[]
+  brokerAccounts BrokerAccount[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -130,4 +131,24 @@ model UserRobot {
   addedAt DateTime @default(now())
 
   @@unique([userId, robotId])
+}
+
+// ─── Broker / Exchange Accounts ───────────────────────────────
+// Stores ONLY display-safe metadata. Sensitive credentials are
+// forwarded to n8n webhook and never persisted here.
+
+model BrokerAccount {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  accountType  String // "BIST" | "BINANCE"
+  institution  String // e.g. "PhillipCapital" | "Binance"
+  accountNo    String // Plain account number (not sensitive)
+  robotName    String // Robot linked to this account
+  maskedSecret String // e.g. "••••••••" — never the real value
+
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

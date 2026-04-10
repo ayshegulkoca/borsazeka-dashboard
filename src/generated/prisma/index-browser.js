@@ -205,6 +205,19 @@ exports.Prisma.UserRobotScalarFieldEnum = {
   addedAt: 'addedAt'
 };
 
+exports.Prisma.BrokerAccountScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  accountType: 'accountType',
+  institution: 'institution',
+  accountNo: 'accountNo',
+  robotName: 'robotName',
+  maskedSecret: 'maskedSecret',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -228,7 +241,8 @@ exports.Prisma.ModelName = {
   VerificationToken: 'VerificationToken',
   Subscription: 'Subscription',
   Invoice: 'Invoice',
-  UserRobot: 'UserRobot'
+  UserRobot: 'UserRobot',
+  BrokerAccount: 'BrokerAccount'
 };
 
 /**

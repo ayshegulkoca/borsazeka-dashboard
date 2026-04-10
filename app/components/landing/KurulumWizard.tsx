@@ -21,11 +21,11 @@ const ENCRYPTION_KEY = process.env.NEXT_PUBLIC_ENCRYPTION_KEY || "";
 const ROBOTS = ["DarkRoom", "BorsaZeka", "TradeMate", "Highway", "Fabrika"];
 const BIST_BROKERS = ["PhillipCapital", "İnfo Yatırım", "A1 Capital", "ALB Yatırım", "Meksa Yatırım"];
 const PHONE_CODES = [
-  { code: "+90", label: "🇹🇷 +90" },
-  { code: "+1",  label: "🇺🇸 +1" },
-  { code: "+44", label: "🇬🇧 +44" },
-  { code: "+49", label: "🇩🇪 +49" },
-  { code: "+31", label: "🇳🇱 +31" },
+  { code: "+90", label: "+90" },
+  { code: "+1",  label: "+1" },
+  { code: "+44", label: "+44" },
+  { code: "+49", label: "+49" },
+  { code: "+31", label: "+31" },
 ];
 
 type Market = "BIST" | "BINANCE" | null;
@@ -299,7 +299,7 @@ export default function KurulumWizard() {
               <div className={s.successRing}>
                 <CheckCircle2 size={44} />
               </div>
-              <h2 className={s.successTitle}>Başvurunuz Alındı 🎉</h2>
+              <h2 className={s.successTitle}>Başvurunuz Alındı</h2>
               <p className={s.successDesc}>
                 Verileriniz AES-256 ile şifrelenerek güvenle iletildi. 
                 Ekibimiz en kısa sürede sizinle iletişime geçecek ve robotunuzu aktif edecektir.

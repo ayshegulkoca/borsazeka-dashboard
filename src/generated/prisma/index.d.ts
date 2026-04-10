@@ -48,6 +48,11 @@ export type Invoice = $Result.DefaultSelection<Prisma.$InvoicePayload>
  * 
  */
 export type UserRobot = $Result.DefaultSelection<Prisma.$UserRobotPayload>
+/**
+ * Model BrokerAccount
+ * 
+ */
+export type BrokerAccount = $Result.DefaultSelection<Prisma.$BrokerAccountPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -239,6 +244,16 @@ export class PrismaClient<
     * ```
     */
   get userRobot(): Prisma.UserRobotDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.brokerAccount`: Exposes CRUD operations for the **BrokerAccount** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more BrokerAccounts
+    * const brokerAccounts = await prisma.brokerAccount.findMany()
+    * ```
+    */
+  get brokerAccount(): Prisma.BrokerAccountDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -679,7 +694,8 @@ export namespace Prisma {
     VerificationToken: 'VerificationToken',
     Subscription: 'Subscription',
     Invoice: 'Invoice',
-    UserRobot: 'UserRobot'
+    UserRobot: 'UserRobot',
+    BrokerAccount: 'BrokerAccount'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -695,7 +711,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "account" | "session" | "verificationToken" | "subscription" | "invoice" | "userRobot"
+      modelProps: "user" | "account" | "session" | "verificationToken" | "subscription" | "invoice" | "userRobot" | "brokerAccount"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1217,6 +1233,80 @@ export namespace Prisma {
           }
         }
       }
+      BrokerAccount: {
+        payload: Prisma.$BrokerAccountPayload<ExtArgs>
+        fields: Prisma.BrokerAccountFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.BrokerAccountFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BrokerAccountPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.BrokerAccountFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BrokerAccountPayload>
+          }
+          findFirst: {
+            args: Prisma.BrokerAccountFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BrokerAccountPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.BrokerAccountFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BrokerAccountPayload>
+          }
+          findMany: {
+            args: Prisma.BrokerAccountFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BrokerAccountPayload>[]
+          }
+          create: {
+            args: Prisma.BrokerAccountCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BrokerAccountPayload>
+          }
+          createMany: {
+            args: Prisma.BrokerAccountCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.BrokerAccountCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BrokerAccountPayload>[]
+          }
+          delete: {
+            args: Prisma.BrokerAccountDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BrokerAccountPayload>
+          }
+          update: {
+            args: Prisma.BrokerAccountUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BrokerAccountPayload>
+          }
+          deleteMany: {
+            args: Prisma.BrokerAccountDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.BrokerAccountUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.BrokerAccountUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BrokerAccountPayload>[]
+          }
+          upsert: {
+            args: Prisma.BrokerAccountUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BrokerAccountPayload>
+          }
+          aggregate: {
+            args: Prisma.BrokerAccountAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateBrokerAccount>
+          }
+          groupBy: {
+            args: Prisma.BrokerAccountGroupByArgs<ExtArgs>
+            result: $Utils.Optional<BrokerAccountGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.BrokerAccountCountArgs<ExtArgs>
+            result: $Utils.Optional<BrokerAccountCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1332,6 +1422,7 @@ export namespace Prisma {
     subscription?: SubscriptionOmit
     invoice?: InvoiceOmit
     userRobot?: UserRobotOmit
+    brokerAccount?: BrokerAccountOmit
   }
 
   /* Types for Logging */
@@ -1416,6 +1507,7 @@ export namespace Prisma {
     sessions: number
     invoices: number
     robots: number
+    brokerAccounts: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -1423,6 +1515,7 @@ export namespace Prisma {
     sessions?: boolean | UserCountOutputTypeCountSessionsArgs
     invoices?: boolean | UserCountOutputTypeCountInvoicesArgs
     robots?: boolean | UserCountOutputTypeCountRobotsArgs
+    brokerAccounts?: boolean | UserCountOutputTypeCountBrokerAccountsArgs
   }
 
   // Custom InputTypes
@@ -1462,6 +1555,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountRobotsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: UserRobotWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountBrokerAccountsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: BrokerAccountWhereInput
   }
 
 
@@ -1742,6 +1842,7 @@ export namespace Prisma {
     subscription?: boolean | User$subscriptionArgs<ExtArgs>
     invoices?: boolean | User$invoicesArgs<ExtArgs>
     robots?: boolean | User$robotsArgs<ExtArgs>
+    brokerAccounts?: boolean | User$brokerAccountsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -1815,6 +1916,7 @@ export namespace Prisma {
     subscription?: boolean | User$subscriptionArgs<ExtArgs>
     invoices?: boolean | User$invoicesArgs<ExtArgs>
     robots?: boolean | User$robotsArgs<ExtArgs>
+    brokerAccounts?: boolean | User$brokerAccountsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1828,6 +1930,7 @@ export namespace Prisma {
       subscription: Prisma.$SubscriptionPayload<ExtArgs> | null
       invoices: Prisma.$InvoicePayload<ExtArgs>[]
       robots: Prisma.$UserRobotPayload<ExtArgs>[]
+      brokerAccounts: Prisma.$BrokerAccountPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -2247,6 +2350,7 @@ export namespace Prisma {
     subscription<T extends User$subscriptionArgs<ExtArgs> = {}>(args?: Subset<T, User$subscriptionArgs<ExtArgs>>): Prisma__SubscriptionClient<$Result.GetResult<Prisma.$SubscriptionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     invoices<T extends User$invoicesArgs<ExtArgs> = {}>(args?: Subset<T, User$invoicesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InvoicePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     robots<T extends User$robotsArgs<ExtArgs> = {}>(args?: Subset<T, User$robotsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserRobotPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    brokerAccounts<T extends User$brokerAccountsArgs<ExtArgs> = {}>(args?: Subset<T, User$brokerAccountsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BrokerAccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2799,6 +2903,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: UserRobotScalarFieldEnum | UserRobotScalarFieldEnum[]
+  }
+
+  /**
+   * User.brokerAccounts
+   */
+  export type User$brokerAccountsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BrokerAccount
+     */
+    select?: BrokerAccountSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BrokerAccount
+     */
+    omit?: BrokerAccountOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BrokerAccountInclude<ExtArgs> | null
+    where?: BrokerAccountWhereInput
+    orderBy?: BrokerAccountOrderByWithRelationInput | BrokerAccountOrderByWithRelationInput[]
+    cursor?: BrokerAccountWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: BrokerAccountScalarFieldEnum | BrokerAccountScalarFieldEnum[]
   }
 
   /**
@@ -9412,6 +9540,1134 @@ export namespace Prisma {
 
 
   /**
+   * Model BrokerAccount
+   */
+
+  export type AggregateBrokerAccount = {
+    _count: BrokerAccountCountAggregateOutputType | null
+    _min: BrokerAccountMinAggregateOutputType | null
+    _max: BrokerAccountMaxAggregateOutputType | null
+  }
+
+  export type BrokerAccountMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    accountType: string | null
+    institution: string | null
+    accountNo: string | null
+    robotName: string | null
+    maskedSecret: string | null
+    isActive: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type BrokerAccountMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    accountType: string | null
+    institution: string | null
+    accountNo: string | null
+    robotName: string | null
+    maskedSecret: string | null
+    isActive: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type BrokerAccountCountAggregateOutputType = {
+    id: number
+    userId: number
+    accountType: number
+    institution: number
+    accountNo: number
+    robotName: number
+    maskedSecret: number
+    isActive: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type BrokerAccountMinAggregateInputType = {
+    id?: true
+    userId?: true
+    accountType?: true
+    institution?: true
+    accountNo?: true
+    robotName?: true
+    maskedSecret?: true
+    isActive?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type BrokerAccountMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    accountType?: true
+    institution?: true
+    accountNo?: true
+    robotName?: true
+    maskedSecret?: true
+    isActive?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type BrokerAccountCountAggregateInputType = {
+    id?: true
+    userId?: true
+    accountType?: true
+    institution?: true
+    accountNo?: true
+    robotName?: true
+    maskedSecret?: true
+    isActive?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type BrokerAccountAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which BrokerAccount to aggregate.
+     */
+    where?: BrokerAccountWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BrokerAccounts to fetch.
+     */
+    orderBy?: BrokerAccountOrderByWithRelationInput | BrokerAccountOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: BrokerAccountWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BrokerAccounts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BrokerAccounts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned BrokerAccounts
+    **/
+    _count?: true | BrokerAccountCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: BrokerAccountMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: BrokerAccountMaxAggregateInputType
+  }
+
+  export type GetBrokerAccountAggregateType<T extends BrokerAccountAggregateArgs> = {
+        [P in keyof T & keyof AggregateBrokerAccount]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateBrokerAccount[P]>
+      : GetScalarType<T[P], AggregateBrokerAccount[P]>
+  }
+
+
+
+
+  export type BrokerAccountGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: BrokerAccountWhereInput
+    orderBy?: BrokerAccountOrderByWithAggregationInput | BrokerAccountOrderByWithAggregationInput[]
+    by: BrokerAccountScalarFieldEnum[] | BrokerAccountScalarFieldEnum
+    having?: BrokerAccountScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: BrokerAccountCountAggregateInputType | true
+    _min?: BrokerAccountMinAggregateInputType
+    _max?: BrokerAccountMaxAggregateInputType
+  }
+
+  export type BrokerAccountGroupByOutputType = {
+    id: string
+    userId: string
+    accountType: string
+    institution: string
+    accountNo: string
+    robotName: string
+    maskedSecret: string
+    isActive: boolean
+    createdAt: Date
+    updatedAt: Date
+    _count: BrokerAccountCountAggregateOutputType | null
+    _min: BrokerAccountMinAggregateOutputType | null
+    _max: BrokerAccountMaxAggregateOutputType | null
+  }
+
+  type GetBrokerAccountGroupByPayload<T extends BrokerAccountGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<BrokerAccountGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof BrokerAccountGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], BrokerAccountGroupByOutputType[P]>
+            : GetScalarType<T[P], BrokerAccountGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type BrokerAccountSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    accountType?: boolean
+    institution?: boolean
+    accountNo?: boolean
+    robotName?: boolean
+    maskedSecret?: boolean
+    isActive?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["brokerAccount"]>
+
+  export type BrokerAccountSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    accountType?: boolean
+    institution?: boolean
+    accountNo?: boolean
+    robotName?: boolean
+    maskedSecret?: boolean
+    isActive?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["brokerAccount"]>
+
+  export type BrokerAccountSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    accountType?: boolean
+    institution?: boolean
+    accountNo?: boolean
+    robotName?: boolean
+    maskedSecret?: boolean
+    isActive?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["brokerAccount"]>
+
+  export type BrokerAccountSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    accountType?: boolean
+    institution?: boolean
+    accountNo?: boolean
+    robotName?: boolean
+    maskedSecret?: boolean
+    isActive?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type BrokerAccountOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "accountType" | "institution" | "accountNo" | "robotName" | "maskedSecret" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["brokerAccount"]>
+  export type BrokerAccountInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type BrokerAccountIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type BrokerAccountIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $BrokerAccountPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "BrokerAccount"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      accountType: string
+      institution: string
+      accountNo: string
+      robotName: string
+      maskedSecret: string
+      isActive: boolean
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["brokerAccount"]>
+    composites: {}
+  }
+
+  type BrokerAccountGetPayload<S extends boolean | null | undefined | BrokerAccountDefaultArgs> = $Result.GetResult<Prisma.$BrokerAccountPayload, S>
+
+  type BrokerAccountCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<BrokerAccountFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: BrokerAccountCountAggregateInputType | true
+    }
+
+  export interface BrokerAccountDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['BrokerAccount'], meta: { name: 'BrokerAccount' } }
+    /**
+     * Find zero or one BrokerAccount that matches the filter.
+     * @param {BrokerAccountFindUniqueArgs} args - Arguments to find a BrokerAccount
+     * @example
+     * // Get one BrokerAccount
+     * const brokerAccount = await prisma.brokerAccount.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends BrokerAccountFindUniqueArgs>(args: SelectSubset<T, BrokerAccountFindUniqueArgs<ExtArgs>>): Prisma__BrokerAccountClient<$Result.GetResult<Prisma.$BrokerAccountPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one BrokerAccount that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {BrokerAccountFindUniqueOrThrowArgs} args - Arguments to find a BrokerAccount
+     * @example
+     * // Get one BrokerAccount
+     * const brokerAccount = await prisma.brokerAccount.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends BrokerAccountFindUniqueOrThrowArgs>(args: SelectSubset<T, BrokerAccountFindUniqueOrThrowArgs<ExtArgs>>): Prisma__BrokerAccountClient<$Result.GetResult<Prisma.$BrokerAccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first BrokerAccount that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BrokerAccountFindFirstArgs} args - Arguments to find a BrokerAccount
+     * @example
+     * // Get one BrokerAccount
+     * const brokerAccount = await prisma.brokerAccount.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends BrokerAccountFindFirstArgs>(args?: SelectSubset<T, BrokerAccountFindFirstArgs<ExtArgs>>): Prisma__BrokerAccountClient<$Result.GetResult<Prisma.$BrokerAccountPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first BrokerAccount that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BrokerAccountFindFirstOrThrowArgs} args - Arguments to find a BrokerAccount
+     * @example
+     * // Get one BrokerAccount
+     * const brokerAccount = await prisma.brokerAccount.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends BrokerAccountFindFirstOrThrowArgs>(args?: SelectSubset<T, BrokerAccountFindFirstOrThrowArgs<ExtArgs>>): Prisma__BrokerAccountClient<$Result.GetResult<Prisma.$BrokerAccountPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more BrokerAccounts that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BrokerAccountFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all BrokerAccounts
+     * const brokerAccounts = await prisma.brokerAccount.findMany()
+     * 
+     * // Get first 10 BrokerAccounts
+     * const brokerAccounts = await prisma.brokerAccount.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const brokerAccountWithIdOnly = await prisma.brokerAccount.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends BrokerAccountFindManyArgs>(args?: SelectSubset<T, BrokerAccountFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BrokerAccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a BrokerAccount.
+     * @param {BrokerAccountCreateArgs} args - Arguments to create a BrokerAccount.
+     * @example
+     * // Create one BrokerAccount
+     * const BrokerAccount = await prisma.brokerAccount.create({
+     *   data: {
+     *     // ... data to create a BrokerAccount
+     *   }
+     * })
+     * 
+     */
+    create<T extends BrokerAccountCreateArgs>(args: SelectSubset<T, BrokerAccountCreateArgs<ExtArgs>>): Prisma__BrokerAccountClient<$Result.GetResult<Prisma.$BrokerAccountPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many BrokerAccounts.
+     * @param {BrokerAccountCreateManyArgs} args - Arguments to create many BrokerAccounts.
+     * @example
+     * // Create many BrokerAccounts
+     * const brokerAccount = await prisma.brokerAccount.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends BrokerAccountCreateManyArgs>(args?: SelectSubset<T, BrokerAccountCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many BrokerAccounts and returns the data saved in the database.
+     * @param {BrokerAccountCreateManyAndReturnArgs} args - Arguments to create many BrokerAccounts.
+     * @example
+     * // Create many BrokerAccounts
+     * const brokerAccount = await prisma.brokerAccount.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many BrokerAccounts and only return the `id`
+     * const brokerAccountWithIdOnly = await prisma.brokerAccount.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends BrokerAccountCreateManyAndReturnArgs>(args?: SelectSubset<T, BrokerAccountCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BrokerAccountPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a BrokerAccount.
+     * @param {BrokerAccountDeleteArgs} args - Arguments to delete one BrokerAccount.
+     * @example
+     * // Delete one BrokerAccount
+     * const BrokerAccount = await prisma.brokerAccount.delete({
+     *   where: {
+     *     // ... filter to delete one BrokerAccount
+     *   }
+     * })
+     * 
+     */
+    delete<T extends BrokerAccountDeleteArgs>(args: SelectSubset<T, BrokerAccountDeleteArgs<ExtArgs>>): Prisma__BrokerAccountClient<$Result.GetResult<Prisma.$BrokerAccountPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one BrokerAccount.
+     * @param {BrokerAccountUpdateArgs} args - Arguments to update one BrokerAccount.
+     * @example
+     * // Update one BrokerAccount
+     * const brokerAccount = await prisma.brokerAccount.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends BrokerAccountUpdateArgs>(args: SelectSubset<T, BrokerAccountUpdateArgs<ExtArgs>>): Prisma__BrokerAccountClient<$Result.GetResult<Prisma.$BrokerAccountPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more BrokerAccounts.
+     * @param {BrokerAccountDeleteManyArgs} args - Arguments to filter BrokerAccounts to delete.
+     * @example
+     * // Delete a few BrokerAccounts
+     * const { count } = await prisma.brokerAccount.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends BrokerAccountDeleteManyArgs>(args?: SelectSubset<T, BrokerAccountDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more BrokerAccounts.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BrokerAccountUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many BrokerAccounts
+     * const brokerAccount = await prisma.brokerAccount.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends BrokerAccountUpdateManyArgs>(args: SelectSubset<T, BrokerAccountUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more BrokerAccounts and returns the data updated in the database.
+     * @param {BrokerAccountUpdateManyAndReturnArgs} args - Arguments to update many BrokerAccounts.
+     * @example
+     * // Update many BrokerAccounts
+     * const brokerAccount = await prisma.brokerAccount.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more BrokerAccounts and only return the `id`
+     * const brokerAccountWithIdOnly = await prisma.brokerAccount.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends BrokerAccountUpdateManyAndReturnArgs>(args: SelectSubset<T, BrokerAccountUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BrokerAccountPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one BrokerAccount.
+     * @param {BrokerAccountUpsertArgs} args - Arguments to update or create a BrokerAccount.
+     * @example
+     * // Update or create a BrokerAccount
+     * const brokerAccount = await prisma.brokerAccount.upsert({
+     *   create: {
+     *     // ... data to create a BrokerAccount
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the BrokerAccount we want to update
+     *   }
+     * })
+     */
+    upsert<T extends BrokerAccountUpsertArgs>(args: SelectSubset<T, BrokerAccountUpsertArgs<ExtArgs>>): Prisma__BrokerAccountClient<$Result.GetResult<Prisma.$BrokerAccountPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of BrokerAccounts.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BrokerAccountCountArgs} args - Arguments to filter BrokerAccounts to count.
+     * @example
+     * // Count the number of BrokerAccounts
+     * const count = await prisma.brokerAccount.count({
+     *   where: {
+     *     // ... the filter for the BrokerAccounts we want to count
+     *   }
+     * })
+    **/
+    count<T extends BrokerAccountCountArgs>(
+      args?: Subset<T, BrokerAccountCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], BrokerAccountCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a BrokerAccount.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BrokerAccountAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends BrokerAccountAggregateArgs>(args: Subset<T, BrokerAccountAggregateArgs>): Prisma.PrismaPromise<GetBrokerAccountAggregateType<T>>
+
+    /**
+     * Group by BrokerAccount.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BrokerAccountGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends BrokerAccountGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: BrokerAccountGroupByArgs['orderBy'] }
+        : { orderBy?: BrokerAccountGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, BrokerAccountGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetBrokerAccountGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the BrokerAccount model
+   */
+  readonly fields: BrokerAccountFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for BrokerAccount.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__BrokerAccountClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the BrokerAccount model
+   */
+  interface BrokerAccountFieldRefs {
+    readonly id: FieldRef<"BrokerAccount", 'String'>
+    readonly userId: FieldRef<"BrokerAccount", 'String'>
+    readonly accountType: FieldRef<"BrokerAccount", 'String'>
+    readonly institution: FieldRef<"BrokerAccount", 'String'>
+    readonly accountNo: FieldRef<"BrokerAccount", 'String'>
+    readonly robotName: FieldRef<"BrokerAccount", 'String'>
+    readonly maskedSecret: FieldRef<"BrokerAccount", 'String'>
+    readonly isActive: FieldRef<"BrokerAccount", 'Boolean'>
+    readonly createdAt: FieldRef<"BrokerAccount", 'DateTime'>
+    readonly updatedAt: FieldRef<"BrokerAccount", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * BrokerAccount findUnique
+   */
+  export type BrokerAccountFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BrokerAccount
+     */
+    select?: BrokerAccountSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BrokerAccount
+     */
+    omit?: BrokerAccountOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BrokerAccountInclude<ExtArgs> | null
+    /**
+     * Filter, which BrokerAccount to fetch.
+     */
+    where: BrokerAccountWhereUniqueInput
+  }
+
+  /**
+   * BrokerAccount findUniqueOrThrow
+   */
+  export type BrokerAccountFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BrokerAccount
+     */
+    select?: BrokerAccountSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BrokerAccount
+     */
+    omit?: BrokerAccountOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BrokerAccountInclude<ExtArgs> | null
+    /**
+     * Filter, which BrokerAccount to fetch.
+     */
+    where: BrokerAccountWhereUniqueInput
+  }
+
+  /**
+   * BrokerAccount findFirst
+   */
+  export type BrokerAccountFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BrokerAccount
+     */
+    select?: BrokerAccountSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BrokerAccount
+     */
+    omit?: BrokerAccountOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BrokerAccountInclude<ExtArgs> | null
+    /**
+     * Filter, which BrokerAccount to fetch.
+     */
+    where?: BrokerAccountWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BrokerAccounts to fetch.
+     */
+    orderBy?: BrokerAccountOrderByWithRelationInput | BrokerAccountOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for BrokerAccounts.
+     */
+    cursor?: BrokerAccountWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BrokerAccounts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BrokerAccounts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of BrokerAccounts.
+     */
+    distinct?: BrokerAccountScalarFieldEnum | BrokerAccountScalarFieldEnum[]
+  }
+
+  /**
+   * BrokerAccount findFirstOrThrow
+   */
+  export type BrokerAccountFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BrokerAccount
+     */
+    select?: BrokerAccountSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BrokerAccount
+     */
+    omit?: BrokerAccountOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BrokerAccountInclude<ExtArgs> | null
+    /**
+     * Filter, which BrokerAccount to fetch.
+     */
+    where?: BrokerAccountWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BrokerAccounts to fetch.
+     */
+    orderBy?: BrokerAccountOrderByWithRelationInput | BrokerAccountOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for BrokerAccounts.
+     */
+    cursor?: BrokerAccountWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BrokerAccounts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BrokerAccounts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of BrokerAccounts.
+     */
+    distinct?: BrokerAccountScalarFieldEnum | BrokerAccountScalarFieldEnum[]
+  }
+
+  /**
+   * BrokerAccount findMany
+   */
+  export type BrokerAccountFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BrokerAccount
+     */
+    select?: BrokerAccountSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BrokerAccount
+     */
+    omit?: BrokerAccountOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BrokerAccountInclude<ExtArgs> | null
+    /**
+     * Filter, which BrokerAccounts to fetch.
+     */
+    where?: BrokerAccountWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BrokerAccounts to fetch.
+     */
+    orderBy?: BrokerAccountOrderByWithRelationInput | BrokerAccountOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing BrokerAccounts.
+     */
+    cursor?: BrokerAccountWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BrokerAccounts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BrokerAccounts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of BrokerAccounts.
+     */
+    distinct?: BrokerAccountScalarFieldEnum | BrokerAccountScalarFieldEnum[]
+  }
+
+  /**
+   * BrokerAccount create
+   */
+  export type BrokerAccountCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BrokerAccount
+     */
+    select?: BrokerAccountSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BrokerAccount
+     */
+    omit?: BrokerAccountOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BrokerAccountInclude<ExtArgs> | null
+    /**
+     * The data needed to create a BrokerAccount.
+     */
+    data: XOR<BrokerAccountCreateInput, BrokerAccountUncheckedCreateInput>
+  }
+
+  /**
+   * BrokerAccount createMany
+   */
+  export type BrokerAccountCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many BrokerAccounts.
+     */
+    data: BrokerAccountCreateManyInput | BrokerAccountCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * BrokerAccount createManyAndReturn
+   */
+  export type BrokerAccountCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BrokerAccount
+     */
+    select?: BrokerAccountSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the BrokerAccount
+     */
+    omit?: BrokerAccountOmit<ExtArgs> | null
+    /**
+     * The data used to create many BrokerAccounts.
+     */
+    data: BrokerAccountCreateManyInput | BrokerAccountCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BrokerAccountIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * BrokerAccount update
+   */
+  export type BrokerAccountUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BrokerAccount
+     */
+    select?: BrokerAccountSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BrokerAccount
+     */
+    omit?: BrokerAccountOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BrokerAccountInclude<ExtArgs> | null
+    /**
+     * The data needed to update a BrokerAccount.
+     */
+    data: XOR<BrokerAccountUpdateInput, BrokerAccountUncheckedUpdateInput>
+    /**
+     * Choose, which BrokerAccount to update.
+     */
+    where: BrokerAccountWhereUniqueInput
+  }
+
+  /**
+   * BrokerAccount updateMany
+   */
+  export type BrokerAccountUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update BrokerAccounts.
+     */
+    data: XOR<BrokerAccountUpdateManyMutationInput, BrokerAccountUncheckedUpdateManyInput>
+    /**
+     * Filter which BrokerAccounts to update
+     */
+    where?: BrokerAccountWhereInput
+    /**
+     * Limit how many BrokerAccounts to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * BrokerAccount updateManyAndReturn
+   */
+  export type BrokerAccountUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BrokerAccount
+     */
+    select?: BrokerAccountSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the BrokerAccount
+     */
+    omit?: BrokerAccountOmit<ExtArgs> | null
+    /**
+     * The data used to update BrokerAccounts.
+     */
+    data: XOR<BrokerAccountUpdateManyMutationInput, BrokerAccountUncheckedUpdateManyInput>
+    /**
+     * Filter which BrokerAccounts to update
+     */
+    where?: BrokerAccountWhereInput
+    /**
+     * Limit how many BrokerAccounts to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BrokerAccountIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * BrokerAccount upsert
+   */
+  export type BrokerAccountUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BrokerAccount
+     */
+    select?: BrokerAccountSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BrokerAccount
+     */
+    omit?: BrokerAccountOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BrokerAccountInclude<ExtArgs> | null
+    /**
+     * The filter to search for the BrokerAccount to update in case it exists.
+     */
+    where: BrokerAccountWhereUniqueInput
+    /**
+     * In case the BrokerAccount found by the `where` argument doesn't exist, create a new BrokerAccount with this data.
+     */
+    create: XOR<BrokerAccountCreateInput, BrokerAccountUncheckedCreateInput>
+    /**
+     * In case the BrokerAccount was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<BrokerAccountUpdateInput, BrokerAccountUncheckedUpdateInput>
+  }
+
+  /**
+   * BrokerAccount delete
+   */
+  export type BrokerAccountDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BrokerAccount
+     */
+    select?: BrokerAccountSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BrokerAccount
+     */
+    omit?: BrokerAccountOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BrokerAccountInclude<ExtArgs> | null
+    /**
+     * Filter which BrokerAccount to delete.
+     */
+    where: BrokerAccountWhereUniqueInput
+  }
+
+  /**
+   * BrokerAccount deleteMany
+   */
+  export type BrokerAccountDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which BrokerAccounts to delete
+     */
+    where?: BrokerAccountWhereInput
+    /**
+     * Limit how many BrokerAccounts to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * BrokerAccount without action
+   */
+  export type BrokerAccountDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BrokerAccount
+     */
+    select?: BrokerAccountSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BrokerAccount
+     */
+    omit?: BrokerAccountOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BrokerAccountInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -9529,6 +10785,22 @@ export namespace Prisma {
   };
 
   export type UserRobotScalarFieldEnum = (typeof UserRobotScalarFieldEnum)[keyof typeof UserRobotScalarFieldEnum]
+
+
+  export const BrokerAccountScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    accountType: 'accountType',
+    institution: 'institution',
+    accountNo: 'accountNo',
+    robotName: 'robotName',
+    maskedSecret: 'maskedSecret',
+    isActive: 'isActive',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type BrokerAccountScalarFieldEnum = (typeof BrokerAccountScalarFieldEnum)[keyof typeof BrokerAccountScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -9653,6 +10925,7 @@ export namespace Prisma {
     subscription?: XOR<SubscriptionNullableScalarRelationFilter, SubscriptionWhereInput> | null
     invoices?: InvoiceListRelationFilter
     robots?: UserRobotListRelationFilter
+    brokerAccounts?: BrokerAccountListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -9679,6 +10952,7 @@ export namespace Prisma {
     subscription?: SubscriptionOrderByWithRelationInput
     invoices?: InvoiceOrderByRelationAggregateInput
     robots?: UserRobotOrderByRelationAggregateInput
+    brokerAccounts?: BrokerAccountOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -9708,6 +10982,7 @@ export namespace Prisma {
     subscription?: XOR<SubscriptionNullableScalarRelationFilter, SubscriptionWhereInput> | null
     invoices?: InvoiceListRelationFilter
     robots?: UserRobotListRelationFilter
+    brokerAccounts?: BrokerAccountListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -10172,6 +11447,86 @@ export namespace Prisma {
     addedAt?: DateTimeWithAggregatesFilter<"UserRobot"> | Date | string
   }
 
+  export type BrokerAccountWhereInput = {
+    AND?: BrokerAccountWhereInput | BrokerAccountWhereInput[]
+    OR?: BrokerAccountWhereInput[]
+    NOT?: BrokerAccountWhereInput | BrokerAccountWhereInput[]
+    id?: StringFilter<"BrokerAccount"> | string
+    userId?: StringFilter<"BrokerAccount"> | string
+    accountType?: StringFilter<"BrokerAccount"> | string
+    institution?: StringFilter<"BrokerAccount"> | string
+    accountNo?: StringFilter<"BrokerAccount"> | string
+    robotName?: StringFilter<"BrokerAccount"> | string
+    maskedSecret?: StringFilter<"BrokerAccount"> | string
+    isActive?: BoolFilter<"BrokerAccount"> | boolean
+    createdAt?: DateTimeFilter<"BrokerAccount"> | Date | string
+    updatedAt?: DateTimeFilter<"BrokerAccount"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type BrokerAccountOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    accountType?: SortOrder
+    institution?: SortOrder
+    accountNo?: SortOrder
+    robotName?: SortOrder
+    maskedSecret?: SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type BrokerAccountWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: BrokerAccountWhereInput | BrokerAccountWhereInput[]
+    OR?: BrokerAccountWhereInput[]
+    NOT?: BrokerAccountWhereInput | BrokerAccountWhereInput[]
+    userId?: StringFilter<"BrokerAccount"> | string
+    accountType?: StringFilter<"BrokerAccount"> | string
+    institution?: StringFilter<"BrokerAccount"> | string
+    accountNo?: StringFilter<"BrokerAccount"> | string
+    robotName?: StringFilter<"BrokerAccount"> | string
+    maskedSecret?: StringFilter<"BrokerAccount"> | string
+    isActive?: BoolFilter<"BrokerAccount"> | boolean
+    createdAt?: DateTimeFilter<"BrokerAccount"> | Date | string
+    updatedAt?: DateTimeFilter<"BrokerAccount"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id">
+
+  export type BrokerAccountOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    accountType?: SortOrder
+    institution?: SortOrder
+    accountNo?: SortOrder
+    robotName?: SortOrder
+    maskedSecret?: SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: BrokerAccountCountOrderByAggregateInput
+    _max?: BrokerAccountMaxOrderByAggregateInput
+    _min?: BrokerAccountMinOrderByAggregateInput
+  }
+
+  export type BrokerAccountScalarWhereWithAggregatesInput = {
+    AND?: BrokerAccountScalarWhereWithAggregatesInput | BrokerAccountScalarWhereWithAggregatesInput[]
+    OR?: BrokerAccountScalarWhereWithAggregatesInput[]
+    NOT?: BrokerAccountScalarWhereWithAggregatesInput | BrokerAccountScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"BrokerAccount"> | string
+    userId?: StringWithAggregatesFilter<"BrokerAccount"> | string
+    accountType?: StringWithAggregatesFilter<"BrokerAccount"> | string
+    institution?: StringWithAggregatesFilter<"BrokerAccount"> | string
+    accountNo?: StringWithAggregatesFilter<"BrokerAccount"> | string
+    robotName?: StringWithAggregatesFilter<"BrokerAccount"> | string
+    maskedSecret?: StringWithAggregatesFilter<"BrokerAccount"> | string
+    isActive?: BoolWithAggregatesFilter<"BrokerAccount"> | boolean
+    createdAt?: DateTimeWithAggregatesFilter<"BrokerAccount"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"BrokerAccount"> | Date | string
+  }
+
   export type UserCreateInput = {
     id?: string
     name?: string | null
@@ -10196,6 +11551,7 @@ export namespace Prisma {
     subscription?: SubscriptionCreateNestedOneWithoutUserInput
     invoices?: InvoiceCreateNestedManyWithoutUserInput
     robots?: UserRobotCreateNestedManyWithoutUserInput
+    brokerAccounts?: BrokerAccountCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -10222,6 +11578,7 @@ export namespace Prisma {
     subscription?: SubscriptionUncheckedCreateNestedOneWithoutUserInput
     invoices?: InvoiceUncheckedCreateNestedManyWithoutUserInput
     robots?: UserRobotUncheckedCreateNestedManyWithoutUserInput
+    brokerAccounts?: BrokerAccountUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -10248,6 +11605,7 @@ export namespace Prisma {
     subscription?: SubscriptionUpdateOneWithoutUserNestedInput
     invoices?: InvoiceUpdateManyWithoutUserNestedInput
     robots?: UserRobotUpdateManyWithoutUserNestedInput
+    brokerAccounts?: BrokerAccountUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -10274,6 +11632,7 @@ export namespace Prisma {
     subscription?: SubscriptionUncheckedUpdateOneWithoutUserNestedInput
     invoices?: InvoiceUncheckedUpdateManyWithoutUserNestedInput
     robots?: UserRobotUncheckedUpdateManyWithoutUserNestedInput
+    brokerAccounts?: BrokerAccountUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -10782,6 +12141,96 @@ export namespace Prisma {
     addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type BrokerAccountCreateInput = {
+    id?: string
+    accountType: string
+    institution: string
+    accountNo: string
+    robotName: string
+    maskedSecret: string
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutBrokerAccountsInput
+  }
+
+  export type BrokerAccountUncheckedCreateInput = {
+    id?: string
+    userId: string
+    accountType: string
+    institution: string
+    accountNo: string
+    robotName: string
+    maskedSecret: string
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BrokerAccountUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    accountType?: StringFieldUpdateOperationsInput | string
+    institution?: StringFieldUpdateOperationsInput | string
+    accountNo?: StringFieldUpdateOperationsInput | string
+    robotName?: StringFieldUpdateOperationsInput | string
+    maskedSecret?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutBrokerAccountsNestedInput
+  }
+
+  export type BrokerAccountUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    accountType?: StringFieldUpdateOperationsInput | string
+    institution?: StringFieldUpdateOperationsInput | string
+    accountNo?: StringFieldUpdateOperationsInput | string
+    robotName?: StringFieldUpdateOperationsInput | string
+    maskedSecret?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BrokerAccountCreateManyInput = {
+    id?: string
+    userId: string
+    accountType: string
+    institution: string
+    accountNo: string
+    robotName: string
+    maskedSecret: string
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BrokerAccountUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    accountType?: StringFieldUpdateOperationsInput | string
+    institution?: StringFieldUpdateOperationsInput | string
+    accountNo?: StringFieldUpdateOperationsInput | string
+    robotName?: StringFieldUpdateOperationsInput | string
+    maskedSecret?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BrokerAccountUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    accountType?: StringFieldUpdateOperationsInput | string
+    institution?: StringFieldUpdateOperationsInput | string
+    accountNo?: StringFieldUpdateOperationsInput | string
+    robotName?: StringFieldUpdateOperationsInput | string
+    maskedSecret?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -10863,6 +12312,12 @@ export namespace Prisma {
     none?: UserRobotWhereInput
   }
 
+  export type BrokerAccountListRelationFilter = {
+    every?: BrokerAccountWhereInput
+    some?: BrokerAccountWhereInput
+    none?: BrokerAccountWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -10881,6 +12336,10 @@ export namespace Prisma {
   }
 
   export type UserRobotOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type BrokerAccountOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -11306,6 +12765,45 @@ export namespace Prisma {
     addedAt?: SortOrder
   }
 
+  export type BrokerAccountCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    accountType?: SortOrder
+    institution?: SortOrder
+    accountNo?: SortOrder
+    robotName?: SortOrder
+    maskedSecret?: SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type BrokerAccountMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    accountType?: SortOrder
+    institution?: SortOrder
+    accountNo?: SortOrder
+    robotName?: SortOrder
+    maskedSecret?: SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type BrokerAccountMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    accountType?: SortOrder
+    institution?: SortOrder
+    accountNo?: SortOrder
+    robotName?: SortOrder
+    maskedSecret?: SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
   export type AccountCreateNestedManyWithoutUserInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -11340,6 +12838,13 @@ export namespace Prisma {
     connect?: UserRobotWhereUniqueInput | UserRobotWhereUniqueInput[]
   }
 
+  export type BrokerAccountCreateNestedManyWithoutUserInput = {
+    create?: XOR<BrokerAccountCreateWithoutUserInput, BrokerAccountUncheckedCreateWithoutUserInput> | BrokerAccountCreateWithoutUserInput[] | BrokerAccountUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: BrokerAccountCreateOrConnectWithoutUserInput | BrokerAccountCreateOrConnectWithoutUserInput[]
+    createMany?: BrokerAccountCreateManyUserInputEnvelope
+    connect?: BrokerAccountWhereUniqueInput | BrokerAccountWhereUniqueInput[]
+  }
+
   export type AccountUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -11372,6 +12877,13 @@ export namespace Prisma {
     connectOrCreate?: UserRobotCreateOrConnectWithoutUserInput | UserRobotCreateOrConnectWithoutUserInput[]
     createMany?: UserRobotCreateManyUserInputEnvelope
     connect?: UserRobotWhereUniqueInput | UserRobotWhereUniqueInput[]
+  }
+
+  export type BrokerAccountUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<BrokerAccountCreateWithoutUserInput, BrokerAccountUncheckedCreateWithoutUserInput> | BrokerAccountCreateWithoutUserInput[] | BrokerAccountUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: BrokerAccountCreateOrConnectWithoutUserInput | BrokerAccountCreateOrConnectWithoutUserInput[]
+    createMany?: BrokerAccountCreateManyUserInputEnvelope
+    connect?: BrokerAccountWhereUniqueInput | BrokerAccountWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -11456,6 +12968,20 @@ export namespace Prisma {
     deleteMany?: UserRobotScalarWhereInput | UserRobotScalarWhereInput[]
   }
 
+  export type BrokerAccountUpdateManyWithoutUserNestedInput = {
+    create?: XOR<BrokerAccountCreateWithoutUserInput, BrokerAccountUncheckedCreateWithoutUserInput> | BrokerAccountCreateWithoutUserInput[] | BrokerAccountUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: BrokerAccountCreateOrConnectWithoutUserInput | BrokerAccountCreateOrConnectWithoutUserInput[]
+    upsert?: BrokerAccountUpsertWithWhereUniqueWithoutUserInput | BrokerAccountUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: BrokerAccountCreateManyUserInputEnvelope
+    set?: BrokerAccountWhereUniqueInput | BrokerAccountWhereUniqueInput[]
+    disconnect?: BrokerAccountWhereUniqueInput | BrokerAccountWhereUniqueInput[]
+    delete?: BrokerAccountWhereUniqueInput | BrokerAccountWhereUniqueInput[]
+    connect?: BrokerAccountWhereUniqueInput | BrokerAccountWhereUniqueInput[]
+    update?: BrokerAccountUpdateWithWhereUniqueWithoutUserInput | BrokerAccountUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: BrokerAccountUpdateManyWithWhereWithoutUserInput | BrokerAccountUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: BrokerAccountScalarWhereInput | BrokerAccountScalarWhereInput[]
+  }
+
   export type AccountUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -11520,6 +13046,20 @@ export namespace Prisma {
     update?: UserRobotUpdateWithWhereUniqueWithoutUserInput | UserRobotUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: UserRobotUpdateManyWithWhereWithoutUserInput | UserRobotUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: UserRobotScalarWhereInput | UserRobotScalarWhereInput[]
+  }
+
+  export type BrokerAccountUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<BrokerAccountCreateWithoutUserInput, BrokerAccountUncheckedCreateWithoutUserInput> | BrokerAccountCreateWithoutUserInput[] | BrokerAccountUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: BrokerAccountCreateOrConnectWithoutUserInput | BrokerAccountCreateOrConnectWithoutUserInput[]
+    upsert?: BrokerAccountUpsertWithWhereUniqueWithoutUserInput | BrokerAccountUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: BrokerAccountCreateManyUserInputEnvelope
+    set?: BrokerAccountWhereUniqueInput | BrokerAccountWhereUniqueInput[]
+    disconnect?: BrokerAccountWhereUniqueInput | BrokerAccountWhereUniqueInput[]
+    delete?: BrokerAccountWhereUniqueInput | BrokerAccountWhereUniqueInput[]
+    connect?: BrokerAccountWhereUniqueInput | BrokerAccountWhereUniqueInput[]
+    update?: BrokerAccountUpdateWithWhereUniqueWithoutUserInput | BrokerAccountUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: BrokerAccountUpdateManyWithWhereWithoutUserInput | BrokerAccountUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: BrokerAccountScalarWhereInput | BrokerAccountScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutAccountsInput = {
@@ -11610,6 +13150,20 @@ export namespace Prisma {
     upsert?: UserUpsertWithoutRobotsInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutRobotsInput, UserUpdateWithoutRobotsInput>, UserUncheckedUpdateWithoutRobotsInput>
+  }
+
+  export type UserCreateNestedOneWithoutBrokerAccountsInput = {
+    create?: XOR<UserCreateWithoutBrokerAccountsInput, UserUncheckedCreateWithoutBrokerAccountsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutBrokerAccountsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutBrokerAccountsNestedInput = {
+    create?: XOR<UserCreateWithoutBrokerAccountsInput, UserUncheckedCreateWithoutBrokerAccountsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutBrokerAccountsInput
+    upsert?: UserUpsertWithoutBrokerAccountsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutBrokerAccountsInput, UserUpdateWithoutBrokerAccountsInput>, UserUncheckedUpdateWithoutBrokerAccountsInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -11964,6 +13518,40 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type BrokerAccountCreateWithoutUserInput = {
+    id?: string
+    accountType: string
+    institution: string
+    accountNo: string
+    robotName: string
+    maskedSecret: string
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BrokerAccountUncheckedCreateWithoutUserInput = {
+    id?: string
+    accountType: string
+    institution: string
+    accountNo: string
+    robotName: string
+    maskedSecret: string
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BrokerAccountCreateOrConnectWithoutUserInput = {
+    where: BrokerAccountWhereUniqueInput
+    create: XOR<BrokerAccountCreateWithoutUserInput, BrokerAccountUncheckedCreateWithoutUserInput>
+  }
+
+  export type BrokerAccountCreateManyUserInputEnvelope = {
+    data: BrokerAccountCreateManyUserInput | BrokerAccountCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
   export type AccountUpsertWithWhereUniqueWithoutUserInput = {
     where: AccountWhereUniqueInput
     update: XOR<AccountUpdateWithoutUserInput, AccountUncheckedUpdateWithoutUserInput>
@@ -12122,6 +13710,38 @@ export namespace Prisma {
     addedAt?: DateTimeFilter<"UserRobot"> | Date | string
   }
 
+  export type BrokerAccountUpsertWithWhereUniqueWithoutUserInput = {
+    where: BrokerAccountWhereUniqueInput
+    update: XOR<BrokerAccountUpdateWithoutUserInput, BrokerAccountUncheckedUpdateWithoutUserInput>
+    create: XOR<BrokerAccountCreateWithoutUserInput, BrokerAccountUncheckedCreateWithoutUserInput>
+  }
+
+  export type BrokerAccountUpdateWithWhereUniqueWithoutUserInput = {
+    where: BrokerAccountWhereUniqueInput
+    data: XOR<BrokerAccountUpdateWithoutUserInput, BrokerAccountUncheckedUpdateWithoutUserInput>
+  }
+
+  export type BrokerAccountUpdateManyWithWhereWithoutUserInput = {
+    where: BrokerAccountScalarWhereInput
+    data: XOR<BrokerAccountUpdateManyMutationInput, BrokerAccountUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type BrokerAccountScalarWhereInput = {
+    AND?: BrokerAccountScalarWhereInput | BrokerAccountScalarWhereInput[]
+    OR?: BrokerAccountScalarWhereInput[]
+    NOT?: BrokerAccountScalarWhereInput | BrokerAccountScalarWhereInput[]
+    id?: StringFilter<"BrokerAccount"> | string
+    userId?: StringFilter<"BrokerAccount"> | string
+    accountType?: StringFilter<"BrokerAccount"> | string
+    institution?: StringFilter<"BrokerAccount"> | string
+    accountNo?: StringFilter<"BrokerAccount"> | string
+    robotName?: StringFilter<"BrokerAccount"> | string
+    maskedSecret?: StringFilter<"BrokerAccount"> | string
+    isActive?: BoolFilter<"BrokerAccount"> | boolean
+    createdAt?: DateTimeFilter<"BrokerAccount"> | Date | string
+    updatedAt?: DateTimeFilter<"BrokerAccount"> | Date | string
+  }
+
   export type UserCreateWithoutAccountsInput = {
     id?: string
     name?: string | null
@@ -12145,6 +13765,7 @@ export namespace Prisma {
     subscription?: SubscriptionCreateNestedOneWithoutUserInput
     invoices?: InvoiceCreateNestedManyWithoutUserInput
     robots?: UserRobotCreateNestedManyWithoutUserInput
+    brokerAccounts?: BrokerAccountCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAccountsInput = {
@@ -12170,6 +13791,7 @@ export namespace Prisma {
     subscription?: SubscriptionUncheckedCreateNestedOneWithoutUserInput
     invoices?: InvoiceUncheckedCreateNestedManyWithoutUserInput
     robots?: UserRobotUncheckedCreateNestedManyWithoutUserInput
+    brokerAccounts?: BrokerAccountUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAccountsInput = {
@@ -12211,6 +13833,7 @@ export namespace Prisma {
     subscription?: SubscriptionUpdateOneWithoutUserNestedInput
     invoices?: InvoiceUpdateManyWithoutUserNestedInput
     robots?: UserRobotUpdateManyWithoutUserNestedInput
+    brokerAccounts?: BrokerAccountUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAccountsInput = {
@@ -12236,6 +13859,7 @@ export namespace Prisma {
     subscription?: SubscriptionUncheckedUpdateOneWithoutUserNestedInput
     invoices?: InvoiceUncheckedUpdateManyWithoutUserNestedInput
     robots?: UserRobotUncheckedUpdateManyWithoutUserNestedInput
+    brokerAccounts?: BrokerAccountUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutSessionsInput = {
@@ -12261,6 +13885,7 @@ export namespace Prisma {
     subscription?: SubscriptionCreateNestedOneWithoutUserInput
     invoices?: InvoiceCreateNestedManyWithoutUserInput
     robots?: UserRobotCreateNestedManyWithoutUserInput
+    brokerAccounts?: BrokerAccountCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSessionsInput = {
@@ -12286,6 +13911,7 @@ export namespace Prisma {
     subscription?: SubscriptionUncheckedCreateNestedOneWithoutUserInput
     invoices?: InvoiceUncheckedCreateNestedManyWithoutUserInput
     robots?: UserRobotUncheckedCreateNestedManyWithoutUserInput
+    brokerAccounts?: BrokerAccountUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSessionsInput = {
@@ -12327,6 +13953,7 @@ export namespace Prisma {
     subscription?: SubscriptionUpdateOneWithoutUserNestedInput
     invoices?: InvoiceUpdateManyWithoutUserNestedInput
     robots?: UserRobotUpdateManyWithoutUserNestedInput
+    brokerAccounts?: BrokerAccountUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -12352,6 +13979,7 @@ export namespace Prisma {
     subscription?: SubscriptionUncheckedUpdateOneWithoutUserNestedInput
     invoices?: InvoiceUncheckedUpdateManyWithoutUserNestedInput
     robots?: UserRobotUncheckedUpdateManyWithoutUserNestedInput
+    brokerAccounts?: BrokerAccountUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutSubscriptionInput = {
@@ -12377,6 +14005,7 @@ export namespace Prisma {
     sessions?: SessionCreateNestedManyWithoutUserInput
     invoices?: InvoiceCreateNestedManyWithoutUserInput
     robots?: UserRobotCreateNestedManyWithoutUserInput
+    brokerAccounts?: BrokerAccountCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSubscriptionInput = {
@@ -12402,6 +14031,7 @@ export namespace Prisma {
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     invoices?: InvoiceUncheckedCreateNestedManyWithoutUserInput
     robots?: UserRobotUncheckedCreateNestedManyWithoutUserInput
+    brokerAccounts?: BrokerAccountUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSubscriptionInput = {
@@ -12443,6 +14073,7 @@ export namespace Prisma {
     sessions?: SessionUpdateManyWithoutUserNestedInput
     invoices?: InvoiceUpdateManyWithoutUserNestedInput
     robots?: UserRobotUpdateManyWithoutUserNestedInput
+    brokerAccounts?: BrokerAccountUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSubscriptionInput = {
@@ -12468,6 +14099,7 @@ export namespace Prisma {
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     invoices?: InvoiceUncheckedUpdateManyWithoutUserNestedInput
     robots?: UserRobotUncheckedUpdateManyWithoutUserNestedInput
+    brokerAccounts?: BrokerAccountUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutInvoicesInput = {
@@ -12493,6 +14125,7 @@ export namespace Prisma {
     sessions?: SessionCreateNestedManyWithoutUserInput
     subscription?: SubscriptionCreateNestedOneWithoutUserInput
     robots?: UserRobotCreateNestedManyWithoutUserInput
+    brokerAccounts?: BrokerAccountCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutInvoicesInput = {
@@ -12518,6 +14151,7 @@ export namespace Prisma {
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     subscription?: SubscriptionUncheckedCreateNestedOneWithoutUserInput
     robots?: UserRobotUncheckedCreateNestedManyWithoutUserInput
+    brokerAccounts?: BrokerAccountUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutInvoicesInput = {
@@ -12559,6 +14193,7 @@ export namespace Prisma {
     sessions?: SessionUpdateManyWithoutUserNestedInput
     subscription?: SubscriptionUpdateOneWithoutUserNestedInput
     robots?: UserRobotUpdateManyWithoutUserNestedInput
+    brokerAccounts?: BrokerAccountUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutInvoicesInput = {
@@ -12584,6 +14219,7 @@ export namespace Prisma {
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     subscription?: SubscriptionUncheckedUpdateOneWithoutUserNestedInput
     robots?: UserRobotUncheckedUpdateManyWithoutUserNestedInput
+    brokerAccounts?: BrokerAccountUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutRobotsInput = {
@@ -12609,6 +14245,7 @@ export namespace Prisma {
     sessions?: SessionCreateNestedManyWithoutUserInput
     subscription?: SubscriptionCreateNestedOneWithoutUserInput
     invoices?: InvoiceCreateNestedManyWithoutUserInput
+    brokerAccounts?: BrokerAccountCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutRobotsInput = {
@@ -12634,6 +14271,7 @@ export namespace Prisma {
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     subscription?: SubscriptionUncheckedCreateNestedOneWithoutUserInput
     invoices?: InvoiceUncheckedCreateNestedManyWithoutUserInput
+    brokerAccounts?: BrokerAccountUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutRobotsInput = {
@@ -12675,6 +14313,7 @@ export namespace Prisma {
     sessions?: SessionUpdateManyWithoutUserNestedInput
     subscription?: SubscriptionUpdateOneWithoutUserNestedInput
     invoices?: InvoiceUpdateManyWithoutUserNestedInput
+    brokerAccounts?: BrokerAccountUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutRobotsInput = {
@@ -12700,6 +14339,127 @@ export namespace Prisma {
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     subscription?: SubscriptionUncheckedUpdateOneWithoutUserNestedInput
     invoices?: InvoiceUncheckedUpdateManyWithoutUserNestedInput
+    brokerAccounts?: BrokerAccountUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserCreateWithoutBrokerAccountsInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: Date | string | null
+    image?: string | null
+    firstName?: string | null
+    lastName?: string | null
+    gender?: string | null
+    phone?: string | null
+    address?: string | null
+    postalCode?: string | null
+    city?: string | null
+    country?: string | null
+    companyName?: string | null
+    twitter?: string | null
+    bio?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    subscription?: SubscriptionCreateNestedOneWithoutUserInput
+    invoices?: InvoiceCreateNestedManyWithoutUserInput
+    robots?: UserRobotCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutBrokerAccountsInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: Date | string | null
+    image?: string | null
+    firstName?: string | null
+    lastName?: string | null
+    gender?: string | null
+    phone?: string | null
+    address?: string | null
+    postalCode?: string | null
+    city?: string | null
+    country?: string | null
+    companyName?: string | null
+    twitter?: string | null
+    bio?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    subscription?: SubscriptionUncheckedCreateNestedOneWithoutUserInput
+    invoices?: InvoiceUncheckedCreateNestedManyWithoutUserInput
+    robots?: UserRobotUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutBrokerAccountsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutBrokerAccountsInput, UserUncheckedCreateWithoutBrokerAccountsInput>
+  }
+
+  export type UserUpsertWithoutBrokerAccountsInput = {
+    update: XOR<UserUpdateWithoutBrokerAccountsInput, UserUncheckedUpdateWithoutBrokerAccountsInput>
+    create: XOR<UserCreateWithoutBrokerAccountsInput, UserUncheckedCreateWithoutBrokerAccountsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutBrokerAccountsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutBrokerAccountsInput, UserUncheckedUpdateWithoutBrokerAccountsInput>
+  }
+
+  export type UserUpdateWithoutBrokerAccountsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null
+    lastName?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    companyName?: NullableStringFieldUpdateOperationsInput | string | null
+    twitter?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    subscription?: SubscriptionUpdateOneWithoutUserNestedInput
+    invoices?: InvoiceUpdateManyWithoutUserNestedInput
+    robots?: UserRobotUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutBrokerAccountsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null
+    lastName?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    companyName?: NullableStringFieldUpdateOperationsInput | string | null
+    twitter?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    subscription?: SubscriptionUncheckedUpdateOneWithoutUserNestedInput
+    invoices?: InvoiceUncheckedUpdateManyWithoutUserNestedInput
+    robots?: UserRobotUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type AccountCreateManyUserInput = {
@@ -12739,6 +14499,18 @@ export namespace Prisma {
     robotId: string
     isActive?: boolean
     addedAt?: Date | string
+  }
+
+  export type BrokerAccountCreateManyUserInput = {
+    id?: string
+    accountType: string
+    institution: string
+    accountNo: string
+    robotName: string
+    maskedSecret: string
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type AccountUpdateWithoutUserInput = {
@@ -12856,6 +14628,42 @@ export namespace Prisma {
     robotId?: StringFieldUpdateOperationsInput | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
     addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BrokerAccountUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    accountType?: StringFieldUpdateOperationsInput | string
+    institution?: StringFieldUpdateOperationsInput | string
+    accountNo?: StringFieldUpdateOperationsInput | string
+    robotName?: StringFieldUpdateOperationsInput | string
+    maskedSecret?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BrokerAccountUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    accountType?: StringFieldUpdateOperationsInput | string
+    institution?: StringFieldUpdateOperationsInput | string
+    accountNo?: StringFieldUpdateOperationsInput | string
+    robotName?: StringFieldUpdateOperationsInput | string
+    maskedSecret?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BrokerAccountUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    accountType?: StringFieldUpdateOperationsInput | string
+    institution?: StringFieldUpdateOperationsInput | string
+    accountNo?: StringFieldUpdateOperationsInput | string
+    robotName?: StringFieldUpdateOperationsInput | string
+    maskedSecret?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 

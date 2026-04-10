@@ -2,7 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { Activity, Home, Bot, Server, LogOut, Bell, Settings, Crown, Zap, Star } from "lucide-react";
+import { Activity, Home, Bot, Server, LogOut, Bell, Settings, Crown, Zap, Star, Wallet } from "lucide-react";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
 import styles from "./layout.module.css";
@@ -70,6 +70,7 @@ export default function DashboardShell({ children, userName, userImage, planLabe
   const navItems = [
     { label: "Ana Sayfa", href: "/dashboard", icon: Home },
     { label: "Robot Vitrini", href: "/dashboard/robots", icon: Bot },
+    { label: "Hesaplarım", href: "/dashboard/accounts", icon: Wallet },
     { label: "Sunucular", href: "/dashboard/servers", icon: Server },
     { label: "Ayarlar", href: "/dashboard/settings", icon: Settings },
   ];
@@ -130,6 +131,24 @@ export default function DashboardShell({ children, userName, userImage, planLabe
           </button>
         </div>
       </aside>
+
+      {/* Mobile Bottom Nav */}
+      <nav className={styles.mobileNav}>
+        {navItems.map((item) => {
+          const Icon = item.icon;
+          const isActive = pathname === item.href;
+          return (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={`${styles.mobileNavLink} ${isActive ? styles.mobileActiveLink : ""}`}
+            >
+              <Icon size={20} />
+              <span>{item.label}</span>
+            </Link>
+          );
+        })}
+      </nav>
 
       {/* Ana İçerik */}
       <main className={styles.mainContent}>
