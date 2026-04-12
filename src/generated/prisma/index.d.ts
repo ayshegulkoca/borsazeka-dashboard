@@ -19,6 +19,11 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
  */
 export type User = $Result.DefaultSelection<Prisma.$UserPayload>
 /**
+ * Model Server
+ * 
+ */
+export type Server = $Result.DefaultSelection<Prisma.$ServerPayload>
+/**
  * Model Account
  * 
  */
@@ -184,6 +189,16 @@ export class PrismaClient<
     * ```
     */
   get user(): Prisma.UserDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.server`: Exposes CRUD operations for the **Server** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Servers
+    * const servers = await prisma.server.findMany()
+    * ```
+    */
+  get server(): Prisma.ServerDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.account`: Exposes CRUD operations for the **Account** model.
@@ -689,6 +704,7 @@ export namespace Prisma {
 
   export const ModelName: {
     User: 'User',
+    Server: 'Server',
     Account: 'Account',
     Session: 'Session',
     VerificationToken: 'VerificationToken',
@@ -711,7 +727,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "account" | "session" | "verificationToken" | "subscription" | "invoice" | "userRobot" | "brokerAccount"
+      modelProps: "user" | "server" | "account" | "session" | "verificationToken" | "subscription" | "invoice" | "userRobot" | "brokerAccount"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -786,6 +802,80 @@ export namespace Prisma {
           count: {
             args: Prisma.UserCountArgs<ExtArgs>
             result: $Utils.Optional<UserCountAggregateOutputType> | number
+          }
+        }
+      }
+      Server: {
+        payload: Prisma.$ServerPayload<ExtArgs>
+        fields: Prisma.ServerFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ServerFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ServerPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ServerFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ServerPayload>
+          }
+          findFirst: {
+            args: Prisma.ServerFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ServerPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ServerFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ServerPayload>
+          }
+          findMany: {
+            args: Prisma.ServerFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ServerPayload>[]
+          }
+          create: {
+            args: Prisma.ServerCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ServerPayload>
+          }
+          createMany: {
+            args: Prisma.ServerCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ServerCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ServerPayload>[]
+          }
+          delete: {
+            args: Prisma.ServerDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ServerPayload>
+          }
+          update: {
+            args: Prisma.ServerUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ServerPayload>
+          }
+          deleteMany: {
+            args: Prisma.ServerDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ServerUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ServerUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ServerPayload>[]
+          }
+          upsert: {
+            args: Prisma.ServerUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ServerPayload>
+          }
+          aggregate: {
+            args: Prisma.ServerAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateServer>
+          }
+          groupBy: {
+            args: Prisma.ServerGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ServerGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ServerCountArgs<ExtArgs>
+            result: $Utils.Optional<ServerCountAggregateOutputType> | number
           }
         }
       }
@@ -1416,6 +1506,7 @@ export namespace Prisma {
   }
   export type GlobalOmitConfig = {
     user?: UserOmit
+    server?: ServerOmit
     account?: AccountOmit
     session?: SessionOmit
     verificationToken?: VerificationTokenOmit
@@ -1508,6 +1599,7 @@ export namespace Prisma {
     invoices: number
     robots: number
     brokerAccounts: number
+    servers: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -1516,6 +1608,7 @@ export namespace Prisma {
     invoices?: boolean | UserCountOutputTypeCountInvoicesArgs
     robots?: boolean | UserCountOutputTypeCountRobotsArgs
     brokerAccounts?: boolean | UserCountOutputTypeCountBrokerAccountsArgs
+    servers?: boolean | UserCountOutputTypeCountServersArgs
   }
 
   // Custom InputTypes
@@ -1562,6 +1655,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountBrokerAccountsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: BrokerAccountWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountServersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ServerWhereInput
   }
 
 
@@ -1843,6 +1943,7 @@ export namespace Prisma {
     invoices?: boolean | User$invoicesArgs<ExtArgs>
     robots?: boolean | User$robotsArgs<ExtArgs>
     brokerAccounts?: boolean | User$brokerAccountsArgs<ExtArgs>
+    servers?: boolean | User$serversArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -1917,6 +2018,7 @@ export namespace Prisma {
     invoices?: boolean | User$invoicesArgs<ExtArgs>
     robots?: boolean | User$robotsArgs<ExtArgs>
     brokerAccounts?: boolean | User$brokerAccountsArgs<ExtArgs>
+    servers?: boolean | User$serversArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1931,6 +2033,7 @@ export namespace Prisma {
       invoices: Prisma.$InvoicePayload<ExtArgs>[]
       robots: Prisma.$UserRobotPayload<ExtArgs>[]
       brokerAccounts: Prisma.$BrokerAccountPayload<ExtArgs>[]
+      servers: Prisma.$ServerPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -2351,6 +2454,7 @@ export namespace Prisma {
     invoices<T extends User$invoicesArgs<ExtArgs> = {}>(args?: Subset<T, User$invoicesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InvoicePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     robots<T extends User$robotsArgs<ExtArgs> = {}>(args?: Subset<T, User$robotsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserRobotPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     brokerAccounts<T extends User$brokerAccountsArgs<ExtArgs> = {}>(args?: Subset<T, User$brokerAccountsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BrokerAccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    servers<T extends User$serversArgs<ExtArgs> = {}>(args?: Subset<T, User$serversArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ServerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2930,6 +3034,30 @@ export namespace Prisma {
   }
 
   /**
+   * User.servers
+   */
+  export type User$serversArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Server
+     */
+    select?: ServerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Server
+     */
+    omit?: ServerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ServerInclude<ExtArgs> | null
+    where?: ServerWhereInput
+    orderBy?: ServerOrderByWithRelationInput | ServerOrderByWithRelationInput[]
+    cursor?: ServerWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ServerScalarFieldEnum | ServerScalarFieldEnum[]
+  }
+
+  /**
    * User without action
    */
   export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2945,6 +3073,1134 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: UserInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Server
+   */
+
+  export type AggregateServer = {
+    _count: ServerCountAggregateOutputType | null
+    _min: ServerMinAggregateOutputType | null
+    _max: ServerMaxAggregateOutputType | null
+  }
+
+  export type ServerMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    name: string | null
+    ip: string | null
+    status: string | null
+    load: string | null
+    latency: string | null
+    isActive: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ServerMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    name: string | null
+    ip: string | null
+    status: string | null
+    load: string | null
+    latency: string | null
+    isActive: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ServerCountAggregateOutputType = {
+    id: number
+    userId: number
+    name: number
+    ip: number
+    status: number
+    load: number
+    latency: number
+    isActive: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type ServerMinAggregateInputType = {
+    id?: true
+    userId?: true
+    name?: true
+    ip?: true
+    status?: true
+    load?: true
+    latency?: true
+    isActive?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ServerMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    name?: true
+    ip?: true
+    status?: true
+    load?: true
+    latency?: true
+    isActive?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ServerCountAggregateInputType = {
+    id?: true
+    userId?: true
+    name?: true
+    ip?: true
+    status?: true
+    load?: true
+    latency?: true
+    isActive?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type ServerAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Server to aggregate.
+     */
+    where?: ServerWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Servers to fetch.
+     */
+    orderBy?: ServerOrderByWithRelationInput | ServerOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ServerWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Servers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Servers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Servers
+    **/
+    _count?: true | ServerCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ServerMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ServerMaxAggregateInputType
+  }
+
+  export type GetServerAggregateType<T extends ServerAggregateArgs> = {
+        [P in keyof T & keyof AggregateServer]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateServer[P]>
+      : GetScalarType<T[P], AggregateServer[P]>
+  }
+
+
+
+
+  export type ServerGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ServerWhereInput
+    orderBy?: ServerOrderByWithAggregationInput | ServerOrderByWithAggregationInput[]
+    by: ServerScalarFieldEnum[] | ServerScalarFieldEnum
+    having?: ServerScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ServerCountAggregateInputType | true
+    _min?: ServerMinAggregateInputType
+    _max?: ServerMaxAggregateInputType
+  }
+
+  export type ServerGroupByOutputType = {
+    id: string
+    userId: string
+    name: string
+    ip: string
+    status: string
+    load: string
+    latency: string
+    isActive: boolean
+    createdAt: Date
+    updatedAt: Date
+    _count: ServerCountAggregateOutputType | null
+    _min: ServerMinAggregateOutputType | null
+    _max: ServerMaxAggregateOutputType | null
+  }
+
+  type GetServerGroupByPayload<T extends ServerGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ServerGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ServerGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ServerGroupByOutputType[P]>
+            : GetScalarType<T[P], ServerGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ServerSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    name?: boolean
+    ip?: boolean
+    status?: boolean
+    load?: boolean
+    latency?: boolean
+    isActive?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["server"]>
+
+  export type ServerSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    name?: boolean
+    ip?: boolean
+    status?: boolean
+    load?: boolean
+    latency?: boolean
+    isActive?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["server"]>
+
+  export type ServerSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    name?: boolean
+    ip?: boolean
+    status?: boolean
+    load?: boolean
+    latency?: boolean
+    isActive?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["server"]>
+
+  export type ServerSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    name?: boolean
+    ip?: boolean
+    status?: boolean
+    load?: boolean
+    latency?: boolean
+    isActive?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type ServerOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "name" | "ip" | "status" | "load" | "latency" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["server"]>
+  export type ServerInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type ServerIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type ServerIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $ServerPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Server"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      name: string
+      ip: string
+      status: string
+      load: string
+      latency: string
+      isActive: boolean
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["server"]>
+    composites: {}
+  }
+
+  type ServerGetPayload<S extends boolean | null | undefined | ServerDefaultArgs> = $Result.GetResult<Prisma.$ServerPayload, S>
+
+  type ServerCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ServerFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ServerCountAggregateInputType | true
+    }
+
+  export interface ServerDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Server'], meta: { name: 'Server' } }
+    /**
+     * Find zero or one Server that matches the filter.
+     * @param {ServerFindUniqueArgs} args - Arguments to find a Server
+     * @example
+     * // Get one Server
+     * const server = await prisma.server.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ServerFindUniqueArgs>(args: SelectSubset<T, ServerFindUniqueArgs<ExtArgs>>): Prisma__ServerClient<$Result.GetResult<Prisma.$ServerPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Server that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ServerFindUniqueOrThrowArgs} args - Arguments to find a Server
+     * @example
+     * // Get one Server
+     * const server = await prisma.server.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ServerFindUniqueOrThrowArgs>(args: SelectSubset<T, ServerFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ServerClient<$Result.GetResult<Prisma.$ServerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Server that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ServerFindFirstArgs} args - Arguments to find a Server
+     * @example
+     * // Get one Server
+     * const server = await prisma.server.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ServerFindFirstArgs>(args?: SelectSubset<T, ServerFindFirstArgs<ExtArgs>>): Prisma__ServerClient<$Result.GetResult<Prisma.$ServerPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Server that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ServerFindFirstOrThrowArgs} args - Arguments to find a Server
+     * @example
+     * // Get one Server
+     * const server = await prisma.server.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ServerFindFirstOrThrowArgs>(args?: SelectSubset<T, ServerFindFirstOrThrowArgs<ExtArgs>>): Prisma__ServerClient<$Result.GetResult<Prisma.$ServerPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Servers that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ServerFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Servers
+     * const servers = await prisma.server.findMany()
+     * 
+     * // Get first 10 Servers
+     * const servers = await prisma.server.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const serverWithIdOnly = await prisma.server.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ServerFindManyArgs>(args?: SelectSubset<T, ServerFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ServerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Server.
+     * @param {ServerCreateArgs} args - Arguments to create a Server.
+     * @example
+     * // Create one Server
+     * const Server = await prisma.server.create({
+     *   data: {
+     *     // ... data to create a Server
+     *   }
+     * })
+     * 
+     */
+    create<T extends ServerCreateArgs>(args: SelectSubset<T, ServerCreateArgs<ExtArgs>>): Prisma__ServerClient<$Result.GetResult<Prisma.$ServerPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Servers.
+     * @param {ServerCreateManyArgs} args - Arguments to create many Servers.
+     * @example
+     * // Create many Servers
+     * const server = await prisma.server.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ServerCreateManyArgs>(args?: SelectSubset<T, ServerCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Servers and returns the data saved in the database.
+     * @param {ServerCreateManyAndReturnArgs} args - Arguments to create many Servers.
+     * @example
+     * // Create many Servers
+     * const server = await prisma.server.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Servers and only return the `id`
+     * const serverWithIdOnly = await prisma.server.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ServerCreateManyAndReturnArgs>(args?: SelectSubset<T, ServerCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ServerPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Server.
+     * @param {ServerDeleteArgs} args - Arguments to delete one Server.
+     * @example
+     * // Delete one Server
+     * const Server = await prisma.server.delete({
+     *   where: {
+     *     // ... filter to delete one Server
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ServerDeleteArgs>(args: SelectSubset<T, ServerDeleteArgs<ExtArgs>>): Prisma__ServerClient<$Result.GetResult<Prisma.$ServerPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Server.
+     * @param {ServerUpdateArgs} args - Arguments to update one Server.
+     * @example
+     * // Update one Server
+     * const server = await prisma.server.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ServerUpdateArgs>(args: SelectSubset<T, ServerUpdateArgs<ExtArgs>>): Prisma__ServerClient<$Result.GetResult<Prisma.$ServerPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Servers.
+     * @param {ServerDeleteManyArgs} args - Arguments to filter Servers to delete.
+     * @example
+     * // Delete a few Servers
+     * const { count } = await prisma.server.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ServerDeleteManyArgs>(args?: SelectSubset<T, ServerDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Servers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ServerUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Servers
+     * const server = await prisma.server.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ServerUpdateManyArgs>(args: SelectSubset<T, ServerUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Servers and returns the data updated in the database.
+     * @param {ServerUpdateManyAndReturnArgs} args - Arguments to update many Servers.
+     * @example
+     * // Update many Servers
+     * const server = await prisma.server.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Servers and only return the `id`
+     * const serverWithIdOnly = await prisma.server.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ServerUpdateManyAndReturnArgs>(args: SelectSubset<T, ServerUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ServerPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Server.
+     * @param {ServerUpsertArgs} args - Arguments to update or create a Server.
+     * @example
+     * // Update or create a Server
+     * const server = await prisma.server.upsert({
+     *   create: {
+     *     // ... data to create a Server
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Server we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ServerUpsertArgs>(args: SelectSubset<T, ServerUpsertArgs<ExtArgs>>): Prisma__ServerClient<$Result.GetResult<Prisma.$ServerPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Servers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ServerCountArgs} args - Arguments to filter Servers to count.
+     * @example
+     * // Count the number of Servers
+     * const count = await prisma.server.count({
+     *   where: {
+     *     // ... the filter for the Servers we want to count
+     *   }
+     * })
+    **/
+    count<T extends ServerCountArgs>(
+      args?: Subset<T, ServerCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ServerCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Server.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ServerAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ServerAggregateArgs>(args: Subset<T, ServerAggregateArgs>): Prisma.PrismaPromise<GetServerAggregateType<T>>
+
+    /**
+     * Group by Server.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ServerGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ServerGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ServerGroupByArgs['orderBy'] }
+        : { orderBy?: ServerGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ServerGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetServerGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Server model
+   */
+  readonly fields: ServerFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Server.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ServerClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Server model
+   */
+  interface ServerFieldRefs {
+    readonly id: FieldRef<"Server", 'String'>
+    readonly userId: FieldRef<"Server", 'String'>
+    readonly name: FieldRef<"Server", 'String'>
+    readonly ip: FieldRef<"Server", 'String'>
+    readonly status: FieldRef<"Server", 'String'>
+    readonly load: FieldRef<"Server", 'String'>
+    readonly latency: FieldRef<"Server", 'String'>
+    readonly isActive: FieldRef<"Server", 'Boolean'>
+    readonly createdAt: FieldRef<"Server", 'DateTime'>
+    readonly updatedAt: FieldRef<"Server", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Server findUnique
+   */
+  export type ServerFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Server
+     */
+    select?: ServerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Server
+     */
+    omit?: ServerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ServerInclude<ExtArgs> | null
+    /**
+     * Filter, which Server to fetch.
+     */
+    where: ServerWhereUniqueInput
+  }
+
+  /**
+   * Server findUniqueOrThrow
+   */
+  export type ServerFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Server
+     */
+    select?: ServerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Server
+     */
+    omit?: ServerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ServerInclude<ExtArgs> | null
+    /**
+     * Filter, which Server to fetch.
+     */
+    where: ServerWhereUniqueInput
+  }
+
+  /**
+   * Server findFirst
+   */
+  export type ServerFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Server
+     */
+    select?: ServerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Server
+     */
+    omit?: ServerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ServerInclude<ExtArgs> | null
+    /**
+     * Filter, which Server to fetch.
+     */
+    where?: ServerWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Servers to fetch.
+     */
+    orderBy?: ServerOrderByWithRelationInput | ServerOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Servers.
+     */
+    cursor?: ServerWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Servers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Servers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Servers.
+     */
+    distinct?: ServerScalarFieldEnum | ServerScalarFieldEnum[]
+  }
+
+  /**
+   * Server findFirstOrThrow
+   */
+  export type ServerFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Server
+     */
+    select?: ServerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Server
+     */
+    omit?: ServerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ServerInclude<ExtArgs> | null
+    /**
+     * Filter, which Server to fetch.
+     */
+    where?: ServerWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Servers to fetch.
+     */
+    orderBy?: ServerOrderByWithRelationInput | ServerOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Servers.
+     */
+    cursor?: ServerWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Servers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Servers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Servers.
+     */
+    distinct?: ServerScalarFieldEnum | ServerScalarFieldEnum[]
+  }
+
+  /**
+   * Server findMany
+   */
+  export type ServerFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Server
+     */
+    select?: ServerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Server
+     */
+    omit?: ServerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ServerInclude<ExtArgs> | null
+    /**
+     * Filter, which Servers to fetch.
+     */
+    where?: ServerWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Servers to fetch.
+     */
+    orderBy?: ServerOrderByWithRelationInput | ServerOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Servers.
+     */
+    cursor?: ServerWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Servers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Servers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Servers.
+     */
+    distinct?: ServerScalarFieldEnum | ServerScalarFieldEnum[]
+  }
+
+  /**
+   * Server create
+   */
+  export type ServerCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Server
+     */
+    select?: ServerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Server
+     */
+    omit?: ServerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ServerInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Server.
+     */
+    data: XOR<ServerCreateInput, ServerUncheckedCreateInput>
+  }
+
+  /**
+   * Server createMany
+   */
+  export type ServerCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Servers.
+     */
+    data: ServerCreateManyInput | ServerCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Server createManyAndReturn
+   */
+  export type ServerCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Server
+     */
+    select?: ServerSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Server
+     */
+    omit?: ServerOmit<ExtArgs> | null
+    /**
+     * The data used to create many Servers.
+     */
+    data: ServerCreateManyInput | ServerCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ServerIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Server update
+   */
+  export type ServerUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Server
+     */
+    select?: ServerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Server
+     */
+    omit?: ServerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ServerInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Server.
+     */
+    data: XOR<ServerUpdateInput, ServerUncheckedUpdateInput>
+    /**
+     * Choose, which Server to update.
+     */
+    where: ServerWhereUniqueInput
+  }
+
+  /**
+   * Server updateMany
+   */
+  export type ServerUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Servers.
+     */
+    data: XOR<ServerUpdateManyMutationInput, ServerUncheckedUpdateManyInput>
+    /**
+     * Filter which Servers to update
+     */
+    where?: ServerWhereInput
+    /**
+     * Limit how many Servers to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Server updateManyAndReturn
+   */
+  export type ServerUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Server
+     */
+    select?: ServerSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Server
+     */
+    omit?: ServerOmit<ExtArgs> | null
+    /**
+     * The data used to update Servers.
+     */
+    data: XOR<ServerUpdateManyMutationInput, ServerUncheckedUpdateManyInput>
+    /**
+     * Filter which Servers to update
+     */
+    where?: ServerWhereInput
+    /**
+     * Limit how many Servers to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ServerIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Server upsert
+   */
+  export type ServerUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Server
+     */
+    select?: ServerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Server
+     */
+    omit?: ServerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ServerInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Server to update in case it exists.
+     */
+    where: ServerWhereUniqueInput
+    /**
+     * In case the Server found by the `where` argument doesn't exist, create a new Server with this data.
+     */
+    create: XOR<ServerCreateInput, ServerUncheckedCreateInput>
+    /**
+     * In case the Server was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ServerUpdateInput, ServerUncheckedUpdateInput>
+  }
+
+  /**
+   * Server delete
+   */
+  export type ServerDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Server
+     */
+    select?: ServerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Server
+     */
+    omit?: ServerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ServerInclude<ExtArgs> | null
+    /**
+     * Filter which Server to delete.
+     */
+    where: ServerWhereUniqueInput
+  }
+
+  /**
+   * Server deleteMany
+   */
+  export type ServerDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Servers to delete
+     */
+    where?: ServerWhereInput
+    /**
+     * Limit how many Servers to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Server without action
+   */
+  export type ServerDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Server
+     */
+    select?: ServerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Server
+     */
+    omit?: ServerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ServerInclude<ExtArgs> | null
   }
 
 
@@ -9556,7 +10812,6 @@ export namespace Prisma {
     institution: string | null
     accountNo: string | null
     robotName: string | null
-    maskedSecret: string | null
     isActive: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -9569,7 +10824,6 @@ export namespace Prisma {
     institution: string | null
     accountNo: string | null
     robotName: string | null
-    maskedSecret: string | null
     isActive: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -9582,7 +10836,6 @@ export namespace Prisma {
     institution: number
     accountNo: number
     robotName: number
-    maskedSecret: number
     isActive: number
     createdAt: number
     updatedAt: number
@@ -9597,7 +10850,6 @@ export namespace Prisma {
     institution?: true
     accountNo?: true
     robotName?: true
-    maskedSecret?: true
     isActive?: true
     createdAt?: true
     updatedAt?: true
@@ -9610,7 +10862,6 @@ export namespace Prisma {
     institution?: true
     accountNo?: true
     robotName?: true
-    maskedSecret?: true
     isActive?: true
     createdAt?: true
     updatedAt?: true
@@ -9623,7 +10874,6 @@ export namespace Prisma {
     institution?: true
     accountNo?: true
     robotName?: true
-    maskedSecret?: true
     isActive?: true
     createdAt?: true
     updatedAt?: true
@@ -9709,7 +10959,6 @@ export namespace Prisma {
     institution: string
     accountNo: string
     robotName: string
-    maskedSecret: string
     isActive: boolean
     createdAt: Date
     updatedAt: Date
@@ -9739,7 +10988,6 @@ export namespace Prisma {
     institution?: boolean
     accountNo?: boolean
     robotName?: boolean
-    maskedSecret?: boolean
     isActive?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -9753,7 +11001,6 @@ export namespace Prisma {
     institution?: boolean
     accountNo?: boolean
     robotName?: boolean
-    maskedSecret?: boolean
     isActive?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -9767,7 +11014,6 @@ export namespace Prisma {
     institution?: boolean
     accountNo?: boolean
     robotName?: boolean
-    maskedSecret?: boolean
     isActive?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -9781,13 +11027,12 @@ export namespace Prisma {
     institution?: boolean
     accountNo?: boolean
     robotName?: boolean
-    maskedSecret?: boolean
     isActive?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type BrokerAccountOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "accountType" | "institution" | "accountNo" | "robotName" | "maskedSecret" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["brokerAccount"]>
+  export type BrokerAccountOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "accountType" | "institution" | "accountNo" | "robotName" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["brokerAccount"]>
   export type BrokerAccountInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -9810,7 +11055,6 @@ export namespace Prisma {
       institution: string
       accountNo: string
       robotName: string
-      maskedSecret: string
       isActive: boolean
       createdAt: Date
       updatedAt: Date
@@ -10244,7 +11488,6 @@ export namespace Prisma {
     readonly institution: FieldRef<"BrokerAccount", 'String'>
     readonly accountNo: FieldRef<"BrokerAccount", 'String'>
     readonly robotName: FieldRef<"BrokerAccount", 'String'>
-    readonly maskedSecret: FieldRef<"BrokerAccount", 'String'>
     readonly isActive: FieldRef<"BrokerAccount", 'Boolean'>
     readonly createdAt: FieldRef<"BrokerAccount", 'DateTime'>
     readonly updatedAt: FieldRef<"BrokerAccount", 'DateTime'>
@@ -10705,6 +11948,22 @@ export namespace Prisma {
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
+  export const ServerScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    name: 'name',
+    ip: 'ip',
+    status: 'status',
+    load: 'load',
+    latency: 'latency',
+    isActive: 'isActive',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type ServerScalarFieldEnum = (typeof ServerScalarFieldEnum)[keyof typeof ServerScalarFieldEnum]
+
+
   export const AccountScalarFieldEnum: {
     id: 'id',
     userId: 'userId',
@@ -10794,7 +12053,6 @@ export namespace Prisma {
     institution: 'institution',
     accountNo: 'accountNo',
     robotName: 'robotName',
-    maskedSecret: 'maskedSecret',
     isActive: 'isActive',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -10861,6 +12119,13 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+  /**
    * Reference to a field of type 'Int'
    */
   export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
@@ -10871,13 +12136,6 @@ export namespace Prisma {
    * Reference to a field of type 'Int[]'
    */
   export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
-    
-
-
-  /**
-   * Reference to a field of type 'Boolean'
-   */
-  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
@@ -10926,6 +12184,7 @@ export namespace Prisma {
     invoices?: InvoiceListRelationFilter
     robots?: UserRobotListRelationFilter
     brokerAccounts?: BrokerAccountListRelationFilter
+    servers?: ServerListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -10953,6 +12212,7 @@ export namespace Prisma {
     invoices?: InvoiceOrderByRelationAggregateInput
     robots?: UserRobotOrderByRelationAggregateInput
     brokerAccounts?: BrokerAccountOrderByRelationAggregateInput
+    servers?: ServerOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -10983,6 +12243,7 @@ export namespace Prisma {
     invoices?: InvoiceListRelationFilter
     robots?: UserRobotListRelationFilter
     brokerAccounts?: BrokerAccountListRelationFilter
+    servers?: ServerListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -11031,6 +12292,86 @@ export namespace Prisma {
     bio?: StringNullableWithAggregatesFilter<"User"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
+  }
+
+  export type ServerWhereInput = {
+    AND?: ServerWhereInput | ServerWhereInput[]
+    OR?: ServerWhereInput[]
+    NOT?: ServerWhereInput | ServerWhereInput[]
+    id?: StringFilter<"Server"> | string
+    userId?: StringFilter<"Server"> | string
+    name?: StringFilter<"Server"> | string
+    ip?: StringFilter<"Server"> | string
+    status?: StringFilter<"Server"> | string
+    load?: StringFilter<"Server"> | string
+    latency?: StringFilter<"Server"> | string
+    isActive?: BoolFilter<"Server"> | boolean
+    createdAt?: DateTimeFilter<"Server"> | Date | string
+    updatedAt?: DateTimeFilter<"Server"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type ServerOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    name?: SortOrder
+    ip?: SortOrder
+    status?: SortOrder
+    load?: SortOrder
+    latency?: SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type ServerWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: ServerWhereInput | ServerWhereInput[]
+    OR?: ServerWhereInput[]
+    NOT?: ServerWhereInput | ServerWhereInput[]
+    userId?: StringFilter<"Server"> | string
+    name?: StringFilter<"Server"> | string
+    ip?: StringFilter<"Server"> | string
+    status?: StringFilter<"Server"> | string
+    load?: StringFilter<"Server"> | string
+    latency?: StringFilter<"Server"> | string
+    isActive?: BoolFilter<"Server"> | boolean
+    createdAt?: DateTimeFilter<"Server"> | Date | string
+    updatedAt?: DateTimeFilter<"Server"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id">
+
+  export type ServerOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    name?: SortOrder
+    ip?: SortOrder
+    status?: SortOrder
+    load?: SortOrder
+    latency?: SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: ServerCountOrderByAggregateInput
+    _max?: ServerMaxOrderByAggregateInput
+    _min?: ServerMinOrderByAggregateInput
+  }
+
+  export type ServerScalarWhereWithAggregatesInput = {
+    AND?: ServerScalarWhereWithAggregatesInput | ServerScalarWhereWithAggregatesInput[]
+    OR?: ServerScalarWhereWithAggregatesInput[]
+    NOT?: ServerScalarWhereWithAggregatesInput | ServerScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Server"> | string
+    userId?: StringWithAggregatesFilter<"Server"> | string
+    name?: StringWithAggregatesFilter<"Server"> | string
+    ip?: StringWithAggregatesFilter<"Server"> | string
+    status?: StringWithAggregatesFilter<"Server"> | string
+    load?: StringWithAggregatesFilter<"Server"> | string
+    latency?: StringWithAggregatesFilter<"Server"> | string
+    isActive?: BoolWithAggregatesFilter<"Server"> | boolean
+    createdAt?: DateTimeWithAggregatesFilter<"Server"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Server"> | Date | string
   }
 
   export type AccountWhereInput = {
@@ -11457,7 +12798,6 @@ export namespace Prisma {
     institution?: StringFilter<"BrokerAccount"> | string
     accountNo?: StringFilter<"BrokerAccount"> | string
     robotName?: StringFilter<"BrokerAccount"> | string
-    maskedSecret?: StringFilter<"BrokerAccount"> | string
     isActive?: BoolFilter<"BrokerAccount"> | boolean
     createdAt?: DateTimeFilter<"BrokerAccount"> | Date | string
     updatedAt?: DateTimeFilter<"BrokerAccount"> | Date | string
@@ -11471,7 +12811,6 @@ export namespace Prisma {
     institution?: SortOrder
     accountNo?: SortOrder
     robotName?: SortOrder
-    maskedSecret?: SortOrder
     isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -11488,7 +12827,6 @@ export namespace Prisma {
     institution?: StringFilter<"BrokerAccount"> | string
     accountNo?: StringFilter<"BrokerAccount"> | string
     robotName?: StringFilter<"BrokerAccount"> | string
-    maskedSecret?: StringFilter<"BrokerAccount"> | string
     isActive?: BoolFilter<"BrokerAccount"> | boolean
     createdAt?: DateTimeFilter<"BrokerAccount"> | Date | string
     updatedAt?: DateTimeFilter<"BrokerAccount"> | Date | string
@@ -11502,7 +12840,6 @@ export namespace Prisma {
     institution?: SortOrder
     accountNo?: SortOrder
     robotName?: SortOrder
-    maskedSecret?: SortOrder
     isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -11521,7 +12858,6 @@ export namespace Prisma {
     institution?: StringWithAggregatesFilter<"BrokerAccount"> | string
     accountNo?: StringWithAggregatesFilter<"BrokerAccount"> | string
     robotName?: StringWithAggregatesFilter<"BrokerAccount"> | string
-    maskedSecret?: StringWithAggregatesFilter<"BrokerAccount"> | string
     isActive?: BoolWithAggregatesFilter<"BrokerAccount"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"BrokerAccount"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"BrokerAccount"> | Date | string
@@ -11552,6 +12888,7 @@ export namespace Prisma {
     invoices?: InvoiceCreateNestedManyWithoutUserInput
     robots?: UserRobotCreateNestedManyWithoutUserInput
     brokerAccounts?: BrokerAccountCreateNestedManyWithoutUserInput
+    servers?: ServerCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -11579,6 +12916,7 @@ export namespace Prisma {
     invoices?: InvoiceUncheckedCreateNestedManyWithoutUserInput
     robots?: UserRobotUncheckedCreateNestedManyWithoutUserInput
     brokerAccounts?: BrokerAccountUncheckedCreateNestedManyWithoutUserInput
+    servers?: ServerUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -11606,6 +12944,7 @@ export namespace Prisma {
     invoices?: InvoiceUpdateManyWithoutUserNestedInput
     robots?: UserRobotUpdateManyWithoutUserNestedInput
     brokerAccounts?: BrokerAccountUpdateManyWithoutUserNestedInput
+    servers?: ServerUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -11633,6 +12972,7 @@ export namespace Prisma {
     invoices?: InvoiceUncheckedUpdateManyWithoutUserNestedInput
     robots?: UserRobotUncheckedUpdateManyWithoutUserNestedInput
     brokerAccounts?: BrokerAccountUncheckedUpdateManyWithoutUserNestedInput
+    servers?: ServerUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -11694,6 +13034,96 @@ export namespace Prisma {
     companyName?: NullableStringFieldUpdateOperationsInput | string | null
     twitter?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ServerCreateInput = {
+    id?: string
+    name: string
+    ip?: string
+    status?: string
+    load?: string
+    latency?: string
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutServersInput
+  }
+
+  export type ServerUncheckedCreateInput = {
+    id?: string
+    userId: string
+    name: string
+    ip?: string
+    status?: string
+    load?: string
+    latency?: string
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ServerUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    ip?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    load?: StringFieldUpdateOperationsInput | string
+    latency?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutServersNestedInput
+  }
+
+  export type ServerUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    ip?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    load?: StringFieldUpdateOperationsInput | string
+    latency?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ServerCreateManyInput = {
+    id?: string
+    userId: string
+    name: string
+    ip?: string
+    status?: string
+    load?: string
+    latency?: string
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ServerUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    ip?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    load?: StringFieldUpdateOperationsInput | string
+    latency?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ServerUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    ip?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    load?: StringFieldUpdateOperationsInput | string
+    latency?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -12147,7 +13577,6 @@ export namespace Prisma {
     institution: string
     accountNo: string
     robotName: string
-    maskedSecret: string
     isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -12161,7 +13590,6 @@ export namespace Prisma {
     institution: string
     accountNo: string
     robotName: string
-    maskedSecret: string
     isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -12173,7 +13601,6 @@ export namespace Prisma {
     institution?: StringFieldUpdateOperationsInput | string
     accountNo?: StringFieldUpdateOperationsInput | string
     robotName?: StringFieldUpdateOperationsInput | string
-    maskedSecret?: StringFieldUpdateOperationsInput | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -12187,7 +13614,6 @@ export namespace Prisma {
     institution?: StringFieldUpdateOperationsInput | string
     accountNo?: StringFieldUpdateOperationsInput | string
     robotName?: StringFieldUpdateOperationsInput | string
-    maskedSecret?: StringFieldUpdateOperationsInput | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -12200,7 +13626,6 @@ export namespace Prisma {
     institution: string
     accountNo: string
     robotName: string
-    maskedSecret: string
     isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -12212,7 +13637,6 @@ export namespace Prisma {
     institution?: StringFieldUpdateOperationsInput | string
     accountNo?: StringFieldUpdateOperationsInput | string
     robotName?: StringFieldUpdateOperationsInput | string
-    maskedSecret?: StringFieldUpdateOperationsInput | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -12225,7 +13649,6 @@ export namespace Prisma {
     institution?: StringFieldUpdateOperationsInput | string
     accountNo?: StringFieldUpdateOperationsInput | string
     robotName?: StringFieldUpdateOperationsInput | string
-    maskedSecret?: StringFieldUpdateOperationsInput | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -12318,6 +13741,12 @@ export namespace Prisma {
     none?: BrokerAccountWhereInput
   }
 
+  export type ServerListRelationFilter = {
+    every?: ServerWhereInput
+    some?: ServerWhereInput
+    none?: ServerWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -12340,6 +13769,10 @@ export namespace Prisma {
   }
 
   export type BrokerAccountOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ServerOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -12470,6 +13903,63 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type UserScalarRelationFilter = {
+    is?: UserWhereInput
+    isNot?: UserWhereInput
+  }
+
+  export type ServerCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    name?: SortOrder
+    ip?: SortOrder
+    status?: SortOrder
+    load?: SortOrder
+    latency?: SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ServerMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    name?: SortOrder
+    ip?: SortOrder
+    status?: SortOrder
+    load?: SortOrder
+    latency?: SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ServerMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    name?: SortOrder
+    ip?: SortOrder
+    status?: SortOrder
+    load?: SortOrder
+    latency?: SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
   export type IntNullableFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel> | null
     in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
@@ -12479,11 +13969,6 @@ export namespace Prisma {
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
-  }
-
-  export type UserScalarRelationFilter = {
-    is?: UserWhereInput
-    isNot?: UserWhereInput
   }
 
   export type AccountProviderProviderAccountIdCompoundUniqueInput = {
@@ -12604,11 +14089,6 @@ export namespace Prisma {
     expires?: SortOrder
   }
 
-  export type BoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
-  }
-
   export type SubscriptionCountOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
@@ -12652,14 +14132,6 @@ export namespace Prisma {
     cancelAtPeriodEnd?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-  }
-
-  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -12772,7 +14244,6 @@ export namespace Prisma {
     institution?: SortOrder
     accountNo?: SortOrder
     robotName?: SortOrder
-    maskedSecret?: SortOrder
     isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -12785,7 +14256,6 @@ export namespace Prisma {
     institution?: SortOrder
     accountNo?: SortOrder
     robotName?: SortOrder
-    maskedSecret?: SortOrder
     isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -12798,7 +14268,6 @@ export namespace Prisma {
     institution?: SortOrder
     accountNo?: SortOrder
     robotName?: SortOrder
-    maskedSecret?: SortOrder
     isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -12845,6 +14314,13 @@ export namespace Prisma {
     connect?: BrokerAccountWhereUniqueInput | BrokerAccountWhereUniqueInput[]
   }
 
+  export type ServerCreateNestedManyWithoutUserInput = {
+    create?: XOR<ServerCreateWithoutUserInput, ServerUncheckedCreateWithoutUserInput> | ServerCreateWithoutUserInput[] | ServerUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ServerCreateOrConnectWithoutUserInput | ServerCreateOrConnectWithoutUserInput[]
+    createMany?: ServerCreateManyUserInputEnvelope
+    connect?: ServerWhereUniqueInput | ServerWhereUniqueInput[]
+  }
+
   export type AccountUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -12884,6 +14360,13 @@ export namespace Prisma {
     connectOrCreate?: BrokerAccountCreateOrConnectWithoutUserInput | BrokerAccountCreateOrConnectWithoutUserInput[]
     createMany?: BrokerAccountCreateManyUserInputEnvelope
     connect?: BrokerAccountWhereUniqueInput | BrokerAccountWhereUniqueInput[]
+  }
+
+  export type ServerUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<ServerCreateWithoutUserInput, ServerUncheckedCreateWithoutUserInput> | ServerCreateWithoutUserInput[] | ServerUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ServerCreateOrConnectWithoutUserInput | ServerCreateOrConnectWithoutUserInput[]
+    createMany?: ServerCreateManyUserInputEnvelope
+    connect?: ServerWhereUniqueInput | ServerWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -12982,6 +14465,20 @@ export namespace Prisma {
     deleteMany?: BrokerAccountScalarWhereInput | BrokerAccountScalarWhereInput[]
   }
 
+  export type ServerUpdateManyWithoutUserNestedInput = {
+    create?: XOR<ServerCreateWithoutUserInput, ServerUncheckedCreateWithoutUserInput> | ServerCreateWithoutUserInput[] | ServerUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ServerCreateOrConnectWithoutUserInput | ServerCreateOrConnectWithoutUserInput[]
+    upsert?: ServerUpsertWithWhereUniqueWithoutUserInput | ServerUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: ServerCreateManyUserInputEnvelope
+    set?: ServerWhereUniqueInput | ServerWhereUniqueInput[]
+    disconnect?: ServerWhereUniqueInput | ServerWhereUniqueInput[]
+    delete?: ServerWhereUniqueInput | ServerWhereUniqueInput[]
+    connect?: ServerWhereUniqueInput | ServerWhereUniqueInput[]
+    update?: ServerUpdateWithWhereUniqueWithoutUserInput | ServerUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: ServerUpdateManyWithWhereWithoutUserInput | ServerUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: ServerScalarWhereInput | ServerScalarWhereInput[]
+  }
+
   export type AccountUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -13062,6 +14559,38 @@ export namespace Prisma {
     deleteMany?: BrokerAccountScalarWhereInput | BrokerAccountScalarWhereInput[]
   }
 
+  export type ServerUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<ServerCreateWithoutUserInput, ServerUncheckedCreateWithoutUserInput> | ServerCreateWithoutUserInput[] | ServerUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ServerCreateOrConnectWithoutUserInput | ServerCreateOrConnectWithoutUserInput[]
+    upsert?: ServerUpsertWithWhereUniqueWithoutUserInput | ServerUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: ServerCreateManyUserInputEnvelope
+    set?: ServerWhereUniqueInput | ServerWhereUniqueInput[]
+    disconnect?: ServerWhereUniqueInput | ServerWhereUniqueInput[]
+    delete?: ServerWhereUniqueInput | ServerWhereUniqueInput[]
+    connect?: ServerWhereUniqueInput | ServerWhereUniqueInput[]
+    update?: ServerUpdateWithWhereUniqueWithoutUserInput | ServerUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: ServerUpdateManyWithWhereWithoutUserInput | ServerUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: ServerScalarWhereInput | ServerScalarWhereInput[]
+  }
+
+  export type UserCreateNestedOneWithoutServersInput = {
+    create?: XOR<UserCreateWithoutServersInput, UserUncheckedCreateWithoutServersInput>
+    connectOrCreate?: UserCreateOrConnectWithoutServersInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
+  }
+
+  export type UserUpdateOneRequiredWithoutServersNestedInput = {
+    create?: XOR<UserCreateWithoutServersInput, UserUncheckedCreateWithoutServersInput>
+    connectOrCreate?: UserCreateOrConnectWithoutServersInput
+    upsert?: UserUpsertWithoutServersInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutServersInput, UserUpdateWithoutServersInput>, UserUncheckedUpdateWithoutServersInput>
+  }
+
   export type UserCreateNestedOneWithoutAccountsInput = {
     create?: XOR<UserCreateWithoutAccountsInput, UserUncheckedCreateWithoutAccountsInput>
     connectOrCreate?: UserCreateOrConnectWithoutAccountsInput
@@ -13102,10 +14631,6 @@ export namespace Prisma {
     create?: XOR<UserCreateWithoutSubscriptionInput, UserUncheckedCreateWithoutSubscriptionInput>
     connectOrCreate?: UserCreateOrConnectWithoutSubscriptionInput
     connect?: UserWhereUniqueInput
-  }
-
-  export type BoolFieldUpdateOperationsInput = {
-    set?: boolean
   }
 
   export type UserUpdateOneRequiredWithoutSubscriptionNestedInput = {
@@ -13300,6 +14825,19 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
   export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel> | null
     in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
@@ -13325,19 +14863,6 @@ export namespace Prisma {
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
     not?: NestedFloatNullableFilter<$PrismaModel> | number | null
-  }
-
-  export type NestedBoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
-  }
-
-  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
@@ -13524,7 +15049,6 @@ export namespace Prisma {
     institution: string
     accountNo: string
     robotName: string
-    maskedSecret: string
     isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -13536,7 +15060,6 @@ export namespace Prisma {
     institution: string
     accountNo: string
     robotName: string
-    maskedSecret: string
     isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -13549,6 +15072,40 @@ export namespace Prisma {
 
   export type BrokerAccountCreateManyUserInputEnvelope = {
     data: BrokerAccountCreateManyUserInput | BrokerAccountCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ServerCreateWithoutUserInput = {
+    id?: string
+    name: string
+    ip?: string
+    status?: string
+    load?: string
+    latency?: string
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ServerUncheckedCreateWithoutUserInput = {
+    id?: string
+    name: string
+    ip?: string
+    status?: string
+    load?: string
+    latency?: string
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ServerCreateOrConnectWithoutUserInput = {
+    where: ServerWhereUniqueInput
+    create: XOR<ServerCreateWithoutUserInput, ServerUncheckedCreateWithoutUserInput>
+  }
+
+  export type ServerCreateManyUserInputEnvelope = {
+    data: ServerCreateManyUserInput | ServerCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -13736,10 +15293,165 @@ export namespace Prisma {
     institution?: StringFilter<"BrokerAccount"> | string
     accountNo?: StringFilter<"BrokerAccount"> | string
     robotName?: StringFilter<"BrokerAccount"> | string
-    maskedSecret?: StringFilter<"BrokerAccount"> | string
     isActive?: BoolFilter<"BrokerAccount"> | boolean
     createdAt?: DateTimeFilter<"BrokerAccount"> | Date | string
     updatedAt?: DateTimeFilter<"BrokerAccount"> | Date | string
+  }
+
+  export type ServerUpsertWithWhereUniqueWithoutUserInput = {
+    where: ServerWhereUniqueInput
+    update: XOR<ServerUpdateWithoutUserInput, ServerUncheckedUpdateWithoutUserInput>
+    create: XOR<ServerCreateWithoutUserInput, ServerUncheckedCreateWithoutUserInput>
+  }
+
+  export type ServerUpdateWithWhereUniqueWithoutUserInput = {
+    where: ServerWhereUniqueInput
+    data: XOR<ServerUpdateWithoutUserInput, ServerUncheckedUpdateWithoutUserInput>
+  }
+
+  export type ServerUpdateManyWithWhereWithoutUserInput = {
+    where: ServerScalarWhereInput
+    data: XOR<ServerUpdateManyMutationInput, ServerUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type ServerScalarWhereInput = {
+    AND?: ServerScalarWhereInput | ServerScalarWhereInput[]
+    OR?: ServerScalarWhereInput[]
+    NOT?: ServerScalarWhereInput | ServerScalarWhereInput[]
+    id?: StringFilter<"Server"> | string
+    userId?: StringFilter<"Server"> | string
+    name?: StringFilter<"Server"> | string
+    ip?: StringFilter<"Server"> | string
+    status?: StringFilter<"Server"> | string
+    load?: StringFilter<"Server"> | string
+    latency?: StringFilter<"Server"> | string
+    isActive?: BoolFilter<"Server"> | boolean
+    createdAt?: DateTimeFilter<"Server"> | Date | string
+    updatedAt?: DateTimeFilter<"Server"> | Date | string
+  }
+
+  export type UserCreateWithoutServersInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: Date | string | null
+    image?: string | null
+    firstName?: string | null
+    lastName?: string | null
+    gender?: string | null
+    phone?: string | null
+    address?: string | null
+    postalCode?: string | null
+    city?: string | null
+    country?: string | null
+    companyName?: string | null
+    twitter?: string | null
+    bio?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    subscription?: SubscriptionCreateNestedOneWithoutUserInput
+    invoices?: InvoiceCreateNestedManyWithoutUserInput
+    robots?: UserRobotCreateNestedManyWithoutUserInput
+    brokerAccounts?: BrokerAccountCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutServersInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: Date | string | null
+    image?: string | null
+    firstName?: string | null
+    lastName?: string | null
+    gender?: string | null
+    phone?: string | null
+    address?: string | null
+    postalCode?: string | null
+    city?: string | null
+    country?: string | null
+    companyName?: string | null
+    twitter?: string | null
+    bio?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    subscription?: SubscriptionUncheckedCreateNestedOneWithoutUserInput
+    invoices?: InvoiceUncheckedCreateNestedManyWithoutUserInput
+    robots?: UserRobotUncheckedCreateNestedManyWithoutUserInput
+    brokerAccounts?: BrokerAccountUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutServersInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutServersInput, UserUncheckedCreateWithoutServersInput>
+  }
+
+  export type UserUpsertWithoutServersInput = {
+    update: XOR<UserUpdateWithoutServersInput, UserUncheckedUpdateWithoutServersInput>
+    create: XOR<UserCreateWithoutServersInput, UserUncheckedCreateWithoutServersInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutServersInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutServersInput, UserUncheckedUpdateWithoutServersInput>
+  }
+
+  export type UserUpdateWithoutServersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null
+    lastName?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    companyName?: NullableStringFieldUpdateOperationsInput | string | null
+    twitter?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    subscription?: SubscriptionUpdateOneWithoutUserNestedInput
+    invoices?: InvoiceUpdateManyWithoutUserNestedInput
+    robots?: UserRobotUpdateManyWithoutUserNestedInput
+    brokerAccounts?: BrokerAccountUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutServersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null
+    lastName?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    companyName?: NullableStringFieldUpdateOperationsInput | string | null
+    twitter?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    subscription?: SubscriptionUncheckedUpdateOneWithoutUserNestedInput
+    invoices?: InvoiceUncheckedUpdateManyWithoutUserNestedInput
+    robots?: UserRobotUncheckedUpdateManyWithoutUserNestedInput
+    brokerAccounts?: BrokerAccountUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutAccountsInput = {
@@ -13766,6 +15478,7 @@ export namespace Prisma {
     invoices?: InvoiceCreateNestedManyWithoutUserInput
     robots?: UserRobotCreateNestedManyWithoutUserInput
     brokerAccounts?: BrokerAccountCreateNestedManyWithoutUserInput
+    servers?: ServerCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAccountsInput = {
@@ -13792,6 +15505,7 @@ export namespace Prisma {
     invoices?: InvoiceUncheckedCreateNestedManyWithoutUserInput
     robots?: UserRobotUncheckedCreateNestedManyWithoutUserInput
     brokerAccounts?: BrokerAccountUncheckedCreateNestedManyWithoutUserInput
+    servers?: ServerUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAccountsInput = {
@@ -13834,6 +15548,7 @@ export namespace Prisma {
     invoices?: InvoiceUpdateManyWithoutUserNestedInput
     robots?: UserRobotUpdateManyWithoutUserNestedInput
     brokerAccounts?: BrokerAccountUpdateManyWithoutUserNestedInput
+    servers?: ServerUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAccountsInput = {
@@ -13860,6 +15575,7 @@ export namespace Prisma {
     invoices?: InvoiceUncheckedUpdateManyWithoutUserNestedInput
     robots?: UserRobotUncheckedUpdateManyWithoutUserNestedInput
     brokerAccounts?: BrokerAccountUncheckedUpdateManyWithoutUserNestedInput
+    servers?: ServerUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutSessionsInput = {
@@ -13886,6 +15602,7 @@ export namespace Prisma {
     invoices?: InvoiceCreateNestedManyWithoutUserInput
     robots?: UserRobotCreateNestedManyWithoutUserInput
     brokerAccounts?: BrokerAccountCreateNestedManyWithoutUserInput
+    servers?: ServerCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSessionsInput = {
@@ -13912,6 +15629,7 @@ export namespace Prisma {
     invoices?: InvoiceUncheckedCreateNestedManyWithoutUserInput
     robots?: UserRobotUncheckedCreateNestedManyWithoutUserInput
     brokerAccounts?: BrokerAccountUncheckedCreateNestedManyWithoutUserInput
+    servers?: ServerUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSessionsInput = {
@@ -13954,6 +15672,7 @@ export namespace Prisma {
     invoices?: InvoiceUpdateManyWithoutUserNestedInput
     robots?: UserRobotUpdateManyWithoutUserNestedInput
     brokerAccounts?: BrokerAccountUpdateManyWithoutUserNestedInput
+    servers?: ServerUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -13980,6 +15699,7 @@ export namespace Prisma {
     invoices?: InvoiceUncheckedUpdateManyWithoutUserNestedInput
     robots?: UserRobotUncheckedUpdateManyWithoutUserNestedInput
     brokerAccounts?: BrokerAccountUncheckedUpdateManyWithoutUserNestedInput
+    servers?: ServerUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutSubscriptionInput = {
@@ -14006,6 +15726,7 @@ export namespace Prisma {
     invoices?: InvoiceCreateNestedManyWithoutUserInput
     robots?: UserRobotCreateNestedManyWithoutUserInput
     brokerAccounts?: BrokerAccountCreateNestedManyWithoutUserInput
+    servers?: ServerCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSubscriptionInput = {
@@ -14032,6 +15753,7 @@ export namespace Prisma {
     invoices?: InvoiceUncheckedCreateNestedManyWithoutUserInput
     robots?: UserRobotUncheckedCreateNestedManyWithoutUserInput
     brokerAccounts?: BrokerAccountUncheckedCreateNestedManyWithoutUserInput
+    servers?: ServerUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSubscriptionInput = {
@@ -14074,6 +15796,7 @@ export namespace Prisma {
     invoices?: InvoiceUpdateManyWithoutUserNestedInput
     robots?: UserRobotUpdateManyWithoutUserNestedInput
     brokerAccounts?: BrokerAccountUpdateManyWithoutUserNestedInput
+    servers?: ServerUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSubscriptionInput = {
@@ -14100,6 +15823,7 @@ export namespace Prisma {
     invoices?: InvoiceUncheckedUpdateManyWithoutUserNestedInput
     robots?: UserRobotUncheckedUpdateManyWithoutUserNestedInput
     brokerAccounts?: BrokerAccountUncheckedUpdateManyWithoutUserNestedInput
+    servers?: ServerUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutInvoicesInput = {
@@ -14126,6 +15850,7 @@ export namespace Prisma {
     subscription?: SubscriptionCreateNestedOneWithoutUserInput
     robots?: UserRobotCreateNestedManyWithoutUserInput
     brokerAccounts?: BrokerAccountCreateNestedManyWithoutUserInput
+    servers?: ServerCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutInvoicesInput = {
@@ -14152,6 +15877,7 @@ export namespace Prisma {
     subscription?: SubscriptionUncheckedCreateNestedOneWithoutUserInput
     robots?: UserRobotUncheckedCreateNestedManyWithoutUserInput
     brokerAccounts?: BrokerAccountUncheckedCreateNestedManyWithoutUserInput
+    servers?: ServerUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutInvoicesInput = {
@@ -14194,6 +15920,7 @@ export namespace Prisma {
     subscription?: SubscriptionUpdateOneWithoutUserNestedInput
     robots?: UserRobotUpdateManyWithoutUserNestedInput
     brokerAccounts?: BrokerAccountUpdateManyWithoutUserNestedInput
+    servers?: ServerUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutInvoicesInput = {
@@ -14220,6 +15947,7 @@ export namespace Prisma {
     subscription?: SubscriptionUncheckedUpdateOneWithoutUserNestedInput
     robots?: UserRobotUncheckedUpdateManyWithoutUserNestedInput
     brokerAccounts?: BrokerAccountUncheckedUpdateManyWithoutUserNestedInput
+    servers?: ServerUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutRobotsInput = {
@@ -14246,6 +15974,7 @@ export namespace Prisma {
     subscription?: SubscriptionCreateNestedOneWithoutUserInput
     invoices?: InvoiceCreateNestedManyWithoutUserInput
     brokerAccounts?: BrokerAccountCreateNestedManyWithoutUserInput
+    servers?: ServerCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutRobotsInput = {
@@ -14272,6 +16001,7 @@ export namespace Prisma {
     subscription?: SubscriptionUncheckedCreateNestedOneWithoutUserInput
     invoices?: InvoiceUncheckedCreateNestedManyWithoutUserInput
     brokerAccounts?: BrokerAccountUncheckedCreateNestedManyWithoutUserInput
+    servers?: ServerUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutRobotsInput = {
@@ -14314,6 +16044,7 @@ export namespace Prisma {
     subscription?: SubscriptionUpdateOneWithoutUserNestedInput
     invoices?: InvoiceUpdateManyWithoutUserNestedInput
     brokerAccounts?: BrokerAccountUpdateManyWithoutUserNestedInput
+    servers?: ServerUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutRobotsInput = {
@@ -14340,6 +16071,7 @@ export namespace Prisma {
     subscription?: SubscriptionUncheckedUpdateOneWithoutUserNestedInput
     invoices?: InvoiceUncheckedUpdateManyWithoutUserNestedInput
     brokerAccounts?: BrokerAccountUncheckedUpdateManyWithoutUserNestedInput
+    servers?: ServerUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutBrokerAccountsInput = {
@@ -14366,6 +16098,7 @@ export namespace Prisma {
     subscription?: SubscriptionCreateNestedOneWithoutUserInput
     invoices?: InvoiceCreateNestedManyWithoutUserInput
     robots?: UserRobotCreateNestedManyWithoutUserInput
+    servers?: ServerCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutBrokerAccountsInput = {
@@ -14392,6 +16125,7 @@ export namespace Prisma {
     subscription?: SubscriptionUncheckedCreateNestedOneWithoutUserInput
     invoices?: InvoiceUncheckedCreateNestedManyWithoutUserInput
     robots?: UserRobotUncheckedCreateNestedManyWithoutUserInput
+    servers?: ServerUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutBrokerAccountsInput = {
@@ -14434,6 +16168,7 @@ export namespace Prisma {
     subscription?: SubscriptionUpdateOneWithoutUserNestedInput
     invoices?: InvoiceUpdateManyWithoutUserNestedInput
     robots?: UserRobotUpdateManyWithoutUserNestedInput
+    servers?: ServerUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutBrokerAccountsInput = {
@@ -14460,6 +16195,7 @@ export namespace Prisma {
     subscription?: SubscriptionUncheckedUpdateOneWithoutUserNestedInput
     invoices?: InvoiceUncheckedUpdateManyWithoutUserNestedInput
     robots?: UserRobotUncheckedUpdateManyWithoutUserNestedInput
+    servers?: ServerUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type AccountCreateManyUserInput = {
@@ -14507,7 +16243,18 @@ export namespace Prisma {
     institution: string
     accountNo: string
     robotName: string
-    maskedSecret: string
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ServerCreateManyUserInput = {
+    id?: string
+    name: string
+    ip?: string
+    status?: string
+    load?: string
+    latency?: string
     isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -14636,7 +16383,6 @@ export namespace Prisma {
     institution?: StringFieldUpdateOperationsInput | string
     accountNo?: StringFieldUpdateOperationsInput | string
     robotName?: StringFieldUpdateOperationsInput | string
-    maskedSecret?: StringFieldUpdateOperationsInput | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -14648,7 +16394,6 @@ export namespace Prisma {
     institution?: StringFieldUpdateOperationsInput | string
     accountNo?: StringFieldUpdateOperationsInput | string
     robotName?: StringFieldUpdateOperationsInput | string
-    maskedSecret?: StringFieldUpdateOperationsInput | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -14660,7 +16405,42 @@ export namespace Prisma {
     institution?: StringFieldUpdateOperationsInput | string
     accountNo?: StringFieldUpdateOperationsInput | string
     robotName?: StringFieldUpdateOperationsInput | string
-    maskedSecret?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ServerUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    ip?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    load?: StringFieldUpdateOperationsInput | string
+    latency?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ServerUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    ip?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    load?: StringFieldUpdateOperationsInput | string
+    latency?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ServerUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    ip?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    load?: StringFieldUpdateOperationsInput | string
+    latency?: StringFieldUpdateOperationsInput | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string

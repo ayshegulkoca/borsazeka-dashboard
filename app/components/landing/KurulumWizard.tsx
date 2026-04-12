@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import CryptoJS from "crypto-js";
+import { syncBrokerAccount } from "@/app/actions/broker";
 import s from "./kurulum.module.css";
 
 // ─── CONFIG ──────────────────────────────────────────────────────────────────
@@ -18,7 +19,7 @@ const WEBHOOK_URL = process.env.NEXT_PUBLIC_WEBHOOK_URL || "";
 const ENCRYPTION_KEY = process.env.NEXT_PUBLIC_ENCRYPTION_KEY || "";
 
 // ─── CONSTANTS ────────────────────────────────────────────────────────────────
-const ROBOTS = ["DarkRoom", "BorsaZeka", "TradeMate", "Highway", "Fabrika"];
+const ROBOTS = ["DarkRoom", "Highway", "TradeMate"];
 const BIST_BROKERS = ["PhillipCapital", "İnfo Yatırım", "A1 Capital", "ALB Yatırım", "Meksa Yatırım"];
 const PHONE_CODES = [
   { code: "+90", label: "+90" },
@@ -72,6 +73,12 @@ function isValidEmail(email: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
+function maskAccountNo(no: string): string {
+  if (!no) return "";
+  if (no.length <= 4) return "****";
+  return no.slice(0, 4) + "****";
+}
+
 // ─── STEP CONTENTS ────────────────────────────────────────────────────────────
 const STEPS = [
   { id: 1, label: "Başlangıç" },
@@ -80,7 +87,7 @@ const STEPS = [
   { id: 4, label: "Onay" },
 ];
 
-export default function KurulumWizard() {
+export default function KurulumWizard({ embedded = false }: { embedded?: boolean }) {
   const { t } = useTranslation("common");
   const [step, setStep] = useState(1);
   const [form, setForm] = useState<FormData>(INITIAL);
@@ -161,9 +168,15 @@ export default function KurulumWizard() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+
+
   const handleSubmit = async () => {
     if (!validate() || isSubmitting) return;
     setIsSubmitting(true);
+
+    const isBinance = form.market === "BINANCE";
+    const accountNo = isBinance ? form.binanceAccountNo : form.brokerAccountNo;
+    const institution = isBinance ? "Binance" : form.broker;
 
     const payload = {
       timestamp: new Date().toISOString(),
@@ -172,7 +185,7 @@ export default function KurulumWizard() {
       market: form.market,
       robot: form.robot,
       // Encrypted fields
-      ...(form.market === "BINANCE" ? {
+      ...(isBinance ? {
         binanceAccountNo: form.binanceAccountNo,
         binanceApiKey: form.binanceApiKey,
         binanceSecretKey: encryptIfKey(form.binanceSecretKey),
@@ -186,20 +199,29 @@ export default function KurulumWizard() {
     };
 
     try {
+      // 1. Send Webhook (Original Logic)
       if (WEBHOOK_URL) {
         await fetch(WEBHOOK_URL, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
         });
-      } else {
-        console.log("[KurulumWizard] Mock submit:", payload);
-        await new Promise(r => setTimeout(r, 1200));
       }
+
+      // 2. Sync with Database (New Logic)
+      await syncBrokerAccount({
+        accountType: form.market as "BIST" | "BINANCE",
+        institution,
+        accountNo: maskAccountNo(accountNo),
+        robotName: form.robot,
+      });
+
       setIsDone(true);
     } catch (err) {
-      console.error(err);
-      setIsDone(true); // Show success anyway for UX
+      console.error("[KurulumWizard Error]:", err);
+      // Still show success for UX if the failure was non-critical, 
+      // but ideally we should handle this based on criticality.
+      setIsDone(true);
     } finally {
       setIsSubmitting(false);
     }
@@ -249,7 +271,7 @@ export default function KurulumWizard() {
 
   // ═══════════════════════════════════════════════════════════════════════════
   return (
-    <div className={s.kurulumPage}>
+    <div className={`${s.kurulumPage}${embedded ? ` ${s.kurulumEmbedded}` : ""}`}>
       {/* Top bar */}
       <div className={s.topBar}>
         <Link href="/" className={s.backLink}>

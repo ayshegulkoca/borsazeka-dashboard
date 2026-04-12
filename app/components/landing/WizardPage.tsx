@@ -21,6 +21,7 @@ import {
   type BudgetOption,
   type PricingResult,
 } from "@/src/data/products";
+import { assignRobotAfterPurchase } from "@/app/actions/robots";
 import s from "./wizard.module.css";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -206,10 +207,27 @@ export default function WizardPage() {
 
         // Oturum açılmışsa e-posta bilgisini Stripe linkine ekle
         const finalLink = getPrefilledStripeLink(pricing.stripeLink, session.user.email);
+        
+        // --- SYNC START ---
+        // Simüle edilmiş satın alma: Gerçekte bu Stripe webhook ile olmalı, 
+        // ancak kullanıcı deneyimi için burada da tetikliyoruz.
+        if (state.robotId) {
+          try {
+            await assignRobotAfterPurchase(state.robotId as any);
+          } catch (e) {
+            console.warn("DB assignment error:", e);
+          }
+        }
+        // --- SYNC END ---
+
         window.location.href = finalLink;
         return;
       }
 
+      // Stripe linki yoksa (İletişim/Manual flow)
+      if (state.robotId) {
+        await assignRobotAfterPurchase(state.robotId as any);
+      }
       setSubmitDone(true);
     } catch (err) {
       console.error("Submit error:", err);

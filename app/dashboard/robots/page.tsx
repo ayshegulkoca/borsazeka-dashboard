@@ -10,19 +10,23 @@ export default async function RobotsPage() {
 
   // Kullanıcının sahip olduğu robotları DB'den çek
   const userRobots = await prisma.userRobot.findMany({
-    where: { userId: session.user.id },
+    where: { 
+      userId: session.user.id,
+      isActive: true
+    },
   });
 
-  // Set: hangi robotid'ler aktif?
-  const activeRobotIds: string[] = userRobots
-    .filter((r) => r.isActive)
-    .map((r) => r.robotId);
+  const activeRobotIds = userRobots.map((r) => r.robotId);
 
+  // SADECE kullanıcının sahip olduğu robotları katalogdan filtrele
+  const ownedRobots = ROBOT_CATALOG.filter(robot => 
+    activeRobotIds.includes(robot.id)
+  );
 
   return (
     <RobotsClient
-      catalog={ROBOT_CATALOG}
-      activeRobotIds={Array.from(activeRobotIds)}
+      ownedRobots={ownedRobots}
+      hasOwnedRobots={ownedRobots.length > 0}
     />
   );
 }

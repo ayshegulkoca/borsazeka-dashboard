@@ -569,3 +569,39 @@
   .nav { flex-wrap: wrap; }
   .btnNext { width: 100%; justify-content: center; }
 }
+
+/* ─── EMBEDDED MODE (inside OnboardingSteps) ─────────────────────────────── */
+.kurulumEmbedded {
+  padding: 0 !important;
+  background: transparent !important;
+  min-height: unset !important;
+}
+
+.kurulumEmbedded .topBar {
+  display: none !important;
+}
+
+.kurulumEmbedded .wizardHeader {
+  display: none !important;
+}
+
+.kurulumEmbedded .progress {
+  max-width: 100% !important;
+}
+
+.kurulumEmbedded .card {
+  max-width: 100% !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border-radius: 0 !important;
+}
+
+.kurulumEmbedded .card::before {
+  display: none !important;
+}
+
+

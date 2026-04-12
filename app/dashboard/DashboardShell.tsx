@@ -120,7 +120,7 @@ export default function DashboardShell({ children, userName, userImage, planLabe
           </div>
           <div className={styles.userInfo}>
             <span className={styles.userName}>{userName}</span>
-            <PlanBadge planLabel={planLabel} />
+            {planLabel && <PlanBadge planLabel={planLabel} />}
           </div>
           <button
             onClick={() => signOut({ callbackUrl: "/" })}

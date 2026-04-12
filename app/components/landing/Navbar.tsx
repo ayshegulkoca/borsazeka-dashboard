@@ -1,14 +1,124 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { Activity } from "lucide-react";
-import { signIn } from "next-auth/react";
+import Image from "next/image";
+import { Activity, ChevronDown, LayoutDashboard, LogOut, User } from "lucide-react";
+import { signIn, signOut, useSession } from "next-auth/react";
 import { useTranslation } from "react-i18next";
 import styles from "./landing.module.css";
 import MagneticButton from "./MagneticButton";
 
+// ── Avatar Dropdown (Navbar'da giriş yapılmış kurumsal görünüm) ──────────────
+function AvatarDropdown() {
+  const { data: session } = useSession();
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  // Click-outside kapama
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
+
+  return (
+    <div ref={ref} className={styles.avatarWrapper}>
+      <button
+        id="navbar-avatar-btn"
+        className={styles.avatarBtn}
+        onClick={() => setOpen((p) => !p)}
+        aria-haspopup="true"
+        aria-expanded={open}
+      >
+        <div className={styles.avatarRing}>
+          {session?.user?.image ? (
+            <Image
+              src={session.user.image}
+              alt={session.user.name ?? ""}
+              width={32}
+              height={32}
+              className={styles.avatarImg}
+            />
+          ) : (
+            <div className={styles.avatarPlaceholder}>
+              <User size={16} />
+            </div>
+          )}
+        </div>
+        <span className={styles.avatarName}>
+          {session?.user?.name?.split(" ")[0] ?? "Hesap"}
+        </span>
+        <ChevronDown
+          size={14}
+          className={`${styles.avatarChevron} ${open ? styles.avatarChevronOpen : ""}`}
+        />
+      </button>
+
+      {open && (
+        <div className={styles.avatarDropdown} role="menu">
+          {/* User info header */}
+          <div className={styles.dropdownHeader}>
+            <div className={styles.dropdownAvatar}>
+              {session?.user?.image ? (
+                <Image
+                  src={session.user.image}
+                  alt={session.user.name ?? ""}
+                  width={40}
+                  height={40}
+                  className={styles.avatarImg}
+                />
+              ) : (
+                <div className={styles.avatarPlaceholder} style={{ width: 40, height: 40 }}>
+                  <User size={20} />
+                </div>
+              )}
+            </div>
+            <div>
+              <div className={styles.dropdownName}>{session?.user?.name ?? "Kullanıcı"}</div>
+              <div className={styles.dropdownEmail}>{session?.user?.email}</div>
+            </div>
+          </div>
+
+          <div className={styles.dropdownDivider} />
+
+          <Link
+            href="/dashboard"
+            className={styles.dropdownItem}
+            role="menuitem"
+            onClick={() => setOpen(false)}
+          >
+            <LayoutDashboard size={15} />
+            Dashboard
+          </Link>
+
+          <div className={styles.dropdownDivider} />
+
+          <button
+            className={`${styles.dropdownItem} ${styles.dropdownItemDanger}`}
+            role="menuitem"
+            onClick={() => {
+              setOpen(false);
+              signOut({ callbackUrl: "/" });
+            }}
+          >
+            <LogOut size={15} />
+            Çıkış Yap
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ── Main Navbar ───────────────────────────────────────────────────────────────
 export default function Navbar() {
+  const { data: session, status } = useSession();
+  const isAuthenticated = status === "authenticated";
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -77,19 +187,26 @@ export default function Navbar() {
             </button>
           </div>
 
-          <MagneticButton strength={0.25}>
-            <button
-              className={styles.btnGhost}
-              onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
-            >
-              {t("navbar.signIn")}
-            </button>
-          </MagneticButton>
-          <MagneticButton strength={0.3}>
-            <Link href="/urun-sec" className={`${styles.btnSolid} ${styles.neonBorder}`}>
-              {t("navbar.getStarted")}
-            </Link>
-          </MagneticButton>
+          {/* Auth: Avatar Dropdown if logged in, else Sign In button */}
+          {mounted && isAuthenticated ? (
+            <AvatarDropdown />
+          ) : (
+            <>
+              <MagneticButton strength={0.25}>
+                <button
+                  className={styles.btnGhost}
+                  onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
+                >
+                  {t("navbar.signIn")}
+                </button>
+              </MagneticButton>
+              <MagneticButton strength={0.3}>
+                <Link href="/urun-sec" className={`${styles.btnSolid} ${styles.neonBorder}`}>
+                  {t("navbar.getStarted")}
+                </Link>
+              </MagneticButton>
+            </>
+          )}
         </div>
 
         {/* Hamburger */}
@@ -134,41 +251,57 @@ export default function Navbar() {
         <div className={styles.mobileLangToggle}>
           <button
             className={`${styles.langBtn} ${mounted && currentLang === "tr" ? styles.langBtnActive : ""}`}
-            onClick={() => {
-              changeLanguage("tr");
-              setMobileOpen(false);
-            }}
+            onClick={() => { changeLanguage("tr"); setMobileOpen(false); }}
           >
             TR
           </button>
           <span className={styles.langDivider}>|</span>
           <button
             className={`${styles.langBtn} ${mounted && currentLang === "en" ? styles.langBtnActive : ""}`}
-            onClick={() => {
-              changeLanguage("en");
-              setMobileOpen(false);
-            }}
+            onClick={() => { changeLanguage("en"); setMobileOpen(false); }}
           >
             EN
           </button>
         </div>
 
         <div className={styles.mobileActions}>
-          <button
-            className={styles.btnGhost}
-            style={{ flex: 1, textAlign: "center" }}
-            onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
-          >
-            {t("navbar.signIn")}
-          </button>
-          <Link
-            href="/urun-sec"
-            className={styles.btnSolid}
-            style={{ flex: 1, textAlign: "center" }}
-            onClick={() => setMobileOpen(false)}
-          >
-            {t("navbar.getStarted")}
-          </Link>
+          {mounted && isAuthenticated ? (
+            <>
+              <Link
+                href="/dashboard"
+                className={styles.btnGhost}
+                style={{ flex: 1, textAlign: "center" }}
+                onClick={() => setMobileOpen(false)}
+              >
+                Dashboard
+              </Link>
+              <button
+                className={styles.btnGhost}
+                style={{ flex: 1, textAlign: "center", color: "#f87171" }}
+                onClick={() => { setMobileOpen(false); signOut({ callbackUrl: "/" }); }}
+              >
+                Çıkış Yap
+              </button>
+            </>
+          ) : (
+            <>
+              <button
+                className={styles.btnGhost}
+                style={{ flex: 1, textAlign: "center" }}
+                onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
+              >
+                {t("navbar.signIn")}
+              </button>
+              <Link
+                href="/urun-sec"
+                className={styles.btnSolid}
+                style={{ flex: 1, textAlign: "center" }}
+                onClick={() => setMobileOpen(false)}
+              >
+                {t("navbar.getStarted")}
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </>

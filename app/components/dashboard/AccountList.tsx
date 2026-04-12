@@ -2,21 +2,24 @@
 
 import { CheckCircle2, MoreVertical, ShieldCheck, Wallet, Globe } from "lucide-react";
 
-interface Account {
+interface BrokerAccount {
   id: string;
-  name: string; // e.g., "PhillipCapital" or "Binance"
+  accountType: string;
+  institution: string;
   accountNo: string;
-  type: "BIST" | "BINANCE";
-  status: "active" | "pending" | "error";
-  connectedAt: string;
+  robotName: string;
+  isActive: boolean;
+  createdAt: Date;
 }
 
-const MOCK_ACCOUNTS: Account[] = [];
+interface Props {
+  initialAccounts: BrokerAccount[];
+}
 
-export default function AccountList() {
+export default function AccountList({ initialAccounts }: Props) {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-      {MOCK_ACCOUNTS.map((acc) => (
+      {initialAccounts.map((acc) => (
         <div
           key={acc.id}
           style={{
@@ -43,16 +46,16 @@ export default function AccountList() {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                color: acc.type === "BIST" ? "#10b981" : "#fbbf24"
+                color: acc.accountType === "BIST" ? "#10b981" : "#fbbf24"
               }}
             >
-              {acc.type === "BIST" ? <Wallet size={24} /> : <Globe size={24} />}
+              {acc.accountType === "BIST" ? <Wallet size={24} /> : <Globe size={24} />}
             </div>
             
             <div>
               <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
                 <h4 style={{ fontSize: "1rem", fontWeight: 700, color: "var(--text-primary)" }}>
-                  {acc.name}
+                  {acc.institution}
                 </h4>
                 <div
                   style={{
@@ -61,16 +64,21 @@ export default function AccountList() {
                     textTransform: "uppercase",
                     padding: "0.15rem 0.4rem",
                     borderRadius: "4px",
-                    backgroundColor: acc.status === "active" ? "rgba(16, 185, 129, 0.1)" : "rgba(251, 191, 36, 0.1)",
-                    color: acc.status === "active" ? "#10b981" : "#fbbf24",
+                    backgroundColor: acc.isActive ? "rgba(16, 185, 129, 0.1)" : "rgba(251, 191, 36, 0.1)",
+                    color: acc.isActive ? "#10b981" : "#fbbf24",
                     display: "flex",
                     alignItems: "center",
                     gap: "0.2rem"
                   }}
                 >
                   <CheckCircle2 size={10} />
-                  {acc.status === "active" ? "Aktif" : "Beklemede"}
+                  {acc.isActive ? "Aktif" : "Beklemede"}
                 </div>
+                {acc.robotName && (
+                  <span style={{ fontSize: "0.75rem", color: "var(--text-muted)", background: "rgba(255,255,255,0.05)", padding: "0.15rem 0.4rem", borderRadius: "4px" }}>
+                    {acc.robotName}
+                  </span>
+                )}
               </div>
               <p style={{ fontSize: "0.85rem", color: "var(--text-secondary)", marginTop: "0.2rem" }}>
                 Hesap No: {acc.accountNo}
@@ -79,9 +87,11 @@ export default function AccountList() {
           </div>
 
           <div style={{ display: "flex", alignItems: "center", gap: "1.5rem" }}>
-            <div style={{ textAlign: "right", display: "none" }}> {/* Hidden on small screens via CSS usually, but here fixed */}
+            <div style={{ textAlign: "right", display: "none" }}>
               <p style={{ fontSize: "0.75rem", color: "var(--text-muted)" }}>Bağlanma Tarihi</p>
-              <p style={{ fontSize: "0.85rem", color: "var(--text-secondary)", fontWeight: 500 }}>{acc.connectedAt}</p>
+              <p style={{ fontSize: "0.85rem", color: "var(--text-secondary)", fontWeight: 500 }}>
+                {new Date(acc.createdAt).toLocaleDateString("tr-TR")}
+              </p>
             </div>
             
             <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", color: "#10b981" }}>
@@ -96,7 +106,7 @@ export default function AccountList() {
         </div>
       ))}
 
-      {MOCK_ACCOUNTS.length === 0 && (
+      {initialAccounts.length === 0 && (
         <div style={{ textAlign: "center", padding: "4rem 2rem", border: "1px dashed var(--border-subtle)", borderRadius: "var(--radius-md)" }}>
           <p style={{ color: "var(--text-muted)" }}>Henüz bir hesap bağlamadınız.</p>
         </div>

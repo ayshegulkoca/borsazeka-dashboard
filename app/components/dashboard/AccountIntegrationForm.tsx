@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import CryptoJS from "crypto-js";
+import { syncBrokerAccount } from "@/app/actions/broker";
 import s from "../landing/kurulum.module.css"; // Reusing these styles for consistency
 
 // ─── CONFIG ──────────────────────────────────────────────────────────────────
@@ -16,7 +17,7 @@ const WEBHOOK_URL = process.env.NEXT_PUBLIC_WEBHOOK_URL || "";
 const ENCRYPTION_KEY = process.env.NEXT_PUBLIC_ENCRYPTION_KEY || "fallback-key-for-dev";
 
 // ─── CONSTANTS ────────────────────────────────────────────────────────────────
-const ROBOTS = ["DarkRoom", "BorsaZeka", "TradeMate", "Highway", "Fabrika"];
+const ROBOTS = ["DarkRoom", "Highway", "TradeMate"];
 const BIST_BROKERS = ["PhillipCapital", "İnfo Yatırım", "A1 Capital", "ALB Yatırım", "Meksa Yatırım"];
 const PHONE_CODES = [
   { code: "+90", label: "+90" },
@@ -73,6 +74,12 @@ function encryptIfKey(value: string): string {
 
 function isValidEmail(email: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+function maskAccountNo(no: string): string {
+  if (!no) return "";
+  if (no.length <= 4) return "****";
+  return no.slice(0, 4) + "****";
 }
 
 const STEPS = [
@@ -170,9 +177,14 @@ export default function AccountIntegrationForm({ initialMarket, onSuccess }: Pro
     }
   };
 
+
   const handleSubmit = async () => {
     if (!validate() || isSubmitting) return;
     setIsSubmitting(true);
+
+    const isBinance = form.market === "BINANCE";
+    const accountNo = isBinance ? form.binanceAccountNo : form.brokerAccountNo;
+    const institution = isBinance ? "Binance" : form.broker;
 
     const payload = {
       timestamp: new Date().toISOString(),
@@ -181,7 +193,7 @@ export default function AccountIntegrationForm({ initialMarket, onSuccess }: Pro
       fullName: form.fullName,
       market: form.market,
       robot: form.robot,
-      ...(form.market === "BINANCE" ? {
+      ...(isBinance ? {
         binanceAccountNo: form.binanceAccountNo,
         binanceApiKey: form.binanceApiKey,
         binanceSecretKey: encryptIfKey(form.binanceSecretKey),
@@ -195,21 +207,28 @@ export default function AccountIntegrationForm({ initialMarket, onSuccess }: Pro
     };
 
     try {
+      // 1. Send Webhook
       if (WEBHOOK_URL) {
         await fetch(WEBHOOK_URL, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
         });
-      } else {
-        console.log("[AccountIntegrationForm] No webhook URL. Mock payload:", payload);
-        await new Promise(r => setTimeout(r, 1500));
       }
+
+      // 2. Sync with Database
+      await syncBrokerAccount({
+        accountType: form.market as "BIST" | "BINANCE",
+        institution,
+        accountNo: maskAccountNo(accountNo),
+        robotName: form.robot,
+      });
+
       setIsDone(true);
       if (onSuccess) onSuccess();
     } catch (err) {
-      console.error(err);
-      setIsDone(true); // Show success anyway for UX in this demo/mock phase
+      console.error("[AccountIntegrationForm Error]:", err);
+      setIsDone(true); // UX
     } finally {
       setIsSubmitting(false);
     }

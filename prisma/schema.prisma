@@ -34,12 +34,37 @@ model User {
   sessions Session[]
 
   // Business relations
-  subscription Subscription?
-  invoices     Invoice[]
-  robots       UserRobot[]
+  subscription   Subscription?
+  invoices       Invoice[]
+  robots         UserRobot[]
+  brokerAccounts BrokerAccount[]
+  servers        Server[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+// ... existing models ...
+
+// ─── Infrastructure ──────────────────────────────────────────
+
+model Server {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  name    String
+  ip      String  @default("192.168.1.100")
+  status  String  @default("online") // online | offline
+  load    String  @default("0%")
+  latency String  @default("-")
+
+  isActive Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
 }
 
 
@@ -132,4 +157,22 @@ model UserRobot {
   addedAt DateTime @default(now())
 
   @@unique([userId, robotId])
+}
+
+// ─── Broker / Exchange Accounts ───────────────────────────────
+// Stores ONLY display-safe metadata. Sensitive credentials are
+// forwarded to n8n webhook and never persisted here.
+
+model BrokerAccount {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  accountType  String // "BIST" | "BINANCE"
+  institution  String // e.g. "PhillipCapital" | "Binance"
+  accountNo    String // Masked or partial account number
+  robotName    String // Name of the robot being set up
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }

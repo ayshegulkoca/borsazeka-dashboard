@@ -1,10 +1,8 @@
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
-import { Eye, EyeOff, Bot, ClipboardList, TrendingUp, TrendingDown, ArrowRight, Plus } from "lucide-react";
 import { PLAN_LABELS } from "@/lib/plans";
 import { ROBOT_BY_ID } from "@/lib/robots";
-import Link from "next/link";
 import DashboardHomeClient from "./DashboardHomeClient";
 
 export default async function DashboardHome() {
@@ -14,9 +12,10 @@ export default async function DashboardHome() {
   const userId = session.user.id;
 
   // Gerçek veriler — DB'den çek
-  const [subscription, userRobots] = await Promise.all([
+  const [subscription, userRobots, brokerAccountsCount] = await Promise.all([
     prisma.subscription.findUnique({ where: { userId } }),
     prisma.userRobot.findMany({ where: { userId, isActive: true }, orderBy: { addedAt: "asc" } }),
+    prisma.brokerAccount.count({ where: { userId } }),
   ]);
 
   const planLabel = subscription?.planType
@@ -35,9 +34,10 @@ export default async function DashboardHome() {
   return (
     <DashboardHomeClient
       displayName={displayName}
-      planLabel={planLabel}
       activeRobotCount={activeRobotCount}
       robots={robotsWithMeta}
+      hasRobots={userRobots.length > 0}
+      hasBrokerAccounts={brokerAccountsCount > 0}
     />
   );
 }

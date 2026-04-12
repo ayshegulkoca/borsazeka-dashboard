@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import GlobalFooter from "@/app/components/landing/GlobalFooter";
 
 // Pages where global footer should NOT appear
-const EXCLUDED_PATHS = ["/dashboard", "/checkout"];
+const EXCLUDED_PATHS = ["/dashboard"];
 
 export default function GlobalFooterConditional() {
   const pathname = usePathname();

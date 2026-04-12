@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import Navbar from "./components/landing/Navbar";
 import HeroSection from "./components/landing/HeroSection";
+import OnboardingSteps from "./components/landing/OnboardingSteps";
 
 export const metadata: Metadata = {
   title: "BorsaZeka — Borsa, Yapay Zeka ile Buluştu",
@@ -13,6 +15,9 @@ export default function LandingPage() {
     <>
       <Navbar />
       <HeroSection />
+      <Suspense fallback={null}>
+        <OnboardingSteps />
+      </Suspense>
     </>
   );
 }

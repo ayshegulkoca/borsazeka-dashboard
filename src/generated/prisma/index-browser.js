@@ -141,6 +141,19 @@ exports.Prisma.UserScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.ServerScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  name: 'name',
+  ip: 'ip',
+  status: 'status',
+  load: 'load',
+  latency: 'latency',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.AccountScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -212,7 +225,6 @@ exports.Prisma.BrokerAccountScalarFieldEnum = {
   institution: 'institution',
   accountNo: 'accountNo',
   robotName: 'robotName',
-  maskedSecret: 'maskedSecret',
   isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -236,6 +248,7 @@ exports.Prisma.NullsOrder = {
 
 exports.Prisma.ModelName = {
   User: 'User',
+  Server: 'Server',
   Account: 'Account',
   Session: 'Session',
   VerificationToken: 'VerificationToken',
