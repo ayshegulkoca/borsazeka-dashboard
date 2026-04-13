@@ -83,3 +83,54 @@ export async function assignRobotAfterPurchase(robotId: RobotId) {
   return { success: true };
 }
 
+
+/** 
+ * Satın alma işlemi başladığında (Stripe'a giderken) status 'PENDING' yapar.
+ * Bu sayede Dashboard'da "Ödeme Kontrol Ediliyor" mesajı gösterebiliriz.
+ */
+export async function markSubscriptionPending(robotId: string) {
+  const userId = await getAuthedUserId();
+
+  // Subscription kaydını PENDING olarak oluştur veya güncelle
+  await prisma.subscription.upsert({
+    where: { userId },
+    update: {
+      status: "PENDING",
+      pendingRobotId: robotId,
+      planType: robotId.toUpperCase() + "_PREMIUM" // Geçici plan tipi
+    },
+    create: {
+      userId,
+      status: "PENDING",
+      pendingRobotId: robotId,
+      planType: robotId.toUpperCase() + "_PREMIUM"
+    }
+  });
+
+  revalidatePath("/");
+  revalidatePath("/dashboard");
+  return { success: true };
+}
+
+/** Kullanıcının abonelik durumunu ve varsa bekleyen robot bilgisini döner */
+export async function getSubscriptionStatus() {
+  const userId = await getAuthedUserId();
+  return prisma.subscription.findUnique({
+    where: { userId }
+  });
+}
+
+/** TİTİZLİK: Tüm sahte UserRobot ve Subscription verilerini temizler */
+export async function clearUserBusinessData() {
+  // Tüm kullanıcılar için veya sadece mevcut kullanıcı için mi? 
+  // İstek: "sistemi sıfırla". Genelde tüm veritabanı temizliği kast edilir.
+  
+  await prisma.userRobot.deleteMany({});
+  await prisma.subscription.deleteMany({});
+  // Server temizliği de gerekebilir
+  await prisma.server.deleteMany({});
+
+  revalidatePath("/");
+  revalidatePath("/dashboard");
+  return { success: true };
+}

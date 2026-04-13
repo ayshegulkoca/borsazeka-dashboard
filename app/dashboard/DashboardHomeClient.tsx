@@ -24,7 +24,9 @@ interface Props {
   robots: RobotWithMeta[];
   hasRobots: boolean;
   hasBrokerAccounts: boolean;
+  subscriptionStatus?: string;
 }
+
 
 export default function DashboardHomeClient({
   displayName,
@@ -32,7 +34,9 @@ export default function DashboardHomeClient({
   robots,
   hasRobots,
   hasBrokerAccounts,
+  subscriptionStatus,
 }: Props) {
+
   const [showBalance, setShowBalance] = useState(true);
 
   return (
@@ -44,7 +48,12 @@ export default function DashboardHomeClient({
       </div>
 
       {/* Onboarding Widget — setup eksikse göster */}
-      <OnboardingProgressWidget hasRobots={hasRobots} hasBrokerAccounts={hasBrokerAccounts} />
+      <OnboardingProgressWidget 
+        hasRobots={hasRobots} 
+        hasBrokerAccounts={hasBrokerAccounts} 
+        subscriptionStatus={subscriptionStatus}
+      />
+
 
       {/* ── Kurulum tamamlanmadan bu bölümleri gösterme ── */}
       {hasRobots ? (

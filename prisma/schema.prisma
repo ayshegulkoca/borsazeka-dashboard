@@ -113,7 +113,8 @@ model Subscription {
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   planType String @default("FREE") // FREE | DARKROOM_PREMIUM | HIGHWAY_PREMIUM | TRADEMATE_PREMIUM | FABRIKA_PREMIUM | BORSAZEKA_CLASSIC
-  status   String @default("ACTIVE") // ACTIVE | CANCELLED | PAST_DUE | TRIALING
+  status   String @default("ACTIVE") // ACTIVE | CANCELLED | PAST_DUE | TRIALING | PENDING
+  pendingRobotId String?           // Robot ID being purchased (while status is PENDING)
 
   // Payment provider fields (for future Stripe/LemonSqueezy integration)
   externalCustomerId     String? @unique

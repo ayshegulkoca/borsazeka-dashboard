@@ -2,6 +2,8 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+
 import Image from "next/image";
 import { Activity, ChevronDown, LayoutDashboard, LogOut, User } from "lucide-react";
 import { signIn, signOut, useSession } from "next-auth/react";
@@ -9,9 +11,9 @@ import { useTranslation } from "react-i18next";
 import styles from "./landing.module.css";
 import MagneticButton from "./MagneticButton";
 
-// ── Avatar Dropdown (Navbar'da giriş yapılmış kurumsal görünüm) ──────────────
 function AvatarDropdown() {
   const { data: session } = useSession();
+
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -43,6 +45,7 @@ function AvatarDropdown() {
               width={32}
               height={32}
               className={styles.avatarImg}
+              referrerPolicy="no-referrer"
             />
           ) : (
             <div className={styles.avatarPlaceholder}>
@@ -71,6 +74,7 @@ function AvatarDropdown() {
                   width={40}
                   height={40}
                   className={styles.avatarImg}
+                  referrerPolicy="no-referrer"
                 />
               ) : (
                 <div className={styles.avatarPlaceholder} style={{ width: 40, height: 40 }}>
@@ -117,8 +121,9 @@ function AvatarDropdown() {
 
 // ── Main Navbar ───────────────────────────────────────────────────────────────
 export default function Navbar() {
-  const { data: session, status } = useSession();
-  const isAuthenticated = status === "authenticated";
+  const { data: session } = useSession();
+  const router = useRouter();
+  const isAuthenticated = !!session;
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -131,6 +136,9 @@ export default function Navbar() {
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  if (!mounted) return null;
+
 
   const changeLanguage = (lang: string) => {
     i18n.changeLanguage(lang);
@@ -161,9 +169,7 @@ export default function Navbar() {
           <li>
             <Link href="/iletisim">{t("navbar.contact")}</Link>
           </li>
-          <li>
-            <Link href="/kurulum" style={{ color: "var(--accent-primary)", fontWeight: 600 }}>{t("navbar.setup")}</Link>
-          </li>
+
         </ul>
 
         {/* Right Actions */}
@@ -188,14 +194,15 @@ export default function Navbar() {
           </div>
 
           {/* Auth: Avatar Dropdown if logged in, else Sign In button */}
-          {mounted && isAuthenticated ? (
+          {isAuthenticated ? (
             <AvatarDropdown />
           ) : (
             <>
               <MagneticButton strength={0.25}>
                 <button
                   className={styles.btnGhost}
-                  onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
+                  onClick={() => signIn("google", { callbackUrl: "/dashboard", prompt: "select_account" })}
+
                 >
                   {t("navbar.signIn")}
                 </button>
@@ -239,13 +246,7 @@ export default function Navbar() {
         <Link href="/iletisim" onClick={() => setMobileOpen(false)}>
           {t("navbar.contact")}
         </Link>
-        <Link 
-          href="/kurulum" 
-          onClick={() => setMobileOpen(false)}
-          style={{ color: "var(--accent-primary)", fontWeight: 700 }}
-        >
-          {t("navbar.setup")}
-        </Link>
+
 
         {/* Mobile Language Toggle */}
         <div className={styles.mobileLangToggle}>
@@ -265,16 +266,9 @@ export default function Navbar() {
         </div>
 
         <div className={styles.mobileActions}>
-          {mounted && isAuthenticated ? (
+          {isAuthenticated ? (
             <>
-              <Link
-                href="/dashboard"
-                className={styles.btnGhost}
-                style={{ flex: 1, textAlign: "center" }}
-                onClick={() => setMobileOpen(false)}
-              >
-                Dashboard
-              </Link>
+
               <button
                 className={styles.btnGhost}
                 style={{ flex: 1, textAlign: "center", color: "#f87171" }}
@@ -288,7 +282,7 @@ export default function Navbar() {
               <button
                 className={styles.btnGhost}
                 style={{ flex: 1, textAlign: "center" }}
-                onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
+                onClick={() => signIn("google", { callbackUrl: "/#basla", prompt: "select_account" })}
               >
                 {t("navbar.signIn")}
               </button>

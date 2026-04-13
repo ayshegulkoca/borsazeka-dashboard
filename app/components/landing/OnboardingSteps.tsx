@@ -1,15 +1,20 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
+
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { useSession, signIn, signOut } from "next-auth/react";
+import Image from "next/image";
+
 import {
   Check, Lock, ArrowRight, Bot, Zap,
   LayoutDashboard, User, ShieldCheck,
 } from "lucide-react";
+import { getSubscriptionStatus } from "@/app/actions/robots";
 import s from "./onboarding.module.css";
+
 
 
 // ── Google SVG logo ───────────────────────────────────────────────────────────
@@ -41,11 +46,35 @@ function StepConnector({ done }: { done: boolean }) {
 export default function OnboardingSteps() {
   const { data: session, status } = useSession();
   const router = useRouter();
-  const isLoggedIn  = status === "authenticated";
+  const isLoggedIn  = !!session;
   const isLoading   = status === "loading";
+
+
 
   const [selectionDone,  setSelectionDone]  = useState(false);
   const [selectionLabel, setSelectionLabel] = useState<string>("");
+  const [isPending,      setIsPending]      = useState(false);
+
+  // DB'den abonelik durumunu çek (Örn: PENDING ise "Kontrol Ediliyor" göster)
+  const syncStatus = useCallback(async () => {
+    if (!isLoggedIn) return;
+    try {
+      const sub = await getSubscriptionStatus();
+      if (sub?.status === "PENDING") {
+        setIsPending(true);
+        setSelectionDone(true); // Adım 2 görsel olarak "başlamış" sayılsın
+      } else if (sub?.status === "ACTIVE") {
+        setIsPending(false);
+        setSelectionDone(true);
+      }
+    } catch (e) {
+      console.warn("Status sync failed:", e);
+    }
+  }, [isLoggedIn]);
+
+  useEffect(() => {
+    syncStatus();
+  }, [syncStatus]);
 
   const markSelectionDone = useCallback((label: string) => {
     setSelectionDone(true);
@@ -74,8 +103,9 @@ export default function OnboardingSteps() {
 
   // ── Derived state ─────────────────────────────────────────────────────────
   const step1Done   = isLoggedIn;
-  const step2Done   = selectionDone;
+  const step2Done   = selectionDone && !isPending; // Sadece ACTIVE ise TAMAMLANDI sayılır
   const step3Locked = !step1Done || !step2Done;
+
 
   // ─────────────────────────────────────────────────────────────────────────
   return (
@@ -119,11 +149,13 @@ export default function OnboardingSteps() {
                 <>
                   <div className={s.authSessionInfo}>
                     {session?.user?.image ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
+                      <Image
                         src={session.user.image}
-                        alt={session.user.name ?? ""}
+                        alt={session.user.name ?? "Avatar"}
+                        width={42}
+                        height={42}
                         className={s.authAvatar}
+                        referrerPolicy="no-referrer"
                       />
                     ) : (
                       <div className={s.authAvatarPlaceholder}>
@@ -152,7 +184,7 @@ export default function OnboardingSteps() {
                   <button
                     id="onboarding-google-signin"
                     className={s.btnGoogle}
-                    onClick={() => signIn("google", { callbackUrl: "/#basla" })}
+                    onClick={() => signIn("google", { callbackUrl: "/#basla", prompt: "select_account" })}
                     disabled={isLoading}
                   >
                     <GoogleLogo />
@@ -207,7 +239,17 @@ export default function OnboardingSteps() {
 
             {/* Body */}
             <div className={s.stepBodyFlat}>
-              {step2Done ? (
+              {isPending ? (
+                <div className={s.selectionDone} style={{ background: "rgba(251,191,36,0.1)", border: "1px solid rgba(251,191,36,0.2)", padding: "1rem", borderRadius: "12px", display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", color: "#fbbf24", fontWeight: 700, fontSize: "0.85rem" }}>
+                    <ShieldCheck size={18} />
+                    Ödemeniz Kontrol Ediliyor...
+                  </div>
+                  <p style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.45)", lineHeight: 1.4 }}>
+                    Stripe tarafındaki ödemeniz doğrulanıyor. Bu işlem genellikle birkaç dakika sürer.
+                  </p>
+                </div>
+              ) : step2Done ? (
                 <div className={s.selectionDone}>
                   <span className={s.selectionDoneChip}>
                     <Check size={12} /> {selectionLabel}
@@ -255,7 +297,11 @@ export default function OnboardingSteps() {
               )}
             </div>
 
-            {step2Done && (
+            {isPending ? (
+              <span className={s.stepStatus} style={{ background: "rgba(251,191,36,0.15)", border: "1px solid rgba(251,191,36,0.3)", color: "#fbbf24" }}>
+                Kontrol Ediliyor
+              </span>
+            ) : step2Done && (
               <span className={`${s.stepStatus} ${s.stepStatusDone}`}>
                 <Check size={11} /> Tamamlandı
               </span>

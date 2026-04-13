@@ -21,7 +21,8 @@ import {
   type BudgetOption,
   type PricingResult,
 } from "@/src/data/products";
-import { assignRobotAfterPurchase } from "@/app/actions/robots";
+import { assignRobotAfterPurchase, markSubscriptionPending } from "@/app/actions/robots";
+
 import s from "./wizard.module.css";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -209,11 +210,10 @@ export default function WizardPage() {
         const finalLink = getPrefilledStripeLink(pricing.stripeLink, session.user.email);
         
         // --- SYNC START ---
-        // Simüle edilmiş satın alma: Gerçekte bu Stripe webhook ile olmalı, 
-        // ancak kullanıcı deneyimi için burada da tetikliyoruz.
+        // Mark as PENDING so dashboard can show "checking payment" state
         if (state.robotId) {
           try {
-            await assignRobotAfterPurchase(state.robotId as any);
+            await markSubscriptionPending(state.robotId);
           } catch (e) {
             console.warn("DB assignment error:", e);
           }
@@ -225,9 +225,6 @@ export default function WizardPage() {
       }
 
       // Stripe linki yoksa (İletişim/Manual flow)
-      if (state.robotId) {
-        await assignRobotAfterPurchase(state.robotId as any);
-      }
       setSubmitDone(true);
     } catch (err) {
       console.error("Submit error:", err);

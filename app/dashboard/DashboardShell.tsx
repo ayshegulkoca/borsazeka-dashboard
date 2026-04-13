@@ -79,12 +79,12 @@ export default function DashboardShell({ children, userName, userImage, planLabe
     <div className={styles.container}>
       {/* Sidebar */}
       <aside className={styles.sidebar}>
-        <div className={styles.logoArea}>
+        <Link href="/" className={styles.logoArea}>
           <div className={styles.logoIcon}>
             <Activity color="var(--accent-primary)" size={24} />
           </div>
           <span className={styles.title}>BorsaZeka</span>
-        </div>
+        </Link>
 
         <nav className={styles.nav}>
           {navItems.map((item) => {
@@ -101,6 +101,13 @@ export default function DashboardShell({ children, userName, userImage, planLabe
               </Link>
             );
           })}
+          
+          <div className={styles.navDivider} style={{ margin: "1rem 0", borderTop: "1px solid rgba(255,255,255,0.05)" }} />
+          
+          <Link href="/" className={styles.navLink} style={{ color: "var(--accent-primary)" }}>
+            <Activity size={20} />
+            <span>Siteye Geri Dön</span>
+          </Link>
         </nav>
 
         {/* Kullanıcı Profili + Plan Rozeti */}

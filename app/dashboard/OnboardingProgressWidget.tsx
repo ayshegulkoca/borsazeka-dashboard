@@ -6,10 +6,13 @@ import { Bot, Link2, Check, ArrowRight, Sparkles } from "lucide-react";
 interface Props {
   hasRobots: boolean;
   hasBrokerAccounts: boolean;
+  subscriptionStatus?: string;
 }
 
+
 // Completely hidden if fully set up
-export default function OnboardingProgressWidget({ hasRobots, hasBrokerAccounts }: Props) {
+export default function OnboardingProgressWidget({ hasRobots, hasBrokerAccounts, subscriptionStatus }: Props) {
+
   if (hasRobots && hasBrokerAccounts) return null;
 
   const steps = [
@@ -17,13 +20,17 @@ export default function OnboardingProgressWidget({ hasRobots, hasBrokerAccounts 
       id: "robot",
       num: "1",
       title: "Size uygun robota abone olun",
-      desc: "Robot vitrinine göz atın, stratejinize uygun robota abone olun.",
+      desc: subscriptionStatus === "PENDING" 
+        ? "Stripe tarafındaki ödemeniz doğrulanıyor. Bu işlem genellikle birkaç dakika sürer."
+        : "Robot vitrinine göz atın, stratejinize uygun robota abone olun.",
       done: hasRobots,
+      pending: subscriptionStatus === "PENDING",
       locked: false,
       href: "/#robotlarimiz",
-      cta: "Robota Abone Ol",
+      cta: subscriptionStatus === "PENDING" ? "Ödeme Kontrol Ediliyor" : "Robota Abone Ol",
       icon: Bot,
     },
+
     {
       id: "account",
       num: "2",
@@ -162,7 +169,7 @@ export default function OnboardingProgressWidget({ hasRobots, hasBrokerAccounts 
                 >
                   <Icon size={18} />
                 </div>
-                {step.done && (
+                {step.done ? (
                   <span
                     style={{
                       display: "inline-flex",
@@ -179,7 +186,23 @@ export default function OnboardingProgressWidget({ hasRobots, hasBrokerAccounts 
                     <Check size={10} />
                     Tamamlandı
                   </span>
-                )}
+                ) : (step as any).pending ? (
+                  <span
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: "0.25rem",
+                      fontSize: "0.7rem",
+                      fontWeight: 700,
+                      color: "#fbbf24",
+                      background: "rgba(251,191,36,0.12)",
+                      padding: "0.15rem 0.45rem",
+                      borderRadius: "100px",
+                    }}
+                  >
+                    Kontrol Ediliyor
+                  </span>
+                ) : null}
               </div>
 
               <div style={{ fontWeight: 600, fontSize: "0.875rem", color: "var(--text-primary)", marginBottom: "0.3rem" }}>
@@ -191,20 +214,22 @@ export default function OnboardingProgressWidget({ hasRobots, hasBrokerAccounts 
 
               {!step.done && !step.locked && (
                 <Link
-                  href={step.href}
+                  href={(step as any).pending ? "#" : step.href}
                   style={{
                     display: "inline-flex",
                     alignItems: "center",
                     gap: "0.35rem",
                     fontSize: "0.8rem",
                     fontWeight: 600,
-                    color: "var(--accent-primary)",
+                    color: (step as any).pending ? "var(--text-muted)" : "var(--accent-primary)",
                     textDecoration: "none",
+                    cursor: (step as any).pending ? "default" : "pointer",
+                    pointerEvents: (step as any).pending ? "none" : "auto",
                     transition: "opacity 0.2s",
                   }}
                 >
                   {step.cta}
-                  <ArrowRight size={13} />
+                  {!(step as any).pending && <ArrowRight size={13} />}
                 </Link>
               )}
             </div>

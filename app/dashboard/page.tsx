@@ -38,6 +38,7 @@ export default async function DashboardHome() {
       robots={robotsWithMeta}
       hasRobots={userRobots.length > 0}
       hasBrokerAccounts={brokerAccountsCount > 0}
+      subscriptionStatus={subscription?.status}
     />
   );
 }
