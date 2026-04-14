@@ -74,7 +74,12 @@ export default function OnboardingSteps() {
 
   useEffect(() => {
     syncStatus();
+
+    // Sayfaya geri dönüldüğünde (Stripe'dan dönüşte) durumu tazele
+    window.addEventListener("focus", syncStatus);
+    return () => window.removeEventListener("focus", syncStatus);
   }, [syncStatus]);
+
 
   const markSelectionDone = useCallback((label: string) => {
     setSelectionDone(true);

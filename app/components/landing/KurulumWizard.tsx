@@ -19,7 +19,26 @@ const WEBHOOK_URL = process.env.NEXT_PUBLIC_WEBHOOK_URL || "";
 const ENCRYPTION_KEY = process.env.NEXT_PUBLIC_ENCRYPTION_KEY || "";
 
 // ─── CONSTANTS ────────────────────────────────────────────────────────────────
-const ROBOTS = ["DarkRoom", "Highway", "TradeMate"];
+// robotId: matches UserRobot.robotId (lowercase) stored in DB via broker.ts
+// name: display label shown in dropdown
+// market: "BIST" | "BINANCE"
+const ROBOT_CATALOG: { robotId: string; name: string; market: "BIST" | "BINANCE" }[] = [
+  // BIST robots
+  { robotId: "darkroom",       name: "DarkRoom Premium",       market: "BIST" },
+  { robotId: "highway",        name: "Highway Premium",        market: "BIST" },
+  { robotId: "trademate",      name: "TradeMate Premium",      market: "BIST" },
+  { robotId: "fabrika",        name: "Fabrika Premium",        market: "BIST" },
+  { robotId: "darkroom_self",  name: "DarkRoom Self-Service",  market: "BIST" },
+  { robotId: "highway_self",   name: "Highway Self-Service",   market: "BIST" },
+  { robotId: "trademate_self", name: "TradeMate Self-Service", market: "BIST" },
+  { robotId: "fabrika_self",   name: "Fabrika Self-Service",   market: "BIST" },
+  { robotId: "classic",        name: "BorsaZeka Classic",      market: "BIST" },
+  // Binance / Kripto + Forex robots
+  { robotId: "kripttozeka",        name: "KriptoZeka",              market: "BINANCE" },
+  { robotId: "kripttozeka_self",   name: "KriptoZeka Ascent Self",  market: "BINANCE" },
+  { robotId: "kripttozeka_ascent", name: "KriptoZeka Ascent",       market: "BINANCE" },
+  { robotId: "forexzeka",          name: "ForexZeka",               market: "BINANCE" },
+];
 const BIST_BROKERS = ["PhillipCapital", "İnfo Yatırım", "A1 Capital", "ALB Yatırım", "Meksa Yatırım"];
 const PHONE_CODES = [
   { code: "+90", label: "+90" },
@@ -431,9 +450,21 @@ export default function KurulumWizard({ embedded = false }: { embedded?: boolean
                     className={`${s.select} ${errors.robot ? s.inputError : ""}`}
                     value={form.robot}
                     onChange={e => update({ robot: e.target.value })}
+                    disabled={!form.market}
                   >
-                    <option value="">Robot seçiniz...</option>
-                    {ROBOTS.map(r => <option key={r} value={r}>{r}</option>)}
+                    {!form.market ? (
+                      <option value="">Önce piyasa seçiniz...</option>
+                    ) : (
+                      <>
+                        <option value="">Robot seçiniz...</option>
+                        {ROBOT_CATALOG
+                          .filter(r => r.market === form.market)
+                          .map(r => (
+                            <option key={r.robotId} value={r.name}>{r.name}</option>
+                          ))
+                        }
+                      </>
+                    )}
                   </select>
                   <Err field="robot" />
                 </div>

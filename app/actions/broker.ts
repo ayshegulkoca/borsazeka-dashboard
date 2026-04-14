@@ -37,8 +37,23 @@ export async function syncBrokerAccount(params: SyncBrokerParams) {
     });
 
     // 2. Activate/Update User Robot
-    // We Map robot display names to IDs if needed, but for now we use the lowercase name as ID
-    const robotId = params.robotName.toLowerCase();
+    // Map display names → robotId (must match UserRobot.robotId in DB)
+    const DISPLAY_TO_ROBOT_ID: Record<string, string> = {
+      "DarkRoom Premium":        "darkroom",
+      "Highway Premium":         "highway",
+      "TradeMate Premium":       "trademate",
+      "Fabrika Premium":         "fabrika",
+      "DarkRoom Self-Service":   "darkroom_self",
+      "Highway Self-Service":    "highway_self",
+      "TradeMate Self-Service":  "trademate_self",
+      "Fabrika Self-Service":    "fabrika_self",
+      "BorsaZeka Classic":       "classic",
+      "KriptoZeka":              "kripttozeka",
+      "KriptoZeka Ascent Self":  "kripttozeka_self",
+      "KriptoZeka Ascent":       "kripttozeka_ascent",
+      "ForexZeka":               "forexzeka",
+    };
+    const robotId = DISPLAY_TO_ROBOT_ID[params.robotName] ?? params.robotName.toLowerCase();
 
     await prisma.userRobot.upsert({
       where: {

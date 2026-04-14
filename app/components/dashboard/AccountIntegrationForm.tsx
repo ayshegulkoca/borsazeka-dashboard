@@ -17,7 +17,27 @@ const WEBHOOK_URL = process.env.NEXT_PUBLIC_WEBHOOK_URL || "";
 const ENCRYPTION_KEY = process.env.NEXT_PUBLIC_ENCRYPTION_KEY || "fallback-key-for-dev";
 
 // ─── CONSTANTS ────────────────────────────────────────────────────────────────
-const ROBOTS = ["DarkRoom", "Highway", "TradeMate"];
+// robotId: matches UserRobot.robotId (lowercase) stored in DB via broker.ts
+// name: display label shown in dropdown
+// market: "BIST" | "BINANCE"
+const ROBOT_CATALOG: { robotId: string; name: string; market: "BIST" | "BINANCE" }[] = [
+  // BIST robots
+  { robotId: "darkroom",       name: "DarkRoom Premium",   market: "BIST" },
+  { robotId: "highway",        name: "Highway Premium",    market: "BIST" },
+  { robotId: "trademate",      name: "TradeMate Premium",  market: "BIST" },
+  { robotId: "fabrika",        name: "Fabrika Premium",    market: "BIST" },
+  { robotId: "darkroom_self",  name: "DarkRoom Self-Service",  market: "BIST" },
+  { robotId: "highway_self",   name: "Highway Self-Service",   market: "BIST" },
+  { robotId: "trademate_self", name: "TradeMate Self-Service", market: "BIST" },
+  { robotId: "fabrika_self",   name: "Fabrika Self-Service",   market: "BIST" },
+  { robotId: "classic",        name: "BorsaZeka Classic",  market: "BIST" },
+  // Binance / Kripto + Forex robots
+  { robotId: "kripttozeka",      name: "KriptoZeka",            market: "BINANCE" },
+  { robotId: "kripttozeka_self", name: "KriptoZeka Ascent Self", market: "BINANCE" },
+  { robotId: "kripttozeka_ascent", name: "KriptoZeka Ascent",   market: "BINANCE" },
+  { robotId: "forexzeka",        name: "ForexZeka",             market: "BINANCE" },
+];
+
 const BIST_BROKERS = ["PhillipCapital", "İnfo Yatırım", "A1 Capital", "ALB Yatırım", "Meksa Yatırım"];
 const PHONE_CODES = [
   { code: "+90", label: "+90" },
@@ -63,6 +83,7 @@ const INITIAL: FormData = {
 
 interface Props {
   initialMarket?: Market;
+  ownedRobotIds: string[];   // From DB: UserRobot.robotId values where isActive=true
   onSuccess?: () => void;
 }
 
@@ -89,7 +110,7 @@ const STEPS = [
   { id: 4, label: "Onay" },
 ];
 
-export default function AccountIntegrationForm({ initialMarket, onSuccess }: Props) {
+export default function AccountIntegrationForm({ initialMarket, ownedRobotIds, onSuccess }: Props) {
   const { t } = useTranslation("common");
   const [step, setStep] = useState(1);
   const [form, setForm] = useState<FormData>({ ...INITIAL, market: initialMarket || null });
@@ -98,6 +119,16 @@ export default function AccountIntegrationForm({ initialMarket, onSuccess }: Pro
   const [showBrokerPw, setShowBrokerPw] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isDone, setIsDone] = useState(false);
+
+  // Robots filtered by selected market AND user ownership
+  const getRobotsForMarket = (market: Market): { robotId: string; name: string }[] => {
+    if (!market) return [];
+    return ROBOT_CATALOG
+      .filter(r => r.market === market && ownedRobotIds.includes(r.robotId));
+  };
+
+  const availableRobots = getRobotsForMarket(form.market);
+  const hasRobots = availableRobots.length > 0;
 
   const update = (patch: Partial<FormData>) => {
     setForm(prev => ({ ...prev, ...patch }));
@@ -332,10 +363,31 @@ export default function AccountIntegrationForm({ initialMarket, onSuccess }: Pro
               <div className={s.divider} />
               <div className={s.fieldGroup}>
                 <label className={s.label}>Robot Adı</label>
-                <select className={`${s.select} ${errors.robot ? s.inputError : ""}`} value={form.robot} onChange={e => update({ robot: e.target.value })}>
-                  <option value="">Robot seçiniz...</option>
-                  {ROBOTS.map(r => <option key={r} value={r}>{r}</option>)}
+                <select
+                  className={`${s.select} ${errors.robot ? s.inputError : ""}`}
+                  value={form.robot}
+                  onChange={e => update({ robot: e.target.value })}
+                  disabled={!form.market || !hasRobots}
+                >
+                  {!form.market ? (
+                    <option value="">Önce piyasa seçiniz...</option>
+                  ) : !hasRobots ? (
+                    <option value="">Bu piyasada aktif robotunuz bulunamadı</option>
+                  ) : (
+                    <>
+                      <option value="">Robot seçiniz...</option>
+                      {availableRobots.map(r => (
+                        <option key={r.robotId} value={r.name}>{r.name}</option>
+                      ))}
+                    </>
+                  )}
                 </select>
+                {!hasRobots && form.market && (
+                  <p style={{ fontSize: "0.78rem", color: "#f59e0b", display: "flex", alignItems: "center", gap: "0.3rem", marginTop: "0.35rem" }}>
+                    <AlertCircle size={13} />
+                    Bu piyasada aktif robotunuz yok. Robotu önce satın almanız gerekmektedir.
+                  </p>
+                )}
                 <Err field="robot" />
               </div>
             </div>
@@ -354,10 +406,29 @@ export default function AccountIntegrationForm({ initialMarket, onSuccess }: Pro
               {initialMarket && (
                 <div className={s.fieldGroup}>
                   <label className={s.label}>Robot Adı</label>
-                  <select className={`${s.select} ${errors.robot ? s.inputError : ""}`} value={form.robot} onChange={e => update({ robot: e.target.value })}>
-                    <option value="">Robot seçiniz...</option>
-                    {ROBOTS.map(r => <option key={r} value={r}>{r}</option>)}
+                  <select
+                    className={`${s.select} ${errors.robot ? s.inputError : ""}`}
+                    value={form.robot}
+                    onChange={e => update({ robot: e.target.value })}
+                    disabled={!hasRobots}
+                  >
+                    {!hasRobots ? (
+                      <option value="">Bu piyasada aktif robotunuz bulunamadı</option>
+                    ) : (
+                      <>
+                        <option value="">Robot seçiniz...</option>
+                        {availableRobots.map(r => (
+                          <option key={r.robotId} value={r.name}>{r.name}</option>
+                        ))}
+                      </>
+                    )}
                   </select>
+                  {!hasRobots && (
+                    <p style={{ fontSize: "0.78rem", color: "#f59e0b", display: "flex", alignItems: "center", gap: "0.3rem", marginTop: "0.35rem" }}>
+                      <AlertCircle size={13} />
+                      Bu piyasada aktif robotunuz yok. Robotu önce satın almanız gerekmektedir.
+                    </p>
+                  )}
                   <Err field="robot" />
                 </div>
               )}

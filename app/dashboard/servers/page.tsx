@@ -1,13 +1,35 @@
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
-import { Server, Activity, ArrowRight, ServerCog } from "lucide-react";
+import { Server, Activity, ArrowRight, ServerCog, Zap, ShieldCheck, Star, Cpu } from "lucide-react";
 import Link from "next/link";
+import { SERVER_PACKAGES } from "@/src/data/products";
+import { getPrefilledStripeLink } from "@/lib/stripe";
 import styles from "./page.module.css";
+
+// Icon mapping for server packages
+const PACKAGE_ICONS = {
+  power:        Zap,
+  professional: Server,
+  expert:       Cpu,
+  elite:        ShieldCheck,
+  ultimate:     Star,
+} as const;
+
+// Accent colors per tier
+const PACKAGE_COLORS: Record<string, string> = {
+  power:        "#10b981",
+  professional: "#3b82f6",
+  expert:       "#f59e0b",
+  elite:        "#8b5cf6",
+  ultimate:     "#ec4899",
+};
 
 export default async function ServersPage() {
   const session = await auth();
   if (!session?.user?.id) redirect("/");
+
+  const userEmail = session.user.email ?? "";
 
   // Kullanıcının sunucularını DB'den çek
   const userServers = await prisma.server.findMany({
@@ -71,6 +93,88 @@ export default async function ServersPage() {
           ))}
         </div>
       )}
+
+      {/* ── Sunucu Paketi Seç ─────────────────────────────────────────────────── */}
+      <div className={styles.packagesSection}>
+        <div className={styles.packagesSectionHeader}>
+          <h2 className={styles.packagesSectionTitle}>Sunucu Paketi Seç</h2>
+          <p className={styles.packagesSectionDesc}>
+            Robotlarınızı çalıştırmak için ihtiyacınıza uygun VPS veya Dedicated sunucu paketini seçin.
+            Tüm paketler yüksek erişilebilirlik ve 7/24 izleme ile gelir.
+          </p>
+        </div>
+
+        <div className={styles.packagesGrid}>
+          {SERVER_PACKAGES.map((pkg) => {
+            const Icon = PACKAGE_ICONS[pkg.id as keyof typeof PACKAGE_ICONS] ?? Server;
+            const color = PACKAGE_COLORS[pkg.id] ?? "#10b981";
+            const stripeUrl = getPrefilledStripeLink(pkg.stripeBaseUrl, userEmail);
+
+            return (
+              <div
+                key={pkg.id}
+                className={`${styles.packageCard} ${pkg.highlight ? styles.packageCardHighlight : ""}`}
+                style={{
+                  borderColor: pkg.highlight ? color + "66" : undefined,
+                  background: pkg.highlight
+                    ? `linear-gradient(135deg, var(--bg-card) 0%, ${color}0d 100%)`
+                    : undefined,
+                }}
+              >
+                {pkg.highlight && (
+                  <div className={styles.packageBadge} style={{ color, background: color + "1a", border: `1px solid ${color}33` }}>
+                    <Star size={11} /> Önerilen
+                  </div>
+                )}
+
+                <div className={styles.packageTop}>
+                  <div
+                    className={styles.packageIcon}
+                    style={{ background: color + "18", border: `1px solid ${color}30` }}
+                  >
+                    <Icon size={22} color={color} />
+                  </div>
+                  <div className={styles.packagePriceWrap}>
+                    <span className={styles.packagePrice} style={{ color }}>€{pkg.priceEUR}</span>
+                    <span className={styles.packagePricePer}>/ay</span>
+                  </div>
+                </div>
+
+                <h3 className={styles.packageName}>{pkg.name}</h3>
+
+                <ul className={styles.packageSpecs}>
+                  {pkg.specs.map((spec) => (
+                    <li key={spec} className={styles.packageSpec}>
+                      <span className={styles.packageSpecDot} style={{ background: color }} />
+                      {spec}
+                    </li>
+                  ))}
+                </ul>
+
+                <a
+                  href={stripeUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.packageCta}
+                  style={{
+                    background: pkg.highlight ? color : "transparent",
+                    color: pkg.highlight ? "#022c22" : color,
+                    border: `1.5px solid ${color}`,
+                  }}
+                  id={`server-pkg-${pkg.id}-btn`}
+                >
+                  Satın Al <ArrowRight size={15} />
+                </a>
+              </div>
+            );
+          })}
+        </div>
+
+        <p className={styles.packagesNote}>
+          Sunucu paketleri aylık fatura edilir. İptal için en az 3 gün öncesinden bildirim yapılmalıdır.
+          Tüm ücretler Euro (€) cinsindendir.
+        </p>
+      </div>
     </div>
   );
 }

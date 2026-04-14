@@ -15,5 +15,13 @@ export default async function AccountsPage() {
     orderBy: { createdAt: "desc" },
   });
 
-  return <AccountsView initialAccounts={accounts} />;
+  // Fetch user's active robots (to filter dropdown in the integration form)
+  const userRobots = await prisma.userRobot.findMany({
+    where: { userId, isActive: true },
+    select: { robotId: true },
+  });
+
+  const ownedRobotIds = userRobots.map(r => r.robotId);
+
+  return <AccountsView initialAccounts={accounts} ownedRobotIds={ownedRobotIds} />;
 }

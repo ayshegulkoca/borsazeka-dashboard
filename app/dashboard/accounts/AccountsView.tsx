@@ -19,9 +19,10 @@ interface BrokerAccount {
 
 interface Props {
   initialAccounts: BrokerAccount[];
+  ownedRobotIds: string[];  // e.g. ["darkroom", "highway", "kripttozeka_self"]
 }
 
-export default function AccountsView({ initialAccounts }: Props) {
+export default function AccountsView({ initialAccounts, ownedRobotIds }: Props) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedMarket, setSelectedMarket] = useState<"BIST" | "BINANCE" | null>(null);
 
@@ -122,6 +123,7 @@ export default function AccountsView({ initialAccounts }: Props) {
       >
         <AccountIntegrationForm 
           initialMarket={selectedMarket || undefined}
+          ownedRobotIds={ownedRobotIds}
           onSuccess={() => {
             // Local state update or fetch could be handled if needed, 
             // but revalidatePath handling redirect back or refresh is usually enough in Next.js

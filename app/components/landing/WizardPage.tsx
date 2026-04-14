@@ -56,7 +56,9 @@ export default function WizardPage() {
   const [notifyDone, setNotifyDone] = useState(false);
   const [notifySubmitting, setNotifySubmitting] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [redirecting, setRedirecting] = useState(false);
   const [submitDone, setSubmitDone] = useState(false);
+
 
   const patch = useCallback((p: Partial<WState>) => setState(prev => ({ ...prev, ...p })), []);
 
@@ -213,15 +215,21 @@ export default function WizardPage() {
         // Mark as PENDING so dashboard can show "checking payment" state
         if (state.robotId) {
           try {
-            await markSubscriptionPending(state.robotId);
+            setRedirecting(true); // Show redirecting state
+            const res = await markSubscriptionPending(state.robotId);
+            if (!res.success) throw new Error("Server action failed");
           } catch (e) {
             console.warn("DB assignment error:", e);
           }
         }
         // --- SYNC END ---
 
-        window.location.href = finalLink;
+        // Give a tiny moment for DB state to propagate before browser leaves the page
+        setTimeout(() => {
+          window.location.href = finalLink;
+        }, 300);
         return;
+
       }
 
       // Stripe linki yoksa (İletişim/Manual flow)
@@ -370,17 +378,8 @@ export default function WizardPage() {
                 <OptionCard selected={state.managementType === "SELF_SERVICE"}
                   icon={<Lock size={22} color="var(--accent-primary)" />}
                   label={t("wizard.step3.selfService")} desc={t("wizard.step3.selfServiceDesc")}
-                  comingSoon comingSoonLabel={t("wizard.comingSoonBadge")}
-                  onClick={() => {
-                    // Coming soon: select but stay on step (no auto-advance)
-                    patch({ managementType: "SELF_SERVICE", robotId: null });
-                  }} />
+                  onClick={() => autoAdvance({ managementType: "SELF_SERVICE", robotId: null })} />
               </div>
-              {state.managementType === "SELF_SERVICE" && (
-                <div style={{ marginTop: "1rem", padding: "0.75rem 1rem", borderRadius: 10, background: "rgba(16,185,129,0.06)", border: "1px solid rgba(16,185,129,0.15)", fontSize: "0.82rem", color: "var(--text-secondary)" }}>
-                  {t("wizard.step3.selfServiceComingSoon")}
-                </div>
-              )}
             </>
           )}
 
@@ -574,10 +573,12 @@ export default function WizardPage() {
                           </div>
                         </div>
 
-                        {state.robotId === "KRIPTTOZEKA_SELF" && pricing.note && (
-                          <div style={{ marginTop: "0.75rem", padding: "0.65rem 0.85rem", borderRadius: 10, background: "rgba(139,92,246,0.07)", border: "1px solid rgba(139,92,246,0.2)", fontSize: "0.79rem", color: "#a78bfa", lineHeight: 1.5 }}>
-                            {t("wizard.step6.kriptoSelfAnnualNote")}
-                          </div>
+                        {state.robotId === "KRIPTTOZEKA_SELF" && pricing.annualCostEUR && pricing.annualStripeLink && (
+                          <AnnualPlanBox
+                            annualCostEUR={pricing.annualCostEUR}
+                            annualStripeLink={pricing.annualStripeLink}
+                            userEmail={session?.user?.email ?? ""}
+                          />
                         )}
 
                         <div className={s.summaryDivider} style={{ margin: "1.5rem 0" }} />
@@ -589,14 +590,15 @@ export default function WizardPage() {
 
                         <p className={s.summaryTerms}>{t("wizard.step6.terms")}</p>
 
-                        <button className={s.btnWizardSubmit}
-                          style={{ width: "100%", marginTop: "1rem", justifyContent: "center" }}
-                          onClick={handleSubmit} disabled={submitting}>
-                          {submitting ? t("wizard.submitting") : (
-                            pricing.stripeLink ? t("wizard.step6.subscribeBtn") : t("wizard.step6.contactBtn")
-                          )}
-                          {!submitting && <ArrowRight size={16} />}
-                        </button>
+                          <button className={s.btnWizardSubmit}
+                            style={{ width: "100%", marginTop: "1rem", justifyContent: "center" }}
+                            onClick={handleSubmit} disabled={submitting || redirecting}>
+                            {redirecting ? "Stripe'a Yönlendiriliyor..." : submitting ? t("wizard.submitting") : (
+                              pricing.stripeLink ? t("wizard.step6.subscribeBtn") : t("wizard.step6.contactBtn")
+                            )}
+                            {(!submitting && !redirecting) && <ArrowRight size={16} />}
+                          </button>
+
 
                         <div style={{ fontSize: "0.75rem", color: "var(--text-muted)", textAlign: "center", marginTop: "1rem" }}>
                           <Trans
@@ -633,11 +635,7 @@ export default function WizardPage() {
                 </button>
               ) : <div />}
               {/* Manual next only for step 3 when self-service is selected (can't auto-advance), and step 5 for CLASSIC */}
-              {state.step === 3 && state.managementType === "SELF_SERVICE" && (
-                <button className={s.btnWizardNext} onClick={goNext} disabled={!canNext()}>
-                  {t("wizard.next")} <ArrowRight size={16} />
-                </button>
-              )}
+              {/* Manual next only for CLASSIC step 5 (no budget options needed) */}
               {state.step === 5 && state.robotId === "CLASSIC" && (
                 <button className={s.btnWizardNext} onClick={goNext}>
                   {t("wizard.next")} <ArrowRight size={16} />
@@ -771,6 +769,115 @@ function RobotCard({ robot, selected, t, onClick }: {
           </li>
         ))}
       </ul>
+    </div>
+  );
+}
+
+// ─── AnnualPlanBox ────────────────────────────────────────────────────────────
+function AnnualPlanBox({
+  annualCostEUR,
+  annualStripeLink,
+  userEmail,
+}: {
+  annualCostEUR: number;
+  annualStripeLink: string;
+  userEmail: string;
+}) {
+  const finalUrl = getPrefilledStripeLink(annualStripeLink, userEmail);
+  const monthlySaving = Math.round((annualCostEUR / 8) * 0.33); // ~4 ay bedava = %33 indirim
+
+  return (
+    <div
+      style={{
+        marginTop: "0.875rem",
+        padding: "1rem 1.1rem",
+        borderRadius: 12,
+        background: "linear-gradient(135deg, rgba(139,92,246,0.1) 0%, rgba(109,40,217,0.07) 100%)",
+        border: "1px solid rgba(139,92,246,0.35)",
+        display: "flex",
+        flexDirection: "column",
+        gap: "0.6rem",
+      }}
+    >
+      {/* Header */}
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
+          <span style={{
+            width: 7, height: 7, borderRadius: "50%",
+            background: "#a78bfa",
+            boxShadow: "0 0 8px #a78bfa",
+            display: "inline-block",
+          }} />
+          <span style={{ fontSize: "0.8rem", fontWeight: 700, color: "#c4b5fd", letterSpacing: "0.01em" }}>
+            Yıllık Plan — 4 Ay Robot Ücretsiz
+          </span>
+        </div>
+        <span style={{
+          fontSize: "0.65rem", fontWeight: 700, padding: "0.18rem 0.55rem",
+          borderRadius: "2rem", background: "rgba(139,92,246,0.2)",
+          color: "#a78bfa", border: "1px solid rgba(139,92,246,0.3)",
+          letterSpacing: "0.03em",
+        }}>
+          EN AVANTAJLI
+        </span>
+      </div>
+
+      {/* Price row */}
+      <div style={{ display: "flex", alignItems: "baseline", gap: "0.4rem" }}>
+        <span style={{ fontSize: "1.6rem", fontWeight: 800, color: "#c4b5fd", lineHeight: 1 }}>
+          €{annualCostEUR}
+        </span>
+        <span style={{ fontSize: "0.75rem", color: "rgba(196,181,253,0.7)", fontWeight: 500 }}>/yıl</span>
+        <span style={{
+          marginLeft: "0.4rem", fontSize: "0.72rem", color: "#86efac",
+          background: "rgba(134,239,172,0.12)", border: "1px solid rgba(134,239,172,0.2)",
+          borderRadius: "2rem", padding: "0.12rem 0.5rem", fontWeight: 700,
+        }}>
+          ~€{monthlySaving}/ay tasarruf
+        </span>
+      </div>
+
+      <p style={{ margin: 0, fontSize: "0.76rem", color: "rgba(196,181,253,0.75)", lineHeight: 1.5 }}>
+        Sunucu ücreti 12 ay · Robot ücreti 8 ay faturalanır. İptal istediğiniz zaman.
+      </p>
+
+      {/* CTA Button */}
+      <a
+        href={finalUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        id="annual-plan-btn"
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: "0.45rem",
+          marginTop: "0.25rem",
+          padding: "0.8rem 1.2rem",
+          borderRadius: 10,
+          background: "linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%)",
+          color: "#fff",
+          fontWeight: 700,
+          fontSize: "0.9rem",
+          textDecoration: "none",
+          boxShadow: "0 4px 20px rgba(139,92,246,0.4), 0 0 0 1px rgba(167,139,250,0.2)",
+          transition: "all 0.2s ease",
+          letterSpacing: "0.01em",
+        }}
+        onMouseEnter={e => {
+          (e.currentTarget as HTMLAnchorElement).style.boxShadow = "0 8px 30px rgba(139,92,246,0.65), 0 0 0 1px rgba(167,139,250,0.4)";
+          (e.currentTarget as HTMLAnchorElement).style.transform = "translateY(-1px)";
+        }}
+        onMouseLeave={e => {
+          (e.currentTarget as HTMLAnchorElement).style.boxShadow = "0 4px 20px rgba(139,92,246,0.4), 0 0 0 1px rgba(167,139,250,0.2)";
+          (e.currentTarget as HTMLAnchorElement).style.transform = "translateY(0)";
+        }}
+      >
+        ✦ Yıllık Avantajla Satın Al
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M5 12h14M12 5l7 7-7 7" />
+        </svg>
+      </a>
     </div>
   );
 }

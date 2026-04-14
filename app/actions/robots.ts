@@ -89,27 +89,36 @@ export async function assignRobotAfterPurchase(robotId: RobotId) {
  * Bu sayede Dashboard'da "Ödeme Kontrol Ediliyor" mesajı gösterebiliriz.
  */
 export async function markSubscriptionPending(robotId: string) {
-  const userId = await getAuthedUserId();
+  try {
+    const userId = await getAuthedUserId();
+    console.log(`[markSubscriptionPending] Starting for User: ${userId}, Robot: ${robotId}`);
 
-  // Subscription kaydını PENDING olarak oluştur veya güncelle
-  await prisma.subscription.upsert({
-    where: { userId },
-    update: {
-      status: "PENDING",
-      pendingRobotId: robotId,
-      planType: robotId.toUpperCase() + "_PREMIUM" // Geçici plan tipi
-    },
-    create: {
-      userId,
-      status: "PENDING",
-      pendingRobotId: robotId,
-      planType: robotId.toUpperCase() + "_PREMIUM"
-    }
-  });
+    // Subscription kaydını PENDING olarak oluştur veya güncelle
+    const updatedSub = await prisma.subscription.upsert({
+      where: { userId },
+      update: {
+        status: "PENDING",
+        pendingRobotId: robotId,
+        planType: robotId.toUpperCase() + "_PREMIUM",
+        updatedAt: new Date()
+      },
+      create: {
+        userId,
+        status: "PENDING",
+        pendingRobotId: robotId,
+        planType: robotId.toUpperCase() + "_PREMIUM"
+      }
+    });
 
-  revalidatePath("/");
-  revalidatePath("/dashboard");
-  return { success: true };
+    console.log(`[markSubscriptionPending] Success for User: ${userId}. Record ID: ${updatedSub.id}`);
+
+    revalidatePath("/");
+    revalidatePath("/dashboard");
+    return { success: true };
+  } catch (error) {
+    console.error(`[markSubscriptionPending] FATAL ERROR:`, error);
+    throw error;
+  }
 }
 
 /** Kullanıcının abonelik durumunu ve varsa bekleyen robot bilgisini döner */
