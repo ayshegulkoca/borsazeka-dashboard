@@ -498,28 +498,28 @@ export const ROBOTS: RobotDefinition[] = [
     minBudgetUSD: 5000,
     features: ["wizard.robots.kriptoZekaAscent.f1","wizard.robots.kriptoZekaAscent.f2","wizard.robots.kriptoZekaAscent.f3","wizard.robots.kriptoZekaAscent.f4"],
   },
-  // ── Kripto Self-Service: KriptoZeka Ascent ───────────────────────────────
+  // ── Kripto Self-Service: KriptoZeka Ascent (Pek Yakında) ────────────────
   {
     id: "KRIPTTOZEKA_SELF",
     nameKey: "wizard.robots.kriptoSelf.name",
     descKey: "wizard.robots.kriptoSelf.desc",
     market: "CRYPTO",
     managementType: "SELF_SERVICE",
-    comingSoon: false,
-    paymentBlocked: false,
+    comingSoon: true,       // ✅ Aktif etmek için: false yap
+    paymentBlocked: true,   // ✅ Aktif etmek için: false yap
     maxCapacity: 50,
     minBudgetUSD: 0,
     features: ["wizard.robots.kriptoSelf.f1","wizard.robots.kriptoSelf.f2","wizard.robots.kriptoSelf.f3","wizard.robots.kriptoSelf.f4"],
   },
-  // ── Forex Premium: ForexZeka ─────────────────────────────────────────────
+  // ── Forex Premium: ForexZeka (Pek Yakında) ────────────────────────────────────────────
   {
     id: "FOREXZEKA",
     nameKey: "wizard.robots.forexZeka.name",
     descKey: "wizard.robots.forexZeka.desc",
     market: "FOREX",
     managementType: "PREMIUM",
-    comingSoon: false,
-    paymentBlocked: false,
+    comingSoon: true,       // ✅ Aktif etmek için: false yap
+    paymentBlocked: true,   // ✅ Aktif etmek için: false yap
     maxCapacity: 25,
     minBudgetUSD: 500,
     features: ["wizard.robots.forexZeka.f1","wizard.robots.forexZeka.f2","wizard.robots.forexZeka.f3","wizard.robots.forexZeka.f4"],
