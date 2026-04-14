@@ -99,7 +99,7 @@ export default async function ServersPage() {
         <div className={styles.packagesSectionHeader}>
           <h2 className={styles.packagesSectionTitle}>Sunucu Paketi Seç</h2>
           <p className={styles.packagesSectionDesc}>
-            Robotlarınızı çalıştırmak için ihtiyacınıza uygun VPS veya Dedicated sunucu paketini seçin.
+            Robotlarınızı çalıştırmak için ihtiyacınıza uygun sunucu paketini seçin.
             Tüm paketler yüksek erişilebilirlik ve 7/24 izleme ile gelir.
           </p>
         </div>
@@ -127,6 +127,7 @@ export default async function ServersPage() {
                   </div>
                 )}
 
+                {/* Icon + Fiyat */}
                 <div className={styles.packageTop}>
                   <div
                     className={styles.packageIcon}
@@ -140,17 +141,13 @@ export default async function ServersPage() {
                   </div>
                 </div>
 
+                {/* Paket adı */}
                 <h3 className={styles.packageName}>{pkg.name}</h3>
 
-                <ul className={styles.packageSpecs}>
-                  {pkg.specs.map((spec) => (
-                    <li key={spec} className={styles.packageSpec}>
-                      <span className={styles.packageSpecDot} style={{ background: color }} />
-                      {spec}
-                    </li>
-                  ))}
-                </ul>
+                {/* Tek satır genel açıklama (teknik detaylar Semih Bey onayına kadar) */}
+                <p className={styles.packageDesc}>{pkg.description}</p>
 
+                {/* Satın Al → Stripe */}
                 <a
                   href={stripeUrl}
                   target="_blank"

@@ -53,7 +53,8 @@ export interface ServerPackage {
   id: string;
   name: string;
   priceEUR: number;
-  specs: string[];
+  specs: string[];        // Semih Bey onayı bekleniyor — şimdilik UI'da gösterilmiyor
+  description: string;   // Tek satır açıklama (teknik detaylar yerine)
   stripeBaseUrl: string;
   highlight?: boolean;   // önerilen paket
 }
@@ -63,6 +64,7 @@ export const SERVER_PACKAGES: ServerPackage[] = [
     id: "power",
     name: "Power VPS",
     priceEUR: 30,
+    description: "Yüksek performanslı işlemci ve güvenli altyapı.",
     specs: ["2 vCPU", "4 GB RAM", "50 GB SSD", "Günlük Yedekleme", "Temel Destek"],
     stripeBaseUrl: "https://buy.stripe.com/eVq4gzgPlakr8i25Jz8IU01",
   },
@@ -70,6 +72,7 @@ export const SERVER_PACKAGES: ServerPackage[] = [
     id: "professional",
     name: "Professional VPS",
     priceEUR: 55,
+    description: "Kesintisiz çalışma süresi ve gelişmiş ağ altyapısı.",
     specs: ["4 vCPU", "8 GB RAM", "100 GB SSD", "Günlük Yedekleme", "Öncelikli Destek"],
     stripeBaseUrl: "https://buy.stripe.com/dRmdR99mT507aqa1tj8IU02",
     highlight: true,
@@ -78,6 +81,7 @@ export const SERVER_PACKAGES: ServerPackage[] = [
     id: "expert",
     name: "Expert VPS",
     priceEUR: 95,
+    description: "Düşük gecikme süresi ve optimize edilmiş işlem kapasitesi.",
     specs: ["8 vCPU", "16 GB RAM", "200 GB SSD", "Saatlik Yedekleme", "7/24 Destek"],
     stripeBaseUrl: "https://buy.stripe.com/9B69AT7eL64bfKu1tj8IU03",
   },
@@ -85,6 +89,7 @@ export const SERVER_PACKAGES: ServerPackage[] = [
     id: "elite",
     name: "Elite Dedicated Server",
     priceEUR: 240,
+    description: "Adanmış sunucu kaynakları ve öncelikli teknik destek.",
     specs: ["16 vCPU", "64 GB RAM", "1 TB NVMe", "Anlık Yedekleme", "Dedicated Line", "VIP Destek"],
     stripeBaseUrl: "https://buy.stripe.com/4gM8wPeHddwDgOydc18IU04",
   },
@@ -92,6 +97,7 @@ export const SERVER_PACKAGES: ServerPackage[] = [
     id: "ultimate",
     name: "Ultimate Dedicated Server",
     priceEUR: 320,
+    description: "Maksimum güç, tam izolasyon ve kurumsal seviye altyapı.",
     specs: ["32 vCPU", "128 GB RAM", "2 TB NVMe", "Anlık Yedekleme", "Dedicated Line", "24/7 VIP Destek", "SLA Garantisi"],
     stripeBaseUrl: "https://buy.stripe.com/cNi6oHdD964baqa6ND8IU05",
   },
