@@ -75,7 +75,6 @@ export const SERVER_PACKAGES: ServerPackage[] = [
     description: "Kesintisiz çalışma süresi ve gelişmiş ağ altyapısı.",
     specs: ["4 vCPU", "8 GB RAM", "100 GB SSD", "Günlük Yedekleme", "Öncelikli Destek"],
     stripeBaseUrl: "https://buy.stripe.com/dRmdR99mT507aqa1tj8IU02",
-    highlight: true,
   },
   {
     id: "expert",
