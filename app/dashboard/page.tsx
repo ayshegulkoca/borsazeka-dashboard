@@ -1,8 +1,8 @@
 import { auth } from "@/auth";
-import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
 import { PLAN_LABELS } from "@/lib/plans";
 import { ROBOT_BY_ID } from "@/lib/robots";
+import { apiGet } from "@/lib/api";
 import DashboardHomeClient from "./DashboardHomeClient";
 
 export default async function DashboardHome() {
@@ -11,12 +11,16 @@ export default async function DashboardHome() {
 
   const userId = session.user.id;
 
-  // Gerçek veriler — DB'den çek
-  const [subscription, userRobots, brokerAccountsCount] = await Promise.all([
-    prisma.subscription.findUnique({ where: { userId } }),
-    prisma.userRobot.findMany({ where: { userId, isActive: true }, orderBy: { addedAt: "asc" } }),
-    prisma.brokerAccount.count({ where: { userId } }),
+  // Gerçek veriler — API'den çek (Prisma yerine)
+  const [subscription, apiRobots, dashboardSummary] = await Promise.all([
+    apiGet<any>("/user/subscription"),
+    apiGet<any[]>("/user/robots"),
+    apiGet<any>("/user/dashboard-summary"),
   ]);
+
+  const userRobots = apiRobots ?? [];
+
+  const brokerAccountsCount = dashboardSummary?.brokerAccountsCount ?? 0;
 
   const planLabel = subscription?.planType
     ? (PLAN_LABELS[subscription.planType] ?? subscription.planType)

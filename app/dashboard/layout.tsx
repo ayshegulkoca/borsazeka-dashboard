@@ -2,6 +2,7 @@ import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
 import { PLAN_LABELS } from "@/lib/plans";
+import { apiGet } from "@/lib/api";
 import DashboardShell from "./DashboardShell";
 
 export default async function DashboardLayout({
@@ -16,25 +17,14 @@ export default async function DashboardLayout({
     redirect("/");
   }
 
-  // User ID'yi session veya email üzerinden bul
-  let userId = session.user.id;
-
-  if (!userId && session.user.email) {
-    const dbUser = await prisma.user.findUnique({
-      where: { email: session.user.email },
-    });
-    userId = dbUser?.id;
-  }
-
+  // User ID API'den veya fallback olarak session'dan gelir
+  const userId = session.user.id;
   if (!userId) {
     redirect("/");
   }
 
-  // Abonelik bilgisini çek — ama Dashboard erişimini ENGELLEME
-  // Kurulum tamamlanmamış kullanıcılar da Dashboard'a girebilmeli
-  const subscription = await prisma.subscription.findUnique({
-    where: { userId },
-  });
+  // Abonelik bilgisini API'den çek (Prisma yerine)
+  const subscription = await apiGet<any>("/user/subscription");
 
   // Sadece AKTİF ve ÜCRETLİ (non-FREE) aboneliği olan kullanıcılar için plan etiketi göster
   const planLabel =
@@ -45,6 +35,7 @@ export default async function DashboardLayout({
   return (
     <DashboardShell
       userName={session.user.name ?? "Kullanıcı"}
+      userEmail={session.user.email ?? undefined}
       userImage={session.user.image ?? undefined}
       planLabel={planLabel}
     >

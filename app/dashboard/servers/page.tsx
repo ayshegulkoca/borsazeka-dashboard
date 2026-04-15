@@ -1,8 +1,9 @@
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
-import { Server, ArrowRight, Zap, ShieldCheck, Star, Cpu } from "lucide-react";
+import { Server, ArrowRight, Zap, ShieldCheck, Star, Cpu, Activity } from "lucide-react";
 import { SERVER_PACKAGES } from "@/src/data/products";
 import { getPrefilledStripeLink } from "@/lib/stripe";
+import { apiGet } from "@/lib/api";
 import styles from "./page.module.css";
 
 const PACKAGE_ICONS = {
@@ -27,14 +28,68 @@ export default async function ServersPage() {
 
   const userEmail = session.user.email ?? "";
 
+  // Aktif sunucuları API'den çek (Prisma yerine)
+  const apiServers = await apiGet<any[]>("/user/servers");
+  const myServers = apiServers ?? [];
+
   return (
     <div className={styles.container}>
       <div>
         <h1 className={styles.title}>Sunucular</h1>
         <p className={styles.subtitle}>
-          Robotlarınızı çalıştırmak için ihtiyacınıza uygun sunucu paketini seçin.
+          Robotlarınızı çalıştırmak için ihtiyacınıza uygun sunucu paketini seçin veya aktif sunucularınızı yönetin.
         </p>
       </div>
+
+      {/* Aktif Sunucularım Bölümü */}
+      {myServers.length > 0 && (
+        <div style={{ marginBottom: "3rem" }}>
+          <h2 className={styles.sectionTitle} style={{ fontSize: "1.2rem", fontWeight: 600, marginBottom: "1.25rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
+            <Activity size={20} color="var(--accent-primary)" />
+            Aktif Sunucularım
+          </h2>
+          <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+            {myServers.map((srv: any) => (
+              <div key={srv.id} className={styles.activeServerCard} style={{ 
+                background: "rgba(255,255,255,0.03)", 
+                border: "1px solid rgba(255,255,255,0.08)", 
+                padding: "1.25rem", 
+                borderRadius: "16px",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center"
+              }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+                  <div style={{ padding: "0.75rem", background: "rgba(16,185,129,0.1)", borderRadius: "12px" }}>
+                    <Server size={22} color="var(--accent-primary)" />
+                  </div>
+                  <div>
+                    <div style={{ fontWeight: 600, fontSize: "1rem" }}>{srv.name}</div>
+                    <div style={{ fontSize: "0.85rem", color: "var(--text-muted)" }}>IP: {srv.ip} • Gecikme: {srv.latency}</div>
+                  </div>
+                </div>
+                <div style={{ display: "flex", alignItems: "center", gap: "1.5rem" }}>
+                   <div style={{ textAlign: "right" }}>
+                      <div style={{ fontSize: "0.75rem", color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.05em" }}>Durum</div>
+                      <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", color: srv.status === "online" ? "#10b981" : "#ef4444", fontSize: "0.9rem", fontWeight: 600 }}>
+                        <div style={{ width: 8, height: 8, borderRadius: "50%", background: srv.status === "online" ? "#10b981" : "#ef4444" }} />
+                        {srv.status === "online" ? "Çevrimiçi" : "Çevrimdışı"}
+                      </div>
+                   </div>
+                   <div style={{ textAlign: "right", minWidth: "80px" }}>
+                      <div style={{ fontSize: "0.75rem", color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.05em" }}>Yük</div>
+                      <div style={{ fontSize: "0.9rem", fontWeight: 600 }}>{srv.load}</div>
+                   </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <h2 className={styles.sectionTitle} style={{ fontSize: "1.2rem", fontWeight: 600, marginBottom: "1.25rem" }}>
+        Sunucu Paketleri
+      </h2>
 
       <div className={styles.packagesGrid}>
         {SERVER_PACKAGES.map((pkg) => {

@@ -9,28 +9,59 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   callbacks: {
     ...authConfig.callbacks,
 
-    // JWT token'a user.id ekle (ilk girişte user nesnesi gelir)
+    // JWT token'a API'den gelen verileri ekle
     async jwt({ token, user, account }) {
-      if (user?.id) {
-        token.id = user.id
+      // Google ile ilk girişte backend handshake yap
+      if (account?.provider === "google" && account.id_token) {
+        try {
+          const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+          const response = await fetch(`${apiUrl}/auth/google-signin`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ idToken: account.id_token }),
+          });
+
+          if (response.ok) {
+            const data = await response.json();
+            // API'den gelen verileri token'a işle
+            token.id = data.userId;
+            token.accessToken = data.token;
+            token.refreshToken = data.refreshToken;
+            token.isNewUser = data.isNewUser;
+            token.userFromApi = {
+              displayName: data.displayName,
+              email: data.email,
+              pictureUrl: data.pictureUrl,
+            };
+          }
+        } catch (error) {
+          console.error("Backend API Auth Error:", error);
+        }
       }
-      // Eğer id yoksa ama email varsa DB'den bul (fallback)
-      if (!token.id && token.email) {
-        const dbUser = await prisma.user.findUnique({
-          where: { email: token.email as string },
-          select: { id: true },
-        })
-        if (dbUser) token.id = dbUser.id
+
+      // Fallback: local user id
+      if (user?.id && !token.id) {
+        token.id = user.id;
       }
-      return token
+
+      return token;
     },
 
-    // Session'a user.id geçir
+    // Session'a token verilerini aktar
     async session({ session, token }) {
-      if (token?.id && session.user) {
-        session.user.id = token.id as string
+      if (session.user) {
+        if (token.id) session.user.id = token.id as string;
+        if (token.accessToken) session.user.accessToken = token.accessToken as string;
+        if (token.refreshToken) session.user.refreshToken = token.refreshToken as string;
+        if (token.isNewUser !== undefined) session.user.isNewUser = token.isNewUser as boolean;
+        
+        // Profil bilgilerini API'den gelenlerle güncelle
+        if (token.userFromApi) {
+          if (token.userFromApi.displayName) session.user.name = token.userFromApi.displayName;
+          if (token.userFromApi.pictureUrl) session.user.image = token.userFromApi.pictureUrl;
+        }
       }
-      return session
+      return session;
     },
   },
 })

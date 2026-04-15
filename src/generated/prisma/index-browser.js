@@ -187,6 +187,7 @@ exports.Prisma.SubscriptionScalarFieldEnum = {
   userId: 'userId',
   planType: 'planType',
   status: 'status',
+  pendingRobotId: 'pendingRobotId',
   externalCustomerId: 'externalCustomerId',
   externalSubscriptionId: 'externalSubscriptionId',
   externalPriceId: 'externalPriceId',

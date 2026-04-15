@@ -7431,6 +7431,7 @@ export namespace Prisma {
     userId: string | null
     planType: string | null
     status: string | null
+    pendingRobotId: string | null
     externalCustomerId: string | null
     externalSubscriptionId: string | null
     externalPriceId: string | null
@@ -7446,6 +7447,7 @@ export namespace Prisma {
     userId: string | null
     planType: string | null
     status: string | null
+    pendingRobotId: string | null
     externalCustomerId: string | null
     externalSubscriptionId: string | null
     externalPriceId: string | null
@@ -7461,6 +7463,7 @@ export namespace Prisma {
     userId: number
     planType: number
     status: number
+    pendingRobotId: number
     externalCustomerId: number
     externalSubscriptionId: number
     externalPriceId: number
@@ -7478,6 +7481,7 @@ export namespace Prisma {
     userId?: true
     planType?: true
     status?: true
+    pendingRobotId?: true
     externalCustomerId?: true
     externalSubscriptionId?: true
     externalPriceId?: true
@@ -7493,6 +7497,7 @@ export namespace Prisma {
     userId?: true
     planType?: true
     status?: true
+    pendingRobotId?: true
     externalCustomerId?: true
     externalSubscriptionId?: true
     externalPriceId?: true
@@ -7508,6 +7513,7 @@ export namespace Prisma {
     userId?: true
     planType?: true
     status?: true
+    pendingRobotId?: true
     externalCustomerId?: true
     externalSubscriptionId?: true
     externalPriceId?: true
@@ -7596,6 +7602,7 @@ export namespace Prisma {
     userId: string
     planType: string
     status: string
+    pendingRobotId: string | null
     externalCustomerId: string | null
     externalSubscriptionId: string | null
     externalPriceId: string | null
@@ -7628,6 +7635,7 @@ export namespace Prisma {
     userId?: boolean
     planType?: boolean
     status?: boolean
+    pendingRobotId?: boolean
     externalCustomerId?: boolean
     externalSubscriptionId?: boolean
     externalPriceId?: boolean
@@ -7644,6 +7652,7 @@ export namespace Prisma {
     userId?: boolean
     planType?: boolean
     status?: boolean
+    pendingRobotId?: boolean
     externalCustomerId?: boolean
     externalSubscriptionId?: boolean
     externalPriceId?: boolean
@@ -7660,6 +7669,7 @@ export namespace Prisma {
     userId?: boolean
     planType?: boolean
     status?: boolean
+    pendingRobotId?: boolean
     externalCustomerId?: boolean
     externalSubscriptionId?: boolean
     externalPriceId?: boolean
@@ -7676,6 +7686,7 @@ export namespace Prisma {
     userId?: boolean
     planType?: boolean
     status?: boolean
+    pendingRobotId?: boolean
     externalCustomerId?: boolean
     externalSubscriptionId?: boolean
     externalPriceId?: boolean
@@ -7686,7 +7697,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type SubscriptionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "planType" | "status" | "externalCustomerId" | "externalSubscriptionId" | "externalPriceId" | "currentPeriodStart" | "nextBillingDate" | "cancelAtPeriodEnd" | "createdAt" | "updatedAt", ExtArgs["result"]["subscription"]>
+  export type SubscriptionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "planType" | "status" | "pendingRobotId" | "externalCustomerId" | "externalSubscriptionId" | "externalPriceId" | "currentPeriodStart" | "nextBillingDate" | "cancelAtPeriodEnd" | "createdAt" | "updatedAt", ExtArgs["result"]["subscription"]>
   export type SubscriptionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -7707,6 +7718,7 @@ export namespace Prisma {
       userId: string
       planType: string
       status: string
+      pendingRobotId: string | null
       externalCustomerId: string | null
       externalSubscriptionId: string | null
       externalPriceId: string | null
@@ -8143,6 +8155,7 @@ export namespace Prisma {
     readonly userId: FieldRef<"Subscription", 'String'>
     readonly planType: FieldRef<"Subscription", 'String'>
     readonly status: FieldRef<"Subscription", 'String'>
+    readonly pendingRobotId: FieldRef<"Subscription", 'String'>
     readonly externalCustomerId: FieldRef<"Subscription", 'String'>
     readonly externalSubscriptionId: FieldRef<"Subscription", 'String'>
     readonly externalPriceId: FieldRef<"Subscription", 'String'>
@@ -12006,6 +12019,7 @@ export namespace Prisma {
     userId: 'userId',
     planType: 'planType',
     status: 'status',
+    pendingRobotId: 'pendingRobotId',
     externalCustomerId: 'externalCustomerId',
     externalSubscriptionId: 'externalSubscriptionId',
     externalPriceId: 'externalPriceId',
@@ -12568,6 +12582,7 @@ export namespace Prisma {
     userId?: StringFilter<"Subscription"> | string
     planType?: StringFilter<"Subscription"> | string
     status?: StringFilter<"Subscription"> | string
+    pendingRobotId?: StringNullableFilter<"Subscription"> | string | null
     externalCustomerId?: StringNullableFilter<"Subscription"> | string | null
     externalSubscriptionId?: StringNullableFilter<"Subscription"> | string | null
     externalPriceId?: StringNullableFilter<"Subscription"> | string | null
@@ -12584,6 +12599,7 @@ export namespace Prisma {
     userId?: SortOrder
     planType?: SortOrder
     status?: SortOrder
+    pendingRobotId?: SortOrderInput | SortOrder
     externalCustomerId?: SortOrderInput | SortOrder
     externalSubscriptionId?: SortOrderInput | SortOrder
     externalPriceId?: SortOrderInput | SortOrder
@@ -12605,6 +12621,7 @@ export namespace Prisma {
     NOT?: SubscriptionWhereInput | SubscriptionWhereInput[]
     planType?: StringFilter<"Subscription"> | string
     status?: StringFilter<"Subscription"> | string
+    pendingRobotId?: StringNullableFilter<"Subscription"> | string | null
     externalPriceId?: StringNullableFilter<"Subscription"> | string | null
     currentPeriodStart?: DateTimeNullableFilter<"Subscription"> | Date | string | null
     nextBillingDate?: DateTimeNullableFilter<"Subscription"> | Date | string | null
@@ -12619,6 +12636,7 @@ export namespace Prisma {
     userId?: SortOrder
     planType?: SortOrder
     status?: SortOrder
+    pendingRobotId?: SortOrderInput | SortOrder
     externalCustomerId?: SortOrderInput | SortOrder
     externalSubscriptionId?: SortOrderInput | SortOrder
     externalPriceId?: SortOrderInput | SortOrder
@@ -12640,6 +12658,7 @@ export namespace Prisma {
     userId?: StringWithAggregatesFilter<"Subscription"> | string
     planType?: StringWithAggregatesFilter<"Subscription"> | string
     status?: StringWithAggregatesFilter<"Subscription"> | string
+    pendingRobotId?: StringNullableWithAggregatesFilter<"Subscription"> | string | null
     externalCustomerId?: StringNullableWithAggregatesFilter<"Subscription"> | string | null
     externalSubscriptionId?: StringNullableWithAggregatesFilter<"Subscription"> | string | null
     externalPriceId?: StringNullableWithAggregatesFilter<"Subscription"> | string | null
@@ -13326,6 +13345,7 @@ export namespace Prisma {
     id?: string
     planType?: string
     status?: string
+    pendingRobotId?: string | null
     externalCustomerId?: string | null
     externalSubscriptionId?: string | null
     externalPriceId?: string | null
@@ -13342,6 +13362,7 @@ export namespace Prisma {
     userId: string
     planType?: string
     status?: string
+    pendingRobotId?: string | null
     externalCustomerId?: string | null
     externalSubscriptionId?: string | null
     externalPriceId?: string | null
@@ -13356,6 +13377,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     planType?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
+    pendingRobotId?: NullableStringFieldUpdateOperationsInput | string | null
     externalCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
     externalSubscriptionId?: NullableStringFieldUpdateOperationsInput | string | null
     externalPriceId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -13372,6 +13394,7 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     planType?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
+    pendingRobotId?: NullableStringFieldUpdateOperationsInput | string | null
     externalCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
     externalSubscriptionId?: NullableStringFieldUpdateOperationsInput | string | null
     externalPriceId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -13387,6 +13410,7 @@ export namespace Prisma {
     userId: string
     planType?: string
     status?: string
+    pendingRobotId?: string | null
     externalCustomerId?: string | null
     externalSubscriptionId?: string | null
     externalPriceId?: string | null
@@ -13401,6 +13425,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     planType?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
+    pendingRobotId?: NullableStringFieldUpdateOperationsInput | string | null
     externalCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
     externalSubscriptionId?: NullableStringFieldUpdateOperationsInput | string | null
     externalPriceId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -13416,6 +13441,7 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     planType?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
+    pendingRobotId?: NullableStringFieldUpdateOperationsInput | string | null
     externalCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
     externalSubscriptionId?: NullableStringFieldUpdateOperationsInput | string | null
     externalPriceId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -14094,6 +14120,7 @@ export namespace Prisma {
     userId?: SortOrder
     planType?: SortOrder
     status?: SortOrder
+    pendingRobotId?: SortOrder
     externalCustomerId?: SortOrder
     externalSubscriptionId?: SortOrder
     externalPriceId?: SortOrder
@@ -14109,6 +14136,7 @@ export namespace Prisma {
     userId?: SortOrder
     planType?: SortOrder
     status?: SortOrder
+    pendingRobotId?: SortOrder
     externalCustomerId?: SortOrder
     externalSubscriptionId?: SortOrder
     externalPriceId?: SortOrder
@@ -14124,6 +14152,7 @@ export namespace Prisma {
     userId?: SortOrder
     planType?: SortOrder
     status?: SortOrder
+    pendingRobotId?: SortOrder
     externalCustomerId?: SortOrder
     externalSubscriptionId?: SortOrder
     externalPriceId?: SortOrder
@@ -14956,6 +14985,7 @@ export namespace Prisma {
     id?: string
     planType?: string
     status?: string
+    pendingRobotId?: string | null
     externalCustomerId?: string | null
     externalSubscriptionId?: string | null
     externalPriceId?: string | null
@@ -14970,6 +15000,7 @@ export namespace Prisma {
     id?: string
     planType?: string
     status?: string
+    pendingRobotId?: string | null
     externalCustomerId?: string | null
     externalSubscriptionId?: string | null
     externalPriceId?: string | null
@@ -15184,6 +15215,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     planType?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
+    pendingRobotId?: NullableStringFieldUpdateOperationsInput | string | null
     externalCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
     externalSubscriptionId?: NullableStringFieldUpdateOperationsInput | string | null
     externalPriceId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -15198,6 +15230,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     planType?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
+    pendingRobotId?: NullableStringFieldUpdateOperationsInput | string | null
     externalCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
     externalSubscriptionId?: NullableStringFieldUpdateOperationsInput | string | null
     externalPriceId?: NullableStringFieldUpdateOperationsInput | string | null

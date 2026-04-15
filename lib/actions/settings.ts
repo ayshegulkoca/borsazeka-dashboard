@@ -46,6 +46,79 @@ export async function updateProfile(
     }
   }
 
+  // ── DispatchRequestDto ─────────────────────────────────────────
+  const dispatchPayload = {
+    firstName:   validated.data.firstName,
+    lastName:    validated.data.lastName,
+    email:       userEmail,
+    gender:      validated.data.gender      || null,
+    phone:       validated.data.phone       || null,
+    address:     validated.data.address     || null,
+    postalCode:  validated.data.postalCode  || null,
+    city:        validated.data.city        || null,
+    country:     validated.data.country     || null,
+    companyName: validated.data.companyName || null,
+    twitter:     validated.data.twitter     || null,
+  }
+
+  // ── 1. POST to backend /dispatch ───────────────────────────────
+  const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL?.replace(/\/$/, '')
+  let accessToken = (session.user as any).accessToken as string | undefined
+  const refreshToken = (session.user as any).refreshToken as string | undefined
+
+  const doDispatch = async (token: string | undefined): Promise<Response | null> => {
+    if (!API_BASE) return null
+    try {
+      return await fetch(`${API_BASE}/dispatch`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
+        body: JSON.stringify(dispatchPayload),
+      })
+    } catch (err) {
+      console.error('[dispatch] Network error:', err)
+      return null
+    }
+  }
+
+  let dispatchRes = await doDispatch(accessToken)
+
+  // ── 2. 401 → refresh token → retry ────────────────────────────
+  if (dispatchRes?.status === 401 && refreshToken && API_BASE) {
+    console.warn('[dispatch] 401 received — attempting token refresh...')
+    try {
+      const refreshRes = await fetch(`${API_BASE}/auth/refresh`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ refreshToken }),
+      })
+
+      if (refreshRes.ok) {
+        const refreshData = await refreshRes.json()
+        accessToken = refreshData.token ?? refreshData.accessToken
+        console.info('[dispatch] Token refreshed, retrying...')
+        dispatchRes = await doDispatch(accessToken)
+      } else {
+        console.error('[dispatch] Refresh failed:', refreshRes.status, await refreshRes.text())
+        return {
+          success: false,
+          message: 'Oturum süreniz dolmuş. Lütfen tekrar giriş yapın.',
+        }
+      }
+    } catch (err) {
+      console.error('[dispatch] Refresh request error:', err)
+    }
+  }
+
+  // Log final dispatch result
+  if (dispatchRes && !dispatchRes.ok) {
+    const body = await dispatchRes.text().catch(() => '')
+    console.error(`[dispatch] API error ${dispatchRes.status}:`, body)
+  }
+
+  // ── 3. Prisma — yerel önbellek olarak güncelle ─────────────────
   try {
     await prisma.user.update({
       where: { email: userEmail },
@@ -67,7 +140,7 @@ export async function updateProfile(
 
     return {
       success: true,
-      message: 'Profil bilgileriniz başarıyla güncellendi.',
+      message: 'Bilgileriniz başarıyla güncellendi.',
     }
   } catch (error) {
     console.error('Profile update error:', error)

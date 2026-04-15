@@ -10,6 +10,7 @@ import styles from "./layout.module.css";
 interface Props {
   children: React.ReactNode;
   userName: string;
+  userEmail?: string;
   userImage?: string;
   planLabel: string;
 }
@@ -64,7 +65,7 @@ function PlanBadge({ planLabel }: { planLabel: string }) {
   );
 }
 
-export default function DashboardShell({ children, userName, userImage, planLabel }: Props) {
+export default function DashboardShell({ children, userName, userEmail, userImage, planLabel }: Props) {
   const pathname = usePathname();
 
   const navItems = [
@@ -127,6 +128,7 @@ export default function DashboardShell({ children, userName, userImage, planLabe
           </div>
           <div className={styles.userInfo}>
             <span className={styles.userName}>{userName}</span>
+            {userEmail && <span className={styles.userEmail} style={{ fontSize: '0.75rem', color: 'var(--text-muted)', display: 'block' }}>{userEmail}</span>}
             {planLabel && <PlanBadge planLabel={planLabel} />}
           </div>
           <button
