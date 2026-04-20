@@ -218,6 +218,10 @@
 .contentBody {
   padding: 2rem;
   flex: 1;
+  position: relative;
+  background:
+    radial-gradient(ellipse 60% 50% at 20% 10%, rgba(16, 185, 129, 0.04), transparent 60%),
+    radial-gradient(ellipse 50% 40% at 80% 80%, rgba(5, 150, 105, 0.03), transparent 60%);
 }
 
 @media (max-width: 768px) {

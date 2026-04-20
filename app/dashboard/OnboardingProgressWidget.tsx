@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Bot, Link2, Check, ArrowRight, Sparkles } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { useState } from "react";
 
 interface Props {
   hasRobots: boolean;
@@ -13,6 +14,7 @@ interface Props {
 // Completely hidden if fully set up
 export default function OnboardingProgressWidget({ hasRobots, hasBrokerAccounts, subscriptionStatus }: Props) {
   const { t } = useTranslation("common");
+  const [hoveredCard, setHoveredCard] = useState<string | null>(null);
 
   if (hasRobots && hasBrokerAccounts) return null;
 
@@ -103,15 +105,16 @@ export default function OnboardingProgressWidget({ hasRobots, hasBrokerAccounts,
           </div>
         </div>
 
-        {/* Progress pill */}
+        {/* Progress pill — daha kalın + parlayan uç */}
         <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
           <div
             style={{
-              width: "100px",
-              height: "6px",
+              width: "120px",
+              height: "10px",
               borderRadius: "100px",
               background: "rgba(255,255,255,0.08)",
               overflow: "hidden",
+              position: "relative",
             }}
           >
             <div
@@ -120,9 +123,29 @@ export default function OnboardingProgressWidget({ hasRobots, hasBrokerAccounts,
                 width: `${progressPct}%`,
                 background: "linear-gradient(90deg, var(--accent-secondary), var(--accent-primary))",
                 borderRadius: "100px",
-                transition: "width 0.5s ease",
+                transition: "width 0.6s cubic-bezier(0.22, 1, 0.36, 1)",
+                position: "relative",
+                minWidth: progressPct > 0 ? "10px" : "0",
               }}
-            />
+            >
+              {/* Parlayan uç nokta */}
+              {progressPct > 0 && (
+                <div
+                  style={{
+                    position: "absolute",
+                    right: "-1px",
+                    top: "50%",
+                    transform: "translateY(-50%)",
+                    width: "14px",
+                    height: "14px",
+                    borderRadius: "50%",
+                    background: "var(--accent-primary)",
+                    boxShadow: "0 0 10px rgba(16,185,129,0.6), 0 0 20px rgba(16,185,129,0.3)",
+                    border: "2px solid rgba(255,255,255,0.3)",
+                  }}
+                />
+              )}
+            </div>
           </div>
           <span style={{ fontSize: "0.75rem", color: "var(--text-muted)", fontWeight: 600 }}>
             {Math.round(progressPct)}%
@@ -130,14 +153,31 @@ export default function OnboardingProgressWidget({ hasRobots, hasBrokerAccounts,
         </div>
       </div>
 
-      {/* Step cards */}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.75rem" }}>
+      {/* Step cards — centered with equal height */}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          gap: "1rem",
+          flexWrap: "wrap",
+        }}
+      >
         {steps.map((step) => {
           const Icon = step.icon;
+          const isHovered = hoveredCard === step.id;
+          const isInteractive = !step.done && !step.locked;
+
           return (
             <div
               key={step.id}
+              onMouseEnter={() => isInteractive ? setHoveredCard(step.id) : null}
+              onMouseLeave={() => setHoveredCard(null)}
               style={{
+                flex: "1 1 260px",
+                maxWidth: "340px",
+                minHeight: "180px",
+                display: "flex",
+                flexDirection: "column",
                 background: step.done
                   ? "rgba(16,185,129,0.08)"
                   : step.locked
@@ -145,33 +185,63 @@ export default function OnboardingProgressWidget({ hasRobots, hasBrokerAccounts,
                   : "rgba(255,255,255,0.04)",
                 border: step.done
                   ? "1px solid rgba(16,185,129,0.25)"
+                  : isHovered
+                  ? "1px solid rgba(16,185,129,0.45)"
                   : step.locked
                   ? "1px dashed rgba(255,255,255,0.08)"
                   : "1px solid rgba(255,255,255,0.1)",
-                borderRadius: "12px",
-                padding: "1rem 1rem 0.85rem",
+                borderRadius: "14px",
+                padding: "1.25rem 1.25rem 1rem",
                 opacity: step.locked ? 0.5 : 1,
-                transition: "all 0.2s",
+                transition: "all 0.3s cubic-bezier(0.22, 1, 0.36, 1)",
                 pointerEvents: step.locked ? "none" : "auto",
+                transform: isHovered ? "translateY(-4px)" : "translateY(0)",
+                boxShadow: isHovered
+                  ? "0 8px 24px rgba(16,185,129,0.12), 0 0 0 1px rgba(16,185,129,0.15)"
+                  : "none",
+                position: "relative",
+                overflow: "hidden",
               }}
             >
+              {/* Hover glow overlay */}
+              {isHovered && (
+                <div
+                  aria-hidden
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    background: "radial-gradient(ellipse at 50% 0%, rgba(16,185,129,0.08), transparent 70%)",
+                    pointerEvents: "none",
+                  }}
+                />
+              )}
+
               {/* Icon + Done check */}
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "0.6rem" }}>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "0.75rem", position: "relative" }}>
+                {/* İkon — soft background */}
                 <div
                   style={{
-                    width: "36px",
-                    height: "36px",
-                    borderRadius: "10px",
+                    width: "44px",
+                    height: "44px",
+                    borderRadius: "12px",
                     background: step.done
                       ? "rgba(16,185,129,0.15)"
+                      : isHovered
+                      ? "rgba(16,185,129,0.12)"
                       : "rgba(255,255,255,0.06)",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    color: step.done ? "var(--accent-primary)" : "var(--text-muted)",
+                    color: step.done || isHovered ? "var(--accent-primary)" : "var(--text-muted)",
+                    transition: "all 0.3s ease",
+                    boxShadow: step.done
+                      ? "0 0 12px rgba(16,185,129,0.15)"
+                      : isHovered
+                      ? "0 0 12px rgba(16,185,129,0.1)"
+                      : "none",
                   }}
                 >
-                  <Icon size={18} />
+                  <Icon size={20} />
                 </div>
                 {step.done ? (
                   <span
@@ -183,7 +253,7 @@ export default function OnboardingProgressWidget({ hasRobots, hasBrokerAccounts,
                       fontWeight: 700,
                       color: "var(--accent-primary)",
                       background: "rgba(16,185,129,0.12)",
-                      padding: "0.15rem 0.45rem",
+                      padding: "0.2rem 0.5rem",
                       borderRadius: "100px",
                     }}
                   >
@@ -200,7 +270,7 @@ export default function OnboardingProgressWidget({ hasRobots, hasBrokerAccounts,
                       fontWeight: 700,
                       color: "#fbbf24",
                       background: "rgba(251,191,36,0.12)",
-                      padding: "0.15rem 0.45rem",
+                      padding: "0.2rem 0.5rem",
                       borderRadius: "100px",
                     }}
                   >
@@ -209,10 +279,10 @@ export default function OnboardingProgressWidget({ hasRobots, hasBrokerAccounts,
                 ) : null}
               </div>
 
-              <div style={{ fontWeight: 600, fontSize: "0.875rem", color: "var(--text-primary)", marginBottom: "0.3rem" }}>
+              <div style={{ fontWeight: 600, fontSize: "0.9rem", color: "var(--text-primary)", marginBottom: "0.35rem" }}>
                 {step.title}
               </div>
-              <div style={{ fontSize: "0.78rem", color: "var(--text-muted)", lineHeight: 1.4, marginBottom: "0.85rem" }}>
+              <div style={{ fontSize: "0.8rem", color: "var(--text-muted)", lineHeight: 1.5, marginBottom: "auto", paddingBottom: "0.85rem" }}>
                 {step.desc}
               </div>
 
@@ -222,18 +292,19 @@ export default function OnboardingProgressWidget({ hasRobots, hasBrokerAccounts,
                   style={{
                     display: "inline-flex",
                     alignItems: "center",
-                    gap: "0.35rem",
-                    fontSize: "0.8rem",
+                    gap: "0.4rem",
+                    fontSize: "0.82rem",
                     fontWeight: 600,
                     color: (step as any).pending ? "var(--text-muted)" : "var(--accent-primary)",
                     textDecoration: "none",
                     cursor: (step as any).pending ? "default" : "pointer",
                     pointerEvents: (step as any).pending ? "none" : "auto",
-                    transition: "opacity 0.2s",
+                    transition: "gap 0.2s ease, opacity 0.2s",
+                    marginTop: "auto",
                   }}
                 >
                   {step.cta}
-                  {!(step as any).pending && <ArrowRight size={13} />}
+                  {!(step as any).pending && <ArrowRight size={14} style={{ transition: "transform 0.2s" }} />}
                 </Link>
               )}
             </div>
