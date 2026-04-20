@@ -18,11 +18,12 @@ interface BrokerAccount {
 }
 
 interface Props {
+  userEmail?: string;
   initialAccounts: BrokerAccount[];
   ownedRobotIds: string[];  // e.g. ["darkroom", "highway", "kripttozeka_self"]
 }
 
-export default function AccountsView({ initialAccounts, ownedRobotIds }: Props) {
+export default function AccountsView({ userEmail, initialAccounts, ownedRobotIds }: Props) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedMarket, setSelectedMarket] = useState<"BIST" | "BINANCE" | null>(null);
 
@@ -122,6 +123,7 @@ export default function AccountsView({ initialAccounts, ownedRobotIds }: Props) 
         title={selectedMarket === "BIST" ? "Aracı Kurum Entegrasyonu" : "Kripto Borsa Entegrasyonu"}
       >
         <AccountIntegrationForm 
+          initialEmail={userEmail}
           initialMarket={selectedMarket || undefined}
           ownedRobotIds={ownedRobotIds}
           onSuccess={() => {

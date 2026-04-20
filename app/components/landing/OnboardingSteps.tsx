@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { useSession, signIn, signOut } from "next-auth/react";
+import { useTranslation } from "react-i18next";
 import Image from "next/image";
 
 import {
@@ -45,6 +46,7 @@ function StepConnector({ done }: { done: boolean }) {
 // ── Main component ────────────────────────────────────────────────────────────
 export default function OnboardingSteps() {
   const { data: session, status } = useSession();
+  const { t } = useTranslation("common");
   const router = useRouter();
   const isLoggedIn  = !!session;
   const isLoading   = status === "loading";
@@ -114,19 +116,18 @@ export default function OnboardingSteps() {
 
   // ─────────────────────────────────────────────────────────────────────────
   return (
-    <section className={s.section} id="robotlarimiz" aria-label="Başlangıç Adımları">
+    <section className={s.section} id="robotlarimiz" aria-label={t("onboardingSteps.title")}>
       <div className={s.inner}>
 
         {/* ── Header ────────────────────────────────────────────────────── */}
         <div className={s.header}>
           <div className={s.badge}>
             <Zap size={11} />
-            3 Adımda Başlayın
+            {t("onboardingSteps.badge")}
           </div>
-          <h2 className={s.title}>Algoritmik Ticarete Başlayın</h2>
+          <h2 className={s.title}>{t("onboardingSteps.title")}</h2>
           <p className={s.subtitle}>
-            Giriş yapın, size uygun yolu seçin ve hesaplarınızı güvenle bağlayın.
-            Tüm süreç 5 dakika içinde tamamlanır.
+            {t("onboardingSteps.subtitle")}
           </p>
         </div>
 
@@ -142,9 +143,11 @@ export default function OnboardingSteps() {
             <div className={`${s.stepNum} ${step1Done ? s.stepNumDone : s.stepNumActive}`}>
               {step1Done ? <Check size={16} /> : "1"}
             </div>
-            <div className={s.stepLabel}>ADIM 1</div>
+            <div className={s.stepLabel}>{t("onboardingSteps.step", { num: 1 })}</div>
             <div className={s.stepTitle}>
-              {step1Done ? "Giriş Yapıldı" : "Hesabınıza Giriş Yapın"}
+              {step1Done
+                ? t("onboardingSteps.step1.titleDone")
+                : t("onboardingSteps.step1.titlePending")}
             </div>
 
             {/* Body */}
@@ -168,7 +171,7 @@ export default function OnboardingSteps() {
                       </div>
                     )}
                     <div className={s.authUserDetails}>
-                      <div className={s.authName}>{session?.user?.name ?? "Kullanıcı"}</div>
+                      <div className={s.authName}>{session?.user?.name ?? t("navbar.user")}</div>
                       <div className={s.authEmail}>{session?.user?.email}</div>
                     </div>
                   </div>
@@ -177,14 +180,14 @@ export default function OnboardingSteps() {
                     className={s.btnSignOut}
                     onClick={handleSignOut}
                   >
-                    Farklı hesap kullan
+                    {t("onboardingSteps.step1.switchAccount")}
                   </button>
                 </>
               ) : (
                 /* Logged-out */
                 <>
                   <p className={s.authDesc}>
-                    Google hesabınızla tek tıkta giriş yapın.
+                    {t("onboardingSteps.step1.desc")}
                   </p>
                   <button
                     id="onboarding-google-signin"
@@ -193,7 +196,7 @@ export default function OnboardingSteps() {
                     disabled={isLoading}
                   >
                     <GoogleLogo />
-                    Google ile Giriş Yap
+                    {t("onboardingSteps.step1.googleBtn")}
                   </button>
                 </>
               )}
@@ -202,7 +205,7 @@ export default function OnboardingSteps() {
             {/* Done chip */}
             {step1Done && (
               <span className={`${s.stepStatus} ${s.stepStatusDone}`}>
-                <Check size={11} /> Tamamlandı
+                <Check size={11} /> {t("onboardingSteps.done")}
               </span>
             )}
           </motion.div>
@@ -239,8 +242,8 @@ export default function OnboardingSteps() {
             >
               {step2Done ? <Check size={16} /> : !step1Done ? <Lock size={14} /> : "2"}
             </div>
-            <div className={s.stepLabel}>ADIM 2</div>
-            <div className={s.stepTitle}>Size uygun robota abone olun</div>
+            <div className={s.stepLabel}>{t("onboardingSteps.step", { num: 2 })}</div>
+            <div className={s.stepTitle}>{t("onboardingSteps.step2.title")}</div>
 
             {/* Body */}
             <div className={s.stepBodyFlat}>
@@ -248,10 +251,10 @@ export default function OnboardingSteps() {
                 <div className={s.selectionDone} style={{ background: "rgba(251,191,36,0.1)", border: "1px solid rgba(251,191,36,0.2)", padding: "1rem", borderRadius: "12px", display: "flex", flexDirection: "column", gap: "0.5rem" }}>
                   <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", color: "#fbbf24", fontWeight: 700, fontSize: "0.85rem" }}>
                     <ShieldCheck size={18} />
-                    Ödemeniz Kontrol Ediliyor...
+                    {t("onboardingSteps.step2.pendingTitle")}
                   </div>
                   <p style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.45)", lineHeight: 1.4 }}>
-                    Stripe tarafındaki ödemeniz doğrulanıyor. Bu işlem genellikle birkaç dakika sürer.
+                    {t("onboardingSteps.step2.pendingDesc")}
                   </p>
                 </div>
               ) : step2Done ? (
@@ -259,25 +262,25 @@ export default function OnboardingSteps() {
                   <span className={s.selectionDoneChip}>
                     <Check size={12} /> {selectionLabel}
                   </span>
-                  <span>seçildi</span>
+                  <span>{t("onboardingSteps.selected")}</span>
                 </div>
               ) : !step1Done ? (
-                <p className={s.lockedHint}>Önce giriş yapmanız gerekiyor.</p>
+                <p className={s.lockedHint}>{t("onboardingSteps.step2.lockedHint")}</p>
               ) : (
                 <div className={s.selectionGrid}>
-                  {/* Option A: Profesyonelim → /robotlar (vitrine, site içinde kalır) */}
+                  {/* Option A: Profesyonelim → /robotlar */}
                   <Link
                     href="/robotlar"
                     className={s.selectionCard}
                     id="onboarding-pro-path"
-                    onClick={() => markSelectionDone("İstediğim robotu biliyorum")}
+                    onClick={() => markSelectionDone(t("onboardingSteps.step2.optionATitle"))}
                   >
                     <div className={s.selectionIcon}>
                       <LayoutDashboard size={20} />
                     </div>
-                    <div className={s.selectionCardTitle}>İstediğim robotu biliyorum</div>
+                    <div className={s.selectionCardTitle}>{t("onboardingSteps.step2.optionATitle")}</div>
                     <div className={s.selectionCardDesc}>
-                      Robot vitrinini görüp doğrudan abone olmak istiyorum.
+                      {t("onboardingSteps.step2.optionADesc")}
                     </div>
                     <ArrowRight size={16} className={s.selectionArrow} />
                   </Link>
@@ -287,14 +290,14 @@ export default function OnboardingSteps() {
                     href="/urun-sec"
                     className={s.selectionCard}
                     id="onboarding-wizard-path"
-                    onClick={() => markSelectionDone("Robotumu Bul")}
+                    onClick={() => markSelectionDone(t("onboardingSteps.step2.optionBTitle"))}
                   >
                     <div className={s.selectionIcon}>
                       <Bot size={20} />
                     </div>
-                    <div className={s.selectionCardTitle}>Robotumu Bul</div>
+                    <div className={s.selectionCardTitle}>{t("onboardingSteps.step2.optionBTitle")}</div>
                     <div className={s.selectionCardDesc}>
-                      6 adımlı sihirbazla bana uygun robotu bulayım.
+                      {t("onboardingSteps.step2.optionBDesc")}
                     </div>
                     <ArrowRight size={16} className={s.selectionArrow} />
                   </Link>
@@ -304,11 +307,11 @@ export default function OnboardingSteps() {
 
             {isPending ? (
               <span className={s.stepStatus} style={{ background: "rgba(251,191,36,0.15)", border: "1px solid rgba(251,191,36,0.3)", color: "#fbbf24" }}>
-                Kontrol Ediliyor
+                {t("onboardingSteps.step2.pendingStatus")}
               </span>
             ) : step2Done && (
               <span className={`${s.stepStatus} ${s.stepStatusDone}`}>
-                <Check size={11} /> Tamamlandı
+                <Check size={11} /> {t("onboardingSteps.done")}
               </span>
             )}
           </motion.div>
@@ -333,8 +336,8 @@ export default function OnboardingSteps() {
             <div className={`${s.stepNum} ${step3Locked ? s.stepNumLocked : s.stepNumActive}`}>
               {step3Locked ? <Lock size={14} /> : "3"}
             </div>
-            <div className={s.stepLabel}>ADIM 3</div>
-            <div className={s.stepTitle}>Hesaplarınızı Bağlayın</div>
+            <div className={s.stepLabel}>{t("onboardingSteps.step", { num: 3 })}</div>
+            <div className={s.stepTitle}>{t("onboardingSteps.step3.title")}</div>
 
             {/* Body */}
             <div className={s.stepBodyFlat}>
@@ -342,17 +345,16 @@ export default function OnboardingSteps() {
                 <div className={s.lockedChecklist}>
                   <div className={`${s.lockedCheckItem} ${step1Done ? s.lockedCheckDone : ""}`}>
                     {step1Done ? <Check size={12} /> : <Lock size={12} />}
-                    Adım 1 — Giriş Yap
+                    {t("onboardingSteps.step3.checklist1")}
                   </div>
                   <div className={`${s.lockedCheckItem} ${step2Done ? s.lockedCheckDone : ""}`}>
                     {step2Done ? <Check size={12} /> : <Lock size={12} />}
-                    Adım 2 — Yolunu Seç
+                    {t("onboardingSteps.step3.checklist2")}
                   </div>
                 </div>
               ) : (
                 <p className={s.authDesc}>
-                  Aracı kurum veya Binance bağlantınızı güvenle tamamlayın.
-                  Verileriniz AES-256 ile şifrelenir.
+                  {t("onboardingSteps.step3.desc")}
                 </p>
               )}
             </div>
@@ -367,13 +369,13 @@ export default function OnboardingSteps() {
               tabIndex={step3Locked ? -1 : 0}
             >
               <ShieldCheck size={16} />
-              Kuruluma Başla
+              {t("onboardingSteps.step3.setupBtn")}
               {!step3Locked && <ArrowRight size={15} />}
             </Link>
 
             {step3Locked && (
               <span className={`${s.stepStatus} ${s.stepStatusLocked}`}>
-                <Lock size={11} /> Kilitli
+                <Lock size={11} /> {t("onboardingSteps.locked")}
               </span>
             )}
           </motion.div>

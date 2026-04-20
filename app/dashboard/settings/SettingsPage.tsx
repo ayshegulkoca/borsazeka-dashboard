@@ -2,6 +2,7 @@
 
 import { useState, useActionState } from 'react'
 import { useFormStatus } from 'react-dom'
+import { useTranslation } from 'react-i18next'
 import {
   User,
   CreditCard,
@@ -18,6 +19,7 @@ import {
   Building,
   Globe,
   Map,
+  Lock,
 } from 'lucide-react'
 
 // X (Twitter) logo helper
@@ -61,6 +63,7 @@ type SettingsPageProps = {
 
 function SubmitButton() {
   const { pending } = useFormStatus()
+  const { t } = useTranslation('common')
 
   return (
     <button
@@ -72,12 +75,12 @@ function SubmitButton() {
       {pending ? (
         <>
           <span className={styles.spinner} />
-          Kaydediliyor...
+          {t('dashboard.settings.saving')}
         </>
       ) : (
         <>
           <Save size={16} />
-          Kaydet
+          {t('dashboard.settings.save')}
         </>
       )}
     </button>
@@ -95,33 +98,43 @@ function ProfileTab({
   state: ProfileFormState
   formAction: (payload: FormData) => void
 }) {
+  const { t } = useTranslation('common')
+
   return (
     <div className={styles.tabContent}>
       <div className={styles.card}>
-        <h3 className={styles.cardTitle}>Kişisel Bilgiler</h3>
+        <h3 className={styles.cardTitle}>{t('dashboard.settings.profileTitle')}</h3>
         <p className={styles.cardDescription}>
-          Hesap bilgilerinizi buradan güncelleyebilirsiniz.
+          {t('dashboard.settings.profileDesc')}
         </p>
 
         <form action={formAction} key={profile?.updatedAt?.toString() ?? 'initial'}>
           <div className={styles.formGrid}>
 
-            {/* Email (Read-only) — full width */}
+            {/* Email (Read-only) — session'dan gelir, kilitıdır */}
             <div className={`${styles.formGroup} ${styles.fieldFullWidth}`}>
               <label htmlFor="email" className={styles.label}>
                 <Mail size={14} />
                 Email *
+                <span className={styles.lockedBadge}>
+                  <Lock size={11} />
+                  {t('dashboard.settings.emailLocked')}
+                </span>
               </label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                className={`${styles.input} ${styles.inputDisabled}`}
-                defaultValue={profile?.email ?? ''}
-                readOnly
-              />
+              <div className={styles.inputLockWrapper}>
+                <Lock size={14} className={styles.lockIcon} />
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  className={`${styles.input} ${styles.inputLocked}`}
+                  defaultValue={profile?.email ?? ''}
+                  readOnly
+                  aria-readonly="true"
+                />
+              </div>
               <span style={{ fontSize: '0.6875rem', color: 'var(--text-muted)' }}>
-                E-posta adresi Google hesabınızdan alınır.
+                {t('dashboard.settings.emailNote')}
               </span>
             </div>
 
@@ -129,7 +142,7 @@ function ProfileTab({
             <div className={styles.formGroup}>
               <label htmlFor="firstName" className={styles.label}>
                 <User size={14} />
-                Ad *
+                {t('dashboard.settings.firstName')} *
               </label>
               <input
                 id="firstName"
@@ -137,7 +150,7 @@ function ProfileTab({
                 type="text"
                 className={styles.input}
                 defaultValue={profile?.firstName ?? ''}
-                placeholder="Adınızı girin"
+                placeholder={t('dashboard.settings.firstNamePlaceholder')}
                 required
               />
               {state.errors?.firstName && (
@@ -152,7 +165,7 @@ function ProfileTab({
             <div className={styles.formGroup}>
               <label htmlFor="lastName" className={styles.label}>
                 <User size={14} />
-                Soyad *
+                {t('dashboard.settings.lastName')} *
               </label>
               <input
                 id="lastName"
@@ -160,7 +173,7 @@ function ProfileTab({
                 type="text"
                 className={styles.input}
                 defaultValue={profile?.lastName ?? ''}
-                placeholder="Soyadınızı girin"
+                placeholder={t('dashboard.settings.lastNamePlaceholder')}
                 required
               />
               {state.errors?.lastName && (
@@ -175,7 +188,7 @@ function ProfileTab({
             <div className={styles.formGroup}>
               <label htmlFor="gender" className={styles.label}>
                 <User size={14} />
-                Cinsiyet
+                {t('dashboard.settings.gender')}
               </label>
               <select
                 id="gender"
@@ -183,11 +196,11 @@ function ProfileTab({
                 className={styles.input}
                 defaultValue={profile?.gender ?? ''}
               >
-                <option value="">Seçiniz</option>
-                <option value="Erkek">Erkek</option>
-                <option value="Kadın">Kadın</option>
-                <option value="Diğer">Diğer</option>
-                <option value="Belirtmek istemiyorum">Belirtmek istemiyorum</option>
+                <option value="">{t('dashboard.settings.genderSelect')}</option>
+                <option value="Erkek">{t('dashboard.settings.genderMale')}</option>
+                <option value="Kadın">{t('dashboard.settings.genderFemale')}</option>
+                <option value="Diğer">{t('dashboard.settings.genderOther')}</option>
+                <option value="Belirtmek istemiyorum">{t('dashboard.settings.genderPreferNot')}</option>
               </select>
               {state.errors?.gender && (
                 <span className={styles.fieldError}>
@@ -201,7 +214,7 @@ function ProfileTab({
             <div className={styles.formGroup}>
               <label htmlFor="phone" className={styles.label}>
                 <Phone size={14} />
-                Telefon *
+                {t('dashboard.settings.phone')} *
               </label>
               <input
                 id="phone"
@@ -209,7 +222,7 @@ function ProfileTab({
                 type="tel"
                 className={styles.input}
                 defaultValue={profile?.phone ?? ''}
-                placeholder="+90 5XX XXX XX XX"
+                placeholder={t('dashboard.settings.phonePlaceholder')}
               />
               {state.errors?.phone && (
                 <span className={styles.fieldError}>
@@ -223,7 +236,7 @@ function ProfileTab({
             <div className={styles.formGroup}>
               <label htmlFor="address" className={styles.label}>
                 <MapPin size={14} />
-                Adres *
+                {t('dashboard.settings.address')} *
               </label>
               <input
                 id="address"
@@ -231,7 +244,7 @@ function ProfileTab({
                 type="text"
                 className={styles.input}
                 defaultValue={profile?.address ?? ''}
-                placeholder="Sokak ve bina bilgisi"
+                placeholder={t('dashboard.settings.addressPlaceholder')}
               />
               {state.errors?.address && (
                 <span className={styles.fieldError}>
@@ -245,7 +258,7 @@ function ProfileTab({
             <div className={styles.formGroup}>
               <label htmlFor="postalCode" className={styles.label}>
                 <Map size={14} />
-                Posta Kodu
+                {t('dashboard.settings.postalCode')}
               </label>
               <input
                 id="postalCode"
@@ -267,7 +280,7 @@ function ProfileTab({
             <div className={styles.formGroup}>
               <label htmlFor="city" className={styles.label}>
                 <MapPin size={14} />
-                Şehir *
+                {t('dashboard.settings.city')} *
               </label>
               <input
                 id="city"
@@ -275,7 +288,7 @@ function ProfileTab({
                 type="text"
                 className={styles.input}
                 defaultValue={profile?.city ?? ''}
-                placeholder="İstanbul"
+                placeholder={t('dashboard.settings.cityPlaceholder')}
               />
               {state.errors?.city && (
                 <span className={styles.fieldError}>
@@ -289,7 +302,7 @@ function ProfileTab({
             <div className={styles.formGroup}>
               <label htmlFor="country" className={styles.label}>
                 <Globe size={14} />
-                Ülke *
+                {t('dashboard.settings.country')} *
               </label>
               <input
                 id="country"
@@ -297,7 +310,7 @@ function ProfileTab({
                 type="text"
                 className={styles.input}
                 defaultValue={profile?.country ?? ''}
-                placeholder="Türkiye"
+                placeholder={t('dashboard.settings.countryPlaceholder')}
               />
               {state.errors?.country && (
                 <span className={styles.fieldError}>
@@ -311,7 +324,7 @@ function ProfileTab({
             <div className={`${styles.formGroup} ${styles.fieldFullWidth}`}>
               <label htmlFor="companyName" className={styles.label}>
                 <Building size={14} />
-                Şirket Adı (varsa)
+                {t('dashboard.settings.companyName')}
               </label>
               <input
                 id="companyName"
@@ -319,7 +332,7 @@ function ProfileTab({
                 type="text"
                 className={styles.input}
                 defaultValue={profile?.companyName ?? ''}
-                placeholder="Şirket adı"
+                placeholder={t('dashboard.settings.companyNamePlaceholder')}
               />
               {state.errors?.companyName && (
                 <span className={styles.fieldError}>
@@ -333,7 +346,7 @@ function ProfileTab({
             <div className={`${styles.formGroup} ${styles.fieldFullWidth}`}>
               <label htmlFor="twitter" className={styles.label}>
                 <XIcon size={14} />
-                Twitter (varsa)
+                {t('dashboard.settings.twitter')}
               </label>
               <input
                 id="twitter"
@@ -341,7 +354,7 @@ function ProfileTab({
                 type="text"
                 className={styles.input}
                 defaultValue={profile?.twitter ?? ''}
-                placeholder="@kullaniciadi"
+                placeholder={t('dashboard.settings.twitterPlaceholder')}
               />
               {state.errors?.twitter && (
                 <span className={styles.fieldError}>
@@ -382,15 +395,18 @@ function ProfileTab({
 // ─── Billing Tab Content ─────────────────────────────────────
 
 function BillingTab({ billing }: { billing: BillingData | null }) {
+  const { t, i18n } = useTranslation('common')
+  const locale = i18n.language?.startsWith('en') ? 'en-US' : 'tr-TR'
+
   const plan = billing?.subscription.planType ?? 'FREE'
   const status = billing?.subscription.status ?? 'ACTIVE'
   const periodEnd = billing?.subscription.nextBillingDate ?? null
   const invoices = billing?.invoices ?? []
 
   const planLabels: Record<string, string> = {
-    FREE: 'Ücretsiz',
-    PRO: 'Pro',
-    PREMIUM: 'Premium Plus',
+    FREE: t('dashboard.settings.planFree'),
+    PRO: t('dashboard.settings.planPro'),
+    PREMIUM: t('dashboard.settings.planPremium'),
   }
 
   const planBadgeClass: Record<string, string> = {
@@ -400,10 +416,10 @@ function BillingTab({ billing }: { billing: BillingData | null }) {
   }
 
   const statusLabels: Record<string, string> = {
-    ACTIVE: 'Aktif',
-    CANCELLED: 'İptal',
-    PAST_DUE: 'Gecikmiş',
-    TRIALING: 'Deneme',
+    ACTIVE: t('dashboard.settings.statusActive'),
+    CANCELLED: t('dashboard.settings.statusCancelled'),
+    PAST_DUE: t('dashboard.settings.statusPastDue'),
+    TRIALING: t('dashboard.settings.statusTrialing'),
   }
 
   const statusClass: Record<string, string> = {
@@ -414,9 +430,9 @@ function BillingTab({ billing }: { billing: BillingData | null }) {
   }
 
   function formatRenewalDate(isoDate: string | null): string {
-    if (!isoDate) return 'Yenileme tarihi yok'
+    if (!isoDate) return t('dashboard.settings.renewalNoDate')
     const date = new Date(isoDate)
-    return date.toLocaleDateString('tr-TR', {
+    return date.toLocaleDateString(locale, {
       day: 'numeric',
       month: 'long',
       year: 'numeric',
@@ -428,22 +444,22 @@ function BillingTab({ billing }: { billing: BillingData | null }) {
     const now = new Date()
     const end = new Date(isoDate)
     const diff = Math.ceil((end.getTime() - now.getTime()) / (1000 * 60 * 60 * 24))
-    if (diff < 0) return 'Süre dolmuş'
-    if (diff === 0) return 'Bugün yenileniyor'
-    if (diff === 1) return '1 gün kaldı'
-    return `${diff} gün kaldı`
+    if (diff < 0) return t('dashboard.settings.renewalExpired')
+    if (diff === 0) return t('dashboard.settings.renewalToday')
+    if (diff === 1) return t('dashboard.settings.renewalDay')
+    return t('dashboard.settings.renewalDays', { days: diff })
   }
 
   function formatAmount(amount: number, currency: string): string {
     const value = amount / 100
-    return new Intl.NumberFormat('tr-TR', {
+    return new Intl.NumberFormat(locale, {
       style: 'currency',
       currency: currency,
     }).format(value)
   }
 
   function formatDate(isoDate: string): string {
-    return new Date(isoDate).toLocaleDateString('tr-TR', {
+    return new Date(isoDate).toLocaleDateString(locale, {
       day: 'numeric',
       month: 'short',
       year: 'numeric',
@@ -457,93 +473,77 @@ function BillingTab({ billing }: { billing: BillingData | null }) {
   }
 
   const invoiceStatusLabel: Record<string, string> = {
-    PAID: 'Ödendi',
-    PENDING: 'Bekliyor',
-    FAILED: 'Başarısız',
+    PAID: t('dashboard.settings.invoicePaid'),
+    PENDING: t('dashboard.settings.invoicePending'),
+    FAILED: t('dashboard.settings.invoiceFailed'),
   }
 
   return (
     <div className={styles.tabContent}>
-      {/* Plan & Renewal Cards */}
-      <div className={styles.billingGrid}>
-        {/* Current Plan */}
-        <div className={`${styles.billingCard} ${styles.planCard}`}>
-          <div className={styles.billingCardLabel}>Mevcut Plan</div>
-          <div className={styles.billingCardValue}>
-            <Crown size={22} color="var(--accent-primary)" />
-            {planLabels[plan] ?? plan}
-            <span className={planBadgeClass[plan] ?? styles.badgeFree}>
-              {plan}
-            </span>
-          </div>
-          <div style={{ marginTop: '0.5rem' }}>
-            <span className={statusClass[status] ?? styles.statusActive}>
-              {statusLabels[status] ?? status}
-            </span>
-          </div>
-        </div>
-
-        {/* Next Renewal */}
-        <div className={`${styles.billingCard} ${styles.renewalCard}`}>
-          <div className={styles.billingCardLabel}>Sonraki Yenileme</div>
-          <div className={styles.billingCardValue}>
-            <CalendarClock size={22} color="#60a5fa" />
-            <div>
-              <div className={styles.renewalDate}>
-                {formatRenewalDate(periodEnd)}
-              </div>
-              {periodEnd && (
-                <div className={styles.renewalSubtext}>
-                  {getDaysUntilRenewal(periodEnd)}
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Manage Subscription */}
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'flex-end',
-          marginBottom: '1.5rem',
-        }}
-      >
-        <button className={styles.manageButton} id="manage-subscription-btn">
-          <ExternalLink size={14} />
-          Aboneliği Yönet
-        </button>
-      </div>
-
       {/* Payment History */}
       <div className={styles.card}>
-        <h3 className={styles.cardTitle}>
-          <Receipt
-            size={18}
-            style={{ display: 'inline', marginRight: '0.5rem', verticalAlign: 'text-bottom' }}
-          />
-          Ödeme Geçmişi
-        </h3>
-        <p className={styles.cardDescription}>
-          Son 10 ödeme işleminiz aşağıda listelenmiştir.
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '1rem', marginBottom: '1.5rem' }}>
+          <div>
+            <h3 className={styles.cardTitle}>
+              <Receipt
+                size={18}
+                style={{ display: 'inline', marginRight: '0.5rem', verticalAlign: 'text-bottom' }}
+              />
+              {t('dashboard.settings.billingHistory')}
+            </h3>
+            <p className={styles.cardDescription} style={{ marginBottom: 0 }}>
+              {t('dashboard.settings.billingHistoryDesc')}
+            </p>
+          </div>
+          <a
+            href="https://billing.stripe.com/p/login/eVqaEXaqXdwD55Q0pf8IU00"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.manageButton}
+            id="manage-subscription-btn"
+          >
+            <ExternalLink size={14} />
+            {t('dashboard.settings.billingManage')}
+          </a>
+        </div>
+        <p
+          style={{
+            fontSize: '0.75rem',
+            color: 'var(--text-muted)',
+            marginBottom: '1rem',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.4rem',
+          }}
+        >
+          <ExternalLink size={12} style={{ flexShrink: 0 }} />
+          {t('dashboard.settings.billingStripeNote')}{' '}
+          <a
+            href="https://billing.stripe.com/p/login/eVqaEXaqXdwD55Q0pf8IU00"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: 'var(--accent-primary)', textDecoration: 'underline' }}
+          >
+            Stripe
+          </a>
+          .
         </p>
 
         {invoices.length > 0 ? (
           <table className={styles.invoiceTable}>
             <thead>
               <tr>
-                <th>Tarih</th>
-                <th>Açıklama</th>
-                <th>Tutar</th>
-                <th>Durum</th>
+                <th>{t('dashboard.settings.invoiceDate')}</th>
+                <th>{t('dashboard.settings.invoiceDesc')}</th>
+                <th>{t('dashboard.settings.invoiceAmount')}</th>
+                <th>{t('dashboard.settings.invoiceStatus')}</th>
               </tr>
             </thead>
             <tbody>
               {invoices.map((inv) => (
                 <tr key={inv.id}>
                   <td>{formatDate(inv.createdAt)}</td>
-                  <td>{inv.description ?? 'Abonelik ödemesi'}</td>
+                  <td>{inv.description ?? t('dashboard.settings.invoiceDefaultDesc')}</td>
                   <td className={styles.invoiceAmount}>
                     {formatAmount(inv.amount, inv.currency)}
                   </td>
@@ -565,7 +565,7 @@ function BillingTab({ billing }: { billing: BillingData | null }) {
             <div className={styles.emptyIcon}>
               <Receipt size={32} />
             </div>
-            Henüz bir ödeme işlemi bulunmuyor.
+            {t('dashboard.settings.billingEmpty')}
           </div>
         )}
       </div>
@@ -581,6 +581,7 @@ const initialState: ProfileFormState = {
 }
 
 export default function SettingsPage({ profile, billing }: SettingsPageProps) {
+  const { t } = useTranslation('common')
   const [activeTab, setActiveTab] = useState<'profile' | 'billing'>('profile')
   const [state, formAction] = useActionState(updateProfile, initialState)
 
@@ -588,9 +589,9 @@ export default function SettingsPage({ profile, billing }: SettingsPageProps) {
     <div className={styles.container}>
       {/* Page Header */}
       <div className={styles.pageHeader}>
-        <h1 className={styles.pageTitle}>Ayarlar</h1>
+        <h1 className={styles.pageTitle}>{t('dashboard.settings.title')}</h1>
         <p className={styles.pageSubtitle}>
-          Hesap bilgilerinizi ve aboneliğinizi yönetin.
+          {t('dashboard.settings.subtitle')}
         </p>
       </div>
 
@@ -602,7 +603,7 @@ export default function SettingsPage({ profile, billing }: SettingsPageProps) {
           id="tab-profile"
         >
           <User size={16} />
-          Profil
+          {t('dashboard.settings.tabProfile')}
         </button>
         <button
           className={`${styles.tabButton} ${activeTab === 'billing' ? styles.tabButtonActive : ''}`}
@@ -610,7 +611,7 @@ export default function SettingsPage({ profile, billing }: SettingsPageProps) {
           id="tab-billing"
         >
           <CreditCard size={16} />
-          Abonelik &amp; Fatura
+          {t('dashboard.settings.tabBilling')}
         </button>
       </div>
 

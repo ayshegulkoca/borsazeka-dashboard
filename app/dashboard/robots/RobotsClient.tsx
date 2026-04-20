@@ -14,6 +14,7 @@ import {
   Bot
 } from "lucide-react";
 import Link from "next/link";
+import { useTranslation } from "react-i18next";
 import { removeRobot } from "@/app/actions/robots";
 import type { RobotDef, RobotId } from "@/lib/robots";
 import styles from "./page.module.css";
@@ -30,6 +31,7 @@ const ICON_MAP = {
 } as const;
 
 export default function RobotsClient({ ownedRobots, hasOwnedRobots }: Props) {
+  const { t } = useTranslation("common");
   const [robots, setRobots] = useState<RobotDef[]>(ownedRobots);
   const [selectedRobot, setSelectedRobot] = useState<RobotDef | null>(null);
   const [loadingId, setLoadingId] = useState<string | null>(null);
@@ -54,12 +56,12 @@ export default function RobotsClient({ ownedRobots, hasOwnedRobots }: Props) {
           <div className={styles.emptyIconWrapper}>
             <Bot size={48} />
           </div>
-          <h2 className={styles.emptyTitle}>Henüz aktif bir robotunuz bulunmuyor</h2>
+          <h2 className={styles.emptyTitle}>{t("dashboard.robots.emptyTitle")}</h2>
           <p className={styles.emptyDesc}>
-            Algoritmik ticarete başlamak için borsa robotlarımıza göz atabilir ve size en uygun stratejiyi seçebilirsiniz.
+            {t("dashboard.robots.emptyDesc")}
           </p>
           <Link href="/#robotlarimiz" className={styles.emptyCta}>
-            Robot Vitrinine Göz At <ArrowRight size={18} />
+            {t("dashboard.robots.emptyCta")} <ArrowRight size={18} />
           </Link>
         </div>
       </div>
@@ -72,11 +74,11 @@ export default function RobotsClient({ ownedRobots, hasOwnedRobots }: Props) {
       <div className={styles.featuredCard}>
         <div className={styles.badge}>
           <span className={styles.badgeDot}></span>
-          Aktif Robotlarım
+          {t("dashboard.robots.bannerBadge")}
         </div>
-        <h2 className={styles.featuredTitle}>Robotlarınızı Yönetin</h2>
+        <h2 className={styles.featuredTitle}>{t("dashboard.robots.bannerTitle")}</h2>
         <p className={styles.featuredSubtitle}>
-          Şu an aktif olan robotlarınızın durumunu izleyebilir veya yeni ayarlar yapabilirsiniz.
+          {t("dashboard.robots.bannerSubtitle")}
         </p>
         <div className={styles.featuredIcon}>
           <BrainCircuit size={140} color="var(--accent-primary)" />
@@ -127,7 +129,7 @@ export default function RobotsClient({ ownedRobots, hasOwnedRobots }: Props) {
                     gap: "0.3rem",
                   }}
                 >
-                  <CheckCircle2 size={12} /> Aktif
+                  <CheckCircle2 size={12} /> {t("dashboard.robots.active")}
                 </span>
               </div>
 
@@ -138,11 +140,11 @@ export default function RobotsClient({ ownedRobots, hasOwnedRobots }: Props) {
 
               <div style={{ display: "flex", gap: "1rem", marginBottom: "1.25rem" }}>
                 <div>
-                  <div style={{ fontSize: "0.7rem", color: "var(--text-muted)" }}>Aylık Getiri</div>
+                  <div style={{ fontSize: "0.7rem", color: "var(--text-muted)" }}>{t("dashboard.robots.monthlyReturn")}</div>
                   <div style={{ fontWeight: 700, color: robot.color, fontSize: "0.95rem" }}>{robot.monthlyReturn}</div>
                 </div>
                 <div>
-                  <div style={{ fontSize: "0.7rem", color: "var(--text-muted)" }}>Risk Seviyesi</div>
+                  <div style={{ fontSize: "0.7rem", color: "var(--text-muted)" }}>{t("dashboard.robots.riskLevel")}</div>
                   <div style={{ fontWeight: 700, fontSize: "0.95rem" }}>{robot.riskLevel}</div>
                 </div>
               </div>
@@ -169,7 +171,9 @@ export default function RobotsClient({ ownedRobots, hasOwnedRobots }: Props) {
                   }}
                 >
                   <Trash2 size={15} />
-                  {isLoading ? "Devre Dışı..." : "Devre Dışı Bırak"}
+                  {isLoading
+                    ? t("dashboard.robots.disabling")
+                    : t("dashboard.robots.disable")}
                 </button>
                 <button
                   onClick={() => setSelectedRobot(robot)}
@@ -194,7 +198,7 @@ export default function RobotsClient({ ownedRobots, hasOwnedRobots }: Props) {
        <div style={{ marginTop: "2rem", textAlign: "center" }}>
         <Link href="/#robotlarimiz">
           <button className={styles.emptyCta} style={{ display: "inline-flex", width: "auto", margin: "0" }}>
-            <Plus size={18} /> Yeni Robot Keşfet
+            <Plus size={18} /> {t("dashboard.robots.addMore")}
           </button>
         </Link>
       </div>

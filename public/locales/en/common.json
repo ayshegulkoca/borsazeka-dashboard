@@ -1,4 +1,38 @@
 {
+  "onboardingSteps": {
+    "badge": "3 Steps to Start",
+    "title": "Start Algorithmic Trading",
+    "subtitle": "Sign in, choose your path, and securely connect your accounts. The entire process takes 5 minutes.",
+    "step": "STEP {{num}}",
+    "done": "Completed",
+    "locked": "Locked",
+    "step1": {
+      "titleDone": "Signed In",
+      "titlePending": "Sign In to Your Account",
+      "desc": "Sign in with a single click using your Google account.",
+      "googleBtn": "Sign in with Google",
+      "switchAccount": "Use a different account"
+    },
+    "selected": "selected",
+    "step2": {
+      "title": "Subscribe to your robot",
+      "pendingTitle": "Payment Under Review...",
+      "pendingDesc": "Your Stripe payment is being verified. This usually takes a few minutes.",
+      "pendingStatus": "Reviewing",
+      "lockedHint": "You need to sign in first.",
+      "optionATitle": "I know which robot I want",
+      "optionADesc": "I want to browse the catalog and subscribe directly.",
+      "optionBTitle": "Find My Robot",
+      "optionBDesc": "Let the 6-step wizard find the right robot for me."
+    },
+    "step3": {
+      "title": "Connect Your Accounts",
+      "desc": "Securely complete your broker or Binance connection. Your data is AES-256 encrypted.",
+      "checklist1": "Step 1 — Sign In",
+      "checklist2": "Step 2 — Choose Path",
+      "setupBtn": "Start Setup"
+    }
+  },
   "navbar": {
     "ourRobots": "Our Robots",
     "robots": "Robots",
@@ -8,7 +42,10 @@
     "signIn": "Sign In",
     "getStarted": "Find Your Robot",
     "setup": "Setup",
-    "menuLabel": "Open menu"
+    "menuLabel": "Open menu",
+    "signOut": "Sign Out",
+    "account": "Account",
+    "user": "User"
   },
   "hero": {
     "badge": "AI-powered stock trading robots since 2015",
@@ -63,7 +100,10 @@
     "findProduct": "Find Your Robot",
     "howItWorks": "How It Works",
     "contact": "Contact",
-    "copyright": "© 2025 BorsaZeka. All rights reserved."
+    "copyright": "© 2025 BorsaZeka. All rights reserved.",
+    "ctaLabel": "Determine Your Strategy",
+    "ctaTitle": "Haven't Determined Your Special Strategy Yet?",
+    "ctaBtn": "Start Robot Wizard"
   },
   "wizard": {
     "pageTitle": "Find Your Robot — BorsaZeka",
@@ -574,6 +614,143 @@
           "content": "BorsaZeka makes no representations or warranties regarding profitability or uptime guarantees. These Terms supersede all prior agreements."
         }
       ]
+    }
+  },
+  "dashboard": {
+    "langToggle": {
+      "label": "Change Language"
+    },
+    "nav": {
+      "home": "Home",
+      "robots": "Robot Catalog",
+      "accounts": "My Accounts",
+      "servers": "Servers",
+      "settings": "Settings",
+      "backToSite": "Back to Site",
+      "billing": "My Invoices"
+    },
+    "header": {
+      "notifications": "Notifications",
+      "settings": "Settings"
+    },
+    "home": {
+      "welcome": "Welcome,",
+      "balanceCard": "Estimated Total Balance",
+      "hideShowBalance": "Hide/Show Balance",
+      "dailyPnl": "Daily P&L",
+      "activeRobots": "Active Robots",
+      "pendingOrders": "Pending Orders",
+      "myActiveRobots": "My Active Robots",
+      "quickActions": "Quick Actions",
+      "addRobot": "Add / Explore Robots",
+      "addNewRobot": "Add New Robot",
+      "marketClosed": "CLOSED",
+      "noRobotsTitle": "You need to set up a robot to view analytics.",
+      "noRobotsDesc": "Follow the setup wizard above or browse the robot catalog directly."
+    },
+    "onboarding": {
+      "widgetTitle": "Complete Setup",
+      "stepsCompleted": "{{completed}} of {{total}} steps completed",
+      "step1Title": "Subscribe to a robot",
+      "step1Desc": "Browse the robot catalog and subscribe to the one that fits your strategy.",
+      "step1DescPending": "Your Stripe payment is being verified. This usually takes a few minutes.",
+      "step1Cta": "Subscribe to a Robot",
+      "step1CtaPending": "Payment Under Review",
+      "step2Title": "Connect Your Account",
+      "step2Desc": "Securely enter your broker or Binance API credentials.",
+      "step2Cta": "Start Setup",
+      "done": "Done",
+      "checking": "Reviewing"
+    },
+    "robots": {
+      "emptyTitle": "No active robots found",
+      "emptyDesc": "Browse our trading robots and choose the strategy that suits you best to get started.",
+      "emptyCta": "Browse Robot Catalog",
+      "bannerBadge": "My Active Robots",
+      "bannerTitle": "Manage Your Robots",
+      "bannerSubtitle": "Monitor the status of your active robots or configure new settings.",
+      "monthlyReturn": "Monthly Return",
+      "riskLevel": "Risk Level",
+      "active": "Active",
+      "disable": "Deactivate",
+      "disabling": "Deactivating...",
+      "addMore": "Explore More Robots"
+    },
+    "servers": {
+      "title": "Servers",
+      "subtitle": "Choose the server package that fits your needs to run your robots, or manage your active servers.",
+      "myServersTitle": "My Active Servers",
+      "packagesTitle": "Server Packages",
+      "status": "Status",
+      "load": "Load",
+      "online": "Online",
+      "offline": "Offline",
+      "perMonth": "/mo",
+      "buyBtn": "Purchase",
+      "packagesNote": "Server packages are billed monthly. Cancellations require at least 3 days notice. All prices are in Euro (€)."
+    },
+    "settings": {
+      "title": "Settings",
+      "subtitle": "Manage your account information and subscription.",
+      "tabProfile": "Profile",
+      "tabBilling": "Subscription & Billing",
+      "profileTitle": "Personal Information",
+      "profileDesc": "Update your account details here.",
+      "emailNote": "Email address is sourced from your Google account.",
+      "emailLocked": "Cannot be changed",
+      "save": "Save",
+      "saving": "Saving...",
+      "firstName": "First Name",
+      "firstNamePlaceholder": "Enter your first name",
+      "lastName": "Last Name",
+      "lastNamePlaceholder": "Enter your last name",
+      "gender": "Gender",
+      "genderSelect": "Select",
+      "genderMale": "Male",
+      "genderFemale": "Female",
+      "genderOther": "Other",
+      "genderPreferNot": "Prefer not to say",
+      "phone": "Phone",
+      "phonePlaceholder": "+1 555 000 0000",
+      "address": "Address",
+      "addressPlaceholder": "Street and building",
+      "postalCode": "Postal Code",
+      "city": "City",
+      "cityPlaceholder": "New York",
+      "country": "Country",
+      "countryPlaceholder": "United States",
+      "companyName": "Company Name (optional)",
+      "companyNamePlaceholder": "Company name",
+      "twitter": "Twitter (optional)",
+      "twitterPlaceholder": "@username",
+      "billingCurrentPlan": "Current Plan",
+      "billingNextRenewal": "Next Renewal",
+      "billingManage": "Manage Subscription",
+      "billingHistory": "Payment History",
+      "billingHistoryDesc": "Your last 10 payment transactions are listed below.",
+      "billingStripeNote": "You can access your detailed billing history and payment methods via the Stripe portal.",
+      "billingEmpty": "No payment transactions yet.",
+      "invoiceDate": "Date",
+      "invoiceDesc": "Description",
+      "invoiceAmount": "Amount",
+      "invoiceStatus": "Status",
+      "invoiceDefaultDesc": "Subscription payment",
+      "renewalNoDate": "No renewal date",
+      "renewalExpired": "Expired",
+      "renewalToday": "Renews today",
+      "renewalDays": "{{days}} days remaining",
+      "renewalDay": "1 day remaining",
+      "planFree": "Free",
+      "planPro": "Pro",
+      "planPremium": "Premium Plus",
+      "statusActive": "Active",
+      "statusCancelled": "Cancelled",
+      "statusPastDue": "Past Due",
+      "statusTrialing": "Trial",
+      "invoicePaid": "Paid",
+      "invoicePending": "Pending",
+      "invoiceFailed": "Failed",
+      "signOut": "Sign out"
     }
   }
 }

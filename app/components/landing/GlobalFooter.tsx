@@ -16,13 +16,13 @@ export default function GlobalFooter() {
         {/* CTA Banner */}
         <div className={s.ctaBanner}>
           <div className={s.ctaBannerText}>
-            <span className={s.ctaBannerLabel}>Stratejinizi Belirleyin</span>
+            <span className={s.ctaBannerLabel}>{t("footer.ctaLabel")}</span>
             <span className={s.ctaBannerTitle}>
-              Size Özel Stratejiyi Henüz Belirlemediniz mi?
+              {t("footer.ctaTitle")}
             </span>
           </div>
           <Link href="/urun-sec" className={s.ctaBannerBtn} id="footer-wizard-cta">
-            Robot Sihirbazını Başlat <ArrowRight size={16} />
+            {t("footer.ctaBtn")} <ArrowRight size={16} />
           </Link>
         </div>
 

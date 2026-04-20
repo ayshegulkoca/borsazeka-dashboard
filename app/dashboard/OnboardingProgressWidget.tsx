@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { Bot, Link2, Check, ArrowRight, Sparkles } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   hasRobots: boolean;
@@ -9,37 +10,40 @@ interface Props {
   subscriptionStatus?: string;
 }
 
-
 // Completely hidden if fully set up
 export default function OnboardingProgressWidget({ hasRobots, hasBrokerAccounts, subscriptionStatus }: Props) {
+  const { t } = useTranslation("common");
 
   if (hasRobots && hasBrokerAccounts) return null;
+
+  const isPending = subscriptionStatus === "PENDING";
 
   const steps = [
     {
       id: "robot",
       num: "1",
-      title: "Size uygun robota abone olun",
-      desc: subscriptionStatus === "PENDING" 
-        ? "Stripe tarafındaki ödemeniz doğrulanıyor. Bu işlem genellikle birkaç dakika sürer."
-        : "Robot vitrinine göz atın, stratejinize uygun robota abone olun.",
+      title: t("dashboard.onboarding.step1Title"),
+      desc: isPending
+        ? t("dashboard.onboarding.step1DescPending")
+        : t("dashboard.onboarding.step1Desc"),
       done: hasRobots,
-      pending: subscriptionStatus === "PENDING",
+      pending: isPending,
       locked: false,
-      href: "/#robotlarimiz",
-      cta: subscriptionStatus === "PENDING" ? "Ödeme Kontrol Ediliyor" : "Robota Abone Ol",
+      href: "/urun-sec",
+      cta: isPending
+        ? t("dashboard.onboarding.step1CtaPending")
+        : t("dashboard.onboarding.step1Cta"),
       icon: Bot,
     },
-
     {
       id: "account",
       num: "2",
-      title: "Hesabınızı Bağlayın",
-      desc: "Aracı kurum veya Binance API bilgilerinizi güvenle girin.",
+      title: t("dashboard.onboarding.step2Title"),
+      desc: t("dashboard.onboarding.step2Desc"),
       done: hasBrokerAccounts,
       locked: !hasRobots,
       href: "/kurulum",
-      cta: "Kuruluma Başla",
+      cta: t("dashboard.onboarding.step2Cta"),
       icon: Link2,
     },
   ];
@@ -91,10 +95,10 @@ export default function OnboardingProgressWidget({ hasRobots, hasBrokerAccounts,
           </div>
           <div>
             <div style={{ fontWeight: 700, fontSize: "0.975rem", color: "var(--text-primary)" }}>
-              Kurulumu Tamamla
+              {t("dashboard.onboarding.widgetTitle")}
             </div>
             <div style={{ fontSize: "0.78rem", color: "var(--text-muted)", marginTop: "0.1rem" }}>
-              {completedCount} / {steps.length} adım tamamlandı
+              {t("dashboard.onboarding.stepsCompleted", { completed: completedCount, total: steps.length })}
             </div>
           </div>
         </div>
@@ -184,7 +188,7 @@ export default function OnboardingProgressWidget({ hasRobots, hasBrokerAccounts,
                     }}
                   >
                     <Check size={10} />
-                    Tamamlandı
+                    {t("dashboard.onboarding.done")}
                   </span>
                 ) : (step as any).pending ? (
                   <span
@@ -200,7 +204,7 @@ export default function OnboardingProgressWidget({ hasRobots, hasBrokerAccounts,
                       borderRadius: "100px",
                     }}
                   >
-                    Kontrol Ediliyor
+                    {t("dashboard.onboarding.checking")}
                   </span>
                 ) : null}
               </div>

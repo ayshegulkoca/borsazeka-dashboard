@@ -5,6 +5,7 @@ import {
   Eye, EyeOff, Bot, ClipboardList,
   TrendingUp, TrendingDown, ArrowRight, Plus, Activity,
 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import styles from "./page.module.css";
 import Link from "next/link";
 import type { RobotDef } from "@/lib/robots";
@@ -36,14 +37,14 @@ export default function DashboardHomeClient({
   hasBrokerAccounts,
   subscriptionStatus,
 }: Props) {
-
+  const { t } = useTranslation("common");
   const [showBalance, setShowBalance] = useState(true);
 
   return (
     <div className={styles.container}>
       {/* Hoşgeldin */}
       <div>
-        <p className={styles.welcomeText}>Hoşgeldin,</p>
+        <p className={styles.welcomeText}>{t("dashboard.home.welcome")}</p>
         <h1 className={styles.title}>{displayName}</h1>
       </div>
 
@@ -61,11 +62,11 @@ export default function DashboardHomeClient({
           {/* Ana Bakiye Kartı */}
           <div className={styles.balanceCard}>
             <div className={styles.balanceHeader}>
-              Toplam Tahmini Bakiye
+              {t("dashboard.home.balanceCard")}
               <button
                 onClick={() => setShowBalance(!showBalance)}
                 className={styles.eyeIcon}
-                aria-label="Bakiyeyi Gizle/Göster"
+                aria-label={t("dashboard.home.hideShowBalance")}
               >
                 {showBalance ? <Eye size={16} /> : <EyeOff size={16} />}
               </button>
@@ -78,7 +79,7 @@ export default function DashboardHomeClient({
                 <TrendingUp size={18} />
               </div>
               <div>
-                <span className={styles.pnlLabel}>Günlük Kar/Zarar</span>
+                <span className={styles.pnlLabel}>{t("dashboard.home.dailyPnl")}</span>
                 <span className={styles.pnlValue}>+₺1.250 (%0.85)</span>
               </div>
             </div>
@@ -91,21 +92,21 @@ export default function DashboardHomeClient({
                 <Bot size={20} />
               </div>
               <span className={styles.statValue}>{activeRobotCount}</span>
-              <span className={styles.statLabel}>Aktif Robot</span>
+              <span className={styles.statLabel}>{t("dashboard.home.activeRobots")}</span>
             </div>
             <div className={styles.statCard}>
               <div className={`${styles.statIconWrapper} ${styles.orderIcon}`}>
                 <ClipboardList size={20} />
               </div>
               <span className={styles.statValue}>2</span>
-              <span className={styles.statLabel}>Bekleyen Emir</span>
+              <span className={styles.statLabel}>{t("dashboard.home.pendingOrders")}</span>
             </div>
           </div>
 
           {/* Aktif Robotlarım */}
           {robots.length > 0 && (
             <div>
-              <h3 className={styles.actionsHeader}>Aktif Robotlarım</h3>
+              <h3 className={styles.actionsHeader}>{t("dashboard.home.myActiveRobots")}</h3>
               <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
                 {robots.map((r) => (
                   <div key={r.robotId} className={styles.tickerCard}>
@@ -155,16 +156,18 @@ export default function DashboardHomeClient({
                 </div>
               </div>
             </div>
-            <div className={styles.tickerBadge}>KAPALI</div>
+            <div className={styles.tickerBadge}>{t("dashboard.home.marketClosed")}</div>
           </div>
 
           {/* Hızlı İşlemler */}
-          <h3 className={styles.actionsHeader}>Hızlı İşlemler</h3>
+          <h3 className={styles.actionsHeader}>{t("dashboard.home.quickActions")}</h3>
           <Link href="/dashboard/robots">
             <button className={styles.actionButton}>
               <div className={styles.actionIcon}>
                 <Plus size={20} />
-                {robots.length === 0 ? "Robot Ekle / Keşfet" : "Yeni Robot Ekle"}
+                {robots.length === 0
+                  ? t("dashboard.home.addRobot")
+                  : t("dashboard.home.addNewRobot")}
               </div>
               <ArrowRight size={20} />
             </button>
@@ -195,10 +198,10 @@ export default function DashboardHomeClient({
             <Bot size={28} />
           </div>
           <h3 style={{ color: "var(--text-primary)", fontWeight: 600, marginBottom: "0.5rem" }}>
-            Analizleri görmek için bir robot kurulumu yapmalısınız.
+            {t("dashboard.home.noRobotsTitle")}
           </h3>
           <p style={{ fontSize: "0.9rem", maxWidth: "400px", margin: "0 auto" }}>
-            Kurulumu tamamlamak için yukarıdaki sihirbazı takip edebilir veya doğrudan robot vitrinine göz atabilirsiniz.
+            {t("dashboard.home.noRobotsDesc")}
           </p>
         </div>
       )}

@@ -34,10 +34,7 @@ export default {
         }
         return true;
       } else {
-        // Mevcut kullanıcılar onboarding'e girmeye çalışırsa dashboard'a atalım (opsiyonel ama plan gereği)
-        if (isOnOnboarding) {
-          return Response.redirect(new URL("/dashboard", nextUrl));
-        }
+        // Mevcut kullanıcılar /urun-sec (Wizard) dahil tüm sayfalara serbestçe erişebilir
         return true;
       }
     },

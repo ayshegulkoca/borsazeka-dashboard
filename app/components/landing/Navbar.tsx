@@ -12,6 +12,7 @@ import styles from "./landing.module.css";
 import MagneticButton from "./MagneticButton";
 
 function AvatarDropdown() {
+  const { t } = useTranslation("common");
   const { data: session } = useSession();
 
   const [open, setOpen] = useState(false);
@@ -54,7 +55,7 @@ function AvatarDropdown() {
           )}
         </div>
         <span className={styles.avatarName}>
-          {session?.user?.name?.split(" ")[0] ?? "Hesap"}
+          {session?.user?.name?.split(" ")[0] ?? t("navbar.account")}
         </span>
         <ChevronDown
           size={14}
@@ -83,7 +84,7 @@ function AvatarDropdown() {
               )}
             </div>
             <div>
-              <div className={styles.dropdownName}>{session?.user?.name ?? "Kullanıcı"}</div>
+              <div className={styles.dropdownName}>{session?.user?.name ?? t("navbar.user")}</div>
               <div className={styles.dropdownEmail}>{session?.user?.email}</div>
             </div>
           </div>
@@ -111,7 +112,7 @@ function AvatarDropdown() {
             }}
           >
             <LogOut size={15} />
-            Çıkış Yap
+            {t("navbar.signOut")}
           </button>
         </div>
       )}
@@ -195,7 +196,14 @@ export default function Navbar() {
 
           {/* Auth: Avatar Dropdown if logged in, else Sign In button */}
           {isAuthenticated ? (
-            <AvatarDropdown />
+            <>
+              <MagneticButton strength={0.3}>
+                <Link href="/urun-sec" className={`${styles.btnSolid} ${styles.neonBorder}`} id="navbar-urun-sec-btn">
+                  {t("navbar.getStarted")}
+                </Link>
+              </MagneticButton>
+              <AvatarDropdown />
+            </>
           ) : (
             <>
               <MagneticButton strength={0.25}>
@@ -268,13 +276,21 @@ export default function Navbar() {
         <div className={styles.mobileActions}>
           {isAuthenticated ? (
             <>
-
+              <Link
+                href="/urun-sec"
+                className={styles.btnSolid}
+                style={{ flex: 1, textAlign: "center" }}
+                onClick={() => setMobileOpen(false)}
+                id="mobile-urun-sec-btn"
+              >
+                {t("navbar.getStarted")}
+              </Link>
               <button
                 className={styles.btnGhost}
                 style={{ flex: 1, textAlign: "center", color: "#f87171" }}
                 onClick={() => { setMobileOpen(false); signOut({ callbackUrl: "/" }); }}
               >
-                Çıkış Yap
+                {t("navbar.signOut")}
               </button>
             </>
           ) : (

@@ -170,6 +170,54 @@
   background: rgba(255, 255, 255, 0.02);
 }
 
+/* ─── Locked Email Field ──────────────────────────────── */
+
+.inputLockWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.lockIcon {
+  position: absolute;
+  left: 0.85rem;
+  color: var(--accent-primary);
+  opacity: 0.8;
+  pointer-events: none;
+  flex-shrink: 0;
+  z-index: 1;
+}
+
+.inputLocked {
+  padding-left: 2.25rem !important;
+  background: rgba(0, 0, 0, 0.2) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  color: var(--text-muted);
+  cursor: not-allowed;
+  user-select: none;
+  opacity: 1; /* disabled değilse opacity 1 kalsın ama renkler gri olsun */
+}
+
+.inputLocked:focus {
+  border-color: rgba(255, 255, 255, 0.06);
+  box-shadow: none;
+}
+
+.lockedBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 9999px;
+  padding: 0.125rem 0.5rem;
+  margin-left: 0.5rem;
+  letter-spacing: 0.01em;
+}
+
 .textarea {
   background: var(--bg-input);
   border: 1px solid var(--border-subtle);
@@ -462,9 +510,10 @@
   cursor: pointer;
   transition: all 0.2s ease;
   font-family: inherit;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 0.5rem;
+  text-decoration: none;
 }
 
 .manageButton:hover {

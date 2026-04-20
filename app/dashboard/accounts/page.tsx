@@ -15,5 +15,11 @@ export default async function AccountsPage() {
   const apiRobots = await apiGet<any[]>("/user/robots");
   const ownedRobotIds = (apiRobots ?? []).map(r => r.robotId);
 
-  return <AccountsView initialAccounts={accounts} ownedRobotIds={ownedRobotIds} />;
+  return (
+    <AccountsView 
+      userEmail={session.user.email ?? undefined}
+      initialAccounts={accounts} 
+      ownedRobotIds={ownedRobotIds} 
+    />
+  );
 }

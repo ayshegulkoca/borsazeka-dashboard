@@ -82,6 +82,7 @@ const INITIAL: FormData = {
 };
 
 interface Props {
+  initialEmail?: string;
   initialMarket?: Market;
   ownedRobotIds: string[];   // From DB: UserRobot.robotId values where isActive=true
   onSuccess?: () => void;
@@ -110,10 +111,14 @@ const STEPS = [
   { id: 4, label: "Onay" },
 ];
 
-export default function AccountIntegrationForm({ initialMarket, ownedRobotIds, onSuccess }: Props) {
+export default function AccountIntegrationForm({ initialEmail, initialMarket, ownedRobotIds, onSuccess }: Props) {
   const { t } = useTranslation("common");
   const [step, setStep] = useState(1);
-  const [form, setForm] = useState<FormData>({ ...INITIAL, market: initialMarket || null });
+  const [form, setForm] = useState<FormData>({ 
+    ...INITIAL, 
+    email: initialEmail || "",
+    market: initialMarket || null 
+  });
   const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
   const [showSecret, setShowSecret] = useState(false);
   const [showBrokerPw, setShowBrokerPw] = useState(false);
@@ -328,8 +333,27 @@ export default function AccountIntegrationForm({ initialMarket, ownedRobotIds, o
               <p className={s.questionDesc}>BorsaZeka hesabınızla eşleşen bilgileri giriniz.</p>
 
               <div className={s.fieldGroup}>
-                <label className={s.label}>E-Posta Adresi</label>
-                <input className={`${s.input} ${errors.email ? s.inputError : ""}`} type="email" placeholder="ornek@gmail.com" value={form.email} onChange={e => update({ email: e.target.value })} />
+                <label className={s.label}>
+                  E-Posta Adresi
+                  {initialEmail && (
+                    <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)', background: 'rgba(255,255,255,0.05)', padding: '0.1rem 0.4rem', borderRadius: '4px', marginLeft: '0.5rem', display: 'inline-flex', alignItems: 'center', gap: '0.2rem' }}>
+                      <Lock size={10} /> {t('dashboard.settings.emailLocked')}
+                    </span>
+                  )}
+                </label>
+                <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+                  {initialEmail && <Lock size={14} style={{ position: 'absolute', left: '0.75rem', opacity: 0.5, color: 'var(--text-muted)' }} />}
+                  <input 
+                    className={`${s.input} ${errors.email ? s.inputError : ""}`} 
+                    type="email" 
+                    placeholder="ornek@gmail.com" 
+                    value={form.email} 
+                    onChange={e => !initialEmail && update({ email: e.target.value })}
+                    readOnly={!!initialEmail}
+                    disabled={!!initialEmail}
+                    style={initialEmail ? { paddingLeft: '2.25rem', background: 'rgba(0, 0, 0, 0.2)', border: '1px solid rgba(255,255,255,0.1)', cursor: 'not-allowed', color: 'var(--text-muted)', opacity: 1 } : {}}
+                  />
+                </div>
                 <Err field="email" />
               </div>
               <div className={s.fieldGroup}>

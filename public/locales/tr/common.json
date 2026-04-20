@@ -1,4 +1,38 @@
 {
+  "onboardingSteps": {
+    "badge": "3 Adımda Başlayın",
+    "title": "Algoritmik Ticarete Başlayın",
+    "subtitle": "Giriş yapın, size uygun yolu seçin ve hesaplarınızı güvenle bağlayın. Tüm süreç 5 dakika içinde tamamlanır.",
+    "step": "ADIM {{num}}",
+    "done": "Tamamlandı",
+    "locked": "Kilitli",
+    "step1": {
+      "titleDone": "Giriş Yapıldı",
+      "titlePending": "Hesabınıza Giriş Yapın",
+      "desc": "Google hesabınızla tek tıkta giriş yapın.",
+      "googleBtn": "Google ile Giriş Yap",
+      "switchAccount": "Farklı hesap kullan"
+    },
+    "selected": "seçildi",
+    "step2": {
+      "title": "Size uygun robota abone olun",
+      "pendingTitle": "Ödemeniz Kontrol Ediliyor...",
+      "pendingDesc": "Stripe tarafındaki ödemeniz doğrulanıyor. Bu işlem genellikle birkaç dakika sürer.",
+      "pendingStatus": "Kontrol Ediliyor",
+      "lockedHint": "Önce giriş yapmanız gerekiyor.",
+      "optionATitle": "İstediğim robotu biliyorum",
+      "optionADesc": "Robot vitrinini görüp doğrudan abone olmak istiyorum.",
+      "optionBTitle": "Robotumu Bul",
+      "optionBDesc": "6 adımlı sihirbazla bana uygun robotu bulayım."
+    },
+    "step3": {
+      "title": "Hesaplarınızı Bağlayın",
+      "desc": "Aracı kurum veya Binance bağlantınızı güvenle tamamlayın. Verileriniz AES-256 ile şifrelenir.",
+      "checklist1": "Adım 1 — Giriş Yap",
+      "checklist2": "Adım 2 — Yolunu Seç",
+      "setupBtn": "Kuruluma Başla"
+    }
+  },
   "navbar": {
     "ourRobots": "Robotlarımız",
     "robots": "Robotlar",
@@ -8,7 +42,10 @@
     "signIn": "Giriş Yap",
     "getStarted": "Ürün Seç",
     "setup": "Kurulum",
-    "menuLabel": "Menüyü aç"
+    "menuLabel": "Menüyü aç",
+    "signOut": "Çıkış Yap",
+    "account": "Hesap",
+    "user": "Kullanıcı"
   },
   "hero": {
     "badge": "2015'ten beri yapay zeka ile borsa robotları",
@@ -63,7 +100,10 @@
     "findProduct": "Ürün Seç",
     "howItWorks": "Nasıl Çalışır?",
     "contact": "İletişim",
-    "copyright": "© 2025 BorsaZeka. Tüm hakları saklıdır."
+    "copyright": "© 2025 BorsaZeka. Tüm hakları saklıdır.",
+    "ctaLabel": "Stratejinizi Belirleyin",
+    "ctaTitle": "Size Özel Stratejiyi Henüz Belirlemediniz mi?",
+    "ctaBtn": "Robot Sihirbazını Başlat"
   },
   "wizard": {
     "pageTitle": "Ürün Seç — BorsaZeka",
@@ -590,6 +630,143 @@
           "content": "BorsaZeka karlılık garantisi vermez. Bu Koşullar taraflar arasındaki tüm anlaşmaların yerini alır."
         }
       ]
+    }
+  },
+  "dashboard": {
+    "langToggle": {
+      "label": "Dili Değiştir"
+    },
+    "nav": {
+      "home": "Ana Sayfa",
+      "robots": "Robot Vitrini",
+      "accounts": "Hesaplarım",
+      "servers": "Sunucular",
+      "settings": "Ayarlar",
+      "backToSite": "Siteye Geri Dön",
+      "billing": "Faturalarım"
+    },
+    "header": {
+      "notifications": "Bildirimler",
+      "settings": "Ayarlar"
+    },
+    "home": {
+      "welcome": "Hoşgeldin,",
+      "balanceCard": "Toplam Tahmini Bakiye",
+      "hideShowBalance": "Bakiyeyi Gizle/Göster",
+      "dailyPnl": "Günlük Kar/Zarar",
+      "activeRobots": "Aktif Robot",
+      "pendingOrders": "Bekleyen Emir",
+      "myActiveRobots": "Aktif Robotlarım",
+      "quickActions": "Hızlı İşlemler",
+      "addRobot": "Robot Ekle / Keşfet",
+      "addNewRobot": "Yeni Robot Ekle",
+      "marketClosed": "KAPALI",
+      "noRobotsTitle": "Analizleri görmek için bir robot kurulumu yapmalısınız.",
+      "noRobotsDesc": "Kurulumu tamamlamak için yukarıdaki sihirbazı takip edebilir veya doğrudan robot vitrinine göz atabilirsiniz."
+    },
+    "onboarding": {
+      "widgetTitle": "Kurulumu Tamamla",
+      "stepsCompleted": "{{completed}} / {{total}} adım tamamlandı",
+      "step1Title": "Size uygun robota abone olun",
+      "step1Desc": "Robot vitrinine göz atın, stratejinize uygun robota abone olun.",
+      "step1DescPending": "Stripe tarafındaki ödemeniz doğrulanıyor. Bu işlem genellikle birkaç dakika sürer.",
+      "step1Cta": "Robota Abone Ol",
+      "step1CtaPending": "Ödeme Kontrol Ediliyor",
+      "step2Title": "Hesabınızı Bağlayın",
+      "step2Desc": "Aracı kurum veya Binance API bilgilerinizi güvenle girin.",
+      "step2Cta": "Kuruluma Başla",
+      "done": "Tamamlandı",
+      "checking": "Kontrol Ediliyor"
+    },
+    "robots": {
+      "emptyTitle": "Henüz aktif bir robotunuz bulunmuyor",
+      "emptyDesc": "Algoritmik ticarete başlamak için borsa robotlarımıza göz atabilir ve size en uygun stratejiyi seçebilirsiniz.",
+      "emptyCta": "Robot Vitrinine Göz At",
+      "bannerBadge": "Aktif Robotlarım",
+      "bannerTitle": "Robotlarınızı Yönetin",
+      "bannerSubtitle": "Şu an aktif olan robotlarınızın durumunu izleyebilir veya yeni ayarlar yapabilirsiniz.",
+      "monthlyReturn": "Aylık Getiri",
+      "riskLevel": "Risk Seviyesi",
+      "active": "Aktif",
+      "disable": "Devre Dışı Bırak",
+      "disabling": "Devre Dışı...",
+      "addMore": "Yeni Robot Keşfet"
+    },
+    "servers": {
+      "title": "Sunucular",
+      "subtitle": "Robotlarınızı çalıştırmak için ihtiyacınıza uygun sunucu paketini seçin veya aktif sunucularınızı yönetin.",
+      "myServersTitle": "Aktif Sunucularım",
+      "packagesTitle": "Sunucu Paketleri",
+      "status": "Durum",
+      "load": "Yük",
+      "online": "Çevrimiçi",
+      "offline": "Çevrimdışı",
+      "perMonth": "/ay",
+      "buyBtn": "Satın Al",
+      "packagesNote": "Sunucu paketleri aylık fatura edilir. İptal için en az 3 gün öncesinden bildirim yapılmalıdır. Tüm ücretler Euro (€) cinsindendir."
+    },
+    "settings": {
+      "title": "Ayarlar",
+      "subtitle": "Hesap bilgilerinizi ve aboneliğinizi yönetin.",
+      "tabProfile": "Profil",
+      "tabBilling": "Abonelik & Fatura",
+      "profileTitle": "Kişisel Bilgiler",
+      "profileDesc": "Hesap bilgilerinizi buradan güncelleyebilirsiniz.",
+      "emailNote": "E-posta adresi Google hesabınızdan alınır.",
+      "emailLocked": "Değiştirilemez",
+      "save": "Kaydet",
+      "saving": "Kaydediliyor...",
+      "firstName": "Ad",
+      "firstNamePlaceholder": "Adınızı girin",
+      "lastName": "Soyad",
+      "lastNamePlaceholder": "Soyadınızı girin",
+      "gender": "Cinsiyet",
+      "genderSelect": "Seçiniz",
+      "genderMale": "Erkek",
+      "genderFemale": "Kadın",
+      "genderOther": "Diğer",
+      "genderPreferNot": "Belirtmek istemiyorum",
+      "phone": "Telefon",
+      "phonePlaceholder": "+90 5XX XXX XX XX",
+      "address": "Adres",
+      "addressPlaceholder": "Sokak ve bina bilgisi",
+      "postalCode": "Posta Kodu",
+      "city": "Şehir",
+      "cityPlaceholder": "İstanbul",
+      "country": "Ülke",
+      "countryPlaceholder": "Türkiye",
+      "companyName": "Şirket Adı (varsa)",
+      "companyNamePlaceholder": "Şirket adı",
+      "twitter": "Twitter (varsa)",
+      "twitterPlaceholder": "@kullaniciadi",
+      "billingCurrentPlan": "Mevcut Plan",
+      "billingNextRenewal": "Sonraki Yenileme",
+      "billingManage": "Aboneliği Yönet",
+      "billingHistory": "Ödeme Geçmişi",
+      "billingHistoryDesc": "Son 10 ödeme işleminiz aşağıda listelenmiştir.",
+      "billingStripeNote": "Detaylı fatura geçmişinize ve ödeme yöntemlerinize Stripe paneli üzerinden ulaşabilirsiniz.",
+      "billingEmpty": "Henüz bir ödeme işlemi bulunmuyor.",
+      "invoiceDate": "Tarih",
+      "invoiceDesc": "Açıklama",
+      "invoiceAmount": "Tutar",
+      "invoiceStatus": "Durum",
+      "invoiceDefaultDesc": "Abonelik ödemesi",
+      "renewalNoDate": "Yenileme tarihi yok",
+      "renewalExpired": "Süre dolmuş",
+      "renewalToday": "Bugün yenileniyor",
+      "renewalDays": "{{days}} gün kaldı",
+      "renewalDay": "1 gün kaldı",
+      "planFree": "Ücretsiz",
+      "planPro": "Pro",
+      "planPremium": "Premium Plus",
+      "statusActive": "Aktif",
+      "statusCancelled": "İptal",
+      "statusPastDue": "Gecikmiş",
+      "statusTrialing": "Deneme",
+      "invoicePaid": "Ödendi",
+      "invoicePending": "Bekliyor",
+      "invoiceFailed": "Başarısız",
+      "signOut": "Çıkış yap"
     }
   }
 }

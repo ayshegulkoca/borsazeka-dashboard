@@ -2,9 +2,10 @@
 
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { Activity, Home, Bot, Server, LogOut, Bell, Settings, Crown, Zap, Star, Wallet } from "lucide-react";
+import { Activity, Home, Bot, Server, LogOut, Bell, Settings, Crown, Zap, Star, Wallet, Receipt } from "lucide-react";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
+import { useTranslation } from "react-i18next";
 import styles from "./layout.module.css";
 
 interface Props {
@@ -65,15 +66,42 @@ function PlanBadge({ planLabel }: { planLabel: string }) {
   );
 }
 
+// ── Language Toggle ────────────────────────────────────────────────────────────
+function LangToggle() {
+  const { i18n, t } = useTranslation("common");
+  const currentLang = i18n.language?.startsWith("tr") ? "tr" : "en";
+
+  const toggle = (lang: string) => {
+    i18n.changeLanguage(lang);
+  };
+
+  return (
+    <div className={styles.langToggleContainer} aria-label={t("dashboard.langToggle.label")}>
+      {(["tr", "en"] as const).map((lang) => (
+        <button
+          key={lang}
+          id={`dashboard-lang-${lang}`}
+          onClick={() => toggle(lang)}
+          className={`${styles.langBtn} ${currentLang === lang ? styles.langBtnActive : ""}`}
+          aria-pressed={currentLang === lang}
+        >
+          {lang.toUpperCase()}
+        </button>
+      ))}
+    </div>
+  );
+}
+
 export default function DashboardShell({ children, userName, userEmail, userImage, planLabel }: Props) {
   const pathname = usePathname();
+  const { t } = useTranslation("common");
 
   const navItems = [
-    { label: "Ana Sayfa", href: "/dashboard", icon: Home },
-    { label: "Robot Vitrini", href: "/dashboard/robots", icon: Bot },
-    { label: "Hesaplarım", href: "/dashboard/accounts", icon: Wallet },
-    { label: "Sunucular", href: "/dashboard/servers", icon: Server },
-    { label: "Ayarlar", href: "/dashboard/settings", icon: Settings },
+    { label: t("dashboard.nav.home"),     href: "/dashboard",          icon: Home },
+    { label: t("dashboard.nav.robots"),   href: "/dashboard/robots",   icon: Bot },
+    { label: t("dashboard.nav.accounts"), href: "/dashboard/accounts", icon: Wallet },
+    { label: t("dashboard.nav.servers"),  href: "/dashboard/servers",  icon: Server },
+    { label: t("dashboard.nav.settings"), href: "/dashboard/settings", icon: Settings },
   ];
 
   return (
@@ -91,6 +119,7 @@ export default function DashboardShell({ children, userName, userEmail, userImag
           {navItems.map((item) => {
             const Icon = item.icon;
             const isActive = pathname === item.href;
+
             return (
               <Link
                 key={item.href}
@@ -102,13 +131,6 @@ export default function DashboardShell({ children, userName, userEmail, userImag
               </Link>
             );
           })}
-          
-          <div className={styles.navDivider} style={{ margin: "1rem 0", borderTop: "1px solid rgba(255,255,255,0.05)" }} />
-          
-          <Link href="/" className={styles.navLink} style={{ color: "var(--accent-primary)" }}>
-            <Activity size={20} />
-            <span>Siteye Geri Dön</span>
-          </Link>
         </nav>
 
         {/* Kullanıcı Profili + Plan Rozeti */}
@@ -134,7 +156,7 @@ export default function DashboardShell({ children, userName, userEmail, userImag
           <button
             onClick={() => signOut({ callbackUrl: "/" })}
             style={{ color: "var(--text-muted)", background: "none", border: "none", cursor: "pointer" }}
-            aria-label="Çıkış yap"
+            aria-label={t("dashboard.settings.signOut")}
           >
             <LogOut size={18} />
           </button>
@@ -166,11 +188,13 @@ export default function DashboardShell({ children, userName, userEmail, userImag
             {navItems.find((i) => i.href === pathname)?.label || "Dashboard"}
           </h2>
           <div className={styles.headerActions}>
-            <button className={styles.iconBtn} aria-label="Bildirimler">
-              <Bell size={20} />
-            </button>
-            <Link href="/dashboard/settings" className={styles.iconBtn} aria-label="Ayarlar">
-              <Settings size={20} />
+            {/* Dil Seçici (Sol tarafta) */}
+            <LangToggle />
+
+            {/* Siteye Geri Dön (En sağda) */}
+            <Link href="/" className={styles.backToSiteBtn} id="header-back-to-site">
+              <Activity size={18} />
+              <span>{t("dashboard.nav.backToSite")}</span>
             </Link>
           </div>
         </header>
