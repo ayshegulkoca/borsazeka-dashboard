@@ -152,8 +152,12 @@ export default function ServersClient({ myServers, packages }: Props) {
                 </div>
               </div>
 
-              <h3 className={styles.packageName}>{pkg.name}</h3>
-              <p className={styles.packageDesc}>{pkg.description}</p>
+              <h3 className={styles.packageName}>
+                {t(`dashboard.servers.packageNames.${pkg.id}`)}
+              </h3>
+              <p className={styles.packageDesc}>
+                {t(`dashboard.servers.packageDescriptions.${pkg.id}`)}
+              </p>
 
               <a
                 href={pkg.stripeUrl}

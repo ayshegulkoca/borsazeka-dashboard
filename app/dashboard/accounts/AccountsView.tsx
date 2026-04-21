@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Plus, Wallet, Globe, Shield, TrendingUp, ExternalLink } from "lucide-react";
 import styles from "./accounts.module.css";
 import Modal from "../../components/ui/Modal";
@@ -24,6 +25,7 @@ interface Props {
 }
 
 export default function AccountsView({ userEmail, initialAccounts, ownedRobotIds }: Props) {
+  const { t } = useTranslation("common");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedMarket, setSelectedMarket] = useState<"BIST" | "BINANCE" | null>(null);
 
@@ -42,9 +44,9 @@ export default function AccountsView({ userEmail, initialAccounts, ownedRobotIds
       {/* Header */}
       <div className={styles.headerSection}>
         <div className={styles.titleArea}>
-          <h1 className={styles.title}>Hesaplarım</h1>
+          <h1 className={styles.title}>{t("dashboard.accounts.title")}</h1>
           <p className={styles.subtitle}>
-            Borsa ve kripto hesaplarınızı güvenle yönetin ve robotlarınızı saniyeler içinde yetkilendirin.
+            {t("dashboard.accounts.subtitle")}
           </p>
         </div>
       </div>
@@ -56,9 +58,9 @@ export default function AccountsView({ userEmail, initialAccounts, ownedRobotIds
             <Wallet size={32} />
           </div>
           <div className={styles.cardContent}>
-            <h3>Aracı Kurum Ekle</h3>
+            <h3>{t("dashboard.accounts.bistCardTitle")}</h3>
             <p>
-              Borsa İstanbul (BIST) işlemleriniz için PhillipCapital, İnfo Yatırım gibi kurumlardaki hesaplarınızı bağlayın.
+              {t("dashboard.accounts.bistCardDesc")}
             </p>
           </div>
           <button 
@@ -66,7 +68,7 @@ export default function AccountsView({ userEmail, initialAccounts, ownedRobotIds
             onClick={() => openAddModal("BIST")}
           >
             <Plus size={18} />
-            Kurum Bağla
+            {t("dashboard.accounts.bistBtn")}
           </button>
         </div>
 
@@ -75,9 +77,9 @@ export default function AccountsView({ userEmail, initialAccounts, ownedRobotIds
             <Globe size={32} />
           </div>
           <div className={styles.cardContent}>
-            <h3>Kripto Hesap Ekle</h3>
+            <h3>{t("dashboard.accounts.cryptoCardTitle")}</h3>
             <p>
-              Binance ve diğer kripto para borsalarındaki hesaplarınızı API anahtarları ile güvenle entegre edin.
+              {t("dashboard.accounts.cryptoCardDesc")}
             </p>
           </div>
           <button 
@@ -85,7 +87,7 @@ export default function AccountsView({ userEmail, initialAccounts, ownedRobotIds
             onClick={() => openAddModal("BINANCE")}
           >
             <Plus size={18} />
-            Borsa Bağla
+            {t("dashboard.accounts.cryptoBtn")}
           </button>
         </div>
 
@@ -94,9 +96,9 @@ export default function AccountsView({ userEmail, initialAccounts, ownedRobotIds
             <TrendingUp size={32} />
           </div>
           <div className={styles.cardContent}>
-            <h3>Tickmill Forex Hesabı</h3>
+            <h3>{t("dashboard.accounts.forexCardTitle")}</h3>
             <p>
-              Forex piyasalarında işlem yapmak için Tickmill hesabınızı oluşturun veya mevcut hesabınızı bağlayın.
+              {t("dashboard.accounts.forexCardDesc")}
             </p>
           </div>
           <div className={styles.buttonStack} style={{ paddingTop: "0.5rem" }}>
@@ -108,20 +110,19 @@ export default function AccountsView({ userEmail, initialAccounts, ownedRobotIds
               style={{ textDecoration: "none" }}
             >
               <ExternalLink size={16} />
-              Hesap Aç
+              {t("dashboard.accounts.forexOpenBtn")}
             </a>
             <button 
               className={`${styles.addButton} ${styles.forexSecondaryButton}`}
               disabled
             >
               <Plus size={18} />
-              Forex Hesabı Ekle
+              {t("dashboard.accounts.forexAddBtn")}
             </button>
           </div>
         </div>
       </div>
 
-      {/* Security Banner */}
       <div style={{
         background: "rgba(16, 185, 129, 0.05)",
         border: "1px solid rgba(16, 185, 129, 0.2)",
@@ -134,14 +135,14 @@ export default function AccountsView({ userEmail, initialAccounts, ownedRobotIds
       }}>
         <Shield size={20} />
         <span style={{ fontSize: "0.85rem", fontWeight: 500 }}>
-          Hassas verileriniz (API Key, Şifre, TC No) tarayıcı tarafında <strong>AES-256</strong> ile şifrelenir ve asla ham metin olarak iletilmez.
+          {t("dashboard.accounts.securityNote")}
         </span>
       </div>
 
       {/* Accounts List */}
       <div className={styles.listSection}>
         <div className={styles.listHeader}>
-          <h3>Bağlı Hesaplar</h3>
+          <h3>{t("dashboard.accounts.listTitle")}</h3>
           <span className={styles.count}>{initialAccounts.length}</span>
         </div>
         <AccountList initialAccounts={initialAccounts} />
@@ -151,7 +152,7 @@ export default function AccountsView({ userEmail, initialAccounts, ownedRobotIds
       <Modal 
         isOpen={isModalOpen} 
         onClose={closeModal}
-        title={selectedMarket === "BIST" ? "Aracı Kurum Entegrasyonu" : "Kripto Borsa Entegrasyonu"}
+        title={selectedMarket === "BIST" ? t("dashboard.accounts.modalBistTitle") : t("dashboard.accounts.modalCryptoTitle")}
       >
         <AccountIntegrationForm 
           initialEmail={userEmail}

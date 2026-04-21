@@ -691,7 +691,39 @@
       "offline": "Offline",
       "perMonth": "/mo",
       "buyBtn": "Purchase",
-      "packagesNote": "Server packages are billed monthly. Cancellations require at least 3 days notice. All prices are in Euro (€)."
+      "packagesNote": "Server packages are billed monthly. Cancellations require at least 3 days notice. All prices are in Euro (€).",
+      "packageNames": {
+        "power": "Power VPS",
+        "professional": "Professional VPS",
+        "expert": "Expert VPS",
+        "elite": "Elite Dedicated Server",
+        "ultimate": "Ultimate Dedicated Server"
+      },
+      "packageDescriptions": {
+        "power": "High-performance processor and secure infrastructure.",
+        "professional": "Uninterrupted uptime and advanced network infrastructure.",
+        "expert": "Low latency and optimized processing capacity.",
+        "elite": "Dedicated server resources and priority technical support.",
+        "ultimate": "Maximum power, full isolation, and enterprise-level infrastructure."
+      }
+    },
+    "accounts": {
+      "title": "My Accounts",
+      "subtitle": "Securely manage your exchange and crypto accounts and authorize your robots in seconds.",
+      "bistCardTitle": "Add Broker Account",
+      "bistCardDesc": "Connect your accounts at institutions like PhillipCapital, İnfo Yatırım for Borsa İstanbul (BIST) transactions.",
+      "bistBtn": "Connect Institution",
+      "cryptoCardTitle": "Add Crypto Account",
+      "cryptoCardDesc": "Securely integrate your accounts on Binance and other crypto exchanges with API keys.",
+      "cryptoBtn": "Connect Exchange",
+      "forexCardTitle": "Tickmill Forex Account",
+      "forexCardDesc": "Create your Tickmill account or connect your existing account to trade in Forex markets.",
+      "forexOpenBtn": "Open Account",
+      "forexAddBtn": "Add Forex Account",
+      "securityNote": "Your sensitive data (API Key, Password, TC No) is encrypted with AES-256 browser-side and never transmitted as plain text.",
+      "listTitle": "Connected Accounts",
+      "modalBistTitle": "Broker Integration",
+      "modalCryptoTitle": "Crypto Exchange Integration"
     },
     "settings": {
       "title": "Settings",

@@ -707,7 +707,39 @@
       "offline": "Çevrimdışı",
       "perMonth": "/ay",
       "buyBtn": "Satın Al",
-      "packagesNote": "Sunucu paketleri aylık fatura edilir. İptal için en az 3 gün öncesinden bildirim yapılmalıdır. Tüm ücretler Euro (€) cinsindendir."
+      "packagesNote": "Sunucu paketleri aylık fatura edilir. İptal için en az 3 gün öncesinden bildirim yapılmalıdır. Tüm ücretler Euro (€) cinsindendir.",
+      "packageNames": {
+        "power": "Power VPS",
+        "professional": "Professional VPS",
+        "expert": "Expert VPS",
+        "elite": "Elite Dedicated Server",
+        "ultimate": "Ultimate Dedicated Server"
+      },
+      "packageDescriptions": {
+        "power": "Yüksek performanslı işlemci ve güvenli altyapı.",
+        "professional": "Kesintisiz çalışma süresi ve gelişmiş ağ altyapısı.",
+        "expert": "Düşük gecikme süresi ve optimize edilmiş işlem kapasitesi.",
+        "elite": "Adanmış sunucu kaynakları ve öncelikli teknik destek.",
+        "ultimate": "Maksimum güç, tam izolasyon ve kurumsal seviye altyapı."
+      }
+    },
+    "accounts": {
+      "title": "Hesaplarım",
+      "subtitle": "Borsa ve kripto hesaplarınızı güvenle yönetin ve robotlarınızı saniyeler içinde yetkilendirin.",
+      "bistCardTitle": "Aracı Kurum Ekle",
+      "bistCardDesc": "Borsa İstanbul (BIST) işlemleriniz için PhillipCapital, İnfo Yatırım gibi kurumlardaki hesaplarınızı bağlayın.",
+      "bistBtn": "Kurum Bağla",
+      "cryptoCardTitle": "Kripto Hesap Ekle",
+      "cryptoCardDesc": "Binance ve diğer kripto para borsalarındaki hesaplarınızı API anahtarları ile güvenle entegre edin.",
+      "cryptoBtn": "Borsa Bağla",
+      "forexCardTitle": "Tickmill Forex Hesabı",
+      "forexCardDesc": "Forex piyasalarında işlem yapmak için Tickmill hesabınızı oluşturun veya mevcut hesabınızı bağlayın.",
+      "forexOpenBtn": "Hesap Aç",
+      "forexAddBtn": "Forex Hesabı Ekle",
+      "securityNote": "Hassas verileriniz (API Key, Şifre, TC No) tarayıcı tarafında AES-256 ile şifrelenir ve asla ham metin olarak iletilmez.",
+      "listTitle": "Bağlı Hesaplar",
+      "modalBistTitle": "Aracı Kurum Entegrasyonu",
+      "modalCryptoTitle": "Kripto Borsa Entegrasyonu"
     },
     "settings": {
       "title": "Ayarlar",
