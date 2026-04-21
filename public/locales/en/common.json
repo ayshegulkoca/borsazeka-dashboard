@@ -723,7 +723,18 @@
       "securityNote": "Your sensitive data (API Key, Password, TC No) is encrypted with AES-256 browser-side and never transmitted as plain text.",
       "listTitle": "Connected Accounts",
       "modalBistTitle": "Broker Integration",
-      "modalCryptoTitle": "Crypto Exchange Integration"
+      "modalCryptoTitle": "Crypto Exchange Integration",
+      "addForexTitle": "Add Forex Account",
+      "addForexSubtitle": "Connect your Tickmill account to our robot and start automated trading in forex markets.",
+      "fields": {
+        "broker": "Broker",
+        "login": "Login (Account No)",
+        "password": "Password",
+        "server": "Server",
+        "robot": "Connected Robot",
+        "save": "Save",
+        "success": "Data received successfully"
+      }
     },
     "settings": {
       "title": "Settings",

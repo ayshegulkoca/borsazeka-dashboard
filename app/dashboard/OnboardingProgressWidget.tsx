@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Bot, Link2, Check, ArrowRight, Sparkles, TrendingUp, ExternalLink } from "lucide-react";
+import { Bot, Link2, Check, ArrowRight, Sparkles, TrendingUp, ExternalLink, Plus } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 
@@ -325,8 +325,8 @@ export default function OnboardingProgressWidget({ hasRobots, hasBrokerAccounts,
                     <ExternalLink size={16} />
                     {t("dashboard.onboarding.step3OpenAccount")}
                   </a>
-                  <button
-                    disabled
+                  <Link
+                    href="/dashboard/accounts/add-forex"
                     style={{
                       width: "100%",
                       display: "inline-flex",
@@ -335,19 +335,27 @@ export default function OnboardingProgressWidget({ hasRobots, hasBrokerAccounts,
                       gap: "0.6rem",
                       fontSize: "0.82rem",
                       fontWeight: 600,
-                      color: "var(--text-muted)",
-                      background: "rgba(255,255,255,0.03)",
-                      border: "1px solid rgba(255,255,255,0.08)",
+                      color: "var(--text-primary)",
+                      background: "rgba(255,255,255,0.06)",
+                      border: "1px solid rgba(255,255,255,0.12)",
                       borderRadius: "12px",
                       padding: "0.75rem 1.25rem",
-                      cursor: "not-allowed",
-                      opacity: 0.6,
+                      textDecoration: "none",
+                      cursor: "pointer",
                       transition: "all 0.2s ease",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.background = "rgba(16,185,129,0.08)";
+                      e.currentTarget.style.borderColor = "rgba(16,185,129,0.3)";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background = "rgba(255,255,255,0.06)";
+                      e.currentTarget.style.borderColor = "rgba(255,255,255,0.12)";
                     }}
                   >
                     <Plus size={16} />
                     {t("dashboard.onboarding.step3AddForex")}
-                  </button>
+                  </Link>
                 </div>
               ) : !step.done && !step.locked && !(step as any).isForexCard ? (
                 <Link

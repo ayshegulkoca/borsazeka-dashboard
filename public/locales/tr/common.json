@@ -739,7 +739,18 @@
       "securityNote": "Hassas verileriniz (API Key, Şifre, TC No) tarayıcı tarafında AES-256 ile şifrelenir ve asla ham metin olarak iletilmez.",
       "listTitle": "Bağlı Hesaplar",
       "modalBistTitle": "Aracı Kurum Entegrasyonu",
-      "modalCryptoTitle": "Kripto Borsa Entegrasyonu"
+      "modalCryptoTitle": "Kripto Borsa Entegrasyonu",
+      "addForexTitle": "Forex Hesabı Ekle",
+      "addForexSubtitle": "Tickmill hesabınızı robotumuza bağlayarak forex piyasalarında otomatik işleme başlayın.",
+      "fields": {
+        "broker": "Broker",
+        "login": "Login (Hesap No)",
+        "password": "Şifre",
+        "server": "Sunucu",
+        "robot": "Bağlı Robot",
+        "save": "Kaydet",
+        "success": "Veriler başarıyla alındı"
+      }
     },
     "settings": {
       "title": "Ayarlar",

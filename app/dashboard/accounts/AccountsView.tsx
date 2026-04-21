@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Plus, Wallet, Globe, Shield, TrendingUp, ExternalLink } from "lucide-react";
 import styles from "./accounts.module.css";
+import Link from "next/link";
 import Modal from "../../components/ui/Modal";
 import AccountIntegrationForm from "../../components/dashboard/AccountIntegrationForm";
 import AccountList from "../../components/dashboard/AccountList";
@@ -112,13 +113,14 @@ export default function AccountsView({ userEmail, initialAccounts, ownedRobotIds
               <ExternalLink size={16} />
               {t("dashboard.accounts.forexOpenBtn")}
             </a>
-            <button 
-              className={`${styles.addButton} ${styles.forexSecondaryButton}`}
-              disabled
-            >
-              <Plus size={18} />
-              {t("dashboard.accounts.forexAddBtn")}
-            </button>
+            <Link href="/dashboard/accounts/add-forex" style={{ textDecoration: "none" }}>
+              <button 
+                className={`${styles.addButton} ${styles.forexSecondaryButton}`}
+              >
+                <Plus size={18} />
+                {t("dashboard.accounts.forexAddBtn")}
+              </button>
+            </Link>
           </div>
         </div>
       </div>
