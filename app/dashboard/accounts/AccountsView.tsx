@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Plus, Wallet, Globe, Shield } from "lucide-react";
+import { Plus, Wallet, Globe, Shield, TrendingUp, ExternalLink } from "lucide-react";
 import styles from "./accounts.module.css";
 import Modal from "../../components/ui/Modal";
 import AccountIntegrationForm from "../../components/dashboard/AccountIntegrationForm";
@@ -87,6 +87,37 @@ export default function AccountsView({ userEmail, initialAccounts, ownedRobotIds
             <Plus size={18} />
             Borsa Bağla
           </button>
+        </div>
+
+        <div className={styles.actionCard}>
+          <div className={`${styles.actionIcon} ${styles.forexIcon}`}>
+            <TrendingUp size={32} />
+          </div>
+          <div className={styles.cardContent}>
+            <h3>Tickmill Forex Hesabı</h3>
+            <p>
+              Forex piyasalarında işlem yapmak için Tickmill hesabınızı oluşturun veya mevcut hesabınızı bağlayın.
+            </p>
+          </div>
+          <div className={styles.buttonStack} style={{ paddingTop: "0.5rem" }}>
+            <a
+              href="https://t.co/kUUMsLhRJZ?amp=1"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`${styles.addButton} ${styles.forexPrimaryButton}`}
+              style={{ textDecoration: "none" }}
+            >
+              <ExternalLink size={16} />
+              Hesap Aç
+            </a>
+            <button 
+              className={`${styles.addButton} ${styles.forexSecondaryButton}`}
+              disabled
+            >
+              <Plus size={18} />
+              Forex Hesabı Ekle
+            </button>
+          </div>
         </div>
       </div>
 

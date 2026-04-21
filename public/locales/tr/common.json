@@ -675,6 +675,10 @@
       "step2Title": "Hesabınızı Bağlayın",
       "step2Desc": "Aracı kurum veya Binance API bilgilerinizi güvenle girin.",
       "step2Cta": "Kuruluma Başla",
+      "step3Title": "Tickmill Forex Hesabı",
+      "step3Desc": "Forex piyasalarında işlem yapmak için hesabınızı oluşturun veya mevcut hesabınızı bağlayın.",
+      "step3OpenAccount": "Hesap Aç",
+      "step3AddForex": "Forex Hesabı Ekle",
       "done": "Tamamlandı",
       "checking": "Kontrol Ediliyor"
     },

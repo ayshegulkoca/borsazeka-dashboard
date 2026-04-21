@@ -1,22 +1,23 @@
 "use client";
 
 import Link from "next/link";
-import { Bot, Link2, Check, ArrowRight, Sparkles } from "lucide-react";
+import { Bot, Link2, Check, ArrowRight, Sparkles, TrendingUp, ExternalLink } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 
 interface Props {
   hasRobots: boolean;
   hasBrokerAccounts: boolean;
+  hasForexAccount?: boolean;
   subscriptionStatus?: string;
 }
 
 // Completely hidden if fully set up
-export default function OnboardingProgressWidget({ hasRobots, hasBrokerAccounts, subscriptionStatus }: Props) {
+export default function OnboardingProgressWidget({ hasRobots, hasBrokerAccounts, hasForexAccount = false, subscriptionStatus }: Props) {
   const { t } = useTranslation("common");
   const [hoveredCard, setHoveredCard] = useState<string | null>(null);
 
-  if (hasRobots && hasBrokerAccounts) return null;
+  if (hasRobots && hasBrokerAccounts && hasForexAccount) return null;
 
   const isPending = subscriptionStatus === "PENDING";
 
@@ -47,6 +48,18 @@ export default function OnboardingProgressWidget({ hasRobots, hasBrokerAccounts,
       href: "/kurulum",
       cta: t("dashboard.onboarding.step2Cta"),
       icon: Link2,
+    },
+    {
+      id: "forex",
+      num: "3",
+      title: t("dashboard.onboarding.step3Title"),
+      desc: t("dashboard.onboarding.step3Desc"),
+      done: hasForexAccount,
+      locked: false,
+      href: "#",
+      cta: "",
+      icon: TrendingUp,
+      isForexCard: true,
     },
   ];
 
@@ -156,10 +169,9 @@ export default function OnboardingProgressWidget({ hasRobots, hasBrokerAccounts,
       {/* Step cards — centered with equal height */}
       <div
         style={{
-          display: "flex",
-          justifyContent: "center",
+          display: "grid",
+          gridTemplateColumns: "repeat(3, 1fr)",
           gap: "1rem",
-          flexWrap: "wrap",
         }}
       >
         {steps.map((step) => {
@@ -170,11 +182,9 @@ export default function OnboardingProgressWidget({ hasRobots, hasBrokerAccounts,
           return (
             <div
               key={step.id}
-              onMouseEnter={() => isInteractive ? setHoveredCard(step.id) : null}
+              onMouseEnter={() => isInteractive || (step as any).isForexCard ? setHoveredCard(step.id) : null}
               onMouseLeave={() => setHoveredCard(null)}
               style={{
-                flex: "1 1 260px",
-                maxWidth: "340px",
                 minHeight: "180px",
                 display: "flex",
                 flexDirection: "column",
@@ -282,11 +292,64 @@ export default function OnboardingProgressWidget({ hasRobots, hasBrokerAccounts,
               <div style={{ fontWeight: 600, fontSize: "0.9rem", color: "var(--text-primary)", marginBottom: "0.35rem" }}>
                 {step.title}
               </div>
-              <div style={{ fontSize: "0.8rem", color: "var(--text-muted)", lineHeight: 1.5, marginBottom: "auto", paddingBottom: "0.85rem" }}>
+              <div style={{ fontSize: "0.8rem", color: "var(--text-muted)", lineHeight: 1.5, marginBottom: "0.5rem", paddingBottom: "1rem" }}>
                 {step.desc}
               </div>
 
-              {!step.done && !step.locked && (
+              {/* Forex card gets two buttons instead of a single CTA */}
+              {(step as any).isForexCard && !step.done ? (
+                <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem", marginTop: "auto" }}>
+                  <a
+                    href="https://t.co/kUUMsLhRJZ?amp=1"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      width: "100%",
+                      display: "inline-flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: "0.6rem",
+                      fontSize: "0.85rem",
+                      fontWeight: 700,
+                      color: "var(--bg-dark, #0d1117)",
+                      background: "var(--accent-primary)",
+                      border: "none",
+                      borderRadius: "12px",
+                      padding: "0.85rem 1.25rem",
+                      textDecoration: "none",
+                      cursor: "pointer",
+                      transition: "all 0.2s ease",
+                      boxShadow: "0 4px 12px rgba(16,185,129,0.2), 0 0 0 1px rgba(16,185,129,0.1)",
+                    }}
+                  >
+                    <ExternalLink size={16} />
+                    {t("dashboard.onboarding.step3OpenAccount")}
+                  </a>
+                  <button
+                    disabled
+                    style={{
+                      width: "100%",
+                      display: "inline-flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: "0.6rem",
+                      fontSize: "0.82rem",
+                      fontWeight: 600,
+                      color: "var(--text-muted)",
+                      background: "rgba(255,255,255,0.03)",
+                      border: "1px solid rgba(255,255,255,0.08)",
+                      borderRadius: "12px",
+                      padding: "0.75rem 1.25rem",
+                      cursor: "not-allowed",
+                      opacity: 0.6,
+                      transition: "all 0.2s ease",
+                    }}
+                  >
+                    <Plus size={16} />
+                    {t("dashboard.onboarding.step3AddForex")}
+                  </button>
+                </div>
+              ) : !step.done && !step.locked && !(step as any).isForexCard ? (
                 <Link
                   href={(step as any).pending ? "#" : step.href}
                   style={{
@@ -306,7 +369,7 @@ export default function OnboardingProgressWidget({ hasRobots, hasBrokerAccounts,
                   {step.cta}
                   {!(step as any).pending && <ArrowRight size={14} style={{ transition: "transform 0.2s" }} />}
                 </Link>
-              )}
+              ) : null}
             </div>
           );
         })}

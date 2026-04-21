@@ -659,6 +659,10 @@
       "step2Title": "Connect Your Account",
       "step2Desc": "Securely enter your broker or Binance API credentials.",
       "step2Cta": "Start Setup",
+      "step3Title": "Tickmill Forex Account",
+      "step3Desc": "Create your account or connect an existing one to trade in forex markets.",
+      "step3OpenAccount": "Open Account",
+      "step3AddForex": "Add Forex Account",
       "done": "Done",
       "checking": "Reviewing"
     },
