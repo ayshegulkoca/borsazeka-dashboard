@@ -1,15 +1,24 @@
 import type { NextAuthConfig } from "next-auth"
+
 import Google from "next-auth/providers/google"
 
 // Edge uyumlu NextAuth yapılandırması (Prisma olmayan kısımlar)
 export default {
   providers: [
     Google({
+      // Explicit credentials: Auth.js v5 otomatik çözümleme için AUTH_GOOGLE_ID/AUTH_GOOGLE_SECRET
+      // ister ama .env.local'de GOOGLE_CLIENT_ID/GOOGLE_CLIENT_SECRET kullanıldığından burada açıkça belirtiyoruz.
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       allowDangerousEmailAccountLinking: true,
     }),
   ],
   session: { strategy: "jwt" },
   trustHost: true,
+  // Production HTTPS/SSL ortamında çerezlerin güvenli iletilmesini garantiler.
+  // Auth.js bunu NEXTAUTH_URL protokolü "https:" olduğunda otomatik yapsa da
+  // açıkça belirtmek reverse-proxy senaryolarında ek güvenlik sağlar.
+  useSecureCookies: process.env.NODE_ENV === "production",
   pages: {
     signIn: '/',
   },
