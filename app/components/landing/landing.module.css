@@ -10,19 +10,25 @@
   left: 0;
   right: 0;
   z-index: 100;
-  padding: 0 2rem;
-  height: 72px;
+  padding: 0 2.5rem;
+  height: 68px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  transition: background 0.3s ease, backdrop-filter 0.3s ease, border-color 0.3s ease;
-  border-bottom: 1px solid transparent;
+  /* Always have a subtle glass base */
+  background: rgba(5, 10, 8, 0.6);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  transition: background 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
 }
 
 .navbar.scrolled {
-  background: rgba(7, 14, 10, 0.85);
-  backdrop-filter: blur(16px);
-  border-bottom-color: rgba(255, 255, 255, 0.06);
+  background: rgba(5, 10, 8, 0.82);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom-color: rgba(16, 185, 129, 0.08);
+  box-shadow: 0 1px 0 rgba(16, 185, 129, 0.05), 0 4px 24px rgba(0, 0, 0, 0.3);
 }
 
 .navLogo {
@@ -48,26 +54,46 @@
 .navLinks {
   display: flex;
   align-items: center;
-  gap: 2.5rem;
+  gap: 2rem;
   list-style: none;
 }
 
 .navLinks a {
-  font-size: 0.9rem;
+  position: relative;
+  font-size: 0.875rem;
   font-weight: 500;
-  color: var(--text-secondary);
-  transition: color 0.2s;
+  /* Slightly muted — not full white */
+  color: rgba(148, 163, 184, 0.85);
+  transition: color 0.3s ease;
+  padding-bottom: 2px;
+}
+
+/* Thin underline on hover */
+.navLinks a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--accent-primary);
+  transition: width 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  opacity: 0.7;
 }
 
 .navLinks a:hover {
-  color: var(--text-primary);
+  color: rgba(248, 250, 252, 0.95);
+}
+
+.navLinks a:hover::after {
+  width: 100%;
 }
 
 .navLinkHighlight {
-  font-size: 0.9rem;
+  font-size: 0.875rem;
   font-weight: 600;
   color: var(--accent-primary) !important;
-  transition: opacity 0.2s;
+  transition: opacity 0.3s;
 }
 
 .navLinkHighlight:hover {
@@ -246,26 +272,26 @@
 }
 
 
-/* Language Toggle */
+/* Language Toggle — oval pill style */
 .langToggle {
   display: flex;
   align-items: center;
   gap: 0;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 8px;
-  padding: 2px;
-  margin-right: 0.25rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 100px;   /* fully oval */
+  padding: 3px;
+  margin-right: 0.5rem;
 }
 
 .langBtn {
-  padding: 0.28rem 0.65rem;
-  border-radius: 6px;
-  font-size: 0.72rem;
+  padding: 0.27rem 0.7rem;
+  border-radius: 100px;
+  font-size: 0.7rem;
   font-weight: 700;
-  letter-spacing: 0.06em;
-  color: var(--text-muted);
-  transition: all 0.2s ease;
+  letter-spacing: 0.07em;
+  color: rgba(148, 163, 184, 0.6);
+  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
   line-height: 1;
 }
 
@@ -276,14 +302,12 @@
 .langBtnActive {
   background: var(--accent-primary);
   color: #022c22 !important;
-  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.35);
+  box-shadow: 0 2px 10px rgba(16, 185, 129, 0.45);
 }
 
+/* Hide the pipe divider — pills are adjacent now */
 .langDivider {
-  font-size: 0.65rem;
-  color: rgba(255, 255, 255, 0.15);
-  user-select: none;
-  margin: 0 1px;
+  display: none;
 }
 
 /* Mobile Language Toggle */
@@ -295,59 +319,67 @@
   gap: 0.5rem;
 }
 
+/* ── Giriş Yap: sade outline, hover'da soft fill ── */
 .btnGhost {
-  padding: 0.5rem 1.25rem;
-  border-radius: 8px;
-  font-size: 0.875rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.48rem 1.2rem;
+  border-radius: 9px;
+  font-size: 0.85rem;
   font-weight: 500;
-  color: var(--text-primary);
-  border: 1px solid var(--border-subtle);
-  transition: all 0.2s;
+  color: rgba(248, 250, 252, 0.75);
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  cursor: pointer;
+  letter-spacing: 0.01em;
 }
 
 .btnGhost:hover {
-  background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(255, 255, 255, 0.12);
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
 }
 
+/* ── Ürün Seç: koyu bg + parlayan yeşil glow border ── */
 .btnSolid {
-  padding: 0.5rem 1.25rem;
-  border-radius: 8px;
-  font-size: 0.875rem;
-  font-weight: 600;
-  background: var(--accent-primary);
-  color: #022c22;
-  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.48rem 1.25rem;
+  border-radius: 9px;
+  font-size: 0.85rem;
+  font-weight: 650;
+  /* Dark background so glow border reads cleanly */
+  background: rgba(10, 20, 15, 0.9);
+  color: rgba(16, 185, 129, 0.95);
+  border: 1px solid rgba(16, 185, 129, 0.55);
+  box-shadow:
+    0 0 0 1px rgba(16, 185, 129, 0.12),
+    0 0 12px rgba(16, 185, 129, 0.18),
+    inset 0 1px 0 rgba(16, 185, 129, 0.1);
+  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  letter-spacing: 0.01em;
+  text-decoration: none;
 }
 
 .btnSolid:hover {
-  background: var(--accent-primary-hover);
+  background: rgba(16, 185, 129, 0.12);
+  border-color: rgba(16, 185, 129, 0.85);
+  color: #10b981;
   transform: translateY(-1px);
-  box-shadow: 0 4px 20px rgba(16, 185, 129, 0.35);
+  box-shadow:
+    0 0 0 1px rgba(16, 185, 129, 0.25),
+    0 0 20px rgba(16, 185, 129, 0.35),
+    0 4px 16px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(16, 185, 129, 0.2);
 }
 
-/* ── Neon Border Utility ── */
+/* ── neonBorder — no longer used on btnSolid, kept for legacy usage ── */
 .neonBorder {
-  position: relative;
-  border: 1px solid transparent;
-  background-clip: padding-box;
-}
-.neonBorder::after {
-  content: '';
-  position: absolute;
-  inset: -1px;
-  border-radius: inherit;
-  background: linear-gradient(to bottom right, rgba(0, 255, 157, 0.45), transparent 60%);
-  -webkit-mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  -webkit-mask-composite: destination-out;
-  mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  mask-composite: exclude;
-  pointer-events: none;
-  z-index: 1;
+  /* border glow is now baked into btnSolid directly */
 }
 
 @keyframes neonPulse {
@@ -445,7 +477,7 @@
     #050c08;
   background-size: 200% 200%;
   animation: meshMove 20s ease infinite alternate;
-  padding: 10.5rem 2rem 5rem; /* +38px for TickerBand height */
+  padding: 8rem 2rem 5rem;
 }
 
 @keyframes meshMove {

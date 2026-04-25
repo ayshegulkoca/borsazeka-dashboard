@@ -2,8 +2,6 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import Navbar from "./components/landing/Navbar";
 import HeroSection from "./components/landing/HeroSection";
-import TickerBand from "./components/landing/TickerBand";
-import FeaturesSection from "./components/landing/FeaturesSection";
 import OnboardingSteps from "./components/landing/OnboardingSteps";
 import MobileAppSection from "./components/landing/MobileAppSection";
 
@@ -17,15 +15,7 @@ export default function LandingPage() {
   return (
     <>
       <Navbar />
-      {/* Canlı piyasa veri şeridi — Navbar hemen altında sabit */}
-      <Suspense fallback={null}>
-        <TickerBand />
-      </Suspense>
       <HeroSection />
-      {/* Glassmorphism özellik kartları */}
-      <Suspense fallback={null}>
-        <FeaturesSection />
-      </Suspense>
       <Suspense fallback={null}>
         <OnboardingSteps />
       </Suspense>
@@ -35,4 +25,3 @@ export default function LandingPage() {
     </>
   );
 }
-
