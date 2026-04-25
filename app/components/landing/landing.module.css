@@ -445,7 +445,7 @@
     #050c08;
   background-size: 200% 200%;
   animation: meshMove 20s ease infinite alternate;
-  padding: 8rem 2rem 5rem;
+  padding: 10.5rem 2rem 5rem; /* +38px for TickerBand height */
 }
 
 @keyframes meshMove {
