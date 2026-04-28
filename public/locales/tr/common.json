@@ -665,9 +665,9 @@
     },
     "nav": {
       "home": "Ana Sayfa",
-      "robots": "Robot Vitrini",
+      "robots": "Robotlarım",
       "accounts": "Hesaplarım",
-      "servers": "Sunucular",
+      "servers": "Sunucularım",
       "settings": "Ayarlar",
       "backToSite": "Siteye Geri Dön",
       "billing": "Faturalarım"
@@ -689,13 +689,13 @@
       "addNewRobot": "Yeni Robot Ekle",
       "marketClosed": "KAPALI",
       "noRobotsTitle": "Analizleri görmek için bir robot kurulumu yapmalısınız.",
-      "noRobotsDesc": "Kurulumu tamamlamak için yukarıdaki sihirbazı takip edebilir veya doğrudan robot vitrinine göz atabilirsiniz."
+      "noRobotsDesc": "Kurulumu tamamlamak için yukarıdaki sihirbazı takip edebilir veya doğrudan robotlarım sayfasına göz atabilirsiniz."
     },
     "onboarding": {
       "widgetTitle": "Kurulumu Tamamla",
       "stepsCompleted": "{{completed}} / {{total}} adım tamamlandı",
       "step1Title": "Size uygun robota abone olun",
-      "step1Desc": "Robot vitrinine göz atın, stratejinize uygun robota abone olun.",
+      "step1Desc": "Robotlarım sayfasına göz atın, stratejinize uygun robota abone olun.",
       "step1DescPending": "Stripe tarafındaki ödemeniz doğrulanıyor. Bu işlem genellikle birkaç dakika sürer.",
       "step1Cta": "Robota Abone Ol",
       "step1CtaPending": "Ödeme Kontrol Ediliyor",

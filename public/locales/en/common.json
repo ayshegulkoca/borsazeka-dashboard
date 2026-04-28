@@ -649,9 +649,9 @@
     },
     "nav": {
       "home": "Home",
-      "robots": "Robot Catalog",
+      "robots": "My Robots",
       "accounts": "My Accounts",
-      "servers": "Servers",
+      "servers": "My Servers",
       "settings": "Settings",
       "backToSite": "Back to Site",
       "billing": "My Invoices"

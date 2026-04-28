@@ -2,7 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { Activity, Home, Bot, Server, LogOut, Bell, Settings, Crown, Zap, Star, Wallet, Receipt } from "lucide-react";
+import { Activity, Home, Bot, Server, LogOut, Bell, Settings, Crown, Zap, Star, Wallet, Receipt, ArrowLeft } from "lucide-react";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
 import { useTranslation } from "react-i18next";
@@ -108,12 +108,22 @@ export default function DashboardShell({ children, userName, userEmail, userImag
     <div className={styles.container}>
       {/* Sidebar */}
       <aside className={styles.sidebar}>
-        <Link href="/" className={styles.logoArea}>
-          <div className={styles.logoIcon}>
-            <Activity color="var(--accent-primary)" size={24} />
-          </div>
-          <span className={styles.title}>BorsaZeka</span>
-        </Link>
+        <div className={styles.sidebarHeader}>
+          <Link href="/" className={styles.logoArea}>
+            <div className={styles.logoIcon}>
+              <Activity color="var(--accent-primary)" size={24} />
+            </div>
+            <span className={styles.title}>BorsaZeka</span>
+          </Link>
+
+          <Link 
+            href="/" 
+            className={styles.backToSiteBtnSidebar} 
+          >
+            <ArrowLeft size={16} />
+            <span>{t("dashboard.nav.backToSite")}</span>
+          </Link>
+        </div>
 
         <nav className={styles.nav}>
           {navItems.map((item) => {
@@ -190,12 +200,6 @@ export default function DashboardShell({ children, userName, userEmail, userImag
           <div className={styles.headerActions}>
             {/* Dil Seçici (Sol tarafta) */}
             <LangToggle />
-
-            {/* Siteye Geri Dön (En sağda) */}
-            <Link href="/" className={styles.backToSiteBtn} id="header-back-to-site">
-              <Activity size={18} />
-              <span>{t("dashboard.nav.backToSite")}</span>
-            </Link>
           </div>
         </header>
 
