@@ -13,8 +13,11 @@ import {
   ExternalLink,
   Plus,
   Sparkles,
+  LayoutGrid,
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { useSession, signOut } from "next-auth/react";
+import Image from "next/image";
 import s from "./setup-wizard.module.css";
 
 // ─── Props ────────────────────────────────────────────────────────────────────
@@ -66,6 +69,7 @@ export default function SetupWizard({
   className = "",
 }: SetupWizardProps) {
   const { t } = useTranslation("common");
+  const { data: session } = useSession();
   const [hoveredStep, setHoveredStep] = useState<number | null>(null);
 
   // Step 3 is locked until both step 1 & 2 are done
@@ -275,35 +279,117 @@ export default function SetupWizard({
                   </span>
                 </div>
                 <div className={s.stepTitle}>{t(step.titleKey)}</div>
-                <div className={s.stepDesc}>{t(step.descKey)}</div>
+                
+                {/* ── CUSTOM STEP CONTENT ────────────────────────── */}
+                
+                {/* Step 1: Profile view when done */}
+                {step.num === 1 && step.done && (
+                  <div className={s.step1Content}>
+                    <div className={s.profileBox}>
+                      <div className={s.profileAvatarWrapper}>
+                        {session?.user?.image ? (
+                          <Image
+                            src={session.user.image}
+                            alt={session.user.name || "User"}
+                            width={36}
+                            height={36}
+                            className={s.profileAvatar}
+                          />
+                        ) : (
+                          <div className={s.profileAvatarPlaceholder}>
+                            <LogIn size={16} />
+                          </div>
+                        )}
+                      </div>
+                      <div className={s.profileInfo}>
+                        <div className={s.profileName}>{session?.user?.name}</div>
+                        <div className={s.profileEmail}>{session?.user?.email}</div>
+                      </div>
+                    </div>
+                    <button 
+                      className={s.profileSwitch}
+                      onClick={() => signOut({ callbackUrl: "/" })}
+                    >
+                      {t("onboardingSteps.step1.switchAccount")}
+                    </button>
+                  </div>
+                )}
+                
+                {/* Step 1: Default desc when not done */}
+                {step.num === 1 && !step.done && (
+                  <div className={s.stepDesc}>{t(step.descKey)}</div>
+                )}
 
-                {/* ── CTA ──────────────────────────────────────── */}
-                {/* Step 3 special: two buttons */}
-                {step.num === 3 && !step.done && !step.locked && (
-                  <div className={s.ctaStack}>
-                    <a
-                      href="https://t.co/kUUMsLhRJZ?amp=1"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={s.ctaPrimary}
-                      id="setup-wizard-open-account"
-                    >
-                      <ExternalLink size={15} />
-                      {t("setupWizard.step3.openAccount")}
-                    </a>
-                    <Link
-                      href="/dashboard/accounts/add-forex"
-                      className={s.ctaSecondary}
-                      id="setup-wizard-add-forex"
-                    >
-                      <Plus size={15} />
-                      {t("setupWizard.step3.addForex")}
+                {/* Step 2: Multi-option paths when active */}
+                {step.num === 2 && !step.done && !step.locked && !step.pending && (
+                  <div className={s.optionList}>
+                    <Link href="/robotlar" className={s.optionCard}>
+                      <div className={s.optionIconBox}>
+                        <LayoutGrid size={18} />
+                      </div>
+                      <div className={s.optionText}>
+                        {t("onboardingSteps.step2.optionATitle")}
+                      </div>
+                      <ArrowRight size={14} className={s.optionArrow} />
+                    </Link>
+                    <Link href="/urun-sec" className={s.optionCard}>
+                      <div className={s.optionIconBox}>
+                        <Bot size={18} />
+                      </div>
+                      <div className={s.optionText}>
+                        {t("onboardingSteps.step2.optionBTitle")}
+                      </div>
+                      <ArrowRight size={14} className={s.optionArrow} />
                     </Link>
                   </div>
                 )}
 
-                {/* Steps 1 & 2 CTA */}
-                {step.num !== 3 && !step.done && !step.locked && step.ctaHref && (
+                {/* Step 2: Default desc when done, locked or pending */}
+                {step.num === 2 && (step.done || step.locked || step.pending) && (
+                  <div className={s.stepDesc}>{t(step.descKey)}</div>
+                )}
+
+                {/* Step 3: Checklist layout */}
+                {step.num === 3 && (
+                  <div className={s.step3Content}>
+                    <div className={s.checklist}>
+                      <div className={`${s.checkItem} ${step1Completed ? s.checkItemDone : ""}`}>
+                        <Check size={12} className={s.checkSmall} />
+                        <span>{t("onboardingSteps.step3.checklist1")}</span>
+                      </div>
+                      <div className={`${s.checkItem} ${step2Completed ? s.checkItemDone : ""}`}>
+                        {step2Completed ? <Check size={12} className={s.checkSmall} /> : <Lock size={12} className={s.checkSmall} />}
+                        <span>{t("onboardingSteps.step3.checklist2")}</span>
+                      </div>
+                    </div>
+                    
+                    {!step.done && !step.locked && (
+                      <div className={s.ctaStack}>
+                        <a
+                          href="https://t.co/kUUMsLhRJZ?amp=1"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={s.ctaPrimary}
+                          id="setup-wizard-open-account"
+                        >
+                          <ExternalLink size={15} />
+                          {t("setupWizard.step3.openAccount")}
+                        </a>
+                        <Link
+                          href="/dashboard/accounts/add-forex"
+                          className={s.ctaSecondary}
+                          id="setup-wizard-add-forex"
+                        >
+                          <Plus size={15} />
+                          {t("setupWizard.step3.addForex")}
+                        </Link>
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* Legacy CTA logic for steps 1 & 2 — only if needed */}
+                {step.num !== 3 && !step.done && !step.locked && step.ctaHref && step.num !== 2 && (
                   <Link
                     href={step.ctaHref}
                     className={s.ctaInline}
