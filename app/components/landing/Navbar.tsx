@@ -148,13 +148,22 @@ export default function Navbar() {
   return (
     <>
       <nav className={`${styles.navbar} ${scrolled ? styles.scrolled : ""}`}>
-        {/* Logo */}
-        <Link href="/" className={styles.navLogo}>
-          <div className={styles.navLogoIcon}>
-            <Activity size={18} color="#022c22" strokeWidth={2.5} />
-          </div>
-          BorsaZeka
-        </Link>
+        {/* Brand: Logo + Dashboard Button (if auth) */}
+        <div className={styles.navBrandWrapper}>
+          <Link href="/" className={styles.navLogo}>
+            <div className={styles.navLogoIcon}>
+              <Activity size={18} color="#022c22" strokeWidth={2.5} />
+            </div>
+            BorsaZeka
+          </Link>
+
+          {isAuthenticated && (
+            <Link href="/dashboard" className={`${styles.btnDashboard} hidden md:inline-flex`}>
+              <LayoutDashboard size={14} className={styles.dashboardIcon} />
+              Dashboard
+            </Link>
+          )}
+        </div>
 
         {/* Center Links */}
         <ul className={styles.navLinks}>
@@ -238,6 +247,17 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       <div className={`${styles.mobileMenu} ${mobileOpen ? styles.open : ""}`}>
+        {isAuthenticated && (
+          <Link
+            href="/dashboard"
+            onClick={() => setMobileOpen(false)}
+            className={styles.btnDashboard}
+            style={{ marginBottom: "0.5rem", justifyContent: "center" }}
+          >
+            <LayoutDashboard size={16} />
+            Dashboard
+          </Link>
+        )}
         <Link href="/robotlar" onClick={() => setMobileOpen(false)}>
           {t("navbar.ourRobots")}
         </Link>
