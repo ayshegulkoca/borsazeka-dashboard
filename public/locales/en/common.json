@@ -1,4 +1,31 @@
 {
+  "setupWizard": {
+    "title": "Complete Setup",
+    "stepsCompleted": "{{completed}} of {{total}} steps completed",
+    "step": "STEP {{num}}",
+    "done": "Completed",
+    "checking": "Reviewing",
+    "locked": "Locked",
+    "step1": {
+      "titleDone": "Signed In",
+      "titlePending": "Sign In",
+      "desc": "You signed in with your Google account."
+    },
+    "step2": {
+      "title": "Choose & Subscribe to a Robot",
+      "desc": "Browse the catalog and subscribe to the robot that fits your strategy.",
+      "descPending": "Your Stripe payment is being verified. This usually takes a few minutes.",
+      "cta": "Subscribe to a Robot",
+      "ctaPending": "Payment Under Review"
+    },
+    "step3": {
+      "title": "Connect Your Account",
+      "desc": "Securely enter your broker or Binance API credentials. Your data is AES-256 encrypted.",
+      "descLocked": "This step will be unlocked once the first two steps are completed.",
+      "openAccount": "Open Forex Account",
+      "addForex": "Add Forex Account"
+    }
+  },
   "onboardingSteps": {
     "badge": "3 Steps to Start",
     "title": "Start Algorithmic Trading",

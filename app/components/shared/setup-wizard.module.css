@@ -1,0 +1,501 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   SetupWizard — Shared component (Landing + Dashboard)
+   Dark green glassmorphism, glow borders, framer-motion ready
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ── Root ──────────────────────────────────────────────────────────────── */
+.root {
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+  border: 1px solid rgba(16, 185, 129, 0.18);
+  background:
+    linear-gradient(135deg, rgba(16, 185, 129, 0.07) 0%, rgba(5, 150, 105, 0.03) 100%);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+
+/* Dashboard variant — compact, sits inline in page */
+.rootDashboard {
+  padding: 1.5rem 1.5rem 1.25rem;
+  margin-bottom: 1.75rem;
+}
+
+/* Landing variant — full-width section card */
+.rootLanding {
+  padding: 2rem 2rem 1.75rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* Glow top line */
+.root::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 8%; right: 8%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.55), transparent);
+  pointer-events: none;
+}
+
+/* ── Ambient glow blobs ─────────────────────────────────────────────────── */
+.glowTopLeft {
+  position: absolute;
+  top: -50px; left: -50px;
+  width: 200px; height: 200px;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.1), transparent 65%);
+  pointer-events: none;
+}
+
+.glowBottomRight {
+  position: absolute;
+  bottom: -40px; right: -40px;
+  width: 160px; height: 160px;
+  background: radial-gradient(circle, rgba(5, 150, 105, 0.07), transparent 65%);
+  pointer-events: none;
+}
+
+/* ── Header row ─────────────────────────────────────────────────────────── */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 1;
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.sparkleIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px; height: 32px;
+  border-radius: 8px;
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  color: var(--accent-primary, #10b981);
+  flex-shrink: 0;
+}
+
+.headerTitle {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary, #fff);
+  letter-spacing: -0.01em;
+}
+
+.headerSub {
+  font-size: 0.75rem;
+  color: var(--text-muted, rgba(255,255,255,0.4));
+  margin-top: 0.1rem;
+}
+
+/* ── Progress bar ──────────────────────────────────────────────────────── */
+.progressBar {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-shrink: 0;
+}
+
+.progressTrack {
+  width: 130px;
+  height: 10px;
+  border-radius: 100px;
+  background: rgba(255, 255, 255, 0.07);
+  position: relative;
+  overflow: visible;
+}
+
+.progressFill {
+  height: 100%;
+  border-radius: 100px;
+  background: linear-gradient(90deg, var(--accent-secondary, #059669), var(--accent-primary, #10b981));
+  min-width: 0;
+  position: relative;
+}
+
+.progressDot {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: var(--accent-primary, #10b981);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 10px rgba(16,185,129,0.7), 0 0 22px rgba(16,185,129,0.3);
+  pointer-events: none;
+}
+
+.progressLabel {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text-muted, rgba(255,255,255,0.4));
+  min-width: 2.5rem;
+}
+
+/* ── Steps row ──────────────────────────────────────────────────────────── */
+.stepsRow {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.stepAndConnector {
+  display: contents; /* connector + card sit directly in flex row */
+}
+
+/* ── Connector ───────────────────────────────────────────────────────────── */
+.connector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  gap: 3px;
+  min-width: 40px;
+  padding: 0 0.25rem;
+  margin-top: 3rem; /* aligns with icon bubbles */
+}
+
+.connectorLine {
+  width: 100%;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.07);
+  border-radius: 100px;
+  transition: background 0.5s ease;
+}
+
+.connectorLineDone {
+  background: rgba(16, 185, 129, 0.45);
+}
+
+.connectorArrow {
+  color: rgba(255, 255, 255, 0.14);
+  transition: color 0.5s ease;
+}
+
+.connectorArrowDone {
+  color: rgba(16, 185, 129, 0.65);
+}
+
+/* ── Step card ───────────────────────────────────────────────────────────── */
+.stepCard {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.25rem 1.25rem 1.1rem;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  background: rgba(255, 255, 255, 0.025);
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.3s ease;
+  cursor: default;
+}
+
+.stepCardActive {
+  border-color: rgba(16, 185, 129, 0.3);
+  background: rgba(16, 185, 129, 0.04);
+}
+
+/* Top glow line for active cards */
+.stepCardActive::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 10%; right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.6), transparent);
+  pointer-events: none;
+}
+
+.stepCardDone {
+  border-color: rgba(16, 185, 129, 0.2);
+  background: rgba(16, 185, 129, 0.04);
+}
+
+.stepCardLocked {
+  opacity: 0.4;
+  filter: saturate(0.25);
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+/* ── Lock overlay ────────────────────────────────────────────────────────── */
+.lockOverlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.lockIcon {
+  color: rgba(255, 255, 255, 0.18);
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5));
+}
+
+/* ── Hover glow overlay ──────────────────────────────────────────────────── */
+.hoverGlow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 0%, rgba(16, 185, 129, 0.09), transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Icon row (icon + badge) ─────────────────────────────────────────────── */
+.iconRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.iconBox {
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted, rgba(255,255,255,0.4));
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.iconBoxDone {
+  background: rgba(16, 185, 129, 0.14);
+  border-color: rgba(16, 185, 129, 0.3);
+  color: var(--accent-primary, #10b981);
+  box-shadow: 0 0 14px rgba(16,185,129,0.15);
+}
+
+.iconBoxHovered {
+  background: rgba(16, 185, 129, 0.1);
+  border-color: rgba(16, 185, 129, 0.25);
+  color: var(--accent-primary, #10b981);
+}
+
+/* ── Status badges ───────────────────────────────────────────────────────── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.67rem;
+  font-weight: 700;
+  padding: 0.22rem 0.6rem;
+  border-radius: 100px;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+
+.badgeDone {
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.22);
+  color: var(--accent-primary, #10b981);
+}
+
+.badgePending {
+  background: rgba(251, 191, 36, 0.12);
+  border: 1px solid rgba(251, 191, 36, 0.25);
+  color: #fbbf24;
+}
+
+.badgeLocked {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  color: rgba(255, 255, 255, 0.22);
+}
+
+/* ── Step text ───────────────────────────────────────────────────────────── */
+.stepMeta {
+  position: relative;
+  z-index: 1;
+}
+
+.stepNum {
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.stepTitle {
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: var(--text-primary, rgba(255,255,255,0.9));
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+  position: relative;
+  z-index: 1;
+}
+
+.stepDesc {
+  font-size: 0.78rem;
+  color: var(--text-muted, rgba(255,255,255,0.38));
+  line-height: 1.55;
+  flex: 1;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── CTA elements ────────────────────────────────────────────────────────── */
+.ctaInline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--accent-primary, #10b981);
+  text-decoration: none;
+  margin-top: auto;
+  padding-top: 0.5rem;
+  transition: gap 0.2s ease;
+  position: relative;
+  z-index: 1;
+  cursor: pointer;
+}
+
+.ctaInline:hover .ctaArrow {
+  transform: translateX(3px);
+}
+
+.ctaArrow {
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+.ctaDisabled {
+  color: var(--text-muted, rgba(255,255,255,0.3));
+  cursor: default;
+  pointer-events: none;
+}
+
+/* Step 3 two-button stack */
+.ctaStack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-top: auto;
+  padding-top: 0.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.ctaPrimary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  background: var(--accent-primary, #10b981);
+  color: #022c22;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.22s ease;
+  box-shadow: 0 4px 14px rgba(16,185,129,0.22), 0 0 0 1px rgba(16,185,129,0.12);
+}
+
+.ctaPrimary:hover {
+  background: #34d399;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(16,185,129,0.3);
+}
+
+.ctaSecondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1rem;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-primary, rgba(255,255,255,0.85));
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.22s ease;
+}
+
+.ctaSecondary:hover {
+  background: rgba(16, 185, 129, 0.08);
+  border-color: rgba(16, 185, 129, 0.28);
+}
+
+/* ── Responsive ─────────────────────────────────────────────────────────── */
+@media (max-width: 860px) {
+  .stepsRow {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .connector {
+    flex-direction: row;
+    min-width: unset;
+    width: 100%;
+    margin-top: 0;
+    padding: 0.2rem 0;
+  }
+
+  .connectorLine {
+    flex: 1;
+    height: 2px;
+    width: auto;
+  }
+
+  .connectorArrow {
+    transform: rotate(90deg);
+  }
+
+  .stepCard {
+    padding: 1.1rem 1rem;
+  }
+
+  .progressTrack {
+    width: 90px;
+  }
+
+  .rootDashboard {
+    padding: 1.25rem 1.1rem 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .progressBar {
+    width: 100%;
+  }
+
+  .progressTrack {
+    flex: 1;
+  }
+}

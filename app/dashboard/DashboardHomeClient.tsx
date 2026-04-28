@@ -9,7 +9,7 @@ import { useTranslation } from "react-i18next";
 import styles from "./page.module.css";
 import Link from "next/link";
 import type { RobotDef } from "@/lib/robots";
-import OnboardingProgressWidget from "./OnboardingProgressWidget";
+import SetupWizard from "@/app/components/shared/SetupWizard";
 
 interface RobotWithMeta {
   id: string;
@@ -48,11 +48,13 @@ export default function DashboardHomeClient({
         <h1 className={styles.title}>{displayName}</h1>
       </div>
 
-      {/* Onboarding Widget — setup eksikse göster */}
-      <OnboardingProgressWidget 
-        hasRobots={hasRobots} 
-        hasBrokerAccounts={hasBrokerAccounts} 
-        subscriptionStatus={subscriptionStatus}
+      {/* Setup Wizard — setup eksikse göster */}
+      <SetupWizard
+        step1Completed={true}
+        step2Completed={hasRobots}
+        step2Pending={subscriptionStatus === "PENDING"}
+        step3Completed={hasBrokerAccounts}
+        variant="dashboard"
       />
 
 

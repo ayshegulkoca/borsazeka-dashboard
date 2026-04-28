@@ -1,4 +1,31 @@
 {
+  "setupWizard": {
+    "title": "Kurulumu Tamamla",
+    "stepsCompleted": "{{completed}} / {{total}} adım tamamlandı",
+    "step": "ADIM {{num}}",
+    "done": "Tamamlandı",
+    "checking": "Kontrol Ediliyor",
+    "locked": "Kilitli",
+    "step1": {
+      "titleDone": "Giriş Yapıldı",
+      "titlePending": "Giriş Yap",
+      "desc": "Google hesabınızla tek tıkta giriş yaptınız."
+    },
+    "step2": {
+      "title": "Robot Seçin ve Abone Olun",
+      "desc": "Size uygun robotu seçin ve aboneliğinizi başlatın.",
+      "descPending": "Stripe ödemeniz doğrulanıyor. Bu işlem birkaç dakika sürebilir.",
+      "cta": "Robota Abone Ol",
+      "ctaPending": "Ödeme Kontrol Ediliyor"
+    },
+    "step3": {
+      "title": "Hesabınızı Bağlayın",
+      "desc": "Aracı kurum veya Binance API bilgilerinizi güvenle girin. Verileriniz AES-256 ile şifrelenir.",
+      "descLocked": "Bu adım ilk iki adım tamamlandıktan sonra aktif hale gelecek.",
+      "openAccount": "Forex Hesabı Aç",
+      "addForex": "Forex Hesabı Ekle"
+    }
+  },
   "onboardingSteps": {
     "badge": "3 Adımda Başlayın",
     "title": "Algoritmik Ticarete Başlayın",
