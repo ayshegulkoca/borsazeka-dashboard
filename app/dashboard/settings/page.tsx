@@ -1,16 +1,5 @@
-import { getProfileData, getBillingData } from '@/lib/actions/settings'
-import SettingsPage from './SettingsPage'
+import { redirect } from 'next/navigation'
 
-export const metadata = {
-  title: 'Ayarlar | BorsaZeka Dashboard',
-  description: 'Hesap bilgilerinizi ve aboneliğinizi yönetin.',
-}
-
-export default async function SettingsPageRoute() {
-  const [profile, billing] = await Promise.all([
-    getProfileData(),
-    getBillingData(),
-  ])
-
-  return <SettingsPage profile={profile} billing={billing} />
+export default function SettingsRedirect() {
+  redirect('/dashboard/settings/profile')
 }

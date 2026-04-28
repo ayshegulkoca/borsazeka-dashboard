@@ -2,7 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { Activity, Home, Bot, Server, LogOut, Bell, Settings, Crown, Zap, Star, Wallet, Receipt, ArrowLeft } from "lucide-react";
+import { Activity, Home, Bot, Server, LogOut, Bell, Settings, Crown, Zap, Star, Wallet, Receipt, ArrowLeft, User, CreditCard } from "lucide-react";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
 import { useTranslation } from "react-i18next";
@@ -101,7 +101,8 @@ export default function DashboardShell({ children, userName, userEmail, userImag
     { label: t("dashboard.nav.robots"),   href: "/dashboard/robots",   icon: Bot },
     { label: t("dashboard.nav.accounts"), href: "/dashboard/accounts", icon: Wallet },
     { label: t("dashboard.nav.servers"),  href: "/dashboard/servers",  icon: Server },
-    { label: t("dashboard.nav.settings"), href: "/dashboard/settings", icon: Settings },
+    { label: t("dashboard.settings.tabProfile"), href: "/dashboard/settings/profile", icon: User },
+    { label: t("dashboard.settings.tabBilling"), href: "/dashboard/settings/billing", icon: CreditCard },
   ];
 
   return (
@@ -128,7 +129,7 @@ export default function DashboardShell({ children, userName, userEmail, userImag
         <nav className={styles.nav}>
           {navItems.map((item) => {
             const Icon = item.icon;
-            const isActive = pathname === item.href;
+            const isActive = pathname.startsWith(item.href) && (item.href !== "/dashboard" || pathname === "/dashboard");
 
             return (
               <Link

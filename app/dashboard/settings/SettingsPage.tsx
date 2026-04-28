@@ -57,6 +57,7 @@ type ProfileData = {
 type SettingsPageProps = {
   profile: ProfileData
   billing: BillingData | null
+  view?: 'profile' | 'billing'
 }
 
 // ─── Submit Button (uses useFormStatus) ──────────────────────
@@ -580,43 +581,24 @@ const initialState: ProfileFormState = {
   message: '',
 }
 
-export default function SettingsPage({ profile, billing }: SettingsPageProps) {
+export default function SettingsPage({ profile, billing, view = 'profile' }: SettingsPageProps) {
   const { t } = useTranslation('common')
-  const [activeTab, setActiveTab] = useState<'profile' | 'billing'>('profile')
   const [state, formAction] = useActionState(updateProfile, initialState)
 
   return (
     <div className={styles.container}>
       {/* Page Header */}
       <div className={styles.pageHeader}>
-        <h1 className={styles.pageTitle}>{t('dashboard.settings.title')}</h1>
+        <h1 className={styles.pageTitle}>
+          {view === 'profile' ? t('dashboard.settings.tabProfile') : t('dashboard.settings.tabBilling')}
+        </h1>
         <p className={styles.pageSubtitle}>
-          {t('dashboard.settings.subtitle')}
+          {view === 'profile' ? t('dashboard.settings.profileDesc') : t('dashboard.settings.billingHistoryDesc')}
         </p>
       </div>
 
-      {/* Tab Navigation */}
-      <div className={styles.tabNav}>
-        <button
-          className={`${styles.tabButton} ${activeTab === 'profile' ? styles.tabButtonActive : ''}`}
-          onClick={() => setActiveTab('profile')}
-          id="tab-profile"
-        >
-          <User size={16} />
-          {t('dashboard.settings.tabProfile')}
-        </button>
-        <button
-          className={`${styles.tabButton} ${activeTab === 'billing' ? styles.tabButtonActive : ''}`}
-          onClick={() => setActiveTab('billing')}
-          id="tab-billing"
-        >
-          <CreditCard size={16} />
-          {t('dashboard.settings.tabBilling')}
-        </button>
-      </div>
-
-      {/* Tab Content */}
-      {activeTab === 'profile' ? (
+      {/* Content Rendering based on view prop */}
+      {view === 'profile' ? (
         <ProfileTab
           profile={profile}
           state={state}
