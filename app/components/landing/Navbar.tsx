@@ -164,6 +164,7 @@ export default function Navbar() {
               aria-label="Dashboard"
             >
               <LayoutDashboard size={18} className={styles.dashboardIcon} />
+              Dashboard
             </Link>
           )}
         </div>
