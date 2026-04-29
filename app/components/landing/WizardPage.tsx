@@ -36,10 +36,54 @@ interface WState {
   budgetLabel: string | null;
   budgetCurrency: "TRY" | "USD";
   selectedBudgetComingSoon: boolean;
+  /** Güvenlik: localStorage kaydedilirken hangi kullanıcıya ait olduğu */
+  userId?: string | null;
 }
 
 const TOTAL = 6;
 const STEP_LABELS = ["Piyasa", "Alt Piyasa", "Yönetim", "Robot", "Bütçe", "Özet"];
+
+// ─── localStorage helpers ────────────────────────────────────────────────────
+const STORAGE_KEY = "borsazeka_wizard_state";
+
+const DEFAULT_STATE: WState = {
+  step: 1, market: null, subMarket: null, managementType: null,
+  robotId: null, budgetValue: null, budgetLabel: null,
+  budgetCurrency: "TRY", selectedBudgetComingSoon: false, userId: null,
+};
+
+/** localStorage'dan state yükler. Parse hatası veya veri yoksa default döner. */
+function loadFromStorage(): WState {
+  if (typeof window === "undefined") return DEFAULT_STATE;
+  try {
+    const raw = window.localStorage.getItem(STORAGE_KEY);
+    if (!raw) return DEFAULT_STATE;
+    const parsed = JSON.parse(raw) as WState;
+    // Temel alan kontrolü — bozuk veriyi reddet
+    if (typeof parsed.step !== "number" || parsed.step < 1 || parsed.step > TOTAL) {
+      return DEFAULT_STATE;
+    }
+    return parsed;
+  } catch {
+    return DEFAULT_STATE;
+  }
+}
+
+/** Mevcut state'i localStorage'a yazar. */
+function saveToStorage(state: WState): void {
+  if (typeof window === "undefined") return;
+  try {
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch {
+    // Depolama dolu veya private mod — sessizce geç
+  }
+}
+
+/** Wizard tamamlandığında geçici veriyi sil. */
+function clearStorage(): void {
+  if (typeof window === "undefined") return;
+  window.localStorage.removeItem(STORAGE_KEY);
+}
 
 // ─── Main ────────────────────────────────────────────────────────────────────
 export default function WizardPage() {
@@ -47,11 +91,8 @@ export default function WizardPage() {
   const { data: session } = useSession();
   const searchParams = useSearchParams();
 
-  const [state, setState] = useState<WState>({
-    step: 1, market: null, subMarket: null, managementType: null,
-    robotId: null, budgetValue: null, budgetLabel: null,
-    budgetCurrency: "TRY", selectedBudgetComingSoon: false,
-  });
+  // ── State — lazy initializer localStorage'dan hidrate eder ─────────────────
+  const [state, setState] = useState<WState>(() => loadFromStorage());
   const [notifyEmail, setNotifyEmail] = useState("");
   const [notifyDone, setNotifyDone] = useState(false);
   const [notifySubmitting, setNotifySubmitting] = useState(false);
@@ -59,6 +100,26 @@ export default function WizardPage() {
   const [redirecting, setRedirecting] = useState(false);
   const [submitDone, setSubmitDone] = useState(false);
 
+  // ── Güvenlik: session yüklendiğinde userId eşleşmesini kontrol et ───────────
+  useEffect(() => {
+    if (!session?.user) return;
+    const userId = session.user.id ?? session.user.email ?? null;
+    const saved = loadFromStorage();
+    if (!saved.userId || saved.userId === userId) {
+      // Aynı kullanıcı veya misafir kayıt → userId'yi güncelle, state'i koru
+      setState(prev => ({ ...prev, userId }));
+    } else {
+      // Farklı kullanıcı → önceki veriyi temizle ve sıfırla
+      clearStorage();
+      setState({ ...DEFAULT_STATE, userId });
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [session?.user?.id, session?.user?.email]);
+
+  // ── Otomatik kayıt: her state değişiminde localStorage'a yaz ────────────────
+  useEffect(() => {
+    saveToStorage(state);
+  }, [state]);
 
   const patch = useCallback((p: Partial<WState>) => setState(prev => ({ ...prev, ...p })), []);
 
@@ -224,6 +285,8 @@ export default function WizardPage() {
         }
         // --- SYNC END ---
 
+        // Stripe'a geçmeden önce wizard state'ini temizle (ödeme sonrası sıfır başlangıç)
+        clearStorage();
         // Give a tiny moment for DB state to propagate before browser leaves the page
         setTimeout(() => {
           window.location.href = finalLink;
@@ -233,9 +296,11 @@ export default function WizardPage() {
       }
 
       // Stripe linki yoksa (İletişim/Manual flow)
+      clearStorage(); // Tamamlandı → temizle
       setSubmitDone(true);
     } catch (err) {
       console.error("Submit error:", err);
+      clearStorage(); // Hata da olsa wizard bitti sayılır
       setSubmitDone(true);
     } finally {
       setSubmitting(false);
