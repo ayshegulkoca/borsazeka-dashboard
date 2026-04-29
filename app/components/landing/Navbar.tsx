@@ -163,7 +163,7 @@ export default function Navbar() {
               title="Dashboard"
               aria-label="Dashboard"
             >
-              <LayoutDashboard size={13} className={styles.dashboardIcon} />
+              <LayoutDashboard size={18} className={styles.dashboardIcon} />
             </Link>
           )}
         </div>
@@ -274,7 +274,7 @@ export default function Navbar() {
             className={styles.btnDashboard}
             style={{ marginBottom: "0.5rem", justifyContent: "center" }}
           >
-            <LayoutDashboard size={16} />
+            <LayoutDashboard size={18} />
             Dashboard
           </Link>
         )}
