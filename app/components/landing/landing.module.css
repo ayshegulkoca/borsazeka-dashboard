@@ -566,7 +566,7 @@
 }
 
 
-/* ---------- Hero Centered (Apple Premium V3) ---------- */
+/* ---------- Hero Centered (Royal Obsidian Premium) ---------- */
 .heroCentered {
   position: relative;
   min-height: 100vh;
@@ -576,7 +576,7 @@
   justify-content: center;
   overflow: hidden;
   background: #000000;
-  padding: 10rem 2rem 8rem;
+  padding: 12rem 2rem 10rem;
   z-index: 1;
 }
 
@@ -700,101 +700,91 @@
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
-  padding: 0.5rem 1rem;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid var(--border-subtle);
+  padding: 0.5rem 1.2rem;
+  background: rgba(108, 92, 231, 0.05);
+  border: 1px solid rgba(108, 92, 231, 0.2);
   border-radius: 100px;
   font-size: 0.7rem;
-  font-weight: 500;
-  color: var(--text-secondary);
-  letter-spacing: 0.05em;
+  font-weight: 400;
+  color: var(--accent-primary);
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  margin-bottom: 2.5rem;
+  margin-bottom: 3rem;
   backdrop-filter: blur(8px);
   animation: fadeIn 0.8s ease-out forwards;
 }
 
 .heroCenteredTitle {
-  font-size: clamp(2.5rem, 6vw, 4.5rem);
-  font-weight: 500;
-  line-height: 1.05;
-  letter-spacing: -0.04em;
-  color: var(--text-primary);
-  margin-bottom: 2rem;
+  font-size: clamp(2.8rem, 7vw, 5.5rem);
+  font-weight: 200;
+  line-height: 1.0;
+  letter-spacing: -0.05em;
+  color: #ffffff;
+  margin-bottom: 2.5rem;
   text-wrap: balance;
   animation: fadeIn 1s ease-out forwards;
 }
 
 .heroCenteredAccent {
-  color: #ffffff;
+  color: var(--accent-primary);
   display: inline;
-  font-weight: 600;
+  font-weight: 300;
 }
 
 .heroCenteredSubtitle {
-  font-size: clamp(1.1rem, 2.5vw, 1.35rem);
+  font-size: clamp(1.15rem, 2.8vw, 1.45rem);
   line-height: 1.6;
   color: var(--text-secondary);
-  max-width: 600px;
-  margin-bottom: 3.5rem;
-  font-weight: 400;
+  max-width: 650px;
+  margin-bottom: 4.5rem;
+  font-weight: 300;
   animation: fadeIn 1.2s ease-out forwards;
 }
 
-/* Apple Capsule Button Style */
+/* Royal Purple Capsule Button */
 .heroCenteredCTA {
   display: inline-flex;
   align-items: center;
-  gap: 0.75rem;
-  padding: 0.9rem 2.5rem;
-  border-radius: 100px;
-  font-size: 1.05rem;
-  font-weight: 600;
-  background: #ffffff;
-  color: #000000;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.1);
+  gap: 0.85rem;
+  padding: 1.1rem 3rem;
+  border-radius: var(--radius-capsule);
+  font-size: 1.1rem;
+  font-weight: 500;
+  background: var(--accent-primary);
+  color: #ffffff;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 10px 30px rgba(108, 92, 231, 0.3);
   animation: fadeIn 1.4s ease-out forwards;
 }
 
 .heroCenteredCTA:hover {
-  background: #f5f5f7;
-  transform: scale(1.02);
-  box-shadow: 0 8px 30px rgba(255, 255, 255, 0.2);
+  background: var(--accent-primary-hover);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 15px 40px rgba(108, 92, 231, 0.5);
+}
+
+.heroCenteredGhost {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 1.1rem 3rem;
+  border-radius: var(--radius-capsule);
+  font-size: 1.1rem;
+  font-weight: 500;
+  background: transparent;
+  color: #ffffff;
+  border: 1px solid var(--border-subtle);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: fadeIn 1.4s ease-out forwards;
+}
+
+.heroCenteredGhost:hover {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 20px rgba(108, 92, 231, 0.2);
 }
 
 .heroMockupWrapper {
-  width: 100%;
-  max-width: 1100px;
-  margin-top: 6rem;
-  position: relative;
-  animation: fadeIn 1.6s ease-out forwards;
-}
-
-.heroMockupImage {
-  width: 100%;
-  height: auto;
-  border-radius: 20px;
-  /* Low-key lighting effect */
-  box-shadow: 
-    0 30px 60px -12px rgba(0,0,0,0.5),
-    0 18px 36px -18px rgba(0,0,0,0.5),
-    inset 0 0 0 1px rgba(255,255,255,0.05);
-  filter: contrast(1.1) brightness(0.9);
-  mask-image: radial-gradient(circle at center, black 60%, transparent 100%);
-  -webkit-mask-image: radial-gradient(circle at center, black 60%, transparent 100%);
-}
-
-.heroMockupGlow {
-  position: absolute;
-  top: -10%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80%;
-  height: 40%;
-  background: radial-gradient(ellipse at center, rgba(16, 185, 129, 0.1) 0%, transparent 70%);
-  pointer-events: none;
-  z-index: -1;
+  display: none;
 }
 
 .heroCenteredSubtitle {

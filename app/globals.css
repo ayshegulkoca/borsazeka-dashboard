@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600&display=swap');
 @import "tailwindcss";
 
 :root {
@@ -7,25 +7,25 @@
   --bg-card-hover: #121212;
   --bg-input: #0f0f0f;
   
-  --accent-primary: #ffffff; /* Apple style often uses white as primary accent on dark */
-  --accent-primary-hover: #f5f5f7;
+  --accent-primary: #6C5CE7; /* Royal Purple */
+  --accent-primary-hover: #5b4cc4;
   --accent-secondary: #1d1d1f;
-  --accent-green: #10b981; /* Keep the brand green as a secondary accent */
   
-  --text-primary: #f5f5f7;
-  --text-secondary: #86868b;
-  --text-muted: #424245;
+  --text-primary: #ffffff;
+  --text-secondary: #a1a1a6;
+  --text-muted: #6e6e73;
   
   --border-subtle: #232323;
   --border-active: #424245;
   
   --radius-sm: 8px;
   --radius-md: 12px;
-  --radius-lg: 20px;
+  --radius-lg: 24px;
   --radius-capsule: 9999px;
   
-  --shadow-premium: 0 4px 24px rgba(0, 0, 0, 0.5);
-  --shadow-inner: inset 0 1px 1px rgba(255, 255, 255, 0.05);
+  --shadow-premium: 0 10px 40px rgba(0, 0, 0, 0.8);
+  --shadow-purple-glow: 0 0 30px rgba(108, 92, 231, 0.15);
+  --shadow-inner: inset 0 1px 1px rgba(255, 255, 255, 0.03);
 }
 
 * {
@@ -44,10 +44,12 @@ body {
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
+  letter-spacing: -0.01em;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
+  font-weight: 300;
 }
 
 .tracking-tighter {
@@ -57,11 +59,7 @@ h1, h2, h3, h4, h5, h6 {
 a {
   color: inherit;
   text-decoration: none;
-  transition: opacity 0.2s ease;
-}
-
-a:hover {
-  opacity: 0.8;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 button {
@@ -69,7 +67,7 @@ button {
   border: none;
   cursor: pointer;
   font-family: inherit;
-  transition: all 0.2s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Base utility classes for typography */
@@ -84,25 +82,30 @@ button {
 .text-5xl { font-size: 3rem; line-height: 1; }
 .text-6xl { font-size: 3.75rem; line-height: 1; }
 
+.font-thin { font-weight: 100; }
 .font-light { font-weight: 300; }
 .font-normal { font-weight: 400; }
 .font-medium { font-weight: 500; }
 .font-semibold { font-weight: 600; }
-.font-bold { font-weight: 700; }
 
 .text-primary { color: var(--text-primary); }
 .text-secondary { color: var(--text-secondary); }
 .text-muted { color: var(--text-muted); }
-.text-accent { color: var(--accent-green); }
+.text-accent { color: var(--accent-primary); }
 
 .opacity-0 { opacity: 0; }
 .opacity-100 { opacity: 1; }
-.transition-all { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+.transition-all { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
 
-/* Premium Card Base */
+/* Royal Obsidian Card */
 .premium-card {
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-premium), var(--shadow-inner);
+  transition: border-color 0.3s ease;
+}
+
+.premium-card:hover {
+  border-color: var(--accent-primary);
 }
