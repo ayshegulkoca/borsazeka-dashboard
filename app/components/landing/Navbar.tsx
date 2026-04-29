@@ -148,6 +148,7 @@ export default function Navbar() {
   return (
     <>
       <nav className={`${styles.navbar} ${scrolled ? styles.scrolled : ""}`}>
+        <div className={styles.navInner}>
         {/* Brand: Logo + Dashboard Button (if auth) */}
         <div className={styles.navBrandWrapper}>
           <Link href="/" className={styles.navLogo}>
@@ -158,9 +159,11 @@ export default function Navbar() {
           </Link>
 
           {isAuthenticated && (
-            <Link href="/dashboard" className={`${styles.btnDashboard} hidden md:inline-flex`}>
-              <LayoutDashboard size={14} className={styles.dashboardIcon} />
-              Dashboard
+            <Link href="/dashboard" className={`${styles.btnDashboard} hidden md:inline-flex`}
+              title="Dashboard"
+              aria-label="Dashboard"
+            >
+              <LayoutDashboard size={13} className={styles.dashboardIcon} />
             </Link>
           )}
         </div>
@@ -196,7 +199,7 @@ export default function Navbar() {
             }}
             aria-label="Uygulamayı İndir bölümüne git"
           >
-            <Smartphone size={14} />
+            <Smartphone size={13} />
             {t("navbar.downloadApp")}
           </button>
 
@@ -259,6 +262,7 @@ export default function Navbar() {
           <span />
           <span />
         </button>
+        </div>
       </nav>
 
       {/* Mobile Menu */}
