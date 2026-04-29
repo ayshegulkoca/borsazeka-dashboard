@@ -15,11 +15,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(5, 10, 8, 0.6);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-  transition: background 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border-subtle);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Max-width inner container — prevents elements hugging screen edges */
@@ -39,11 +39,9 @@
 }
 
 .navbar.scrolled {
-  background: rgba(5, 10, 8, 0.82);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border-bottom-color: rgba(16, 185, 129, 0.08);
-  box-shadow: 0 1px 0 rgba(16, 185, 129, 0.05), 0 4px 24px rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.9);
+  border-bottom-color: var(--border-active);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
 }
 
 .navLogo {
@@ -516,16 +514,16 @@
 .mobileMenu {
   display: none;
   position: fixed;
-  top: 72px;
+  top: 64px;
   left: 0;
   right: 0;
-  background: rgba(7, 14, 10, 0.97);
-  backdrop-filter: blur(16px);
-  padding: 1.5rem 2rem;
+  bottom: 0;
+  background: #000000;
+  padding: 2rem;
   z-index: 99;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.5rem;
+  animation: fadeIn 0.4s ease-out;
 }
 
 .mobileMenu.open {
@@ -568,29 +566,23 @@
 }
 
 
-/* ---------- Hero Centered (V2) ---------- */
+/* ---------- Hero Centered (Apple Premium V3) ---------- */
 .heroCentered {
   position: relative;
   min-height: 100vh;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  /* Mesh Gradient Background */
-  background: 
-    radial-gradient(at 0% 0%, #002211 0%, transparent 50%),
-    radial-gradient(at 100% 0%, #001108 0%, transparent 50%),
-    radial-gradient(at 100% 100%, #002211 0%, transparent 50%),
-    radial-gradient(at 0% 100%, #001108 0%, transparent 50%),
-    #050c08;
-  background-size: 200% 200%;
-  animation: meshMove 20s ease infinite alternate;
-  padding: 8rem 2rem 5rem;
+  background: #000000;
+  padding: 10rem 2rem 8rem;
+  z-index: 1;
 }
 
-@keyframes meshMove {
-  0%   { background-position: 0% 0%; }
-  100% { background-position: 100% 100%; }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0);    }
 }
 
 .heroBackground {
@@ -695,60 +687,114 @@
 
 .heroCenteredInner {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  max-width: 800px;
+  max-width: 900px;
   width: 100%;
 }
 
 .heroBadge {
   display: inline-flex;
   align-items: center;
-  gap: 0.75rem;
-  padding: 0.6rem 1.25rem;
-  background: rgba(16, 185, 129, 0.08);
-  border: 1px solid rgba(16, 185, 129, 0.15);
+  gap: 0.6rem;
+  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-subtle);
   border-radius: 100px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  color: var(--text-primary);
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--text-secondary);
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  margin-bottom: 2rem;
+  margin-bottom: 2.5rem;
   backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.8s ease-out forwards;
 }
 
 .heroCenteredTitle {
-  font-size: clamp(2.2rem, 5vw, 4rem);
-  font-weight: 900;
-  line-height: 1.1;
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 500;
+  line-height: 1.05;
   letter-spacing: -0.04em;
   color: var(--text-primary);
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
   text-wrap: balance;
+  animation: fadeIn 1s ease-out forwards;
 }
 
 .heroCenteredAccent {
-  color: var(--accent-primary);
+  color: #ffffff;
   display: inline;
-  position: relative;
-  text-shadow: 0 0 25px rgba(16, 185, 129, 0.4);
+  font-weight: 600;
 }
 
-.heroCenteredAccent::before {
-  content: '';
+.heroCenteredSubtitle {
+  font-size: clamp(1.1rem, 2.5vw, 1.35rem);
+  line-height: 1.6;
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin-bottom: 3.5rem;
+  font-weight: 400;
+  animation: fadeIn 1.2s ease-out forwards;
+}
+
+/* Apple Capsule Button Style */
+.heroCenteredCTA {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.9rem 2.5rem;
+  border-radius: 100px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  background: #ffffff;
+  color: #000000;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.1);
+  animation: fadeIn 1.4s ease-out forwards;
+}
+
+.heroCenteredCTA:hover {
+  background: #f5f5f7;
+  transform: scale(1.02);
+  box-shadow: 0 8px 30px rgba(255, 255, 255, 0.2);
+}
+
+.heroMockupWrapper {
+  width: 100%;
+  max-width: 1100px;
+  margin-top: 6rem;
+  position: relative;
+  animation: fadeIn 1.6s ease-out forwards;
+}
+
+.heroMockupImage {
+  width: 100%;
+  height: auto;
+  border-radius: 20px;
+  /* Low-key lighting effect */
+  box-shadow: 
+    0 30px 60px -12px rgba(0,0,0,0.5),
+    0 18px 36px -18px rgba(0,0,0,0.5),
+    inset 0 0 0 1px rgba(255,255,255,0.05);
+  filter: contrast(1.1) brightness(0.9);
+  mask-image: radial-gradient(circle at center, black 60%, transparent 100%);
+  -webkit-mask-image: radial-gradient(circle at center, black 60%, transparent 100%);
+}
+
+.heroMockupGlow {
   position: absolute;
-  inset: -10px;
-  background: rgba(16, 185, 129, 0.15);
-  filter: blur(20px);
-  border-radius: 50%;
+  top: -10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  height: 40%;
+  background: radial-gradient(ellipse at center, rgba(16, 185, 129, 0.1) 0%, transparent 70%);
+  pointer-events: none;
   z-index: -1;
-  opacity: 0.7;
 }
 
 .heroCenteredSubtitle {
