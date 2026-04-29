@@ -252,7 +252,7 @@ export default function MobileAppSection() {
     <section
       ref={ref as React.RefObject<HTMLElement>}
       className={`${s.section} ${inView ? s.sectionVisible : ""}`}
-      id="mobil-uygulama"
+      id="download-section"
       aria-label="Mobil Uygulama İndirme"
     >
       {/* ── Mesh background ── */}

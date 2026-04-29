@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 import Image from "next/image";
-import { Activity, ChevronDown, LayoutDashboard, LogOut, User } from "lucide-react";
+import { Activity, ChevronDown, LayoutDashboard, LogOut, Smartphone, User } from "lucide-react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useTranslation } from "react-i18next";
 import styles from "./landing.module.css";
@@ -184,6 +184,22 @@ export default function Navbar() {
 
         {/* Right Actions */}
         <div className={styles.navActions}>
+          {/* 📲 Uygulamayı İndir */}
+          <button
+            id="navbar-download-btn"
+            className={styles.btnDownload}
+            onClick={() => {
+              const el = document.getElementById("download-section");
+              if (el) {
+                el.scrollIntoView({ behavior: "smooth", block: "start" });
+              }
+            }}
+            aria-label="Uygulamayı İndir bölümüne git"
+          >
+            <Smartphone size={14} />
+            {t("navbar.downloadApp")}
+          </button>
+
           {/* Language Toggle */}
           <div className={styles.langToggle}>
             <button
@@ -274,6 +290,23 @@ export default function Navbar() {
         <Link href="/iletisim" onClick={() => setMobileOpen(false)}>
           {t("navbar.contact")}
         </Link>
+
+        {/* 📲 Uygulamayı İndir — mobil için belirgin buton */}
+        <button
+          id="mobile-download-btn"
+          className={styles.btnDownloadMobile}
+          onClick={() => {
+            setMobileOpen(false);
+            setTimeout(() => {
+              const el = document.getElementById("download-section");
+              if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+            }, 150);
+          }}
+          aria-label="Uygulamayı İndir bölümüne git"
+        >
+          <Smartphone size={18} />
+          {t("navbar.downloadApp")}
+        </button>
 
 
         {/* Mobile Language Toggle */}

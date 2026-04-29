@@ -72,7 +72,8 @@
     "menuLabel": "Open menu",
     "signOut": "Sign Out",
     "account": "Account",
-    "user": "User"
+    "user": "User",
+    "downloadApp": "Download App"
   },
   "hero": {
     "badge": "AI-powered stock trading robots since 2015",

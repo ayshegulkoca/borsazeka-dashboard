@@ -420,6 +420,67 @@
   /* border glow is now baked into btnSolid directly */
 }
 
+/* ── Uygulamayı İndir: ghost-fill + mor/yeşil gradient glow ── */
+.btnDownload {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  padding: 0.42rem 1rem;
+  border-radius: 9px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: rgba(167, 139, 250, 0.9);
+  background: rgba(139, 92, 246, 0.08);
+  border: 1px solid rgba(139, 92, 246, 0.35);
+  box-shadow:
+    0 0 0 1px rgba(139, 92, 246, 0.08),
+    0 0 10px rgba(139, 92, 246, 0.12);
+  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.btnDownload:hover {
+  color: #c4b5fd;
+  background: rgba(139, 92, 246, 0.15);
+  border-color: rgba(139, 92, 246, 0.65);
+  transform: translateY(-1px);
+  box-shadow:
+    0 0 0 1px rgba(139, 92, 246, 0.2),
+    0 0 18px rgba(139, 92, 246, 0.3),
+    0 4px 14px rgba(0, 0, 0, 0.2);
+}
+
+/* Mobil download butonu — tam genişlik, belirgin */
+.btnDownloadMobile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.85rem 1.25rem;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #c4b5fd;
+  background: rgba(139, 92, 246, 0.1);
+  border: 1px solid rgba(139, 92, 246, 0.4);
+  box-shadow: 0 0 16px rgba(139, 92, 246, 0.15);
+  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  text-decoration: none;
+  cursor: pointer;
+  margin-top: 0.25rem;
+}
+
+.btnDownloadMobile:hover {
+  background: rgba(139, 92, 246, 0.18);
+  border-color: rgba(139, 92, 246, 0.7);
+  box-shadow: 0 0 24px rgba(139, 92, 246, 0.28);
+}
+
 @keyframes neonPulse {
   0%, 100% { opacity: 0.5; }
   50%       { opacity: 1; }
