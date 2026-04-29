@@ -117,7 +117,7 @@ export default function SurecPage() {
                 {MOCK_REPORT.slice(0, 3).map((row) => (
                   <div key={row.key} className={styles.miniReportRow}>
                     <span className={styles.miniAccount}>{t("surec.client")} #{row.key}</span>
-                    <span className={styles.miniValue} style={{ color: row.positive ? "#10b981" : "#f87171" }}>
+                    <span className={styles.miniValue} style={{ color: row.positive ? "#4ade80" : "#f87171" }}>
                       {row.value}
                     </span>
                   </div>

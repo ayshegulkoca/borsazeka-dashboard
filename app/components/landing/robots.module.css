@@ -30,7 +30,7 @@
 }
 
 .heroTitle {
-  font-size: clamp(2rem, 4vw, 3.25rem);
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
   font-weight: 800;
   letter-spacing: -0.04em;
   color: var(--text-primary);
@@ -38,7 +38,7 @@
 }
 
 .heroSubtitle {
-  font-size: 1.05rem;
+  font-size: 0.95rem;
   line-height: 1.75;
   color: var(--text-secondary);
   max-width: 560px;
@@ -295,7 +295,7 @@
   font-size: 1rem;
   font-weight: 700;
   background: var(--accent-primary);
-  color: #022c22;
+  color: #000000;
   transition: all 0.2s;
 }
 

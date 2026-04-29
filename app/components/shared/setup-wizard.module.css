@@ -7,12 +7,10 @@
 .root {
   position: relative;
   overflow: hidden;
-  border-radius: 20px;
-  border: 1px solid rgba(16, 185, 129, 0.18);
-  background:
-    linear-gradient(135deg, rgba(16, 185, 129, 0.07) 0%, rgba(5, 150, 105, 0.03) 100%);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
+  border-radius: 24px;
+  border: 1px solid var(--border-subtle);
+  background: #000000;
+  box-shadow: var(--shadow-premium);
 }
 
 /* Dashboard variant — compact, sits inline in page */
@@ -34,16 +32,16 @@
   position: absolute;
   top: 0; left: 8%; right: 8%;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.55), transparent);
+  background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.45), transparent);
   pointer-events: none;
 }
 
-/* ── Ambient glow blobs ─────────────────────────────────────────────────── */
+
 .glowTopLeft {
   position: absolute;
   top: -50px; left: -50px;
   width: 200px; height: 200px;
-  background: radial-gradient(circle, rgba(16, 185, 129, 0.1), transparent 65%);
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.08), transparent 65%);
   pointer-events: none;
 }
 
@@ -51,7 +49,7 @@
   position: absolute;
   bottom: -40px; right: -40px;
   width: 160px; height: 160px;
-  background: radial-gradient(circle, rgba(5, 150, 105, 0.07), transparent 65%);
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.05), transparent 65%);
   pointer-events: none;
 }
 
@@ -78,10 +76,10 @@
   align-items: center;
   justify-content: center;
   width: 32px; height: 32px;
-  border-radius: 8px;
-  background: rgba(16, 185, 129, 0.12);
-  border: 1px solid rgba(16, 185, 129, 0.2);
-  color: var(--accent-primary, #10b981);
+  border-radius: 10px;
+  background: rgba(139, 92, 246, 0.12);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  color: var(--accent-primary);
   flex-shrink: 0;
 }
 
@@ -118,7 +116,7 @@
 .progressFill {
   height: 100%;
   border-radius: 100px;
-  background: linear-gradient(90deg, var(--accent-secondary, #059669), var(--accent-primary, #10b981));
+  background: var(--accent-primary);
   min-width: 0;
   position: relative;
 }
@@ -127,11 +125,11 @@
   position: absolute;
   top: 50%;
   transform: translate(-50%, -50%);
-  width: 14px; height: 14px;
+  width: 12px; height: 12px;
   border-radius: 50%;
-  background: var(--accent-primary, #10b981);
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 0 0 10px rgba(16,185,129,0.7), 0 0 22px rgba(16,185,129,0.3);
+  background: var(--accent-primary);
+  border: 2px solid #000;
+  box-shadow: 0 0 15px rgba(139, 92, 246, 0.6);
   pointer-events: none;
 }
 
@@ -177,16 +175,16 @@
 }
 
 .connectorLineDone {
-  background: rgba(16, 185, 129, 0.45);
+  background: rgba(139, 92, 246, 0.5);
 }
 
 .connectorArrow {
-  color: rgba(255, 255, 255, 0.14);
+  color: rgba(255, 255, 255, 0.1);
   transition: color 0.5s ease;
 }
 
 .connectorArrowDone {
-  color: rgba(16, 185, 129, 0.65);
+  color: rgba(139, 92, 246, 0.7);
 }
 
 /* ── Step card ───────────────────────────────────────────────────────────── */
@@ -207,28 +205,20 @@
 }
 
 .stepCardActive {
-  border-color: rgba(16, 185, 129, 0.3);
-  background: rgba(16, 185, 129, 0.04);
-}
-
-/* Top glow line for active cards */
-.stepCardActive::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 10%; right: 10%;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.6), transparent);
-  pointer-events: none;
+  border-color: rgba(139, 92, 246, 0.25);
+  background: rgba(139, 92, 246, 0.04);
 }
 
 .stepCardDone {
-  border-color: rgba(16, 185, 129, 0.2);
-  background: rgba(16, 185, 129, 0.04);
+  border-color: rgba(139, 92, 246, 0.15);
+  background: rgba(139, 92, 246, 0.03);
 }
 
 .stepCardLocked {
-  opacity: 0.4;
-  filter: saturate(0.25);
+  opacity: 0.5;
+  filter: saturate(0);
+  background: #0a0a0a;
+  border-color: #1A1A1A;
   pointer-events: none;
   cursor: not-allowed;
 }
@@ -253,7 +243,7 @@
 .hoverGlow {
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse at 50% 0%, rgba(16, 185, 129, 0.09), transparent 70%);
+  background: radial-gradient(ellipse at 50% 0%, rgba(139, 92, 246, 0.08), transparent 70%);
   pointer-events: none;
   z-index: 0;
 }
@@ -282,16 +272,16 @@
 }
 
 .iconBoxDone {
-  background: rgba(16, 185, 129, 0.14);
-  border-color: rgba(16, 185, 129, 0.3);
-  color: var(--accent-primary, #10b981);
-  box-shadow: 0 0 14px rgba(16,185,129,0.15);
+  background: rgba(139, 92, 246, 0.15);
+  border-color: rgba(139, 92, 246, 0.3);
+  color: var(--accent-primary);
+  box-shadow: 0 0 15px rgba(139, 92, 246, 0.15);
 }
 
 .iconBoxHovered {
-  background: rgba(16, 185, 129, 0.1);
-  border-color: rgba(16, 185, 129, 0.25);
-  color: var(--accent-primary, #10b981);
+  background: rgba(139, 92, 246, 0.12);
+  border-color: rgba(139, 92, 246, 0.3);
+  color: var(--accent-primary);
 }
 
 /* ── Status badges ───────────────────────────────────────────────────────── */
@@ -308,9 +298,9 @@
 }
 
 .badgeDone {
-  background: rgba(16, 185, 129, 0.12);
-  border: 1px solid rgba(16, 185, 129, 0.22);
-  color: var(--accent-primary, #10b981);
+  background: rgba(139, 92, 246, 0.12);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  color: var(--accent-primary);
 }
 
 .badgePending {
@@ -347,8 +337,8 @@
   width: 36px; height: 36px;
   border-radius: 50%;
   overflow: hidden;
-  border: 1px solid rgba(16, 185, 129, 0.4);
-  background: #022c22;
+  border: 1px solid rgba(139, 92, 246, 0.4);
+  background: #000;
   flex-shrink: 0;
 }
 
@@ -362,7 +352,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #10b981;
+  color: var(--accent-primary);
 }
 
 .profileInfo {
@@ -426,20 +416,20 @@
 }
 
 .optionCard:hover {
-  background: rgba(16, 185, 129, 0.08);
-  border-color: rgba(16, 185, 129, 0.3);
+  background: rgba(139, 92, 246, 0.08);
+  border-color: rgba(139, 92, 246, 0.3);
   transform: translateX(4px);
 }
 
 .optionIconBox {
   width: 32px; height: 32px;
   border-radius: 8px;
-  background: rgba(16, 185, 129, 0.1);
-  border: 1px solid rgba(16, 185, 129, 0.15);
+  background: rgba(139, 92, 246, 0.1);
+  border: 1px solid rgba(139, 92, 246, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #10b981;
+  color: var(--accent-primary);
 }
 
 .optionText {
@@ -455,7 +445,7 @@
 }
 
 .optionCard:hover .optionArrow {
-  color: #10b981;
+  color: var(--accent-primary);
   transform: translateX(2px);
 }
 
@@ -487,7 +477,7 @@
 }
 
 .checkItemDone {
-  color: #10b981;
+  color: var(--accent-primary);
 }
 
 .checkSmall {
@@ -534,11 +524,11 @@
   gap: 0.4rem;
   font-size: 0.8rem;
   font-weight: 700;
-  color: var(--accent-primary, #10b981);
+  color: var(--accent-primary);
   text-decoration: none;
   margin-top: auto;
   padding-top: 0.5rem;
-  transition: gap 0.2s ease;
+  transition: all 0.2s ease;
   position: relative;
   z-index: 1;
   cursor: pointer;
@@ -575,23 +565,23 @@
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  padding: 0.75rem 1rem;
-  border-radius: 12px;
-  background: var(--accent-primary, #10b981);
-  color: #022c22;
+  padding: 0.85rem 1.25rem;
+  border-radius: var(--radius-capsule);
+  background: var(--accent-primary);
+  color: #ffffff;
   font-size: 0.82rem;
   font-weight: 700;
   text-decoration: none;
   border: none;
   cursor: pointer;
   transition: all 0.22s ease;
-  box-shadow: 0 4px 14px rgba(16,185,129,0.22), 0 0 0 1px rgba(16,185,129,0.12);
+  box-shadow: 0 4px 14px rgba(139, 92, 246, 0.25);
 }
 
 .ctaPrimary:hover {
-  background: #34d399;
+  background: var(--accent-primary-hover);
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(16,185,129,0.3);
+  box-shadow: 0 8px 24px rgba(139, 92, 246, 0.35);
 }
 
 .ctaSecondary {
@@ -599,11 +589,11 @@
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  padding: 0.65rem 1rem;
-  border-radius: 12px;
+  padding: 0.75rem 1.25rem;
+  border-radius: var(--radius-capsule);
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  color: var(--text-primary, rgba(255,255,255,0.85));
+  color: #ffffff;
   font-size: 0.8rem;
   font-weight: 600;
   text-decoration: none;
@@ -612,8 +602,8 @@
 }
 
 .ctaSecondary:hover {
-  background: rgba(16, 185, 129, 0.08);
-  border-color: rgba(16, 185, 129, 0.28);
+  background: rgba(139, 92, 246, 0.08);
+  border-color: rgba(139, 92, 246, 0.3);
 }
 
 /* ── Responsive ─────────────────────────────────────────────────────────── */

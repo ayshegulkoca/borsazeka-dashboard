@@ -780,7 +780,7 @@ function OptionCard({ selected, icon, label, desc, comingSoon, comingSoonLabel, 
       onClick={onClick} role="button" tabIndex={0}
       onKeyDown={e => e.key === "Enter" && onClick()}>
       {comingSoon && <span className={s.comingSoonBadge}>{comingSoonLabel}</span>}
-      <div className={s.optionCheck}><Check size={12} color="#022c22" /></div>
+      <div className={s.optionCheck}><Check size={12} color="#000000" /></div>
       <div className={s.optionIcon}>{icon}</div>
       <div className={s.optionLabel}>{label}</div>
       <div className={s.optionDesc}>{desc}</div>
@@ -812,7 +812,7 @@ function RobotCard({ robot, selected, t, onClick }: {
         <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "0.5rem", flexShrink: 0 }}>
           {selected && !robot.comingSoon && (
             <div style={{ width: 22, height: 22, borderRadius: "50%", background: "var(--accent-primary)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <Check size={13} color="#022c22" />
+              <Check size={13} color="#000000" />
             </div>
           )}
           {robot.comingSoon && (

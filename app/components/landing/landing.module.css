@@ -54,15 +54,7 @@
   color: var(--text-primary);
 }
 
-.navLogoIcon {
-  width: 36px;
-  height: 36px;
-  background: var(--accent-primary);
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+
 
 .navLinks {
   display: flex;
@@ -75,35 +67,29 @@
 }
 
 .navLinks a {
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: #ffffff;
+  transition: all 0.3s ease;
   position: relative;
-  font-size: 0.8rem;
-  font-weight: 500;
-  letter-spacing: 0.02em;
-  color: rgba(148, 163, 184, 0.8);
-  transition: color 0.3s ease;
-  padding-bottom: 2px;
-  white-space: nowrap;
-}
-
-/* Thin underline on hover */
-.navLinks a::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 0;
-  height: 1px;
-  background: var(--accent-primary);
-  transition: width 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-  opacity: 0.7;
+  padding: 0.5rem 0;
+  opacity: 0.8;
 }
 
 .navLinks a:hover {
-  color: rgba(248, 250, 252, 0.92);
+  opacity: 1;
 }
 
-.navLinks a:hover::after {
-  width: 100%;
+/* Active state for elite dark theme — thin white line */
+.navLinks a.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: #ffffff;
+  opacity: 0.5;
 }
 
 .navLinkHighlight {
@@ -156,7 +142,7 @@
   height: 32px;
   border-radius: 50%;
   overflow: hidden;
-  border: 1.5px solid rgba(16, 185, 129, 0.5);
+  border: 1.5px solid rgba(139, 92, 246, 0.5);
   background: var(--bg-card);
   display: flex;
   align-items: center;
@@ -177,7 +163,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, rgba(16, 185, 129, 0.3), rgba(5, 150, 105, 0.4));
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.3), rgba(124, 58, 237, 0.4));
   color: var(--accent-primary);
 }
 
@@ -202,14 +188,14 @@
   position: absolute;
   top: calc(100% + 10px);
   right: 0;
-  min-width: 220px;
-  background: #121f1a;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+  min-width: 240px;
+  background: #000000;
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  box-shadow: var(--shadow-premium);
   z-index: 200;
   overflow: hidden;
-  animation: dropdownFadeIn 0.15s ease;
+  animation: dropdownFadeIn 0.2s ease-out;
 }
 
 @keyframes dropdownFadeIn {
@@ -229,7 +215,7 @@
   height: 40px;
   border-radius: 50%;
   overflow: hidden;
-  border: 1.5px solid rgba(16, 185, 129, 0.4);
+  border: 1.5px solid rgba(139, 92, 246, 0.3);
   background: var(--bg-card);
   display: flex;
   align-items: center;
@@ -319,9 +305,8 @@
 }
 
 .langBtnActive {
-  background: var(--accent-primary);
-  color: #022c22 !important;
-  box-shadow: 0 2px 10px rgba(16, 185, 129, 0.45);
+  color: #ffffff;
+  font-weight: 700;
 }
 
 /* Hide the pipe divider — pills are adjacent now */
@@ -343,23 +328,19 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.48rem 1.2rem;
-  border-radius: 9px;
+  padding: 0.75rem 1.75rem;
+  border-radius: var(--radius-capsule);
   font-size: 0.85rem;
   font-weight: 500;
-  color: rgba(248, 250, 252, 0.75);
-  background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-  cursor: pointer;
-  letter-spacing: 0.01em;
+  color: #ffffff;
+  border: 1px solid var(--border-subtle);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .btnGhost:hover {
-  color: var(--text-primary);
-  background: rgba(255, 255, 255, 0.07);
-  border-color: rgba(255, 255, 255, 0.2);
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 0.05);
+  border-color: #ffffff;
+  color: #ffffff;
 }
 
 /* ── Ürün Seç: koyu bg + parlayan yeşil glow border ── */
@@ -367,66 +348,25 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.48rem 1.25rem;
-  border-radius: 9px;
+  padding: 0.75rem 1.75rem;
+  border-radius: var(--radius-capsule);
   font-size: 0.85rem;
-  font-weight: 650;
-  /* Dark background so glow border reads cleanly */
-  background: rgba(10, 20, 15, 0.9);
-  color: rgba(16, 185, 129, 0.95);
-  border: 1px solid rgba(16, 185, 129, 0.55);
-  box-shadow:
-    0 0 0 1px rgba(16, 185, 129, 0.12),
-    0 0 12px rgba(16, 185, 129, 0.18),
-    inset 0 1px 0 rgba(16, 185, 129, 0.1);
-  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-  letter-spacing: 0.01em;
-  text-decoration: none;
+  font-weight: 600;
+  background: var(--accent-primary);
+  color: #ffffff;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 15px rgba(139, 92, 246, 0.2);
 }
 
 .btnSolid:hover {
-  background: rgba(16, 185, 129, 0.12);
-  border-color: rgba(16, 185, 129, 0.85);
-  color: #10b981;
+  background: var(--accent-primary-hover);
   transform: translateY(-1px);
-  box-shadow:
-    0 0 0 1px rgba(16, 185, 129, 0.25),
-    0 0 20px rgba(16, 185, 129, 0.35),
-    0 4px 16px rgba(0, 0, 0, 0.25),
-    inset 0 1px 0 rgba(16, 185, 129, 0.2);
+  box-shadow: 0 8px 25px rgba(139, 92, 246, 0.4);
+  color: #000000;
 }
 
 /* ── Dashboard Button: compact icon-only pill ── */
-.btnDashboard {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  /* Enlarge the pill */
-  padding: 0.45rem 0.9rem;
-  border-radius: 100px;
-  font-size: 0.85rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  color: var(--accent-primary);
-  background: transparent;
-  border: 1.5px solid rgba(16, 185, 129, 0.35);
-  text-decoration: none;
-  transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
-  white-space: nowrap;
-}
 
-.btnDashboard:hover {
-  background: rgba(16, 185, 129, 0.08);
-  border-color: rgba(16, 185, 129, 0.6);
-  box-shadow: 0 0 14px rgba(16, 185, 129, 0.18);
-  color: #fff;
-}
-
-.dashboardIcon {
-  color: var(--accent-primary);
-  flex-shrink: 0;
-}
 
 
 /* ── neonBorder — no longer used on btnSolid, kept for legacy usage ── */
@@ -436,29 +376,21 @@
 
 /* ── Uygulamayı İndir: pure ghost — no background fill ── */
 .btnDownload {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 0.35rem;
-  padding: 0.3rem 0.65rem;
-  border-radius: 8px;
+  gap: 0.5rem;
+  padding: 0.6rem 1.2rem;
+  border-radius: var(--radius-capsule);
   font-size: 0.75rem;
   font-weight: 500;
-  letter-spacing: 0.025em;
-  color: rgba(167, 139, 250, 0.75);
-  background: transparent;
-  border: 1px solid rgba(139, 92, 246, 0.22);
-  transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
-  text-decoration: none;
-  cursor: pointer;
-  white-space: nowrap;
+  color: #ffffff;
+  border: 1px solid var(--border-subtle);
+  transition: all 0.3s ease;
 }
 
 .btnDownload:hover {
-  color: #c4b5fd;
-  background: rgba(139, 92, 246, 0.08);
-  border-color: rgba(139, 92, 246, 0.45);
-  box-shadow: 0 0 12px rgba(139, 92, 246, 0.18);
+  background: rgba(255, 255, 255, 0.05);
+  border-color: #ffffff;
 }
 
 /* Mobil download butonu — tam genişlik, belirgin */
@@ -556,7 +488,7 @@
 /* ---------- Section Base ---------- */
 .section {
   width: 100%;
-  padding: 7rem 2rem;
+  padding: 5rem 2rem;
 }
 
 .container {
@@ -566,7 +498,7 @@
 }
 
 
-/* ---------- Hero Centered (Royal Obsidian Premium) ---------- */
+/* ---------- Hero Centered (Royal Obsidian Premium V4) ---------- */
 .heroCentered {
   position: relative;
   min-height: 100vh;
@@ -576,7 +508,7 @@
   justify-content: center;
   overflow: hidden;
   background: #000000;
-  padding: 12rem 2rem 10rem;
+  padding: 10rem 2rem 8rem;
   z-index: 1;
 }
 
@@ -601,17 +533,17 @@
 }
 
 .heroChartLine1 {
-  stroke: rgba(16, 185, 129, 0.25);
+  stroke: rgba(255, 255, 255, 0.25);
   animation: chartPulse 4s ease-in-out infinite alternate;
 }
 
 .heroChartLine2 {
-  stroke: rgba(16, 185, 129, 0.12);
+  stroke: rgba(255, 255, 255, 0.12);
   animation: chartPulse 5s ease-in-out 1s infinite alternate;
 }
 
 .heroChartLine3 {
-  stroke: rgba(16, 185, 129, 0.07);
+  stroke: rgba(255, 255, 255, 0.07);
   animation: chartPulse 6s ease-in-out 2s infinite alternate;
 }
 
@@ -637,8 +569,8 @@
 .heroNeuralNode {
   position: absolute;
   border-radius: 50%;
-  background: rgba(16, 185, 129, 0.35);
-  box-shadow: 0 0 12px rgba(16, 185, 129, 0.4);
+  background: rgba(139, 92, 246, 0.35);
+  box-shadow: 0 0 12px rgba(139, 92, 246, 0.4);
   animation: nodeFloat 3s ease-in-out infinite alternate;
 }
 
@@ -653,8 +585,8 @@
   inset: 0;
   z-index: 0;
   background-image: 
-    linear-gradient(rgba(16, 185, 129, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(16, 185, 129, 0.05) 1px, transparent 1px);
+    linear-gradient(rgba(139, 92, 246, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(139, 92, 246, 0.05) 1px, transparent 1px);
   background-size: 60px 60px;
   background-position: center center;
   mask-image: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0,0,0,1) 0%, rgba(0,0,0,0.1) 40%, transparent 70%);
@@ -667,23 +599,42 @@
   position: absolute;
   top: 15%;
   left: 15%;
-  width: 600px;
-  height: 600px;
-  background: radial-gradient(circle, rgba(16, 185, 129, 0.12) 0%, transparent 70%);
+  width: 700px;
+  height: 700px;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.05) 0%, transparent 70%);
   pointer-events: none;
-  filter: blur(40px);
+  filter: blur(80px);
 }
 
 .heroGlow2 {
   position: absolute;
   bottom: 0%;
   right: 10%;
-  width: 500px;
-  height: 500px;
-  background: radial-gradient(circle, rgba(16, 185, 129, 0.08) 0%, transparent 70%);
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.04) 0%, transparent 70%);
   pointer-events: none;
-  filter: blur(50px);
+  filter: blur(100px);
 }
+
+.heroBackground {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.heroMockupGlow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 800px;
+  height: 400px;
+  background: radial-gradient(ellipse, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+  filter: blur(60px);
+}
+
 
 .heroCenteredInner {
   position: relative;
@@ -700,157 +651,97 @@
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
-  padding: 0.5rem 1.2rem;
-  background: rgba(108, 92, 231, 0.05);
-  border: 1px solid rgba(108, 92, 231, 0.2);
-  border-radius: 100px;
-  font-size: 0.7rem;
+  padding: 0.6rem 1.4rem;
+  background: rgba(139, 92, 246, 0.04);
+  border: 1px solid rgba(139, 92, 246, 0.15);
+  border-radius: var(--radius-capsule);
+  font-size: 0.75rem;
   font-weight: 400;
   color: var(--accent-primary);
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  margin-bottom: 3rem;
+  margin-bottom: 2.5rem;
   backdrop-filter: blur(8px);
-  animation: fadeIn 0.8s ease-out forwards;
 }
 
 .heroCenteredTitle {
-  font-size: clamp(2.8rem, 7vw, 5.5rem);
+  font-size: clamp(2rem, 5vw, 3.5rem);
   font-weight: 200;
-  line-height: 1.0;
-  letter-spacing: -0.05em;
+  line-height: 0.95;
+  letter-spacing: -0.06em;
   color: #ffffff;
-  margin-bottom: 2.5rem;
+  margin-bottom: 2rem;
   text-wrap: balance;
-  animation: fadeIn 1s ease-out forwards;
 }
 
 .heroCenteredAccent {
   color: var(--accent-primary);
   display: inline;
-  font-weight: 300;
+  font-weight: 200;
 }
 
 .heroCenteredSubtitle {
-  font-size: clamp(1.15rem, 2.8vw, 1.45rem);
-  line-height: 1.6;
+  font-size: clamp(0.9rem, 2vw, 1.1rem);
+  line-height: 1.5;
   color: var(--text-secondary);
-  max-width: 650px;
-  margin-bottom: 4.5rem;
-  font-weight: 300;
-  animation: fadeIn 1.2s ease-out forwards;
+  max-width: 700px;
+  margin-bottom: 4rem;
+  font-weight: 200;
 }
+
 
 /* Royal Purple Capsule Button */
 .heroCenteredCTA {
   display: inline-flex;
   align-items: center;
-  gap: 0.85rem;
-  padding: 1.1rem 3rem;
+  justify-content: center;
+  padding: 1.25rem 3.5rem;
+  background: #000000 !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.8);
   border-radius: var(--radius-capsule);
-  font-size: 1.1rem;
-  font-weight: 500;
-  background: var(--accent-primary);
-  color: #ffffff;
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  text-decoration: none;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 10px 30px rgba(108, 92, 231, 0.3);
-  animation: fadeIn 1.4s ease-out forwards;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
 }
 
 .heroCenteredCTA:hover {
-  background: var(--accent-primary-hover);
-  transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 15px 40px rgba(108, 92, 231, 0.5);
+  background: #111111 !important;
+  border-color: #ffffff;
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px);
 }
+
+
+
 
 .heroCenteredGhost {
   display: inline-flex;
   align-items: center;
-  gap: 0.85rem;
-  padding: 1.1rem 3rem;
+  gap: 1rem;
+  padding: 1.25rem 3.5rem;
   border-radius: var(--radius-capsule);
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   font-weight: 500;
   background: transparent;
   color: #ffffff;
   border: 1px solid var(--border-subtle);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  animation: fadeIn 1.4s ease-out forwards;
 }
 
 .heroCenteredGhost:hover {
   border-color: var(--accent-primary);
-  box-shadow: 0 0 20px rgba(108, 92, 231, 0.2);
+  background: rgba(255, 255, 255, 0.03);
+  box-shadow: 0 0 30px rgba(139, 92, 246, 0.15);
 }
 
 .heroMockupWrapper {
   display: none;
 }
 
-.heroCenteredSubtitle {
-  font-size: clamp(1rem, 2vw, 1.2rem);
-  line-height: 1.75;
-  color: var(--text-secondary);
-  max-width: 560px;
-  margin-bottom: 2.5rem;
-}
-
-.heroCenteredCTA {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 1rem 2.75rem;
-  border-radius: 14px;
-  font-size: 1.1rem;
-  font-weight: 700;
-  background: var(--accent-primary);
-  color: #022c22;
-  transition: all 0.25s;
-  box-shadow: 0 4px 24px rgba(16, 185, 129, 0.3);
-  position: relative;
-  z-index: 1;
-}
-
-.heroCenteredCTA:hover {
-  background: var(--accent-primary-hover);
-  transform: translateY(-3px);
-  box-shadow: 0 12px 40px rgba(16, 185, 129, 0.5);
-}
-
-/* Rotating border glow wrapper around CTA button */
-.heroCTAWrapper {
-  position: relative;
-  display: inline-flex;
-  border-radius: 16px;
-  padding: 2px;
-  margin-bottom: 3.5rem;
-  background: conic-gradient(
-    from var(--angle, 0deg),
-    rgba(16,185,129,0) 0%,
-    rgba(16,185,129,0.6) 25%,
-    rgba(16,185,129,0) 50%
-  );
-  animation: rotateBorder 3s linear infinite;
-}
-
-@property --angle {
-  syntax: "<angle>";
-  inherits: false;
-  initial-value: 0deg;
-}
-
-@keyframes rotateBorder {
-  to { --angle: 360deg; }
-}
-
-.heroCTAWrapper::before {
-  content: '';
-  position: absolute;
-  inset: 2px;
-  border-radius: 14px;
-  background: var(--bg-dark);
-  z-index: 0;
-}
 
 
 .heroCenteredStats {
@@ -889,17 +780,18 @@
   border-radius: 20px;
   background: linear-gradient(
     135deg,
-    rgba(16, 185, 129, 0.06) 0%,
+    rgba(255, 255, 255, 0.06) 0%,
     transparent 50%,
-    rgba(16, 185, 129, 0.03) 100%
+    rgba(255, 255, 255, 0.03) 100%
   );
   pointer-events: none;
 }
 
 @keyframes statsGlowPulse {
   0%   { box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.02) inset; }
-  100% { box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 20px rgba(16,185,129,0.1), 0 0 0 1px rgba(255,255,255,0.05) inset; }
+  100% { box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 20px rgba(255, 255, 255, 0.1), 0 0 0 1px rgba(255,255,255,0.05) inset; }
 }
+
 
 
 .heroStatDivider {
@@ -916,8 +808,8 @@
   width: 100%;
   max-width: 1200px;
   height: 200px;
-  background: radial-gradient(ellipse at center, rgba(16, 185, 129, 0.15) 0%, transparent 70%);
-  filter: blur(60px);
+  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
+  filter: blur(80px);
   pointer-events: none;
   z-index: 0;
 }
@@ -967,7 +859,7 @@
 }
 
 .robotCard:hover {
-  border-color: rgba(16, 185, 129, 0.25);
+  border-color: rgba(255, 255, 255, 0.25);
   transform: translateY(-3px);
 }
 
@@ -988,7 +880,7 @@
 .robotIconWrap {
   width: 56px;
   height: 56px;
-  background: rgba(16, 185, 129, 0.08);
+  background: rgba(255, 255, 255, 0.08);
   border-radius: 14px;
   display: flex;
   align-items: center;
@@ -1015,9 +907,9 @@
   font-weight: 600;
   padding: 0.2rem 0.65rem;
   border-radius: 100px;
-  background: rgba(16, 185, 129, 0.12);
+  background: rgba(139, 92, 246, 0.12);
   color: var(--accent-primary);
-  border: 1px solid rgba(16, 185, 129, 0.2);
+  border: 1.5px solid rgba(139, 92, 246, 0.4);
 }
 
 .robotComingSoon {
@@ -1033,7 +925,7 @@
 
 /* ---------- Pricing ---------- */
 .pricingSection {
-  background: linear-gradient(to bottom, var(--bg-dark), #05110a, var(--bg-dark));
+  background: linear-gradient(to bottom, var(--bg-dark), #000000, var(--bg-dark));
 }
 
 .pricingGrid {
@@ -1058,15 +950,15 @@
 }
 
 .pricingCardFeatured {
-  background: linear-gradient(135deg, #0e1b15 0%, #0a2016 100%);
-  border-color: rgba(16, 185, 129, 0.35);
+  background: linear-gradient(135deg, #000000 0%, #000000 100%);
+  border-color: rgba(255, 255, 255, 0.35);
   transform: scale(1.04);
-  box-shadow: 0 0 50px rgba(16, 185, 129, 0.15);
+  box-shadow: 0 0 50px rgba(255, 255, 255, 0.15);
 }
 
 .pricingCardFeatured:hover {
   transform: scale(1.04) translateY(-4px);
-  box-shadow: 0 0 70px rgba(16, 185, 129, 0.25);
+  box-shadow: 0 0 70px rgba(255, 255, 255, 0.25);
 }
 
 .pricingPopularBadge {
@@ -1075,7 +967,7 @@
   left: 50%;
   transform: translateX(-50%);
   background: var(--accent-primary);
-  color: #022c22;
+  color: #000000;
   font-size: 0.72rem;
   font-weight: 700;
   padding: 0.3rem 1rem;
@@ -1148,14 +1040,14 @@
   font-size: 0.9rem;
   font-weight: 600;
   background: var(--accent-primary);
-  color: #022c22;
+  color: #000000;
   text-align: center;
   transition: all 0.2s;
 }
 
 .btnPricingPrimary:hover {
   background: var(--accent-primary-hover);
-  box-shadow: 0 4px 20px rgba(16, 185, 129, 0.35);
+  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.35);
 }
 
 .btnPricingOutline {
@@ -1177,9 +1069,9 @@
 
 /* ---------- Bottom CTA ---------- */
 .ctaSection {
-  background: linear-gradient(135deg, #07200f 0%, #0a2d16 50%, #051a0a 100%);
-  border-top: 1px solid rgba(16, 185, 129, 0.1);
-  border-bottom: 1px solid rgba(16, 185, 129, 0.1);
+  background: linear-gradient(135deg, #000000 0%, #000000 50%, #000000 100%);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   text-align: center;
 }
 
@@ -1215,14 +1107,14 @@
   font-size: 1rem;
   font-weight: 700;
   background: var(--accent-primary);
-  color: #022c22;
+  color: #000000;
   transition: all 0.2s;
 }
 
 .btnCtaPrimary:hover {
   background: var(--accent-primary-hover);
   transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(16, 185, 129, 0.45);
+  box-shadow: 0 8px 30px rgba(255, 255, 255, 0.45);
 }
 
 .btnCtaSecondary {
@@ -1486,14 +1378,39 @@
   font-size: 0.95rem;
   font-weight: 700;
   background: var(--accent-primary);
-  color: #022c22;
+  color: #000000;
   transition: all 0.2s;
 }
 
 .contactBtnPrimary:hover {
   background: var(--accent-primary-hover);
   transform: translateY(-2px);
-  box-shadow: 0 8px 28px rgba(16, 185, 129, 0.4);
+  box-shadow: 0 8px 28px rgba(139, 92, 246, 0.3);
+}
+
+.btnDashboard {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.5rem 1.2rem;
+  border-radius: var(--radius-capsule);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #ffffff;
+  border: 1px solid var(--border-subtle);
+  background: rgba(255, 255, 255, 0.03);
+  transition: all 0.3s ease;
+  margin-left: 1.5rem;
+}
+
+.btnDashboard:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.dashboardIcon {
+  color: var(--accent-primary);
 }
 
 .contactBtnOutline {
@@ -1504,14 +1421,14 @@
   border-radius: 12px;
   font-size: 0.95rem;
   font-weight: 600;
-  border: 1px solid rgba(16, 185, 129, 0.25);
+  border: 1px solid rgba(139, 92, 246, 0.25);
   color: var(--accent-primary);
-  background: rgba(16, 185, 129, 0.06);
+  background: rgba(139, 92, 246, 0.06);
   transition: all 0.2s;
 }
 
 .contactBtnOutline:hover {
-  background: rgba(16, 185, 129, 0.12);
+  background: rgba(139, 92, 246, 0.12);
   transform: translateY(-2px);
 }
 

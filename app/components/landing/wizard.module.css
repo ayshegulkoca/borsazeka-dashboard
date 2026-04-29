@@ -138,7 +138,7 @@
 .stepperCircleDone {
   border-color: var(--accent-primary);
   background: var(--accent-primary);
-  color: #022c22;
+  color: #000000;
 }
 
 .stepperLabel {
@@ -660,7 +660,7 @@
   padding: 0.75rem 1.25rem;
   border-radius: 10px;
   background: var(--accent-primary);
-  color: #022c22;
+  color: #000000;
   font-size: 0.875rem;
   font-weight: 600;
   white-space: nowrap;
@@ -708,7 +708,7 @@
   font-size: 0.9rem;
   font-weight: 700;
   background: var(--accent-primary);
-  color: #022c22;
+  color: #000000;
   transition: all 0.2s;
 }
 
@@ -732,7 +732,7 @@
   font-size: 0.95rem;
   font-weight: 700;
   background: var(--accent-primary);
-  color: #022c22;
+  color: #000000;
   transition: all 0.2s;
 }
 

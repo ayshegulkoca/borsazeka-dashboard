@@ -20,9 +20,9 @@ const ROBOT_CATALOG = [
     descKey: "wizard.robots.darkroom.desc",
     market: "BIST",
     icon: Shield,
-    color: "#10b981",
+    color: "#22c55e",
     gradient: "linear-gradient(135deg, #0e1b15 0%, #072b1c 100%)",
-    border: "rgba(16,185,129,0.3)",
+    border: "rgba(34,197,94,0.3)",
     comingSoon: false,
     minBudget: "600.000 ₺",
     maxCapacity: 40,
@@ -177,7 +177,7 @@ const ROBOT_CATALOG = [
 ];
 
 const MARKET_LABELS: Record<string, { tr: string; en: string; color: string }> = {
-  BIST:   { tr: "BIST", en: "BIST", color: "#10b981" },
+  BIST:   { tr: "BIST", en: "BIST", color: "#8B5CF6" },
   CRYPTO: { tr: "Kripto", en: "Crypto", color: "#f97316" },
   FOREX:  { tr: "Forex", en: "Forex", color: "#06b6d4" },
 };

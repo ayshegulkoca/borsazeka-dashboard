@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
+import { usePathname } from "next/navigation";
 import Image from "next/image";
 import { Activity, ChevronDown, LayoutDashboard, LogOut, Smartphone, User } from "lucide-react";
 import { signIn, signOut, useSession } from "next-auth/react";
@@ -91,18 +92,6 @@ function AvatarDropdown() {
 
           <div className={styles.dropdownDivider} />
 
-          <Link
-            href="/dashboard"
-            className={styles.dropdownItem}
-            role="menuitem"
-            onClick={() => setOpen(false)}
-          >
-            <LayoutDashboard size={15} />
-            Dashboard
-          </Link>
-
-          <div className={styles.dropdownDivider} />
-
           <button
             className={`${styles.dropdownItem} ${styles.dropdownItemDanger}`}
             role="menuitem"
@@ -124,6 +113,7 @@ function AvatarDropdown() {
 export default function Navbar() {
   const { data: session } = useSession();
   const router = useRouter();
+  const pathname = usePathname();
   const isAuthenticated = !!session;
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -152,10 +142,7 @@ export default function Navbar() {
         {/* Brand: Logo + Dashboard Button (if auth) */}
         <div className={styles.navBrandWrapper}>
           <Link href="/" className={styles.navLogo}>
-            <div className={styles.navLogoIcon}>
-              <Activity size={18} color="#022c22" strokeWidth={2.5} />
-            </div>
-            BorsaZeka
+            <span>BorsaZeka</span>
           </Link>
 
           {isAuthenticated && (
@@ -172,18 +159,25 @@ export default function Navbar() {
         {/* Center Links */}
         <ul className={styles.navLinks}>
           <li>
-            <Link href="/robotlar">{t("navbar.ourRobots")}</Link>
+            <Link href="/robotlar" className={pathname === "/robotlar" ? styles.active : ""}>
+              {t("navbar.ourRobots")}
+            </Link>
           </li>
           <li>
-            <Link href="/urun-sec">{t("navbar.findProduct")}</Link>
+            <Link href="/urun-sec" className={pathname === "/urun-sec" ? styles.active : ""}>
+              {t("navbar.findProduct")}
+            </Link>
           </li>
           <li>
-            <Link href="/surec">{t("navbar.howItWorks")}</Link>
+            <Link href="/surec" className={pathname === "/surec" ? styles.active : ""}>
+              {t("navbar.howItWorks")}
+            </Link>
           </li>
           <li>
-            <Link href="/iletisim">{t("navbar.contact")}</Link>
+            <Link href="/iletisim" className={pathname === "/iletisim" ? styles.active : ""}>
+              {t("navbar.contact")}
+            </Link>
           </li>
-
         </ul>
 
         {/* Right Actions */}
@@ -225,31 +219,17 @@ export default function Navbar() {
 
           {/* Auth: Avatar Dropdown if logged in, else Sign In button */}
           {isAuthenticated ? (
-            <>
-              <MagneticButton strength={0.3}>
-                <Link href="/urun-sec" className={`${styles.btnSolid} ${styles.neonBorder}`} id="navbar-urun-sec-btn">
-                  {t("navbar.getStarted")}
-                </Link>
-              </MagneticButton>
-              <AvatarDropdown />
-            </>
+            <AvatarDropdown />
           ) : (
-            <>
-              <MagneticButton strength={0.25}>
-                <button
-                  className={styles.btnGhost}
-                  onClick={() => signIn("google", { callbackUrl: "/dashboard", prompt: "select_account" })}
+            <MagneticButton strength={0.25}>
+              <button
+                className={styles.btnGhost}
+                onClick={() => signIn("google", { callbackUrl: "/dashboard", prompt: "select_account" })}
 
-                >
-                  {t("navbar.signIn")}
-                </button>
-              </MagneticButton>
-              <MagneticButton strength={0.3}>
-                <Link href="/urun-sec" className={`${styles.btnSolid} ${styles.neonBorder}`}>
-                  {t("navbar.getStarted")}
-                </Link>
-              </MagneticButton>
-            </>
+              >
+                {t("navbar.signIn")}
+              </button>
+            </MagneticButton>
           )}
         </div>
 
@@ -281,13 +261,6 @@ export default function Navbar() {
         )}
         <Link href="/robotlar" onClick={() => setMobileOpen(false)}>
           {t("navbar.ourRobots")}
-        </Link>
-        <Link
-          href="/urun-sec"
-          onClick={() => setMobileOpen(false)}
-          style={{ color: "var(--accent-primary)", fontWeight: 600 }}
-        >
-          {t("navbar.findProduct")}
         </Link>
         <Link href="/surec" onClick={() => setMobileOpen(false)}>
           {t("navbar.howItWorks")}
@@ -334,15 +307,6 @@ export default function Navbar() {
         <div className={styles.mobileActions}>
           {isAuthenticated ? (
             <>
-              <Link
-                href="/urun-sec"
-                className={styles.btnSolid}
-                style={{ flex: 1, textAlign: "center" }}
-                onClick={() => setMobileOpen(false)}
-                id="mobile-urun-sec-btn"
-              >
-                {t("navbar.getStarted")}
-              </Link>
               <button
                 className={styles.btnGhost}
                 style={{ flex: 1, textAlign: "center", color: "#f87171" }}
@@ -360,14 +324,6 @@ export default function Navbar() {
               >
                 {t("navbar.signIn")}
               </button>
-              <Link
-                href="/urun-sec"
-                className={styles.btnSolid}
-                style={{ flex: 1, textAlign: "center" }}
-                onClick={() => setMobileOpen(false)}
-              >
-                {t("navbar.getStarted")}
-              </Link>
             </>
           )}
         </div>
