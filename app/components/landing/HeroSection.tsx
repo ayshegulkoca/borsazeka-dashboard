@@ -19,11 +19,24 @@ export default function HeroSection() {
           muted 
           loop 
           playsInline
+          disablePictureInPicture
+          disableRemotePlayback
+          controlsList="nodownload nofullscreen noremoteplayback"
+          {...({
+            webkitPlaysInline: true,
+            "x5-video-player-type": "h5",
+            "x5-video-player-fullscreen": "true",
+            "x5-video-orientation": "portrait"
+          } as any)}
         >
           <source src="/videos/background.mp4" type="video/mp4" />
         </video>
-        {/* Dark Overlay Overlay */}
+        
+        {/* Dark Overlay */}
         <div className={styles.videoOverlay} />
+
+        {/* Shadow DOM / Interaction Overlay (Ghost Div) */}
+        <div className={styles.videoInteractionBlocker} aria-hidden="true" />
       </div>
 
       {/* ── Content Container (Left Aligned) ── */}

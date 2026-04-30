@@ -563,6 +563,8 @@
   inset: 0;
   z-index: 0;
   overflow: hidden;
+  pointer-events: none;
+  user-select: none;
 }
 
 .heroVideo {
@@ -570,12 +572,25 @@
   height: 100%;
   object-fit: cover;
   filter: grayscale(30%) brightness(50%);
+  pointer-events: none;
+  user-select: none;
 }
 
 .videoOverlay {
   position: absolute;
   inset: 0;
   background: rgba(0, 0, 0, 0.6);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.videoInteractionBlocker {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  background: transparent;
+  pointer-events: auto; /* Catch all events here */
+  cursor: default;
 }
 
 .heroContainer {
