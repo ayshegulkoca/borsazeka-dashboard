@@ -630,8 +630,8 @@
 .heroAsymmetricTitle {
   font-size: clamp(2rem, 5vw, 3rem); /* text-5xl equivalent for elite feel */
   font-weight: 100;
-  line-height: 1.2;
-  letter-spacing: 0.04em;
+  line-height: 1.1; /* Narrowed for premium feel (leading-tight) */
+  letter-spacing: -0.05em; /* tracking-tighter */
   color: #ffffff;
   margin-bottom: 2rem;
   text-wrap: balance;
@@ -642,8 +642,9 @@
   line-height: 1.7;
   color: #A1A1AA;
   margin-bottom: 3rem;
-  font-weight: 200;
+  font-weight: 200; /* Extra Light (200) */
   max-width: 480px;
+  opacity: 0.7; /* Reduced opacity for secondary feel */
 }
 
 .heroAsymmetricCTA {
@@ -833,10 +834,10 @@
 }
 
 .heroCenteredAccent {
-  color: #3730A3; /* Elegant Dark Purple */
+  color: #a78bfa; /* text-purple-400: brighter and more premium */
   display: inline;
-  font-weight: 300; /* Light 300 */
-  text-shadow: none; /* Removed glow effect */
+  font-weight: 500; /* Medium (500) */
+  text-shadow: 0 0 20px rgba(167, 139, 250, 0.2); /* Subtle glow for 'signature' feel */
 }
 
 .heroCenteredSubtitle {
