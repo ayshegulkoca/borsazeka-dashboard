@@ -1,5 +1,6 @@
 /* ============================================================
    BorsaZeka Setup Wizard — Ultra-Light Aesthetic (V5)
+   Final: Horizontal Steps & Vertical Options
    ============================================================ */
 
 .root {
@@ -13,7 +14,12 @@
 }
 
 .rootDashboard {
-  padding: 2.5rem;
+  padding: 1.25rem 1.75rem;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .rootLanding {
@@ -28,7 +34,7 @@
   left: -100px;
   width: 300px;
   height: 300px;
-  background: radial-gradient(circle, rgba(55, 48, 163, 0.08) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(29, 49, 74, 0.15) 0%, transparent 70%);
   filter: blur(60px);
   pointer-events: none;
 }
@@ -39,7 +45,7 @@
   right: -100px;
   width: 300px;
   height: 300px;
-  background: radial-gradient(circle, rgba(67, 56, 202, 0.06) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(29, 49, 74, 0.1) 0%, transparent 70%);
   filter: blur(60px);
   pointer-events: none;
 }
@@ -49,38 +55,39 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 3rem;
+  margin-bottom: 1.25rem;
   gap: 2rem;
 }
 
 .headerLeft {
   display: flex;
   align-items: center;
-  gap: 1.25rem;
+  gap: 1rem;
 }
 
 .sparkleIcon {
-  width: 44px;
-  height: 44px;
+  width: 32px;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(55, 48, 163, 0.1);
-  border: 1px solid rgba(55, 48, 163, 0.2);
-  border-radius: 14px;
-  color: #3730A3;
+  background: rgba(29, 49, 74, 0.2);
+  border: 1px solid rgba(29, 49, 74, 0.4);
+  border-radius: 10px;
+  color: #60a5fa;
 }
 
+
 .headerTitle {
-  font-size: 1.25rem;
+  font-size: 0.95rem;
   font-weight: 200;
   letter-spacing: 0.02em;
   color: #ffffff;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0;
 }
 
 .headerSub {
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   font-weight: 300;
   color: #71717A;
 }
@@ -89,14 +96,14 @@
 .progressBar {
   display: flex;
   align-items: center;
-  gap: 1.25rem;
+  gap: 1rem;
   flex: 1;
-  max-width: 400px;
+  max-width: 320px;
 }
 
 .progressTrack {
   height: 4px;
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(255, 255, 255, 0.05);
   border-radius: 100px;
   flex: 1;
   position: relative;
@@ -105,9 +112,9 @@
 
 .progressFill {
   height: 100%;
-  background: #3730A3;
+  background: #1d314a; /* Deep Space Blue */
   border-radius: 100px;
-  box-shadow: 0 0 10px rgba(55, 48, 163, 0.2);
+  box-shadow: 0 0 10px rgba(29, 49, 74, 0.3);
 }
 
 .progressDot {
@@ -117,22 +124,22 @@
   width: 10px;
   height: 10px;
   background: #ffffff;
-  border: 2px solid #3730A3;
+  border: 2px solid #1d314a;
   border-radius: 50%;
-  box-shadow: 0 0 10px rgba(55, 48, 163, 0.3);
+  box-shadow: 0 0 8px rgba(29, 49, 74, 0.4);
 }
 
 .progressLabel {
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   font-weight: 600;
   color: #ffffff;
-  min-width: 2.5rem;
+  min-width: 2rem;
 }
 
 /* ── Steps Row ────────────────────────────────────────────── */
 .stepsRow {
   display: flex;
-  gap: 1.5rem;
+  gap: 0.75rem;
 }
 
 .stepAndConnector {
@@ -142,110 +149,100 @@
 }
 
 .stepCard {
+  flex: 1;
   background: rgba(255, 255, 255, 0.01);
-  border: 1px solid rgba(255, 255, 255, 0.03);
-  border-radius: 28px;
-  padding: 2.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 14px;
+  padding: 1rem;
   position: relative;
   transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-  height: 100%;
   display: flex;
-  flex-direction: column;
+  flex-direction: column; /* Vertical contents within the card */
+  align-items: flex-start;
+  gap: 0.5rem;
+  min-height: 120px; /* Space for vertical buttons */
 }
 
 .stepCardActive {
-  background: rgba(255, 255, 255, 0.02);
-  border-color: rgba(55, 48, 163, 0.15);
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(29, 49, 74, 0.4);
 }
 
 .stepCardDone {
-  background: rgba(255, 255, 255, 0.005);
-  border-color: rgba(255, 255, 255, 0.02);
+  background: rgba(29, 49, 74, 0.05);
+  border-color: rgba(29, 49, 74, 0.2);
 }
 
 .stepCardLocked {
-  opacity: 0.6;
-  filter: grayscale(0.5);
+  opacity: 0.4;
+  filter: grayscale(0.8);
 }
 
 .iconRow {
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.25rem;
 }
 
 .iconBox {
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.02);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.03);
   color: #71717A;
-  border: 1px solid rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
   transition: all 0.3s;
+  flex-shrink: 0;
 }
 
 .iconBoxDone {
-  background: rgba(55, 48, 163, 0.1);
-  color: #3730A3;
-  border-color: rgba(55, 48, 163, 0.2);
+  background: rgba(29, 49, 74, 0.15);
+  color: #60a5fa;
+  border-color: rgba(29, 49, 74, 0.3);
 }
 
 .iconBoxHovered {
-  border-color: #3730A3;
+  border-color: #1d314a;
   color: #ffffff;
 }
 
 .badge {
-  padding: 0.35rem 0.75rem;
+  padding: 0.25rem 0.5rem;
   border-radius: 100px;
-  font-size: 0.65rem;
-  font-weight: 500;
+  font-size: 0.6rem;
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.3rem;
 }
 
 .badgeDone {
-  background: rgba(55, 48, 163, 0.1);
-  color: #3730A3;
-  border: 1px solid rgba(55, 48, 163, 0.2);
+  background: #1d314a;
+  color: #ffffff;
+  border: 1px solid rgba(255,255,255,0.1);
 }
 
-.badgePending {
-  background: rgba(251, 191, 36, 0.1);
-  color: #fbbf24;
-  border: 1px solid rgba(251, 191, 36, 0.2);
-}
-
-.stepNum {
-  font-size: 0.65rem;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: #3F3F46;
-  margin-bottom: 0.5rem;
-  display: block;
+.stepMeta {
+  display: none; /* Removed for compactness */
 }
 
 .stepTitle {
-  font-size: 1.1rem;
-  font-weight: 100;
+  font-size: 11px;
+  font-weight: 300;
   color: #ffffff;
-  margin-bottom: 1rem;
-  line-height: 1.3;
+  margin-bottom: 0.25rem;
+  line-height: 1.2;
 }
 
 .stepDesc {
-  font-size: 0.85rem;
-  font-weight: 200;
-  color: #71717A;
-  line-height: 1.6;
+  display: none !important; /* Hide descriptions for compactness */
 }
 
 /* Connector - Invisible spacing */
@@ -253,142 +250,140 @@
   display: none;
 }
 
-/* ── Custom Step Content ─────────────────────────────────── */
+.step3Content {
+  display: none !important;
+}
+
 .step1Content {
-  margin-top: auto;
-  padding-top: 1.5rem;
+  display: flex !important;
+  flex-direction: column;
+  gap: 0.4rem;
+  width: 100%;
 }
 
 .profileBox {
-  background: rgba(255, 255, 255, 0.02);
-  border-radius: 16px;
-  padding: 1rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  padding: 0.5rem 0.75rem;
   display: flex;
   align-items: center;
-  gap: 0.85rem;
-  margin-bottom: 1rem;
+  gap: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .profileAvatarWrapper {
-  width: 36px;
-  height: 36px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(29, 49, 74, 0.4);
+}
+
+.profileAvatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profileAvatarPlaceholder {
+  width: 28px;
+  height: 28px;
+  background: rgba(29, 49, 74, 0.2);
+  color: #60a5fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.profileInfo {
+  display: flex;
+  flex-direction: column;
 }
 
 .profileName {
-  font-size: 0.85rem;
-  font-weight: 400;
+  font-size: 11px;
+  font-weight: 500;
   color: #ffffff;
 }
 
 .profileEmail {
-  font-size: 0.7rem;
+  font-size: 10px;
+  font-weight: 300;
   color: #71717A;
 }
 
 .profileSwitch {
-  width: 100%;
+  width: fit-content;
   background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 0.6rem;
-  border-radius: 12px;
-  font-size: 0.75rem;
-  color: #71717A;
+  border: none;
+  padding: 0;
+  font-size: 10px;
+  color: #60a5fa;
   cursor: pointer;
-  transition: all 0.2s;
+  text-decoration: underline;
+  font-family: inherit;
+  transition: opacity 0.2s;
 }
 
 .profileSwitch:hover {
-  background: rgba(255, 255, 255, 0.03);
-  color: #ffffff;
+  opacity: 0.8;
 }
 
-/* CTAs */
-.ctaStack {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  margin-top: 1.5rem;
-}
-
-.ctaPrimary {
-  width: 100%;
-  background: #ffffff;
-  color: #000000;
-  padding: 0.85rem;
-  border-radius: 14px;
-  font-size: 0.85rem;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.6rem;
-  text-decoration: none;
-  transition: all 0.3s;
-}
-
-.ctaPrimary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(255,255,255,0.1);
-}
-
-.ctaSecondary {
-  width: 100%;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  color: #ffffff;
-  padding: 0.85rem;
-  border-radius: 14px;
-  font-size: 0.85rem;
-  font-weight: 300;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.6rem;
-  text-decoration: none;
-  transition: all 0.3s;
-}
-
-.ctaSecondary:hover {
-  background: rgba(255, 255, 255, 0.06);
-}
-
-/* Step 2 Options */
+/* Step 2 Options - Vertical Stack (flex-col) */
 .optionList {
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-  margin-top: 1rem;
+  display: flex !important;
+  flex-direction: column; /* Dikey dizilim */
+  gap: 0.5rem; /* gap-2 */
+  width: 100%;
+  margin-top: 0.5rem;
+  pointer-events: auto;
+  z-index: 20;
 }
 
 .optionCard {
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 14px;
-  padding: 0.85rem 1rem;
+  width: 100%; /* w-full */
+  background: rgba(29, 49, 74, 0.15);
+  border: 1px solid rgba(29, 49, 74, 0.3);
+  border-radius: 8px;
+  padding: 0.5rem 0.85rem;
   text-decoration: none;
   transition: all 0.2s;
   display: flex;
   align-items: center;
   justify-content: center;
+  white-space: nowrap;
 }
 
 .optionCard:hover {
-  background: rgba(55, 48, 163, 0.08);
-  border-color: rgba(55, 48, 163, 0.2);
+  background: rgba(29, 49, 74, 0.3);
+  border-color: rgba(29, 49, 74, 0.5);
+  transform: translateY(-1px);
 }
 
 .optionText {
-  font-size: 0.8rem;
-  font-weight: 300;
+  font-size: 10px;
+  font-weight: 500;
   color: #ffffff;
+}
+
+/* Show minimal CTA for non-done steps */
+.ctaInline {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #60a5fa;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin-top: auto;
 }
 
 @media (max-width: 1024px) {
   .stepsRow {
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 0.75rem;
   }
 }

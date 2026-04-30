@@ -39,15 +39,16 @@
   align-items: center;
   gap: 0.55rem;
   padding: 0.42rem 1.1rem;
-  background: rgba(55, 48, 163, 0.08);
-  border: 1px solid rgba(55, 48, 163, 0.18);
+  background: #1d314a; /* Deep Space Blue */
+  border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 100px;
   font-size: 0.68rem;
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--accent-primary);
+  color: #ffffff;
   margin-bottom: 1.25rem;
+  box-shadow: 0 4px 15px rgba(29, 49, 74, 0.3);
 }
 
 .title {

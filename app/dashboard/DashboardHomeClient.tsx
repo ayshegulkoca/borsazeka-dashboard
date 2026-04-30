@@ -44,8 +44,10 @@ export default function DashboardHomeClient({
     <div className={styles.container}>
       {/* Hoşgeldin */}
       <div className={styles.welcomeSection}>
-        <p className={styles.welcomeText}>{t("dashboard.home.welcome")}</p>
-        <h1 className={styles.title}>{displayName}</h1>
+        <h1 className={styles.title}>
+          <span className={styles.welcomeText}>{t("dashboard.home.welcome")} </span>
+          {displayName}
+        </h1>
       </div>
 
       {/* Setup Wizard — setup eksikse göster */}

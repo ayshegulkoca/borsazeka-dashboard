@@ -243,7 +243,7 @@ export default function SetupWizard({
                         : ""
                     }`}
                   >
-                    <Icon size={20} />
+                    <Icon size={16} />
                   </div>
 
                   {/* Status badge */}
