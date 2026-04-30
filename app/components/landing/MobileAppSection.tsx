@@ -155,7 +155,7 @@ function PhoneMockup() {
             <div className={s.phoneStatusIcons}>
               <svg width="16" height="10" viewBox="0 0 16 10" fill="currentColor"><rect x="0" y="3" width="3" height="7" rx="0.5"/><rect x="4.5" y="2" width="3" height="8" rx="0.5"/><rect x="9" y="0" width="3" height="10" rx="0.5"/><rect x="13.5" y="0.5" width="2" height="9" rx="0.5" opacity=".35"/></svg>
               <svg width="15" height="10" viewBox="0 0 15 11" fill="currentColor"><path d="M7.5 2.25A7.1 7.1 0 0 1 12.9 4.5L14.25 3A9.35 9.35 0 0 0 7.5 0 9.35 9.35 0 0 0 .75 3L2.1 4.5A7.1 7.1 0 0 1 7.5 2.25z" opacity=".35"/><path d="M7.5 5.25A4.1 4.1 0 0 1 10.4 6.5L11.75 5a6 6 0 0 0-8.5 0L4.6 6.5A4.1 4.1 0 0 1 7.5 5.25z"/><circle cx="7.5" cy="9.5" r="1.5"/></svg>
-              <svg width="25" height="12" viewBox="0 0 25 12" fill="currentColor"><rect x="0.5" y="0.5" width="21" height="11" rx="3.5" stroke="currentColor" strokeOpacity=".35" fill="none"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#8B5CF6"/><rect x="22.5" y="4" width="2" height="4" rx="1" fill="currentColor" fillOpacity=".4"/></svg>
+              <svg width="25" height="12" viewBox="0 0 25 12" fill="currentColor"><rect x="0.5" y="0.5" width="21" height="11" rx="3.5" stroke="currentColor" strokeOpacity=".35" fill="none"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#4F46E5"/><rect x="22.5" y="4" width="2" height="4" rx="1" fill="currentColor" fillOpacity=".4"/></svg>
             </div>
           </div>
 
@@ -187,8 +187,8 @@ function PhoneMockup() {
                   </linearGradient>
                 </defs>
                 <path d="M0 130 L30 115 L60 125 L90 90 L120 100 L150 70 L180 80 L210 50 L240 60 L280 30 L280 160 L0 160Z" fill="url(#chartFill)"/>
-                <path d="M0 130 L30 115 L60 125 L90 90 L120 100 L150 70 L180 80 L210 50 L240 60 L280 30" stroke="#8B5CF6" strokeWidth="2" fill="none" className={s.chartLine}/>
-                <circle cx="280" cy="30" r="4" fill="#8B5CF6" className={s.chartDot}/>
+                <path d="M0 130 L30 115 L60 125 L90 90 L120 100 L150 70 L180 80 L210 50 L240 60 L280 30" stroke="#4F46E5" strokeWidth="2" fill="none" className={s.chartLine}/>
+                <circle cx="280" cy="30" r="4" fill="#4F46E5" className={s.chartDot}/>
               </svg>
               {/* Stats row */}
               <div className={s.mockStatsRow}>
@@ -206,7 +206,7 @@ function PhoneMockup() {
               {/* Robot card */}
               <div className={s.mockRobotCard}>
                 <div className={s.mockRobotIcon}>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8B5CF6" strokeWidth="2"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M12 11V7"/><circle cx="12" cy="5" r="2"/><path d="M7 11V9a5 5 0 0 1 10 0v2"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" strokeWidth="2"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M12 11V7"/><circle cx="12" cy="5" r="2"/><path d="M7 11V9a5 5 0 0 1 10 0v2"/></svg>
                 </div>
                 <div>
                   <div className={s.mockRobotName}>DarkRoom v3</div>

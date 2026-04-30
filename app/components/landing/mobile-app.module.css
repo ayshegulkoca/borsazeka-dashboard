@@ -137,7 +137,7 @@
   border: 1px solid rgba(139, 92, 246, 0.18);
   border-radius: 100px;
   font-size: 0.72rem;
-  font-weight: 700;
+  font-weight: 300;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--accent-primary);
@@ -163,23 +163,24 @@
 /* ── Headline ── */
 .headline {
   font-size: clamp(2rem, 4vw, 3.2rem);
-  font-weight: 900;
+  font-weight: 100; /* Ultra Light */
   line-height: 1.1;
-  letter-spacing: -0.04em;
+  letter-spacing: 0.04em;
   color: var(--text-primary);
   margin: 0;
 }
 
 .headlineAccent {
   color: var(--accent-primary);
-  text-shadow: 0 0 30px rgba(139, 92, 246, 0.4);
+  text-shadow: none; /* Removed glow */
   display: inline;
 }
 
 .headlineSub {
   color: rgba(248, 250, 252, 0.65);
-  font-weight: 700;
+  font-weight: 300;
   font-size: 0.85em;
+  letter-spacing: 0.05em;
 }
 
 /* ── Description ── */
@@ -611,7 +612,7 @@
 
 @keyframes dotPulse {
   0%, 100% { r: 4; opacity: 0.7; }
-  50%       { r: 6; opacity: 1; filter: drop-shadow(0 0 6px #8B5CF6); }
+  50%       { r: 6; opacity: 1; filter: drop-shadow(0 0 6px #4F46E5); }
 }
 
 /* Mock stats */

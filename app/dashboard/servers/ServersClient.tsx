@@ -16,7 +16,7 @@ const PACKAGE_COLORS: Record<string, string> = {
   power:        "#10b981",
   professional: "#3b82f6",
   expert:       "#f59e0b",
-  elite:        "#8b5cf6",
+  elite:        "#4F46E5",
   ultimate:     "#ec4899",
 };
 

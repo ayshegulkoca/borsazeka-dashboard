@@ -80,7 +80,7 @@ const ROBOT_CATALOG = [
     descKey: "wizard.robots.fabrika.desc",
     market: "BIST",
     icon: Activity,
-    color: "#8b5cf6",
+    color: "#4F46E5",
     gradient: "linear-gradient(135deg, #160e2a 0%, #1e1040 100%)",
     border: "rgba(139,92,246,0.3)",
     comingSoon: false,
@@ -177,7 +177,7 @@ const ROBOT_CATALOG = [
 ];
 
 const MARKET_LABELS: Record<string, { tr: string; en: string; color: string }> = {
-  BIST:   { tr: "BIST", en: "BIST", color: "#8B5CF6" },
+  BIST:   { tr: "BIST", en: "BIST", color: "#4F46E5" },
   CRYPTO: { tr: "Kripto", en: "Crypto", color: "#f97316" },
   FOREX:  { tr: "Forex", en: "Forex", color: "#06b6d4" },
 };

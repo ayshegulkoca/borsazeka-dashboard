@@ -32,10 +32,10 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
-          className={`${styles.heroCenteredTitle} tracking-tighter font-light`}
+          className={styles.heroCenteredTitle}
         >
           Borsa, yapay zeka ile buluştu: <br />
-          <span className="text-accent" style={{ fontWeight: 400 }}>BorsaZeka!</span>
+          <span className={styles.heroCenteredAccent}>BorsaZeka!</span>
         </motion.h1>
 
         <motion.p 
