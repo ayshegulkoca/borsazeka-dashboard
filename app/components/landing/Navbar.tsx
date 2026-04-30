@@ -178,6 +178,11 @@ export default function Navbar() {
               {t("navbar.contact")}
             </Link>
           </li>
+          <li>
+            <Link href="/forex" className={pathname === "/forex" ? styles.active : ""}>
+              {t("navbar.openForexAccount")}
+            </Link>
+          </li>
         </ul>
 
         {/* Right Actions */}
@@ -267,6 +272,9 @@ export default function Navbar() {
         </Link>
         <Link href="/iletisim" onClick={() => setMobileOpen(false)}>
           {t("navbar.contact")}
+        </Link>
+        <Link href="/forex" onClick={() => setMobileOpen(false)}>
+          {t("navbar.openForexAccount")}
         </Link>
 
         {/* 📲 Uygulamayı İndir — mobil için belirgin buton */}

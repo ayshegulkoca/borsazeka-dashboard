@@ -73,7 +73,8 @@
     "signOut": "Sign Out",
     "account": "Account",
     "user": "User",
-    "downloadApp": "Download App"
+    "downloadApp": "Download App",
+    "openForexAccount": "Open Forex Account"
   },
   "hero": {
     "badge": "AI-powered stock trading robots since 2015",

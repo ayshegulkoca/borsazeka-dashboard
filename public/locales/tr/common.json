@@ -73,7 +73,8 @@
     "signOut": "Çıkış Yap",
     "account": "Hesap",
     "user": "Kullanıcı",
-    "downloadApp": "Uygulamayı İndir"
+    "downloadApp": "Uygulamayı İndir",
+    "openForexAccount": "Forex Hesabı Aç"
   },
   "hero": {
     "badge": "2015'ten beri yapay zeka ile borsa robotları",
