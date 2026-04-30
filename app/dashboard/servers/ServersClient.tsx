@@ -13,11 +13,11 @@ const PACKAGE_ICONS = {
 } as const;
 
 const PACKAGE_COLORS: Record<string, string> = {
-  power:        "#10b981",
-  professional: "#3b82f6",
-  expert:       "#f59e0b",
-  elite:        "#4F46E5",
-  ultimate:     "#ec4899",
+  power:        "#94a3b8", /* Slate-400 */
+  professional: "#64748b", /* Slate-500 */
+  expert:       "#1d314a", /* Deep Space Blue */
+  elite:        "#334155", /* Slate-700 */
+  ultimate:     "#475569", /* Slate-600 */
 };
 
 interface ServerPackage {
@@ -48,12 +48,6 @@ export default function ServersClient({ myServers, packages }: Props) {
 
   return (
     <div className={styles.container}>
-      <div>
-        <h1 className={styles.title}>{t("dashboard.servers.title")}</h1>
-        <p className={styles.subtitle}>
-          {t("dashboard.servers.subtitle")}
-        </p>
-      </div>
 
       {/* Aktif Sunucularım */}
       {myServers.length > 0 && (
@@ -62,7 +56,7 @@ export default function ServersClient({ myServers, packages }: Props) {
             className={styles.sectionTitle}
             style={{ fontSize: "1.2rem", fontWeight: 600, marginBottom: "1.25rem", display: "flex", alignItems: "center", gap: "0.5rem" }}
           >
-            <Activity size={20} color="var(--accent-primary)" />
+            <Activity size={20} color="#64748b" />
             {t("dashboard.servers.myServersTitle")}
           </h2>
           <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
@@ -82,7 +76,7 @@ export default function ServersClient({ myServers, packages }: Props) {
               >
                 <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
                   <div style={{ padding: "0.75rem", background: "rgba(16,185,129,0.1)", borderRadius: "12px" }}>
-                    <Server size={22} color="var(--accent-primary)" />
+                    <Server size={22} color="#64748b" />
                   </div>
                   <div>
                     <div style={{ fontWeight: 600, fontSize: "1rem" }}>{srv.name}</div>

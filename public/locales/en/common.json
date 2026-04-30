@@ -22,7 +22,7 @@
       "title": "Connect Your Account",
       "desc": "Securely enter your broker or Binance API credentials. Your data is AES-256 encrypted.",
       "descLocked": "This step will be unlocked once the first two steps are completed.",
-      "openAccount": "Open Forex Account",
+      "openAccount": "Get Info and Open Account",
       "addForex": "Add Forex Account"
     }
   },
@@ -74,7 +74,8 @@
     "account": "Account",
     "user": "User",
     "downloadApp": "Download App",
-    "openForex": "Open Forex Account"
+    "openForex": "Open Forex Account",
+    "dashboard": "Dashboard"
   },
   "hero": {
     "badge": "AI-powered stock trading robots since 2015",
@@ -140,6 +141,12 @@
     "title": "Let's Find Your Perfect Robot",
     "subtitle": "In 6 steps, we'll identify the best robot and pricing plan for you.",
     "stepOf": "Step {{current}} of {{total}}",
+    "market": "Market",
+    "subMarket": "Sub-Market",
+    "management": "Management",
+    "robot": "Robot",
+    "budget": "Budget",
+    "summary": "Summary",
     "back": "Back",
     "next": "Next",
     "submit": "Subscribe",
@@ -768,7 +775,8 @@
       "cryptoBtn": "Connect Exchange",
       "forexCardTitle": "Tickmill Forex Account",
       "forexCardDesc": "Create your Tickmill account or connect your existing account to trade in Forex markets.",
-      "forexOpenBtn": "Open Account",
+      "forexOpenBtn": "Get Info and Open Account",
+      "get_info_and_open": "Get Info and Open Account",
       "forexAddBtn": "Add Forex Account",
       "securityNote": "Your sensitive data (API Key, Password, TC No) is encrypted with AES-256 browser-side and never transmitted as plain text.",
       "listTitle": "Connected Accounts",
@@ -798,6 +806,8 @@
       "save": "Save",
       "saving": "Saving...",
       "firstName": "First Name",
+      "customerId": "Customer ID",
+      "customerIdPlaceholder": "e.g. 1000",
       "firstNamePlaceholder": "Enter your first name",
       "lastName": "Last Name",
       "lastNamePlaceholder": "Enter your last name",

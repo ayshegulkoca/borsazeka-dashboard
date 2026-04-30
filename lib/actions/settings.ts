@@ -35,6 +35,7 @@ export async function updateProfile(
     country:     formData.get('country')     as string,
     companyName: formData.get('companyName') as string,
     twitter:     formData.get('twitter')     as string,
+    customerId:  formData.get('customerId')  as string,
   }
 
   const validated = profileSchema.safeParse(rawData)
@@ -60,6 +61,7 @@ export async function updateProfile(
     country:     validated.data.country     || null,
     companyName: validated.data.companyName || null,
     twitter:     validated.data.twitter     || null,
+    bio:         validated.data.customerId  || null,
   }
 
   // ── 1. POST to backend /dispatch (merkezi apiFetch ile 401 retry dahil) ──
@@ -100,6 +102,7 @@ export async function updateProfile(
         country:     validated.data.country     || null,
         companyName: validated.data.companyName || null,
         twitter:     validated.data.twitter     || null,
+        bio:         validated.data.customerId  || null,
       },
     })
 
@@ -140,6 +143,7 @@ export async function getProfileData() {
         country:     true,
         companyName: true,
         twitter:     true,
+        bio:         true,
         name:        true,
         image:       true,
         updatedAt:   true,

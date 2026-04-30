@@ -20,6 +20,7 @@ import {
   Globe,
   Map,
   Lock,
+  Hash,
 } from 'lucide-react'
 
 // X (Twitter) logo helper
@@ -100,6 +101,48 @@ function ProfileTab({
   formAction: (payload: FormData) => void
 }) {
   const { t } = useTranslation('common')
+  const [invalidFields, setInvalidFields] = useState<Record<string, boolean>>({})
+  const [validationMsg, setValidationMsg] = useState<{id: string, msg: string} | null>(null)
+
+  const triggerInvalid = (id: string, msg: string = 'Sadece rakam giriniz') => {
+    setInvalidFields(prev => ({ ...prev, [id]: true }))
+    setValidationMsg({ id, msg })
+    setTimeout(() => {
+      setInvalidFields(prev => ({ ...prev, [id]: false }))
+    }, 400)
+    setTimeout(() => {
+      setValidationMsg(null)
+    }, 2500)
+  }
+
+  const handleNumericInput = (e: React.FormEvent<HTMLInputElement>, limit?: number) => {
+    const input = e.currentTarget
+    const id = input.id
+    const value = input.value
+    const cleanValue = value.replace(/[^0-9]/g, '')
+    
+    if (value !== cleanValue) {
+      input.value = cleanValue
+      triggerInvalid(id)
+    }
+
+    if (limit && cleanValue.length > limit) {
+      input.value = cleanValue.slice(0, limit)
+      triggerInvalid(id, `Maksimum ${limit} karakter girebilirsiniz`)
+    }
+  }
+
+  const handlePhoneInput = (e: React.FormEvent<HTMLInputElement>) => {
+    const input = e.currentTarget
+    const id = input.id
+    const value = input.value
+    const cleanValue = value.replace(/[^0-9+]/g, '')
+    
+    if (value !== cleanValue) {
+      input.value = cleanValue
+      triggerInvalid(id, 'Sadece rakam ve + işareti girebilirsiniz')
+    }
+  }
 
   return (
     <div className={styles.tabContent}>
@@ -111,6 +154,28 @@ function ProfileTab({
 
         <form action={formAction} key={profile?.updatedAt?.toString() ?? 'initial'}>
           <div className={styles.formGrid}>
+            
+            {/* Customer ID (Editable) */}
+            <div className={styles.formGroup}>
+              <label htmlFor="customerId" className={styles.label} style={{ fontWeight: 200 }}>
+                <Hash size={14} />
+                {t('dashboard.settings.customerId')}
+              </label>
+              <input
+                id="customerId"
+                name="customerId"
+                type="text"
+                className={`${styles.input} ${invalidFields.customerId ? styles.inputInvalid : ''}`}
+                defaultValue={profile?.bio ?? ''} 
+                placeholder={t('dashboard.settings.customerIdPlaceholder')}
+                onInput={(e) => handleNumericInput(e)}
+              />
+              {validationMsg?.id === 'customerId' && (
+                <span className={styles.fieldError} style={{ marginTop: '2px', fontSize: '0.7rem' }}>
+                  {validationMsg.msg}
+                </span>
+              )}
+            </div>
 
             {/* Email (Read-only) — session'dan gelir, kilitıdır */}
             <div className={`${styles.formGroup} ${styles.fieldFullWidth}`}>
@@ -221,10 +286,16 @@ function ProfileTab({
                 id="phone"
                 name="phone"
                 type="tel"
-                className={styles.input}
+                className={`${styles.input} ${invalidFields.phone ? styles.inputInvalid : ''}`}
                 defaultValue={profile?.phone ?? ''}
                 placeholder={t('dashboard.settings.phonePlaceholder')}
+                onInput={handlePhoneInput}
               />
+              {validationMsg?.id === 'phone' && (
+                <span className={styles.fieldError} style={{ marginTop: '2px', fontSize: '0.7rem' }}>
+                  {validationMsg.msg}
+                </span>
+              )}
               {state.errors?.phone && (
                 <span className={styles.fieldError}>
                   <AlertCircle size={12} />
@@ -265,10 +336,16 @@ function ProfileTab({
                 id="postalCode"
                 name="postalCode"
                 type="text"
-                className={styles.input}
+                className={`${styles.input} ${invalidFields.postalCode ? styles.inputInvalid : ''}`}
                 defaultValue={profile?.postalCode ?? ''}
                 placeholder="34000"
+                onInput={(e) => handleNumericInput(e, 10)}
               />
+              {validationMsg?.id === 'postalCode' && (
+                <span className={styles.fieldError} style={{ marginTop: '2px', fontSize: '0.7rem' }}>
+                  {validationMsg.msg}
+                </span>
+              )}
               {state.errors?.postalCode && (
                 <span className={styles.fieldError}>
                   <AlertCircle size={12} />
@@ -587,15 +664,6 @@ export default function SettingsPage({ profile, billing, view = 'profile' }: Set
 
   return (
     <div className={styles.container}>
-      {/* Page Header */}
-      <div className={styles.pageHeader}>
-        <h1 className={styles.pageTitle}>
-          {view === 'profile' ? t('dashboard.settings.tabProfile') : t('dashboard.settings.tabBilling')}
-        </h1>
-        <p className={styles.pageSubtitle}>
-          {view === 'profile' ? t('dashboard.settings.profileDesc') : t('dashboard.settings.billingHistoryDesc')}
-        </p>
-      </div>
 
       {/* Content Rendering based on view prop */}
       {view === 'profile' ? (

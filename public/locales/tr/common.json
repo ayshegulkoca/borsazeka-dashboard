@@ -22,7 +22,7 @@
       "title": "Hesabınızı Bağlayın",
       "desc": "Aracı kurum veya Binance API bilgilerinizi güvenle girin. Verileriniz AES-256 ile şifrelenir.",
       "descLocked": "Bu adım ilk iki adım tamamlandıktan sonra aktif hale gelecek.",
-      "openAccount": "Forex Hesabı Aç",
+      "openAccount": "Bilgi Al ve Hesap Aç",
       "addForex": "Forex Hesabı Ekle"
     }
   },
@@ -74,7 +74,8 @@
     "account": "Hesap",
     "user": "Kullanıcı",
     "downloadApp": "Uygulamayı İndir",
-    "openForex": "Forex Hesabı Aç"
+    "openForex": "Forex Hesabı Aç",
+    "dashboard": "Dashboard"
   },
   "hero": {
     "badge": "2015'ten beri yapay zeka ile borsa robotları",
@@ -140,6 +141,12 @@
     "title": "Size En Uygun Robotu Bulalım",
     "subtitle": "6 adımda en uygun robot ve fiyat planınızı belirleyin.",
     "stepOf": "Adım {{current}} / {{total}}",
+    "market": "Piyasa",
+    "subMarket": "Alt Piyasa",
+    "management": "Yönetim",
+    "robot": "Robot",
+    "budget": "Bütçe",
+    "summary": "Özet",
     "back": "Geri",
     "next": "İleri",
     "submit": "Abone Ol",
@@ -784,7 +791,8 @@
       "cryptoBtn": "Borsa Bağla",
       "forexCardTitle": "Tickmill Forex Hesabı",
       "forexCardDesc": "Forex piyasalarında işlem yapmak için Tickmill hesabınızı oluşturun veya mevcut hesabınızı bağlayın.",
-      "forexOpenBtn": "Hesap Aç",
+      "forexOpenBtn": "Bilgi Al ve Hesap Aç",
+      "get_info_and_open": "Bilgi Al ve Hesap Aç",
       "forexAddBtn": "Forex Hesabı Ekle",
       "securityNote": "Hassas verileriniz (API Key, Şifre, TC No) tarayıcı tarafında AES-256 ile şifrelenir ve asla ham metin olarak iletilmez.",
       "listTitle": "Bağlı Hesaplar",
@@ -814,6 +822,8 @@
       "save": "Kaydet",
       "saving": "Kaydediliyor...",
       "firstName": "Ad",
+      "customerId": "Müşteri Numarası",
+      "customerIdPlaceholder": "Örn: 1000",
       "firstNamePlaceholder": "Adınızı girin",
       "lastName": "Soyad",
       "lastNamePlaceholder": "Soyadınızı girin",

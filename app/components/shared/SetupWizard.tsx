@@ -349,16 +349,14 @@ export default function SetupWizard({
                     
                     {!step.done && !step.locked && (
                       <div className={s.ctaStack}>
-                        <a
-                          href="https://t.co/kUUMsLhRJZ?amp=1"
-                          target="_blank"
-                          rel="noopener noreferrer"
+                        <Link
+                          href="/forex"
                           className={s.ctaPrimary}
                           id="setup-wizard-open-account"
                         >
                           <ExternalLink size={15} />
                           {t("setupWizard.step3.openAccount")}
-                        </a>
+                        </Link>
                         <Link
                           href="/dashboard/accounts/add-forex"
                           className={s.ctaSecondary}

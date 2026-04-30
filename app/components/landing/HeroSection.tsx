@@ -57,9 +57,8 @@ export default function HeroSection() {
             transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
             className={styles.heroAsymmetricTitle}
           >
-            <span className="block">Borsa,</span>
-            <span className="block">Yapay zeka ile buluştu:</span>
-            <span className={`${styles.heroCenteredAccent} block`}>BorsaZeka!</span>
+            <span className="block">{t("hero.title")}</span>
+            <span className={`${styles.heroCenteredAccent} block`}>{t("hero.titleAccent")}</span>
           </motion.h1>
 
           <motion.p 

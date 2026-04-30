@@ -147,11 +147,11 @@ export default function Navbar() {
 
           {isAuthenticated && (
             <Link href="/dashboard" className={`${styles.btnDashboard} hidden md:inline-flex`}
-              title="Dashboard"
-              aria-label="Dashboard"
+              title={t("navbar.dashboard") || "Dashboard"}
+              aria-label={t("navbar.dashboard") || "Dashboard"}
             >
               <LayoutDashboard size={18} className={styles.dashboardIcon} />
-              Dashboard
+              {t("navbar.dashboard") || "Dashboard"}
             </Link>
           )}
         </div>
@@ -261,7 +261,7 @@ export default function Navbar() {
             style={{ marginBottom: "0.5rem", justifyContent: "center" }}
           >
             <LayoutDashboard size={18} />
-            Dashboard
+            {t("navbar.dashboard") || "Dashboard"}
           </Link>
         )}
         <Link href="/robotlar" onClick={() => setMobileOpen(false)}>

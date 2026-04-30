@@ -50,6 +50,11 @@ export const profileSchema = z.object({
     .max(100, 'Twitter en fazla 100 karakter olabilir')
     .optional()
     .or(z.literal('')),
+  customerId: z
+    .string()
+    .max(50, 'Müşteri numarası en fazla 50 karakter olabilir')
+    .optional()
+    .or(z.literal('')),
 })
 
 export type ProfileFormData = z.infer<typeof profileSchema>
@@ -69,5 +74,6 @@ export type ProfileFormState = {
     country?: string[]
     companyName?: string[]
     twitter?: string[]
+    customerId?: string[]
   }
 }

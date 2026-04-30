@@ -21,22 +21,22 @@ export default function IletisimPage() {
             <span className={s.tag}>{t("iletisim.tag")}</span>
             <h1 className={s.title}>{t("iletisim.title")}</h1>
             <p className={s.subtitle}>
-              Sorularınız mı var? Uzman ekibimiz ve topluluğumuzla 7/24 iletişimde kalın.
+              {t("iletisim.subtitle")}
             </p>
 
             {/* Quick-access links */}
             <div className={s.quickLinks}>
               <a href="https://www.x.com/DH_Altin" target="_blank" rel="noopener noreferrer" className={s.quickLink}>
                 <X size={18} color="#1d9bf0" />
-                <span>Twitter / X — @DH_Altin</span>
+                <span>{t("iletisim.twitterLabel")} — @DH_Altin</span>
               </a>
               <a href="https://t.me/semiharslan" target="_blank" rel="noopener noreferrer" className={s.quickLink}>
                 <Send size={18} color="#26a5e4" />
-                <span>Telegram — @semiharslan</span>
+                <span>{t("iletisim.telegramDmLabel")} — @semiharslan</span>
               </a>
               <a href="https://t.me/BorsaZekaCom" target="_blank" rel="noopener noreferrer" className={s.quickLink}>
                 <Activity size={18} color="#00FF9D" />
-                <span>Kanal — @BorsaZekaCom</span>
+                <span>{t("iletisim.telegramChannelLabel")} — @BorsaZekaCom</span>
               </a>
             </div>
           </div>

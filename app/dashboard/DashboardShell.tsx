@@ -14,6 +14,7 @@ interface Props {
   userEmail?: string;
   userImage?: string;
   planLabel: string;
+  customerId?: string;
 }
 
 // Plan tipine göre rozet rengi ve ikonu
@@ -92,7 +93,7 @@ function LangToggle() {
   );
 }
 
-export default function DashboardShell({ children, userName, userEmail, userImage, planLabel }: Props) {
+export default function DashboardShell({ children, userName, userEmail, userImage, planLabel, customerId }: Props) {
   const pathname = usePathname();
   const { t } = useTranslation("common");
 
@@ -161,6 +162,11 @@ export default function DashboardShell({ children, userName, userEmail, userImag
           </div>
           <div className={styles.userInfo}>
             <span className={styles.userName}>{userName}</span>
+            {customerId && (
+              <span style={{ fontSize: '0.65rem', color: '#94a3b8', display: 'block', fontWeight: 500, marginBottom: '0.2rem' }}>
+                ID: {customerId}
+              </span>
+            )}
             {userEmail && <span className={styles.userEmail} style={{ fontSize: '0.75rem', color: 'var(--text-muted)', display: 'block' }}>{userEmail}</span>}
             {planLabel && <PlanBadge planLabel={planLabel} />}
           </div>

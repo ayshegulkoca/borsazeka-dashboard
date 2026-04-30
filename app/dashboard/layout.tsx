@@ -24,7 +24,13 @@ export default async function DashboardLayout({
   }
 
   // Abonelik bilgisini API'den çek (Prisma yerine)
-  const subscription = await apiGet<any>("/user/subscription");
+  const [subscription, user] = await Promise.all([
+    apiGet<any>("/user/subscription"),
+    prisma.user.findUnique({
+      where: { id: userId },
+      select: { bio: true }
+    })
+  ]);
 
   // Sadece AKTİF ve ÜCRETLİ (non-FREE) aboneliği olan kullanıcılar için plan etiketi göster
   const planLabel =
@@ -38,6 +44,7 @@ export default async function DashboardLayout({
       userEmail={session.user.email ?? undefined}
       userImage={session.user.image ?? undefined}
       planLabel={planLabel}
+      customerId={user?.bio ?? undefined}
     >
       {children}
     </DashboardShell>

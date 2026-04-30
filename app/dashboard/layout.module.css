@@ -47,8 +47,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(55, 48, 163, 0.1);
-  border: 1px solid rgba(55, 48, 163, 0.2);
+  background: rgba(29, 49, 74, 0.1);
+  border: 1px solid rgba(29, 49, 74, 0.2);
   border-radius: 8px;
 }
 
@@ -107,7 +107,7 @@
 .activeLink {
   color: #ffffff !important;
   font-weight: 400 !important;
-  background: rgba(55, 48, 163, 0.06) !important;
+  background: rgba(29, 49, 74, 0.08) !important;
 }
 
 .activeLink::before {
@@ -117,7 +117,7 @@
   top: 25%;
   bottom: 25%;
   width: 2px;
-  background: #3730A3;
+  background: #1d314a;
   border-radius: 0 4px 4px 0;
 }
 
@@ -128,7 +128,7 @@
 
 .activeLink svg {
   opacity: 1;
-  color: #3730A3;
+  color: #1d314a;
 }
 
 /* User Profile Section */
@@ -148,7 +148,7 @@
   height: 40px;
   border-radius: 50%;
   overflow: hidden;
-  border: 1px solid rgba(55, 48, 163, 0.3);
+  border: 1px solid rgba(29, 49, 74, 0.3);
   background: #0A0A0A;
 }
 
@@ -217,7 +217,7 @@
 }
 
 .langBtnActive {
-  background: #3730A3;
+  background: #1d314a;
   color: #ffffff;
 }
 

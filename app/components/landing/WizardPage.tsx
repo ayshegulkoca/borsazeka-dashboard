@@ -41,7 +41,6 @@ interface WState {
 }
 
 const TOTAL = 6;
-const STEP_LABELS = ["Piyasa", "Alt Piyasa", "Yönetim", "Robot", "Bütçe", "Özet"];
 
 // ─── localStorage helpers ────────────────────────────────────────────────────
 const STORAGE_KEY = "borsazeka_wizard_state";
@@ -98,6 +97,15 @@ export default function WizardPage() {
   const [notifySubmitting, setNotifySubmitting] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [redirecting, setRedirecting] = useState(false);
+
+  const STEP_LABELS = [
+    t("wizard.market"),
+    t("wizard.subMarket"),
+    t("wizard.management"),
+    t("wizard.robot"),
+    t("wizard.budget"),
+    t("wizard.summary")
+  ];
   const [submitDone, setSubmitDone] = useState(false);
 
   // ── Güvenlik: session yüklendiğinde userId eşleşmesini kontrol et ───────────

@@ -42,16 +42,6 @@ export default function AccountsView({ userEmail, initialAccounts, ownedRobotIds
 
   return (
     <div className={styles.container}>
-      {/* Header */}
-      <div className={styles.headerSection}>
-        <div className={styles.titleArea}>
-          <h1 className={styles.title}>{t("dashboard.accounts.title")}</h1>
-          <p className={styles.subtitle}>
-            {t("dashboard.accounts.subtitle")}
-          </p>
-        </div>
-      </div>
-
       {/* Main Actions */}
       <div className={styles.actionsGrid}>
         <div className={styles.actionCard}>
@@ -103,16 +93,14 @@ export default function AccountsView({ userEmail, initialAccounts, ownedRobotIds
             </p>
           </div>
           <div className={styles.buttonStack} style={{ paddingTop: "0.5rem" }}>
-            <a
-              href="https://t.co/kUUMsLhRJZ?amp=1"
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link 
+              href="/forex" 
               className={`${styles.addButton} ${styles.forexPrimaryButton}`}
               style={{ textDecoration: "none" }}
             >
               <ExternalLink size={16} />
-              {t("dashboard.accounts.forexOpenBtn")}
-            </a>
+              {t("dashboard.accounts.get_info_and_open")}
+            </Link>
             <Link href="/dashboard/accounts/add-forex" style={{ textDecoration: "none" }}>
               <button 
                 className={`${styles.addButton} ${styles.forexSecondaryButton}`}
