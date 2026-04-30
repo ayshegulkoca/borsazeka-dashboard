@@ -174,13 +174,13 @@ export default function Navbar() {
             </Link>
           </li>
           <li>
-            <Link href="/iletisim" className={pathname === "/iletisim" ? styles.active : ""}>
-              {t("navbar.contact")}
+            <Link href="/forex" className={pathname === "/forex" ? styles.active : ""}>
+              {t("navbar.openForex")}
             </Link>
           </li>
           <li>
-            <Link href="/forex" className={pathname === "/forex" ? styles.active : ""}>
-              {t("navbar.openForexAccount")}
+            <Link href="/iletisim" className={pathname === "/iletisim" ? styles.active : ""}>
+              {t("navbar.contact")}
             </Link>
           </li>
         </ul>
@@ -270,11 +270,11 @@ export default function Navbar() {
         <Link href="/surec" onClick={() => setMobileOpen(false)}>
           {t("navbar.howItWorks")}
         </Link>
+        <Link href="/forex" onClick={() => setMobileOpen(false)}>
+          {t("navbar.openForex")}
+        </Link>
         <Link href="/iletisim" onClick={() => setMobileOpen(false)}>
           {t("navbar.contact")}
-        </Link>
-        <Link href="/forex" onClick={() => setMobileOpen(false)}>
-          {t("navbar.openForexAccount")}
         </Link>
 
         {/* 📲 Uygulamayı İndir — mobil için belirgin buton */}

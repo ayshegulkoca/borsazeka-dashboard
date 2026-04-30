@@ -1,122 +1,186 @@
-/* ============================================================
-   BorsaZeka Forex Page — Ultra-Light Premium Aesthetic
-   Design: Black BG, Thin White Fonts, Royal Purple Highlights
-   ============================================================ */
-
 .forexPage {
-  background-color: #000000;
-  color: #ffffff;
+  background: #000000;
   min-height: 100vh;
+  color: #ffffff;
   position: relative;
   overflow: hidden;
-  padding-bottom: 8rem;
-}
-
-/* ── Subtle Background Glows ───────────────────────────────── */
-.bgGlow {
-  position: absolute;
-  width: 600px;
-  height: 600px;
-  background: radial-gradient(circle, rgba(55, 48, 163, 0.04) 0%, transparent 70%);
-  filter: blur(80px);
-  pointer-events: none;
   z-index: 0;
 }
 
-.glowTopLeft {
-  top: -10%;
-  left: -10%;
+/* ── Animated Background Container ── */
+.bgContainer {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
 }
 
-.glowBottomRight {
-  bottom: -10%;
-  right: -10%;
+.meshGradient {
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(circle at 20% 30%, rgba(55, 48, 163, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(67, 56, 202, 0.12) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 1) 0%, transparent 100%);
+  filter: blur(100px);
+  animation: meshMove 20s ease-in-out infinite alternate;
 }
 
-/* ── Hero Section ────────────────────────────────────────── */
+@keyframes meshMove {
+  0% { transform: scale(1) translate(0, 0); }
+  50% { transform: scale(1.1) translate(2%, 2%); }
+  100% { transform: scale(1) translate(-2%, 1%); }
+}
+
+.gridOverlay {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(circle at center, black, transparent 80%);
+  opacity: 0.5;
+}
+
+.particlesContainer {
+  position: absolute;
+  inset: 0;
+}
+
+.particle {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: #ffffff;
+  border-radius: 50%;
+  opacity: 0.3;
+  filter: blur(1px);
+  animation: floatParticle 10s linear infinite;
+}
+
+@keyframes floatParticle {
+  from { transform: translateY(0) translateX(0); opacity: 0; }
+  10% { opacity: 0.4; }
+  90% { opacity: 0.4; }
+  to { transform: translateY(-100vh) translateX(20px); opacity: 0; }
+}
+
+/* ── Hero Section ── */
 .hero {
-  padding: 12rem 2rem 6rem;
-  text-align: center;
   position: relative;
-  z-index: 1;
-  max-width: 900px;
-  margin: 0 auto;
+  padding: 10rem 2rem 6rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  z-index: 10;
+  backdrop-filter: blur(4px);
+}
+
+.heroGlow {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1000px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(55, 48, 163, 0.08) 0%, transparent 70%);
+  filter: blur(100px);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.heroTag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.6rem 1.4rem;
+  background: rgba(55, 48, 163, 0.05);
+  border: 1px solid rgba(55, 48, 163, 0.2);
+  border-radius: 100px;
+  font-size: 0.75rem;
+  font-weight: 300;
+  color: #4338CA;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 2.5rem;
+  backdrop-filter: blur(8px);
 }
 
 .heroTitle {
   font-size: clamp(2rem, 5vw, 3.5rem);
-  font-weight: 100; /* Ultra-Light */
+  font-weight: 100;
   line-height: 1.1;
   letter-spacing: 0.04em;
   margin-bottom: 2rem;
-  color: #ffffff;
+  max-width: 900px;
   text-wrap: balance;
 }
 
 .heroSubtitle {
-  font-size: clamp(1rem, 2vw, 1.2rem);
+  font-size: clamp(0.9rem, 2vw, 1.1rem);
   font-weight: 200;
-  line-height: 1.6;
-  color: rgba(255, 255, 255, 0.6);
-  margin-bottom: 4rem;
+  color: #A1A1AA;
   max-width: 700px;
-  margin-left: auto;
-  margin-right: auto;
+  line-height: 1.6;
+  margin-bottom: 4rem;
 }
 
-.btnCTA {
+.ctaButton {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 1.1rem 3rem;
+  padding: 1.25rem 3.5rem;
   background: transparent;
   color: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 100px; /* Capsule */
-  font-size: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 100px;
+  font-size: 1.05rem;
   font-weight: 300;
   letter-spacing: 0.02em;
-  text-decoration: none;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  text-decoration: none;
 }
 
-.btnCTA:hover {
+.ctaButton:hover {
   background: rgba(255, 255, 255, 0.05);
-  border-color: #3730A3; /* Royal Purple */
-  box-shadow: 0 0 30px rgba(55, 48, 163, 0.2);
+  border-color: #4338CA;
+  box-shadow: 0 0 30px rgba(67, 56, 202, 0.3);
   transform: translateY(-2px);
 }
 
-/* ── Features Bento Grid ─────────────────────────────────── */
+/* ── Bento Grid Section ── */
 .featuresSection {
-  padding: 4rem 2rem;
-  position: relative;
-  z-index: 1;
   max-width: 1280px;
   margin: 0 auto;
+  padding: 4rem 2rem 10rem;
+  position: relative;
+  z-index: 10;
 }
 
-.featuresGrid {
+.bentoGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
 }
 
 .featureCard {
   background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: 24px;
-  padding: 2.5rem;
-  transition: all 0.4s ease;
+  padding: 3rem 2.5rem;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 .featureCard:hover {
-  border-color: rgba(55, 48, 163, 0.3);
   background: rgba(255, 255, 255, 0.04);
-  transform: translateY(-4px);
+  border-color: rgba(67, 56, 202, 0.3);
+  transform: translateY(-5px);
 }
 
 .iconWrapper {
@@ -125,58 +189,54 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(55, 48, 163, 0.1);
-  border-radius: 14px;
-  color: #3730A3; /* Royal Purple */
-  border: 1px solid rgba(55, 48, 163, 0.2);
+  background: rgba(67, 56, 202, 0.1);
+  border: 1px solid rgba(67, 56, 202, 0.2);
+  border-radius: 16px;
+  color: #4338CA;
 }
 
 .featureTitle {
   font-size: 1.25rem;
   font-weight: 300;
   color: #ffffff;
-  letter-spacing: 0.01em;
+  letter-spacing: 0.02em;
 }
 
-.featureText {
+.featureDesc {
   font-size: 0.95rem;
   font-weight: 200;
+  color: #A1A1AA;
   line-height: 1.6;
-  color: rgba(255, 255, 255, 0.5);
 }
 
-/* ── Glass Orb Visual Detail ─────────────────────────────── */
-.orbContainer {
-  position: relative;
-  margin-top: 6rem;
-  display: flex;
-  justify-content: center;
+/* ── Background Glows ── */
+.bottomGlow {
+  position: absolute;
+  bottom: -200px;
+  right: -100px;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(55, 48, 163, 0.05) 0%, transparent 70%);
+  filter: blur(100px);
+  pointer-events: none;
 }
 
-.glassOrb {
-  width: 200px;
-  height: 200px;
-  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.1), transparent);
-  border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(20px);
-  position: relative;
-  box-shadow: 
-    0 0 40px rgba(55, 48, 163, 0.15),
-    inset 0 0 20px rgba(255, 255, 255, 0.05);
-  animation: float 8s ease-in-out infinite;
+@media (max-width: 1024px) {
+  .bentoGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
-@keyframes float {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  50% { transform: translateY(-15px) rotate(5deg); }
-}
-
-@media (max-width: 768px) {
+@media (max-width: 640px) {
+  .bentoGrid {
+    grid-template-columns: 1fr;
+  }
+  
   .hero {
     padding-top: 8rem;
   }
-  .featuresGrid {
-    grid-template-columns: 1fr;
+  
+  .heroTitle {
+    font-size: 2rem;
   }
 }

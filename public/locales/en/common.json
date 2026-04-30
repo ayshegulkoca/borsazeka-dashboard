@@ -74,7 +74,7 @@
     "account": "Account",
     "user": "User",
     "downloadApp": "Download App",
-    "openForexAccount": "Open Forex Account"
+    "openForex": "Open Forex Account"
   },
   "hero": {
     "badge": "AI-powered stock trading robots since 2015",
@@ -435,6 +435,27 @@
     "mockReportTitle": "Daily Report — T2 Overall",
     "mockReportFooter": "Published on Telegram & Twitter",
     "client": "Client"
+  },
+  "forexPage": {
+    "pageTitle": "Open Forex Account — BorsaZeka",
+    "heroTag": "Global Trading Infrastructure",
+    "heroTitle": "Take a Professional Step into Global Markets",
+    "heroSubtitle": "Create your forex account in minutes on the reliable Tickmill infrastructure, fully compatible with BorsaZeka algorithms and low commissions.",
+    "ctaButton": "Open Account Now",
+    "features": {
+      "security": {
+        "title": "Corporate Trust",
+        "desc": "Regulated transparent investment environment since 2014, audited by FCA, CySEC, and FSA licenses."
+      },
+      "cost": {
+        "title": "Cost Advantage",
+        "desc": "Maximize your profitability with near-zero spreads and commission structures below market standards."
+      },
+      "flexibility": {
+        "title": "Flexible Leverage & Islamic Account",
+        "desc": "Customizable leverage options up to 1:500 and Islamic account alternatives without swap payments."
+      }
+    }
   },
   "kurulum": {
     "pageTitle": "Account Setup — BorsaZeka",

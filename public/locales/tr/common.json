@@ -74,7 +74,7 @@
     "account": "Hesap",
     "user": "Kullanıcı",
     "downloadApp": "Uygulamayı İndir",
-    "openForexAccount": "Forex Hesabı Aç"
+    "openForex": "Forex Hesabı Aç"
   },
   "hero": {
     "badge": "2015'ten beri yapay zeka ile borsa robotları",
@@ -451,6 +451,27 @@
     "mockReportTitle": "Günlük Rapor — T2 Overall",
     "mockReportFooter": "Telegram'da & Twitter'da paylaşılır",
     "client": "Müşteri"
+  },
+  "forexPage": {
+    "pageTitle": "Forex Hesabı Aç — BorsaZeka",
+    "heroTag": "Global İşlem Altyapısı",
+    "heroTitle": "Global Piyasalara Profesyonel Bir Adım Atın",
+    "heroSubtitle": "BorsaZeka algoritmalarıyla tam uyumlu, düşük komisyonlu ve güvenilir Tickmill altyapısında forex hesabınızı dakikalar içinde oluşturun.",
+    "ctaButton": "Hemen Hesap Aç",
+    "features": {
+      "security": {
+        "title": "Kurumsal Güven",
+        "desc": "2014'ten bu yana FCA, CySEC ve FSA lisanslarıyla denetlenen, global ölçekte regüle edilmiş şeffaf yatırım ortamı."
+      },
+      "cost": {
+        "title": "Maliyet Avantajı",
+        "desc": "Sıfıra yakın spread oranları ve piyasa standartlarının altında komisyon yapılarıyla kârlılığınızı maksimize edin."
+      },
+      "flexibility": {
+        "title": "Esnek Kaldıraç & İslami Hesap",
+        "desc": "1:500'e kadar özelleştirilebilir kaldıraç seçenekleri ve swap ödemesi içermeyen İslami hesap alternatifi."
+      }
+    }
   },
   "kurulum": {
     "pageTitle": "Hesap Kurulumu — BorsaZeka",
