@@ -2,18 +2,18 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #4F46E5;
-  --color-primary-hover: #3730A3;
+  --color-primary: #3730A3;
+  --color-primary-hover: #4338CA;
 }
 
 :root {
   --bg-dark: #000000;
   --bg-card: #000000;
-  --bg-card-hover: #0a0a0a;
-  --bg-input: #0a0a0a;
+  --bg-card-hover: #050505;
+  --bg-input: #050505;
   
-  --accent-primary: #4F46E5; /* Deep Royal Purple / Indigo */
-  --accent-primary-hover: #3730A3;
+  --accent-primary: #3730A3; /* Elegant Dark Royal Purple */
+  --accent-primary-hover: #4338CA;
   --accent-secondary: #1A1A1A;
   
   --text-primary: #ffffff;

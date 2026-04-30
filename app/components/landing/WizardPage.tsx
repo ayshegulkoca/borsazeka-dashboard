@@ -495,8 +495,8 @@ export default function WizardPage() {
               <span className={s.stepTag}>{t("wizard.stepOf", { current: 5, total: TOTAL })}</span>
               <h2 className={s.stepTitle}>{t("wizard.step5.title")}</h2>
               {state.robotId === "CLASSIC" ? (
-                <div style={{ padding: "2rem", textAlign: "center", background: "rgba(139,92,246,0.05)", borderRadius: 16, border: "1px dashed rgba(139,92,246,0.3)" }}>
-                  <p style={{ color: "#a78bfa", fontWeight: 600, marginBottom: "0.5rem" }}>
+                <div style={{ padding: "2rem", textAlign: "center", background: "rgba(55, 48, 163, 0.05)", borderRadius: 16, border: "1px dashed rgba(55, 48, 163, 0.3)" }}>
+                  <p style={{ color: "#818cf8", fontWeight: 600, marginBottom: "0.5rem" }}>
                     Ücretler Yakında Belirlenecek
                   </p>
                   <p style={{ color: "var(--text-secondary)", fontSize: "0.85rem" }}>
@@ -570,7 +570,7 @@ export default function WizardPage() {
                         <div className={`${s.summaryRowValue} ${s.summaryRowValueAccent}`}>
                           {selectedRobot ? t(selectedRobot.nameKey) : "—"}
                           {selectedRobot?.comingSoon && (
-                            <span style={{ fontSize: "0.62rem", marginLeft: 6, padding: "0.15rem 0.5rem", borderRadius: 100, background: "rgba(139,92,246,0.15)", color: "#a78bfa", border: "1px solid rgba(139,92,246,0.25)" }}>
+                            <span style={{ fontSize: "0.62rem", marginLeft: 6, padding: "0.15rem 0.5rem", borderRadius: 100, background: "rgba(55, 48, 163, 0.15)", color: "#818cf8", border: "1px solid rgba(55, 48, 163, 0.25)" }}>
                               Pek Yakında
                             </span>
                           )}

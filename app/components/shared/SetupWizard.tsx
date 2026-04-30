@@ -212,9 +212,9 @@ export default function SetupWizard({
                 animate={{
                   y: isHovered ? -4 : 0,
                   boxShadow: isHovered
-                    ? "0 8px 32px rgba(79, 70, 229, 0.15), 0 0 0 1px rgba(79, 70, 229, 0.18)"
+                    ? "0 8px 32px rgba(55, 48, 163, 0.15), 0 0 0 1px rgba(55, 48, 163, 0.18)"
                     : step.done
-                    ? "0 0 0 1px rgba(79, 70, 229, 0.12)"
+                    ? "0 0 0 1px rgba(55, 48, 163, 0.12)"
                     : "none",
                 }}
                 transition={{ duration: 0.25, ease: "easeOut" }}
