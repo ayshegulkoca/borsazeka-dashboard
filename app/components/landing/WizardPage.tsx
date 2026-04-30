@@ -400,11 +400,11 @@ export default function WizardPage() {
               <h2 className={s.stepTitle}>{t("wizard.step1.title")}</h2>
               <div className={s.optionGrid}>
                 <OptionCard selected={state.market === "BIST"}
-                  icon={<MapPin size={22} color="var(--accent-primary)" />}
+                  icon={<MapPin size={22} color="var(--wiz-primary-light)" />}
                   label={t("wizard.step1.domestic")} desc={t("wizard.step1.domesticDesc")}
                   onClick={() => autoAdvance({ market: "BIST", subMarket: "BIST", robotId: null, budgetValue: null, managementType: null })} />
                 <OptionCard selected={state.market === "CRYPTO" || state.market === "FOREX"}
-                  icon={<Globe size={22} color="var(--accent-primary)" />}
+                  icon={<Globe size={22} color="var(--wiz-primary-light)" />}
                   label={t("wizard.step1.international")} desc={t("wizard.step1.internationalDesc")}
                   onClick={() => autoAdvance({ market: "CRYPTO", subMarket: null, robotId: null, budgetValue: null, managementType: null })} />
               </div>
@@ -419,11 +419,11 @@ export default function WizardPage() {
               {/* 50/50 split grid */}
               <div className={s.optionGrid50}>
                 <OptionCard selected={state.subMarket === "CRYPTO"}
-                  icon={<Bot size={22} color="var(--accent-primary)" />}
+                  icon={<Bot size={22} color="var(--wiz-primary-light)" />}
                   label={t("wizard.step2.crypto")} desc={t("wizard.step2.cryptoDesc")}
                   onClick={() => autoAdvance({ subMarket: "CRYPTO", market: "CRYPTO", robotId: null, budgetValue: null, budgetCurrency: "USD", managementType: null })} />
                 <OptionCard selected={state.subMarket === "FOREX"}
-                  icon={<Globe size={22} color="var(--accent-primary)" />}
+                  icon={<Globe size={22} color="var(--wiz-primary-light)" />}
                   label={t("wizard.step2.forex")} desc={t("wizard.step2.forexDesc")}
                   onClick={() => autoAdvance({ subMarket: "FOREX", market: "FOREX", robotId: null, budgetValue: null, budgetCurrency: "USD", managementType: null })} />
               </div>
@@ -437,11 +437,11 @@ export default function WizardPage() {
               <h2 className={s.stepTitle}>{t("wizard.step3.title")}</h2>
               <div className={s.optionGrid}>
                 <OptionCard selected={state.managementType === "PREMIUM"}
-                  icon={<Users size={22} color="var(--accent-primary)" />}
+                  icon={<Users size={22} color="var(--wiz-primary-light)" />}
                   label={t("wizard.step3.premium")} desc={t("wizard.step3.premiumDesc")}
                   onClick={() => autoAdvance({ managementType: "PREMIUM", robotId: null })} />
                 <OptionCard selected={state.managementType === "SELF_SERVICE"}
-                  icon={<Lock size={22} color="var(--accent-primary)" />}
+                  icon={<Lock size={22} color="var(--wiz-primary-light)" />}
                   label={t("wizard.step3.selfService")} desc={t("wizard.step3.selfServiceDesc")}
                   onClick={() => autoAdvance({ managementType: "SELF_SERVICE", robotId: null })} />
               </div>
@@ -495,8 +495,8 @@ export default function WizardPage() {
               <span className={s.stepTag}>{t("wizard.stepOf", { current: 5, total: TOTAL })}</span>
               <h2 className={s.stepTitle}>{t("wizard.step5.title")}</h2>
               {state.robotId === "CLASSIC" ? (
-                <div style={{ padding: "2rem", textAlign: "center", background: "rgba(55, 48, 163, 0.05)", borderRadius: 16, border: "1px dashed rgba(55, 48, 163, 0.3)" }}>
-                  <p style={{ color: "#818cf8", fontWeight: 600, marginBottom: "0.5rem" }}>
+                <div style={{ padding: "2rem", textAlign: "center", background: "rgba(29, 49, 74, 0.1)", borderRadius: 16, border: "1px dashed rgba(29, 49, 74, 0.4)" }}>
+                  <p style={{ color: "#60a5fa", fontWeight: 600, marginBottom: "0.5rem" }}>
                     Ücretler Yakında Belirlenecek
                   </p>
                   <p style={{ color: "var(--text-secondary)", fontSize: "0.85rem" }}>
@@ -553,7 +553,7 @@ export default function WizardPage() {
                   <p style={{ color: "var(--text-secondary)", lineHeight: 1.6, marginBottom: "1.5rem" }}>
                     En kısa sürede Telegram veya e-posta ile size ulaşacağız.
                   </p>
-                  <Link href="/iletisim" style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem", color: "var(--accent-primary)", fontWeight: 600 }}>
+                  <Link href="/iletisim" style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem", color: "var(--wiz-primary-light)", fontWeight: 600 }}>
                     İletişim sayfasına git <ArrowRight size={15} />
                   </Link>
                 </div>
@@ -570,7 +570,7 @@ export default function WizardPage() {
                         <div className={`${s.summaryRowValue} ${s.summaryRowValueAccent}`}>
                           {selectedRobot ? t(selectedRobot.nameKey) : "—"}
                           {selectedRobot?.comingSoon && (
-                            <span style={{ fontSize: "0.62rem", marginLeft: 6, padding: "0.15rem 0.5rem", borderRadius: 100, background: "rgba(55, 48, 163, 0.15)", color: "#818cf8", border: "1px solid rgba(55, 48, 163, 0.25)" }}>
+                            <span style={{ fontSize: "0.62rem", marginLeft: 6, padding: "0.15rem 0.5rem", borderRadius: 100, background: "rgba(29, 49, 74, 0.15)", color: "#60a5fa", border: "1px solid rgba(29, 49, 74, 0.25)" }}>
                               Pek Yakında
                             </span>
                           )}
@@ -619,14 +619,14 @@ export default function WizardPage() {
                           </div>
                           <div className={s.summaryInfoItem}>
                             <span className={s.summaryInfoLabel}>{t("wizard.step6.summaryServer")}</span>
-                            <span className={s.summaryInfoValue} style={{ color: "var(--accent-primary)", fontWeight: "bold" }}>
+                            <span className={s.summaryInfoValue} style={{ color: "var(--wiz-primary-light)", fontWeight: "bold" }}>
                               €{pricing.serverCostEUR}
                             </span>
                           </div>
                           {/* Ödeme Detayı satırı */}
                           <div className={s.summaryInfoItem}>
                             <span className={s.summaryInfoLabel}>{t("wizard.step6.paymentDetail")}</span>
-                            <span className={s.summaryInfoValue} style={{ color: "var(--accent-primary)", fontWeight: 700 }}>
+                            <span className={s.summaryInfoValue} style={{ color: "var(--wiz-primary-light)", fontWeight: 700 }}>
                               €{pricing.serverCostDisplay} {t("wizard.step6.perMonth")}
                             </span>
                           </div>
@@ -670,8 +670,8 @@ export default function WizardPage() {
                             i18nKey="wizard.step6.agreementNote"
                             t={t}
                             components={{
-                              linkTerms: <Link href="/kullanim-kosullari" style={{ color: "var(--accent-primary)", textDecoration: "underline" }} />,
-                              linkPrivacy: <Link href="/gizlilik-politikasi" style={{ color: "var(--accent-primary)", textDecoration: "underline" }} />,
+                              linkTerms: <Link href="/kullanim-kosullari" style={{ color: "var(--wiz-primary-light)", textDecoration: "underline" }} />,
+                              linkPrivacy: <Link href="/gizlilik-politikasi" style={{ color: "var(--wiz-primary-light)", textDecoration: "underline" }} />,
                             }}
                           />
                         </div>
@@ -734,7 +734,7 @@ function ComingSoonPanel({ robot, notifyEmail, notifyDone, notifySubmitting, onE
         <ul style={{ listStyle: "none", textAlign: "left", marginBottom: "1.25rem", display: "flex", flexDirection: "column", gap: "0.4rem" }}>
           {robot.features.map((fKey: string) => (
             <li key={fKey} style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "0.82rem", color: "var(--text-secondary)" }}>
-              <Check size={13} color="var(--accent-primary)" /> {t(fKey)}
+              <Check size={13} color="var(--wiz-primary-light)" /> {t(fKey)}
             </li>
           ))}
         </ul>
@@ -761,7 +761,7 @@ function ComingSoonPanel({ robot, notifyEmail, notifyDone, notifySubmitting, onE
           </button>
         </form>
       ) : (
-        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", justifyContent: "center", color: "var(--accent-primary)", fontWeight: 600, fontSize: "0.875rem" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", justifyContent: "center", color: "var(--wiz-primary-light)", fontWeight: 600, fontSize: "0.875rem" }}>
           <CheckCircle2 size={17} /> Kaydedildi, en kısa sürede haberdar edeceğiz!
         </div>
       )}

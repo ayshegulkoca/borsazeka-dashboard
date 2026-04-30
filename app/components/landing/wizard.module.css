@@ -1,26 +1,26 @@
 /* ── Coming Soon: visual badge only, still clickable ─────────────────────── */
 .optionCardComingSoon {
-  border-color: rgba(139, 92, 246, 0.2);
+  border-color: rgba(29, 49, 74, 0.2);
 }
 
 .optionCardComingSoon .optionIcon {
-  background: rgba(139, 92, 246, 0.08);
-  border-color: rgba(139, 92, 246, 0.2);
+  background: rgba(29, 49, 74, 0.08);
+  border-color: rgba(29, 49, 74, 0.2);
 }
 
 .robotCardComingSoon {
-  border-color: rgba(139, 92, 246, 0.2);
-  background: rgba(139, 92, 246, 0.03);
+  border-color: rgba(29, 49, 74, 0.2);
+  background: rgba(29, 49, 74, 0.03);
 }
 
 .robotCardComingSoon:hover {
-  border-color: rgba(139, 92, 246, 0.35);
-  background: rgba(139, 92, 246, 0.06);
+  border-color: rgba(29, 49, 74, 0.35);
+  background: rgba(29, 49, 74, 0.06);
 }
 
 /* Budget option coming-soon variant */
 .budgetOptionComingSoon {
-  border-color: rgba(139, 92, 246, 0.2) !important;
+  border-color: rgba(29, 49, 74, 0.2) !important;
   color: var(--text-muted) !important;
   position: relative;
 }
@@ -31,9 +31,9 @@
   letter-spacing: 0.05em;
   padding: 0.15rem 0.4rem;
   border-radius: 100px;
-  background: rgba(139, 92, 246, 0.15);
-  color: #a78bfa;
-  border: 1px solid rgba(139, 92, 246, 0.25);
+  background: rgba(44, 74, 107, 0.15);
+  color: #60a5fa;
+  border: 1px solid rgba(44, 74, 107, 0.25);
   margin-left: 0.5rem;
   vertical-align: middle;
 }
@@ -43,6 +43,14 @@
   min-height: 100vh;
   background: var(--bg-dark);
   padding-top: 80px; /* navbar height */
+
+  /* Deep Space Palette */
+  --wiz-primary: #1d314a;
+  --wiz-primary-light: #2c4a6b;
+  --wiz-accent-glow: rgba(29, 49, 74, 0.15);
+  --wiz-card-bg: rgba(29, 49, 74, 0.05); /* bg-[#1d314a]/5 */
+  --wiz-border: rgba(29, 49, 74, 0.3); /* border-[#1d314a]/30 */
+  --wiz-text-slate: #cbd5e1; /* text-slate-300 */
 }
 
 .wizardTopBar {
@@ -64,7 +72,7 @@
 }
 
 .wizardBackLink:hover {
-  color: var(--accent-primary);
+  color: var(--wiz-primary-light);
 }
 
 .wizardHeader {
@@ -84,7 +92,7 @@
 
 .wizardSubtitle {
   font-size: 1rem;
-  color: var(--text-secondary);
+  color: var(--wiz-text-slate);
   line-height: 1.6;
 }
 
@@ -129,16 +137,16 @@
 }
 
 .stepperCircleActive {
-  border-color: var(--accent-primary);
-  background: rgba(55, 48, 163, 0.15);
-  color: var(--accent-primary);
-  box-shadow: 0 0 0 4px rgba(55, 48, 163, 0.1);
+  border-color: var(--wiz-primary);
+  background: var(--wiz-accent-glow);
+  color: #60a5fa; /* Parlak mavi */
+  box-shadow: 0 0 15px rgba(29, 49, 74, 0.4);
 }
 
 .stepperCircleDone {
-  border-color: var(--accent-primary);
-  background: var(--accent-primary);
-  color: #000000;
+  border-color: var(--wiz-primary);
+  background: var(--wiz-primary);
+  color: #ffffff;
 }
 
 .stepperLabel {
@@ -160,7 +168,7 @@
 }
 
 .stepperConnectorFilled {
-  background: var(--accent-primary);
+  background: linear-gradient(90deg, var(--wiz-primary), transparent);
 }
 
 /* ── Step Content Card ───────────────────────────────────────── */
@@ -194,7 +202,7 @@
   border-radius: 20px;
   background: linear-gradient(
     135deg,
-    rgba(55, 48, 163, 0.05) 0%,
+    rgba(29, 49, 74, 0.15) 0%,
     transparent 40%
   );
   pointer-events: none;
@@ -213,7 +221,7 @@
 
 .stepTitle {
   font-size: 1.2rem;
-  font-weight: 400;
+  font-weight: 200; /* Extra Light */
   color: var(--text-primary);
   margin-bottom: 1.75rem;
   letter-spacing: 0.02em;
@@ -224,7 +232,7 @@
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--accent-primary);
+  color: var(--wiz-primary-light);
   margin-bottom: 0.5rem;
   display: block;
 }
@@ -248,7 +256,7 @@
 }
 
 .optionCard {
-  border: 2px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 14px;
   padding: 1.5rem;
   cursor: pointer;
@@ -259,8 +267,8 @@
 }
 
 .optionCard:hover {
-  border-color: rgba(55, 48, 163, 0.3);
-  background: rgba(55, 48, 163, 0.04);
+  border-color: var(--wiz-border);
+  background: var(--wiz-card-bg);
   transform: translateY(-2px);
   box-shadow:
     0 8px 24px rgba(0, 0, 0, 0.25),
@@ -268,9 +276,9 @@
 }
 
 .optionCardSelected {
-  border-color: var(--accent-primary) !important;
-  background: rgba(55, 48, 163, 0.08) !important;
-  box-shadow: 0 0 0 1px var(--accent-primary), inset 0 0 30px rgba(55, 48, 163, 0.05);
+  border-color: var(--wiz-primary) !important;
+  background: var(--wiz-card-bg) !important;
+  box-shadow: 0 0 0 1px var(--wiz-primary), inset 0 0 30px rgba(29, 49, 74, 0.05);
 }
 
 .optionCardDisabled {
@@ -290,8 +298,8 @@
   width: 44px;
   height: 44px;
   border-radius: 12px;
-  background: rgba(55, 48, 163, 0.1);
-  border: 1px solid rgba(55, 48, 163, 0.2);
+  background: rgba(29, 49, 74, 0.1);
+  border: 1px solid rgba(29, 49, 74, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -307,7 +315,7 @@
 
 .optionDesc {
   font-size: 0.8rem;
-  color: var(--text-secondary);
+  color: var(--wiz-text-slate);
   line-height: 1.5;
 }
 
@@ -318,12 +326,16 @@
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: var(--accent-primary);
+  background: var(--wiz-primary);
   display: flex;
   align-items: center;
   justify-content: center;
   opacity: 0;
   transition: opacity 0.2s;
+}
+
+.optionCheck svg {
+  color: #ffffff !important;
 }
 
 .optionCardSelected .optionCheck {
@@ -345,7 +357,7 @@
 
 /* ── Robot Cards (Step 4) ────────────────────────────────────── */
 .robotOptionCard {
-  border: 2px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 14px;
   padding: 1.5rem;
   cursor: pointer;
@@ -355,17 +367,17 @@
 }
 
 .robotOptionCard:hover:not(.optionCardDisabled) {
-  border-color: rgba(55, 48, 163, 0.3);
-  background: rgba(55, 48, 163, 0.04);
+  border-color: var(--wiz-border);
+  background: var(--wiz-card-bg);
   box-shadow:
     0 8px 24px rgba(0, 0, 0, 0.25),
     0 0 0 1px rgba(255, 255, 255, 0.05) inset;
 }
 
 .robotOptionCard.optionCardSelected {
-  border-color: var(--accent-primary);
-  background: rgba(55, 48, 163, 0.08);
-  box-shadow: 0 0 0 1px var(--accent-primary);
+  border-color: var(--wiz-primary);
+  background: var(--wiz-card-bg);
+  box-shadow: 0 0 0 1px var(--wiz-primary);
 }
 
 .robotHeader {
@@ -390,7 +402,7 @@
 
 .robotDesc {
   font-size: 0.8rem;
-  color: var(--text-secondary);
+  color: var(--wiz-text-slate);
   line-height: 1.5;
 }
 
@@ -418,7 +430,7 @@
   align-items: center;
   gap: 0.5rem;
   font-size: 0.78rem;
-  color: var(--text-secondary);
+  color: var(--wiz-text-slate);
 }
 
 /* ── Budget Options (Step 5) ─────────────────────────────────── */
@@ -429,7 +441,7 @@
 }
 
 .budgetOption {
-  border: 2px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 12px;
   padding: 1rem 1.25rem;
   cursor: pointer;
@@ -442,15 +454,15 @@
 }
 
 .budgetOption:hover {
-  border-color: rgba(55, 48, 163, 0.25);
+  border-color: var(--wiz-border);
   color: var(--text-primary);
-  background: rgba(55, 48, 163, 0.04);
+  background: var(--wiz-card-bg);
 }
 
 .budgetOptionSelected {
-  border-color: var(--accent-primary) !important;
+  border-color: var(--wiz-primary) !important;
   color: var(--text-primary) !important;
-  background: rgba(55, 48, 163, 0.1) !important;
+  background: var(--wiz-card-bg) !important;
   font-weight: 600;
 }
 
@@ -481,7 +493,7 @@
   position: absolute;
   top: 0; left: 0;
   width: 100%; height: 60%;
-  background: linear-gradient(to bottom right, rgba(55, 48, 163, 0.04), transparent);
+  background: linear-gradient(to bottom right, rgba(29, 49, 74, 0.1), transparent);
   pointer-events: none;
   z-index: 0;
 }
@@ -496,7 +508,7 @@
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--accent-primary);
+  color: var(--wiz-primary-light);
   margin-bottom: 1.25rem;
 }
 
@@ -515,7 +527,7 @@
 
 .summaryRowLabel {
   font-size: 0.85rem;
-  color: var(--text-secondary);
+  color: var(--wiz-text-slate);
 }
 
 .summaryRowNote {
@@ -532,15 +544,15 @@
 }
 
 .summaryRowValueAccent {
-  color: var(--accent-primary);
+  color: var(--wiz-primary-light);
 }
 
 .summaryTotalRow {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgba(55, 48, 163, 0.08);
-  border: 1px solid rgba(55, 48, 163, 0.2);
+  background: rgba(29, 49, 74, 0.15);
+  border: 1px solid rgba(29, 49, 74, 0.3);
   border-radius: 10px;
   padding: 1rem;
   margin-top: 1rem;
@@ -555,7 +567,7 @@
 .summaryTotalValue {
   font-size: 1.4rem;
   font-weight: 800;
-  color: var(--accent-primary);
+  color: #60a5fa;
   letter-spacing: -0.02em;
 }
 
@@ -582,7 +594,7 @@
 }
 
 .summaryInfoLabel {
-  color: var(--text-secondary);
+  color: var(--wiz-text-slate);
 }
 
 .summaryInfoValue {
@@ -608,8 +620,8 @@
 
 /* Coming Soon overlay (step 6) */
 .comingSoonBox {
-  background: rgba(55, 48, 163, 0.04);
-  border: 1px solid rgba(55, 48, 163, 0.15);
+  background: rgba(29, 49, 74, 0.08);
+  border: 1px solid rgba(29, 49, 74, 0.2);
   border-radius: 16px;
   padding: 2rem;
   text-align: center;
@@ -624,7 +636,7 @@
 
 .comingSoonBoxDesc {
   font-size: 0.9rem;
-  color: var(--text-secondary);
+  color: var(--wiz-text-slate);
   line-height: 1.6;
   margin-bottom: 1.5rem;
 }
@@ -649,7 +661,7 @@
 }
 
 .notifyInput:focus {
-  border-color: var(--accent-primary);
+  border-color: var(--wiz-primary);
 }
 
 .notifyInput::placeholder {
@@ -659,8 +671,8 @@
 .notifyBtn {
   padding: 0.75rem 1.25rem;
   border-radius: 10px;
-  background: var(--accent-primary);
-  color: #000000;
+  background: var(--wiz-primary);
+  color: #ffffff;
   font-size: 0.875rem;
   font-weight: 600;
   white-space: nowrap;
@@ -668,7 +680,7 @@
 }
 
 .notifyBtn:hover {
-  background: var(--accent-primary-hover);
+  background: var(--wiz-primary-light);
 }
 
 /* ── Navigation Buttons ──────────────────────────────────────── */
@@ -707,15 +719,15 @@
   border-radius: 10px;
   font-size: 0.9rem;
   font-weight: 500;
-  background: var(--accent-primary);
-  color: #000000;
+  background: var(--wiz-primary);
+  color: #ffffff;
   transition: all 0.2s;
 }
 
 .btnWizardNext:hover:not(:disabled) {
-  background: var(--accent-primary-hover);
+  background: var(--wiz-primary-light);
   transform: translateY(-1px);
-  box-shadow: 0 4px 20px rgba(55, 48, 163, 0.35);
+  box-shadow: 0 4px 20px rgba(29, 49, 74, 0.4);
 }
 
 .btnWizardNext:disabled {
@@ -731,14 +743,14 @@
   border-radius: 10px;
   font-size: 0.95rem;
   font-weight: 700;
-  background: var(--accent-primary);
-  color: #000000;
+  background: var(--wiz-primary);
+  color: #ffffff;
   transition: all 0.2s;
 }
 
 .btnWizardSubmit:hover:not(:disabled) {
-  background: var(--accent-primary-hover);
-  box-shadow: 0 6px 25px rgba(55, 48, 163, 0.4);
+  background: var(--wiz-primary-light);
+  box-shadow: 0 6px 25px rgba(29, 49, 74, 0.5);
   transform: translateY(-1px);
 }
 
