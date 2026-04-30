@@ -52,6 +52,7 @@ type ProfileData = {
   twitter:     string | null
   name:        string | null
   image:       string | null
+  customerId?: string | null
   updatedAt?:  Date | string | null
 } | null
 
@@ -166,7 +167,7 @@ function ProfileTab({
                 name="customerId"
                 type="text"
                 className={`${styles.input} ${invalidFields.customerId ? styles.inputInvalid : ''}`}
-                defaultValue={profile?.bio ?? ''} 
+                defaultValue={profile?.customerId ?? ''} 
                 placeholder={t('dashboard.settings.customerIdPlaceholder')}
                 onInput={(e) => handleNumericInput(e)}
               />

@@ -149,7 +149,8 @@ export async function getProfileData() {
         updatedAt:   true,
       },
     })
-    return user
+    if (!user) return null
+    return { ...user, customerId: user.bio }
   } catch (error) {
     console.error('Failed to fetch profile:', error)
     return null
