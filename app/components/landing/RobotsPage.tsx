@@ -20,7 +20,7 @@ const ROBOT_CATALOG = [
     descKey: "wizard.robots.darkroom.desc",
     market: "BIST",
     icon: Shield,
-    color: "#a1a1aa", // Muted Zinc
+    color: "#a855f7", // Deep Purple
     gradient: "linear-gradient(135deg, #000000 0%, #0a0a0a 100%)",
     border: "rgba(255, 255, 255, 0.08)",
     comingSoon: false,
@@ -40,7 +40,7 @@ const ROBOT_CATALOG = [
     descKey: "wizard.robots.highway.desc",
     market: "BIST",
     icon: TrendingUp,
-    color: "#a1a1aa",
+    color: "#3b82f6", // Vibrant Blue
     gradient: "linear-gradient(135deg, #000000 0%, #0a0a0a 100%)",
     border: "rgba(255, 255, 255, 0.08)",
     comingSoon: false,
@@ -60,7 +60,7 @@ const ROBOT_CATALOG = [
     descKey: "wizard.robots.trademate.desc",
     market: "BIST",
     icon: Target,
-    color: "#a1a1aa",
+    color: "#10b981", // Emerald Green
     gradient: "linear-gradient(135deg, #000000 0%, #0a0a0a 100%)",
     border: "rgba(255, 255, 255, 0.08)",
     comingSoon: false,
@@ -80,7 +80,7 @@ const ROBOT_CATALOG = [
     descKey: "wizard.robots.fabrika.desc",
     market: "BIST",
     icon: Activity,
-    color: "#a1a1aa",
+    color: "#f59e0b", // Gold
     gradient: "linear-gradient(135deg, #000000 0%, #0a0a0a 100%)",
     border: "rgba(255, 255, 255, 0.08)",
     comingSoon: false,
@@ -100,7 +100,7 @@ const ROBOT_CATALOG = [
     descKey: "wizard.robots.classic.desc",
     market: "BIST",
     icon: Zap,
-    color: "#52525b",
+    color: "#94a3b8", // Slate Silver
     gradient: "linear-gradient(135deg, #050505 0%, #000000 100%)",
     border: "rgba(100,116,139,0.2)",
     comingSoon: true,
@@ -120,7 +120,7 @@ const ROBOT_CATALOG = [
     descKey: "wizard.robots.kriptoZeka.desc",
     market: "CRYPTO",
     icon: Coins,
-    color: "#a1a1aa",
+    color: "#f59e0b", // Neon Orange (Bitcoin)
     gradient: "linear-gradient(135deg, #000000 0%, #0a0a0a 100%)",
     border: "rgba(255, 255, 255, 0.08)",
     comingSoon: false,
@@ -140,7 +140,7 @@ const ROBOT_CATALOG = [
     descKey: "wizard.robots.kriptoZekaAscent.desc",
     market: "CRYPTO",
     icon: Bot,
-    color: "#52525b",
+    color: "#f59e0b", // Neon Orange
     gradient: "linear-gradient(135deg, #000000 0%, #0a0a0a 100%)",
     border: "rgba(255, 255, 255, 0.08)",
     comingSoon: true,
@@ -161,7 +161,7 @@ const ROBOT_CATALOG = [
     descKey: "wizard.robots.forexZeka.desc",
     market: "FOREX",
     icon: Globe,
-    color: "#52525b",
+    color: "#0d9488", // Ocean Green
     gradient: "linear-gradient(135deg, #000000 0%, #0a0a0a 100%)",
     border: "rgba(255, 255, 255, 0.08)",
     comingSoon: true,
@@ -219,8 +219,15 @@ export default function RobotsPage() {
                   style={{ background: robot.gradient, borderColor: robot.border }}
                 >
                   {robot.comingSoon && (
-                    <div className={robotStyles.comingSoonOverlay}>
-                      <Lock size={14} />
+                    <div 
+                      className={robotStyles.comingSoonOverlay}
+                      style={{ 
+                        color: robot.color, 
+                        background: `${robot.color}15`, 
+                        borderColor: `${robot.color}30` 
+                      }}
+                    >
+                      <Lock size={14} color={robot.color} />
                       {t("robots.comingSoon")}
                     </div>
                   )}
@@ -229,13 +236,21 @@ export default function RobotsPage() {
                   <div className={robotStyles.cardTop}>
                     <div
                       className={robotStyles.iconWrap}
-                      style={{ background: `${robot.color}1a`, border: `1px solid ${robot.color}33` }}
+                      style={{ background: `${robot.color}10`, border: `1px solid ${robot.color}33` }}
                     >
-                      <Icon size={22} color={robot.color} />
+                      <div 
+                        className={robotStyles.iconGlow} 
+                        style={{ background: robot.color }}
+                      />
+                      <Icon size={22} color={robot.color} style={{ position: "relative", zIndex: 1 }} />
                     </div>
                     <span
                       className={robotStyles.marketBadge}
-                      style={{ color: mktLabel.color, background: `${mktLabel.color}18`, borderColor: `${mktLabel.color}33` }}
+                      style={{ 
+                        color: robot.comingSoon ? `${robot.color}80` : robot.color, 
+                        background: `${robot.color}10`, 
+                        borderColor: `${robot.color}25` 
+                      }}
                     >
                       {mktLabel[lang]}
                     </span>
@@ -294,7 +309,14 @@ export default function RobotsPage() {
                     style={
                       robot.comingSoon
                         ? {}
-                        : { background: robot.color, color: "#fff" }
+                        : { 
+                            background: "rgba(255,255,255,0.05)", 
+                            border: `1px solid ${robot.color}40`,
+                            color: "#fff",
+                            "--hover-bg": robot.color,
+                            "--hover-glow": robot.id === "KRIPTTOZEKA" ? `${robot.color}80` : `${robot.color}40`,
+                            boxShadow: robot.id === "KRIPTTOZEKA" ? `0 0 15px ${robot.color}20` : "none"
+                          } as any
                     }
                   >
                     {robot.comingSoon ? (

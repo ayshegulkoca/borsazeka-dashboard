@@ -33,14 +33,14 @@
 .glow {
   position: absolute;
   top: 50%;
-  left: 35%;
-  transform: translate(-50%, -50%);
+  right: -5%; /* Right corner as requested */
+  transform: translateY(-50%);
   width: 600px;
-  height: 400px;
-  background: radial-gradient(ellipse, rgba(67, 56, 202, 0.04) 0%, transparent 65%);
+  height: 600px;
+  background: radial-gradient(circle, rgba(29, 49, 74, 0.12) 0%, transparent 70%);
   pointer-events: none;
   z-index: 0;
-  filter: blur(40px);
+  filter: blur(80px);
 }
 
 /* ── Content grid ── */
@@ -87,8 +87,8 @@
 
 .title {
   font-size: clamp(2.25rem, 4.5vw, 3.75rem);
-  font-weight: 100; /* Ultra Light */
-  letter-spacing: 0.04em;
+  font-weight: 100; /* Thin */
+  letter-spacing: 0.15em; /* tracking-widest */
   color: #f1f5f9;
   line-height: 1.05;
   margin-bottom: 1.25rem;
@@ -97,7 +97,8 @@
 .subtitle {
   font-size: 1.05rem;
   line-height: 1.75;
-  color: #64748b;
+  color: #94a3b8; /* slate-400 */
+  font-weight: 200; /* Extra Light */
   max-width: 440px;
   margin-bottom: 2.5rem;
 }
@@ -106,23 +107,29 @@
 .quickLinks {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 1rem;
+  max-width: 320px;
 }
 
 .quickLink {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 1rem;
   font-size: 0.875rem;
-  font-weight: 500;
-  color: #475569;
+  font-weight: 400;
+  color: #cbd5e1;
   text-decoration: none;
-  transition: color 0.2s;
-  letter-spacing: 0.01em;
+  transition: all 0.3s;
+  padding: 0.85rem 1.25rem;
+  background: rgba(255, 255, 255, 0.03); /* bg-white/5 approx */
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
 }
 
 .quickLink:hover {
-  color: #94a3b8;
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(29, 49, 74, 0.4);
+  transform: translateX(5px);
 }
 
 .quickDot {
@@ -157,7 +164,7 @@
 .sphereRing3 {
   position: absolute;
   border-radius: 50%;
-  border: 1px solid rgba(67, 56, 202, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.05); /* border-white/5 as requested */
 }
 
 .sphereRing1 {
@@ -237,8 +244,8 @@
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: #4338CA;
-  box-shadow: 0 0 12px rgba(67, 56, 202, 0.7);
+  background: #ffffff;
+  box-shadow: 0 0 15px rgba(29, 49, 74, 0.8); /* Signal point shadow as requested */
 }
 
 /* ── Office Section ── */

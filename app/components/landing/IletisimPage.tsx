@@ -1,6 +1,6 @@
 "use client";
 
-import { MapPin, ExternalLink } from "lucide-react";
+import { MapPin, ExternalLink, X, Send, Activity } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import s from "./iletisim.module.css";
 
@@ -27,16 +27,16 @@ export default function IletisimPage() {
             {/* Quick-access links */}
             <div className={s.quickLinks}>
               <a href="https://www.x.com/DH_Altin" target="_blank" rel="noopener noreferrer" className={s.quickLink}>
-                <span className={s.quickDot} style={{ background: "#1d9bf0" }} />
-                Twitter / X — @DH_Altin
+                <X size={18} color="#1d9bf0" />
+                <span>Twitter / X — @DH_Altin</span>
               </a>
               <a href="https://t.me/semiharslan" target="_blank" rel="noopener noreferrer" className={s.quickLink}>
-                <span className={s.quickDot} style={{ background: "#26a5e4" }} />
-                Telegram — @semiharslan
+                <Send size={18} color="#26a5e4" />
+                <span>Telegram — @semiharslan</span>
               </a>
               <a href="https://t.me/BorsaZekaCom" target="_blank" rel="noopener noreferrer" className={s.quickLink}>
-                <span className={s.quickDot} style={{ background: "#00FF9D" }} />
-                Kanal — @BorsaZekaCom
+                <Activity size={18} color="#00FF9D" />
+                <span>Kanal — @BorsaZekaCom</span>
               </a>
             </div>
           </div>
