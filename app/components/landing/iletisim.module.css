@@ -87,8 +87,8 @@
 
 .title {
   font-size: clamp(2.25rem, 4.5vw, 3.75rem);
-  font-weight: 800;
-  letter-spacing: -0.04em;
+  font-weight: 100; /* Ultra Light */
+  letter-spacing: 0.04em;
   color: #f1f5f9;
   line-height: 1.05;
   margin-bottom: 1.25rem;
@@ -295,9 +295,9 @@
 
 .officeTitle {
   font-size: 2.25rem;
-  font-weight: 800;
+  font-weight: 200; /* Extra Light */
   color: #f1f5f9;
-  letter-spacing: -0.03em;
+  letter-spacing: 0.02em;
   text-shadow: 0 0 30px rgba(67, 56, 202, 0.15);
 }
 

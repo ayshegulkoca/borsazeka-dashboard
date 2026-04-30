@@ -29,7 +29,7 @@
   align-items: center;
   gap: 0.65rem;
   font-size: 1.15rem;
-  font-weight: 700;
+  font-weight: 300; /* Lighter logo */
   color: #FFFFFF;
   text-decoration: none;
   margin-bottom: 1rem;
@@ -55,7 +55,7 @@
 
 .groupTitle {
   font-size: 0.75rem;
-  font-weight: 600;
+  font-weight: 400;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: #FFFFFF;

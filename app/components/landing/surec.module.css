@@ -88,8 +88,8 @@
 
 .heroTitle {
   font-size: clamp(2rem, 5vw, 3.5rem);
-  font-weight: 800;
-  letter-spacing: -0.04em;
+  font-weight: 100; /* Ultra Light */
+  letter-spacing: 0.04em;
   line-height: 1.1;
   color: var(--text-primary);
   margin-bottom: 1.25rem;
@@ -139,8 +139,8 @@
 
 .sectionTitle {
   font-size: clamp(1.5rem, 3.5vw, 2.25rem);
-  font-weight: 700;
-  letter-spacing: -0.03em;
+  font-weight: 200; /* Extra Light */
+  letter-spacing: 0.03em;
   color: var(--text-primary);
   margin-bottom: 1rem;
 }
@@ -216,7 +216,7 @@
 
 .missionCardTitle {
   font-size: 0.9rem;
-  font-weight: 600;
+  font-weight: 400;
   color: var(--text-primary);
   margin-bottom: 0.3rem;
 }
@@ -410,7 +410,7 @@
 
 .stepTitle {
   font-size: 1.1rem;
-  font-weight: 700;
+  font-weight: 400;
   color: var(--text-primary);
   margin-bottom: 0.5rem;
 }
@@ -508,9 +508,9 @@
 
 .cardTitle {
   font-size: 1.5rem;
-  font-weight: 700;
+  font-weight: 300;
   color: var(--text-primary);
-  letter-spacing: -0.02em;
+  letter-spacing: 0.02em;
 }
 
 .cardInfo {
@@ -633,8 +633,8 @@
 
 .ctaTitle {
   font-size: clamp(2rem, 4vw, 3rem);
-  font-weight: 800;
-  letter-spacing: -0.04em;
+  font-weight: 200;
+  letter-spacing: 0.02em;
   color: var(--text-primary);
   margin-bottom: 1rem;
 }

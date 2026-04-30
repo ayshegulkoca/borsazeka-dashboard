@@ -76,8 +76,8 @@
 
 .wizardTitle {
   font-size: clamp(1.75rem, 3vw, 2.5rem);
-  font-weight: 800;
-  letter-spacing: -0.04em;
+  font-weight: 100; /* Ultra Light */
+  letter-spacing: 0.04em;
   color: var(--text-primary);
   margin-bottom: 0.75rem;
 }
@@ -213,10 +213,10 @@
 
 .stepTitle {
   font-size: 1.2rem;
-  font-weight: 700;
+  font-weight: 400;
   color: var(--text-primary);
   margin-bottom: 1.75rem;
-  letter-spacing: -0.02em;
+  letter-spacing: 0.02em;
 }
 
 .stepTag {
@@ -384,7 +384,7 @@
 
 .robotName {
   font-size: 1.05rem;
-  font-weight: 700;
+  font-weight: 400;
   color: var(--text-primary);
 }
 
@@ -706,7 +706,7 @@
   padding: 0.875rem 2rem;
   border-radius: 10px;
   font-size: 0.9rem;
-  font-weight: 700;
+  font-weight: 500;
   background: var(--accent-primary);
   color: #000000;
   transition: all 0.2s;

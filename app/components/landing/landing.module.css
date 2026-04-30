@@ -899,7 +899,7 @@
 
 .robotName {
   font-size: 0.95rem;
-  font-weight: 600;
+  font-weight: 400;
   color: var(--text-primary);
   margin-bottom: 0.3rem;
 }
@@ -913,7 +913,7 @@
 .robotBadge {
   display: inline-block;
   font-size: 0.7rem;
-  font-weight: 600;
+  font-weight: 500;
   padding: 0.2rem 0.65rem;
   border-radius: 100px;
   background: rgba(79, 70, 229, 0.12);
@@ -987,7 +987,7 @@
 
 .pricingPlanName {
   font-size: 0.8rem;
-  font-weight: 600;
+  font-weight: 400;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--text-muted);
@@ -996,7 +996,7 @@
 
 .pricingPrice {
   font-size: 2.5rem;
-  font-weight: 800;
+  font-weight: 200;
   color: var(--text-primary);
   letter-spacing: -0.04em;
   margin-bottom: 0.25rem;
