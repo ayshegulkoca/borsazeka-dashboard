@@ -32,12 +32,12 @@ function QRCodePlaceholder() {
       aria-label="QR Kod"
     >
       {/* Outer finder patterns */}
-      <rect x="5" y="5" width="30" height="30" rx="3" stroke="rgba(139, 92, 246, 0.7)" strokeWidth="3" fill="none" />
-      <rect x="12" y="12" width="16" height="16" rx="1" fill="rgba(139, 92, 246, 0.7)" />
-      <rect x="65" y="5" width="30" height="30" rx="3" stroke="rgba(139, 92, 246, 0.7)" strokeWidth="3" fill="none" />
-      <rect x="72" y="12" width="16" height="16" rx="1" fill="rgba(139, 92, 246, 0.7)" />
-      <rect x="5" y="65" width="30" height="30" rx="3" stroke="rgba(139, 92, 246, 0.7)" strokeWidth="3" fill="none" />
-      <rect x="12" y="72" width="16" height="16" rx="1" fill="rgba(139, 92, 246, 0.7)" />
+      <rect x="5" y="5" width="30" height="30" rx="3" stroke="rgba(148, 163, 184, 0.7)" strokeWidth="3" fill="none" />
+      <rect x="12" y="12" width="16" height="16" rx="1" fill="rgba(148, 163, 184, 0.7)" />
+      <rect x="65" y="5" width="30" height="30" rx="3" stroke="rgba(148, 163, 184, 0.7)" strokeWidth="3" fill="none" />
+      <rect x="72" y="12" width="16" height="16" rx="1" fill="rgba(148, 163, 184, 0.7)" />
+      <rect x="5" y="65" width="30" height="30" rx="3" stroke="rgba(148, 163, 184, 0.7)" strokeWidth="3" fill="none" />
+      <rect x="12" y="72" width="16" height="16" rx="1" fill="rgba(148, 163, 184, 0.7)" />
       {/* Data modules (simplified) */}
       {[
         [45,5],[50,5],[55,5],[60,5],
@@ -62,7 +62,7 @@ function QRCodePlaceholder() {
         [5,87],[10,87],[20,87],[30,87],
         [5,94],[15,94],[25,94],[30,94],
       ].map(([x, y], i) => (
-        <rect key={i} x={x} y={y} width="4" height="4" fill="rgba(139, 92, 246, 0.55)" />
+        <rect key={i} x={x} y={y} width="4" height="4" fill="rgba(148, 163, 184, 0.55)" />
       ))}
     </svg>
   );
