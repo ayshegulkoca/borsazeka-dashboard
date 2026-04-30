@@ -23,18 +23,18 @@ export default function AccountList({ initialAccounts }: Props) {
         <div
           key={acc.id}
           style={{
-            backgroundColor: "var(--bg-card)",
-            border: "1px solid var(--border-subtle)",
-            borderRadius: "var(--radius-md)",
-            padding: "1.25rem",
+            backgroundColor: "#0A0A0A",
+            border: "1px solid rgba(255, 255, 255, 0.05)",
+            borderRadius: "24px",
+            padding: "1.5rem",
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            transition: "all 0.2s",
+            transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
             cursor: "pointer"
           }}
-          onMouseEnter={(e) => (e.currentTarget.style.borderColor = "rgba(16, 185, 129, 0.3)")}
-          onMouseLeave={(e) => (e.currentTarget.style.borderColor = "var(--border-subtle)")}
+          onMouseEnter={(e) => (e.currentTarget.style.borderColor = "rgba(55, 48, 163, 0.3)")}
+          onMouseLeave={(e) => (e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.05)")}
         >
           <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
             <div
@@ -42,45 +42,47 @@ export default function AccountList({ initialAccounts }: Props) {
                 width: "48px",
                 height: "48px",
                 borderRadius: "12px",
-                backgroundColor: "rgba(255, 255, 255, 0.03)",
+                backgroundColor: "rgba(55, 48, 163, 0.05)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                color: acc.accountType === "BIST" ? "#10b981" : "#fbbf24"
+                color: acc.accountType === "BIST" ? "#3730A3" : "#fbbf24",
+                border: "1px solid rgba(55, 48, 163, 0.1)"
               }}
             >
-              {acc.accountType === "BIST" ? <Wallet size={24} /> : <Globe size={24} />}
+              {acc.accountType === "BIST" ? <Wallet size={20} strokeWidth={1.5} /> : <Globe size={20} strokeWidth={1.5} />}
             </div>
             
             <div>
               <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                <h4 style={{ fontSize: "1rem", fontWeight: 700, color: "var(--text-primary)" }}>
+                <h4 style={{ fontSize: "1rem", fontWeight: 200, color: "#ffffff", letterSpacing: '0.02em' }}>
                   {acc.institution}
                 </h4>
                 <div
                   style={{
                     fontSize: "0.65rem",
-                    fontWeight: 700,
+                    fontWeight: 500,
                     textTransform: "uppercase",
-                    padding: "0.15rem 0.4rem",
-                    borderRadius: "4px",
-                    backgroundColor: acc.isActive ? "rgba(16, 185, 129, 0.1)" : "rgba(251, 191, 36, 0.1)",
-                    color: acc.isActive ? "#10b981" : "#fbbf24",
+                    padding: "0.15rem 0.5rem",
+                    borderRadius: "100px",
+                    backgroundColor: acc.isActive ? "rgba(55, 48, 163, 0.1)" : "rgba(251, 191, 36, 0.1)",
+                    color: acc.isActive ? "#3730A3" : "#fbbf24",
+                    border: "1px solid " + (acc.isActive ? "rgba(55, 48, 163, 0.2)" : "rgba(251, 191, 36, 0.2)"),
                     display: "flex",
                     alignItems: "center",
-                    gap: "0.2rem"
+                    gap: "0.25rem"
                   }}
                 >
                   <CheckCircle2 size={10} />
                   {acc.isActive ? "Aktif" : "Beklemede"}
                 </div>
                 {acc.robotName && (
-                  <span style={{ fontSize: "0.75rem", color: "var(--text-muted)", background: "rgba(255,255,255,0.05)", padding: "0.15rem 0.4rem", borderRadius: "4px" }}>
+                  <span style={{ fontSize: "0.75rem", fontWeight: 200, color: "#71717A", background: "rgba(255,255,255,0.03)", padding: "0.15rem 0.5rem", borderRadius: "100px", border: '1px solid rgba(255,255,255,0.05)' }}>
                     {acc.robotName}
                   </span>
                 )}
               </div>
-              <p style={{ fontSize: "0.85rem", color: "var(--text-secondary)", marginTop: "0.2rem" }}>
+              <p style={{ fontSize: "0.85rem", fontWeight: 200, color: "#71717A", marginTop: "0.2rem" }}>
                 Hesap No: {acc.accountNo}
               </p>
             </div>
@@ -94,9 +96,9 @@ export default function AccountList({ initialAccounts }: Props) {
               </p>
             </div>
             
-            <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", color: "#10b981" }}>
-              <ShieldCheck size={18} />
-              <span style={{ fontSize: "0.75rem", fontWeight: 600 }}>Güvenli</span>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", color: "#3730A3" }}>
+              <ShieldCheck size={16} strokeWidth={1.5} />
+              <span style={{ fontSize: "0.75rem", fontWeight: 400 }}>Güvenli</span>
             </div>
 
             <button style={{ color: "var(--text-muted)", padding: "0.5rem" }}>

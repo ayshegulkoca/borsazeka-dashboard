@@ -46,15 +46,9 @@ export interface SetupWizardProps {
 }
 
 // ─── Sub-component: Step connector ───────────────────────────────────────────
-function StepConnector({ done }: { done: boolean }) {
+function StepConnector() {
   return (
-    <div className={s.connector} aria-hidden="true">
-      <div className={`${s.connectorLine} ${done ? s.connectorLineDone : ""}`} />
-      <ArrowRight
-        size={13}
-        className={`${s.connectorArrow} ${done ? s.connectorArrowDone : ""}`}
-      />
-    </div>
+    <div className={s.connector} aria-hidden="true" />
   );
 }
 
@@ -198,9 +192,7 @@ export default function SetupWizard({
           return (
             <div key={step.num} className={s.stepAndConnector}>
               {/* Connector before steps 2 & 3 */}
-              {idx > 0 && (
-                <StepConnector done={steps[idx - 1].done && !steps[idx - 1].pending} />
-              )}
+              {idx > 0 && <StepConnector />}
 
               <motion.div
                 layout
@@ -324,22 +316,14 @@ export default function SetupWizard({
                 {step.num === 2 && !step.done && !step.locked && !step.pending && (
                   <div className={s.optionList}>
                     <Link href="/robotlar" className={s.optionCard}>
-                      <div className={s.optionIconBox}>
-                        <LayoutGrid size={18} />
-                      </div>
-                      <div className={s.optionText}>
+                      <span className={s.optionText}>
                         {t("onboardingSteps.step2.optionATitle")}
-                      </div>
-                      <ArrowRight size={14} className={s.optionArrow} />
+                      </span>
                     </Link>
                     <Link href="/urun-sec" className={s.optionCard}>
-                      <div className={s.optionIconBox}>
-                        <Bot size={18} />
-                      </div>
-                      <div className={s.optionText}>
+                      <span className={s.optionText}>
                         {t("onboardingSteps.step2.optionBTitle")}
-                      </div>
-                      <ArrowRight size={14} className={s.optionArrow} />
+                      </span>
                     </Link>
                   </div>
                 )}

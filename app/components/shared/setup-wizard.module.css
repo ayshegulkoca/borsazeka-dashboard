@@ -1,660 +1,394 @@
-/* ═══════════════════════════════════════════════════════════════════════
-   SetupWizard — Shared component (Landing + Dashboard)
-   Dark green glassmorphism, glow borders, framer-motion ready
-   ═══════════════════════════════════════════════════════════════════════ */
+/* ============================================================
+   BorsaZeka Setup Wizard — Ultra-Light Aesthetic (V5)
+   ============================================================ */
 
-/* ── Root ──────────────────────────────────────────────────────────────── */
 .root {
   position: relative;
+  border-radius: 40px;
   overflow: hidden;
-  border-radius: 24px;
-  border: 1px solid var(--border-subtle);
-  background: #000000;
-  box-shadow: var(--shadow-premium);
+  margin-bottom: 2rem;
+  background: #0A0A0A;
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  transition: all 0.3s ease;
 }
 
-/* Dashboard variant — compact, sits inline in page */
 .rootDashboard {
-  padding: 1.5rem 1.5rem 1.25rem;
-  margin-bottom: 1.75rem;
+  padding: 2.5rem;
 }
 
-/* Landing variant — full-width section card */
 .rootLanding {
-  padding: 2rem 2rem 1.75rem;
-  max-width: 1100px;
-  margin: 0 auto;
+  padding: 3.5rem 2.5rem;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
 }
 
-/* Glow top line */
-.root::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 8%; right: 8%;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(55, 48, 163, 0.45), transparent);
-  pointer-events: none;
-}
-
-
+/* ── Ambient Glows ───────────────────────────────────────── */
 .glowTopLeft {
   position: absolute;
-  top: -50px; left: -50px;
-  width: 200px; height: 200px;
-  background: radial-gradient(circle, rgba(55, 48, 163, 0.08), transparent 65%);
+  top: -100px;
+  left: -100px;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(55, 48, 163, 0.08) 0%, transparent 70%);
+  filter: blur(60px);
   pointer-events: none;
 }
 
 .glowBottomRight {
   position: absolute;
-  bottom: -40px; right: -40px;
-  width: 160px; height: 160px;
-  background: radial-gradient(circle, rgba(55, 48, 163, 0.05), transparent 65%);
+  bottom: -100px;
+  right: -100px;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(67, 56, 202, 0.06) 0%, transparent 70%);
+  filter: blur(60px);
   pointer-events: none;
 }
 
-/* ── Header row ─────────────────────────────────────────────────────────── */
+/* ── Header ───────────────────────────────────────────────── */
 .header {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  gap: 1rem;
-  margin-bottom: 1.25rem;
-  flex-wrap: wrap;
-  position: relative;
-  z-index: 1;
+  align-items: center;
+  margin-bottom: 3rem;
+  gap: 2rem;
 }
 
 .headerLeft {
   display: flex;
   align-items: center;
-  gap: 0.65rem;
+  gap: 1.25rem;
 }
 
 .sparkleIcon {
+  width: 44px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px; height: 32px;
-  border-radius: 10px;
-  background: rgba(55, 48, 163, 0.12);
+  background: rgba(55, 48, 163, 0.1);
   border: 1px solid rgba(55, 48, 163, 0.2);
-  color: var(--accent-primary);
-  flex-shrink: 0;
+  border-radius: 14px;
+  color: #3730A3;
 }
 
 .headerTitle {
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: var(--text-primary, #fff);
-  letter-spacing: -0.01em;
+  font-size: 1.25rem;
+  font-weight: 200;
+  letter-spacing: 0.02em;
+  color: #ffffff;
+  margin-bottom: 0.25rem;
 }
 
 .headerSub {
-  font-size: 0.75rem;
-  color: var(--text-muted, rgba(255,255,255,0.4));
-  margin-top: 0.1rem;
+  font-size: 0.85rem;
+  font-weight: 300;
+  color: #71717A;
 }
 
-/* ── Progress bar ──────────────────────────────────────────────────────── */
+/* ── Progress Bar ─────────────────────────────────────────── */
 .progressBar {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
-  flex-shrink: 0;
+  gap: 1.25rem;
+  flex: 1;
+  max-width: 400px;
 }
 
 .progressTrack {
-  width: 130px;
-  height: 10px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.03);
   border-radius: 100px;
-  background: rgba(255, 255, 255, 0.07);
+  flex: 1;
   position: relative;
   overflow: visible;
 }
 
 .progressFill {
   height: 100%;
+  background: #3730A3;
   border-radius: 100px;
-  background: var(--accent-primary);
-  min-width: 0;
-  position: relative;
+  box-shadow: 0 0 10px rgba(55, 48, 163, 0.2);
 }
 
 .progressDot {
   position: absolute;
   top: 50%;
   transform: translate(-50%, -50%);
-  width: 12px; height: 12px;
+  width: 10px;
+  height: 10px;
+  background: #ffffff;
+  border: 2px solid #3730A3;
   border-radius: 50%;
-  background: var(--accent-primary);
-  border: 2px solid #000;
-  box-shadow: 0 0 15px rgba(55, 48, 163, 0.6);
-  pointer-events: none;
+  box-shadow: 0 0 10px rgba(55, 48, 163, 0.3);
 }
 
 .progressLabel {
-  font-size: 0.72rem;
-  font-weight: 700;
-  color: var(--text-muted, rgba(255,255,255,0.4));
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #ffffff;
   min-width: 2.5rem;
 }
 
-/* ── Steps row ──────────────────────────────────────────────────────────── */
+/* ── Steps Row ────────────────────────────────────────────── */
 .stepsRow {
   display: flex;
-  align-items: stretch;
-  gap: 0;
-  position: relative;
-  z-index: 1;
+  gap: 1.5rem;
 }
 
 .stepAndConnector {
-  display: contents; /* connector + card sit directly in flex row */
-}
-
-/* ── Connector ───────────────────────────────────────────────────────────── */
-.connector {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  gap: 3px;
-  min-width: 40px;
-  padding: 0 0.25rem;
-  margin-top: 3rem; /* aligns with icon bubbles */
-}
-
-.connectorLine {
-  width: 100%;
-  height: 2px;
-  background: rgba(255, 255, 255, 0.07);
-  border-radius: 100px;
-  transition: background 0.5s ease;
-}
-
-.connectorLineDone {
-  background: rgba(55, 48, 163, 0.5);
-}
-
-.connectorArrow {
-  color: rgba(255, 255, 255, 0.1);
-  transition: color 0.5s ease;
-}
-
-.connectorArrowDone {
-  color: rgba(55, 48, 163, 0.7);
-}
-
-/* ── Step card ───────────────────────────────────────────────────────────── */
-.stepCard {
   flex: 1;
-  min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  padding: 1.25rem 1.25rem 1.1rem;
-  border-radius: 18px;
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  background: rgba(255, 255, 255, 0.025);
+}
+
+.stepCard {
+  background: rgba(255, 255, 255, 0.01);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  border-radius: 28px;
+  padding: 2.25rem;
   position: relative;
-  overflow: hidden;
-  transition: border-color 0.3s ease;
-  cursor: default;
+  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .stepCardActive {
-  border-color: rgba(55, 48, 163, 0.25);
-  background: rgba(55, 48, 163, 0.04);
+  background: rgba(255, 255, 255, 0.02);
+  border-color: rgba(55, 48, 163, 0.15);
 }
 
 .stepCardDone {
-  border-color: rgba(55, 48, 163, 0.15);
-  background: rgba(55, 48, 163, 0.03);
+  background: rgba(255, 255, 255, 0.005);
+  border-color: rgba(255, 255, 255, 0.02);
 }
 
 .stepCardLocked {
-  opacity: 0.5;
-  filter: saturate(0);
-  background: #0a0a0a;
-  border-color: #1A1A1A;
-  pointer-events: none;
-  cursor: not-allowed;
+  opacity: 0.6;
+  filter: grayscale(0.5);
 }
 
-/* ── Lock overlay ────────────────────────────────────────────────────────── */
-.lockOverlay {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 3;
-  pointer-events: none;
-}
-
-.lockIcon {
-  color: rgba(255, 255, 255, 0.18);
-  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5));
-}
-
-/* ── Hover glow overlay ──────────────────────────────────────────────────── */
-.hoverGlow {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse at 50% 0%, rgba(55, 48, 163, 0.08), transparent 70%);
-  pointer-events: none;
-  z-index: 0;
-}
-
-/* ── Icon row (icon + badge) ─────────────────────────────────────────────── */
 .iconRow {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  margin-bottom: 0.5rem;
-  position: relative;
-  z-index: 1;
+  align-items: center;
+  margin-bottom: 1.5rem;
 }
 
 .iconBox {
-  width: 44px; height: 44px;
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  width: 40px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--text-muted, rgba(255,255,255,0.4));
-  transition: all 0.3s ease;
-  flex-shrink: 0;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.02);
+  color: #71717A;
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  transition: all 0.3s;
 }
 
 .iconBoxDone {
-  background: rgba(55, 48, 163, 0.15);
-  border-color: rgba(55, 48, 163, 0.3);
-  color: var(--accent-primary);
-  box-shadow: 0 0 15px rgba(55, 48, 163, 0.15);
+  background: rgba(55, 48, 163, 0.1);
+  color: #3730A3;
+  border-color: rgba(55, 48, 163, 0.2);
 }
 
 .iconBoxHovered {
-  background: rgba(55, 48, 163, 0.12);
-  border-color: rgba(55, 48, 163, 0.3);
-  color: var(--accent-primary);
+  border-color: #3730A3;
+  color: #ffffff;
 }
 
-/* ── Status badges ───────────────────────────────────────────────────────── */
 .badge {
+  padding: 0.35rem 0.75rem;
+  border-radius: 100px;
+  font-size: 0.65rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
   display: inline-flex;
   align-items: center;
-  gap: 0.3rem;
-  font-size: 0.67rem;
-  font-weight: 700;
-  padding: 0.22rem 0.6rem;
-  border-radius: 100px;
-  letter-spacing: 0.03em;
-  white-space: nowrap;
+  gap: 0.4rem;
 }
 
 .badgeDone {
-  background: rgba(55, 48, 163, 0.12);
+  background: rgba(55, 48, 163, 0.1);
+  color: #3730A3;
   border: 1px solid rgba(55, 48, 163, 0.2);
-  color: var(--accent-primary);
 }
 
 .badgePending {
-  background: rgba(251, 191, 36, 0.12);
-  border: 1px solid rgba(251, 191, 36, 0.25);
+  background: rgba(251, 191, 36, 0.1);
   color: #fbbf24;
+  border: 1px solid rgba(251, 191, 36, 0.2);
 }
 
-.badgeLocked {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  color: rgba(255, 255, 255, 0.22);
+.stepNum {
+  font-size: 0.65rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #3F3F46;
+  margin-bottom: 0.5rem;
+  display: block;
 }
 
-/* ── Step 1 Profile ─────────────────────────────────────────────────────── */
+.stepTitle {
+  font-size: 1.1rem;
+  font-weight: 100;
+  color: #ffffff;
+  margin-bottom: 1rem;
+  line-height: 1.3;
+}
+
+.stepDesc {
+  font-size: 0.85rem;
+  font-weight: 200;
+  color: #71717A;
+  line-height: 1.6;
+}
+
+/* Connector - Invisible spacing */
+.connector {
+  display: none;
+}
+
+/* ── Custom Step Content ─────────────────────────────────── */
 .step1Content {
-  margin-top: 0.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
+  margin-top: auto;
+  padding-top: 1.5rem;
 }
 
 .profileBox {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 16px;
+  padding: 1rem;
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  padding: 0.75rem;
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  gap: 0.85rem;
+  margin-bottom: 1rem;
 }
 
 .profileAvatarWrapper {
-  width: 36px; height: 36px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   overflow: hidden;
-  border: 1px solid rgba(55, 48, 163, 0.4);
-  background: #000;
-  flex-shrink: 0;
-}
-
-.profileAvatar {
-  width: 100%; height: 100%;
-  object-fit: cover;
-}
-
-.profileAvatarPlaceholder {
-  width: 100%; height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--accent-primary);
-}
-
-.profileInfo {
-  min-width: 0;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .profileName {
   font-size: 0.85rem;
-  font-weight: 700;
-  color: #fff;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  font-weight: 400;
+  color: #ffffff;
 }
 
 .profileEmail {
-  font-size: 0.72rem;
-  color: rgba(255, 255, 255, 0.35);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  font-size: 0.7rem;
+  color: #71717A;
 }
 
 .profileSwitch {
-  font-size: 0.72rem;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.3);
+  width: 100%;
   background: transparent;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 0.4rem 0.75rem;
-  border-radius: 10px;
+  padding: 0.6rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  color: #71717A;
   cursor: pointer;
-  width: fit-content;
   transition: all 0.2s;
 }
 
 .profileSwitch:hover {
-  background: rgba(255, 255, 255, 0.05);
-  color: #fff;
-  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.03);
+  color: #ffffff;
 }
 
-/* ── Step 2 Options ─────────────────────────────────────────────────────── */
+/* CTAs */
+.ctaStack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.ctaPrimary {
+  width: 100%;
+  background: #ffffff;
+  color: #000000;
+  padding: 0.85rem;
+  border-radius: 14px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.ctaPrimary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(255,255,255,0.1);
+}
+
+.ctaSecondary {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  padding: 0.85rem;
+  border-radius: 14px;
+  font-size: 0.85rem;
+  font-weight: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.ctaSecondary:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* Step 2 Options */
 .optionList {
   display: flex;
   flex-direction: column;
-  gap: 0.65rem;
-  margin-top: 0.5rem;
+  gap: 0.6rem;
+  margin-top: 1rem;
 }
 
 .optionCard {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 14px;
+  padding: 0.85rem 1rem;
+  text-decoration: none;
+  transition: all 0.2s;
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  padding: 0.75rem 1rem;
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  text-decoration: none;
-  transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+  justify-content: center;
 }
 
 .optionCard:hover {
   background: rgba(55, 48, 163, 0.08);
-  border-color: rgba(55, 48, 163, 0.3);
-  transform: translateX(4px);
-}
-
-.optionIconBox {
-  width: 32px; height: 32px;
-  border-radius: 8px;
-  background: rgba(55, 48, 163, 0.1);
-  border: 1px solid rgba(55, 48, 163, 0.2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--accent-primary);
+  border-color: rgba(55, 48, 163, 0.2);
 }
 
 .optionText {
-  flex: 1;
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: rgba(255, 255, 255, 0.9);
-}
-
-.optionArrow {
-  color: rgba(255, 255, 255, 0.15);
-  transition: all 0.25s;
-}
-
-.optionCard:hover .optionArrow {
-  color: var(--accent-primary);
-  transform: translateX(2px);
-}
-
-/* ── Step 3 Checklist ───────────────────────────────────────────────────── */
-.step3Content {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin-top: 0.5rem;
-}
-
-.checklist {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  padding: 0.75rem;
-  background: rgba(255, 255, 255, 0.03);
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.checkItem {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.25);
-}
-
-.checkItemDone {
-  color: var(--accent-primary);
-}
-
-.checkSmall {
-  flex-shrink: 0;
-}
-
-/* ── Step text ───────────────────────────────────────────────────────────── */
-.stepMeta {
-  position: relative;
-  z-index: 1;
-}
-
-.stepNum {
-  font-size: 0.6rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.3);
-}
-
-.stepTitle {
-  font-size: 0.9rem;
-  font-weight: 800;
-  color: var(--text-primary, rgba(255,255,255,0.9));
-  letter-spacing: -0.02em;
-  line-height: 1.3;
-  position: relative;
-  z-index: 1;
-}
-
-.stepDesc {
-  font-size: 0.78rem;
-  color: var(--text-muted, rgba(255,255,255,0.38));
-  line-height: 1.55;
-  flex: 1;
-  position: relative;
-  z-index: 1;
-}
-
-/* ── CTA elements ────────────────────────────────────────────────────────── */
-.ctaInline {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
   font-size: 0.8rem;
-  font-weight: 700;
-  color: var(--accent-primary);
-  text-decoration: none;
-  margin-top: auto;
-  padding-top: 0.5rem;
-  transition: all 0.2s ease;
-  position: relative;
-  z-index: 1;
-  cursor: pointer;
-}
-
-.ctaInline:hover .ctaArrow {
-  transform: translateX(3px);
-}
-
-.ctaArrow {
-  transition: transform 0.2s ease;
-  flex-shrink: 0;
-}
-
-.ctaDisabled {
-  color: var(--text-muted, rgba(255,255,255,0.3));
-  cursor: default;
-  pointer-events: none;
-}
-
-/* Step 3 two-button stack */
-.ctaStack {
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-  margin-top: auto;
-  padding-top: 0.5rem;
-  position: relative;
-  z-index: 1;
-}
-
-.ctaPrimary {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  padding: 0.85rem 1.25rem;
-  border-radius: var(--radius-capsule);
-  background: var(--accent-primary);
+  font-weight: 300;
   color: #ffffff;
-  font-size: 0.82rem;
-  font-weight: 700;
-  text-decoration: none;
-  border: none;
-  cursor: pointer;
-  transition: all 0.22s ease;
-  box-shadow: 0 4px 14px rgba(55, 48, 163, 0.25);
 }
 
-.ctaPrimary:hover {
-  background: var(--accent-primary-hover);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(55, 48, 163, 0.35);
-}
-
-.ctaSecondary {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  padding: 0.75rem 1.25rem;
-  border-radius: var(--radius-capsule);
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: #ffffff;
-  font-size: 0.8rem;
-  font-weight: 600;
-  text-decoration: none;
-  cursor: pointer;
-  transition: all 0.22s ease;
-}
-
-.ctaSecondary:hover {
-  background: rgba(55, 48, 163, 0.08);
-  border-color: rgba(55, 48, 163, 0.3);
-}
-
-/* ── Responsive ─────────────────────────────────────────────────────────── */
-@media (max-width: 860px) {
+@media (max-width: 1024px) {
   .stepsRow {
     flex-direction: column;
-    gap: 0.75rem;
-  }
-
-  .connector {
-    flex-direction: row;
-    min-width: unset;
-    width: 100%;
-    margin-top: 0;
-    padding: 0.2rem 0;
-  }
-
-  .connectorLine {
-    flex: 1;
-    height: 2px;
-    width: auto;
-  }
-
-  .connectorArrow {
-    transform: rotate(90deg);
-  }
-
-  .stepCard {
-    padding: 1.1rem 1rem;
-  }
-
-  .progressTrack {
-    width: 90px;
-  }
-
-  .rootDashboard {
-    padding: 1.25rem 1.1rem 1rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .header {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .progressBar {
-    width: 100%;
-  }
-
-  .progressTrack {
-    flex: 1;
+    gap: 1.5rem;
   }
 }

@@ -112,7 +112,7 @@ export default function DashboardShell({ children, userName, userEmail, userImag
         <div className={styles.sidebarHeader}>
           <Link href="/" className={styles.logoArea}>
             <div className={styles.logoIcon}>
-              <Activity color="var(--accent-primary)" size={24} />
+              <Activity color="#3730A3" size={20} strokeWidth={1.5} />
             </div>
             <span className={styles.title}>BorsaZeka</span>
           </Link>
@@ -121,7 +121,7 @@ export default function DashboardShell({ children, userName, userEmail, userImag
             href="/" 
             className={styles.backToSiteBtnSidebar} 
           >
-            <ArrowLeft size={16} />
+            <ArrowLeft size={14} strokeWidth={1.5} />
             <span>{t("dashboard.nav.backToSite")}</span>
           </Link>
         </div>
@@ -137,7 +137,7 @@ export default function DashboardShell({ children, userName, userEmail, userImag
                 href={item.href}
                 className={`${styles.navLink} ${isActive ? styles.activeLink : ""}`}
               >
-                <Icon size={20} />
+                <Icon size={18} strokeWidth={isActive ? 2 : 1.5} />
                 <span>{item.label}</span>
               </Link>
             );
@@ -166,10 +166,10 @@ export default function DashboardShell({ children, userName, userEmail, userImag
           </div>
           <button
             onClick={() => signOut({ callbackUrl: "/" })}
-            style={{ color: "var(--text-muted)", background: "none", border: "none", cursor: "pointer" }}
+            style={{ color: "#71717A", background: "none", border: "none", cursor: "pointer" }}
             aria-label={t("dashboard.settings.signOut")}
           >
-            <LogOut size={18} />
+            <LogOut size={16} strokeWidth={1.5} />
           </button>
         </div>
       </aside>

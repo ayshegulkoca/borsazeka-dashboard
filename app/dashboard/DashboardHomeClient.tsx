@@ -43,7 +43,7 @@ export default function DashboardHomeClient({
   return (
     <div className={styles.container}>
       {/* Hoşgeldin */}
-      <div>
+      <div className={styles.welcomeSection}>
         <p className={styles.welcomeText}>{t("dashboard.home.welcome")}</p>
         <h1 className={styles.title}>{displayName}</h1>
       </div>
@@ -60,17 +60,17 @@ export default function DashboardHomeClient({
 
       {/* ── Kurulum tamamlanmadan bu bölümleri gösterme ── */}
       {hasRobots ? (
-        <>
+        <div className={styles.bentoGrid}>
           {/* Ana Bakiye Kartı */}
-          <div className={styles.balanceCard}>
+          <div className={`${styles.card} ${styles.balanceCard}`}>
             <div className={styles.balanceHeader}>
               {t("dashboard.home.balanceCard")}
               <button
                 onClick={() => setShowBalance(!showBalance)}
-                className={styles.eyeIcon}
+                style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'inherit' }}
                 aria-label={t("dashboard.home.hideShowBalance")}
               >
-                {showBalance ? <Eye size={16} /> : <EyeOff size={16} />}
+                {showBalance ? <Eye size={16} strokeWidth={1.5} /> : <EyeOff size={16} strokeWidth={1.5} />}
               </button>
             </div>
             <div className={styles.balanceValue}>
@@ -78,7 +78,7 @@ export default function DashboardHomeClient({
             </div>
             <div className={styles.pnlPill}>
               <div className={styles.pnlIconWrapper}>
-                <TrendingUp size={18} />
+                <TrendingUp size={16} strokeWidth={2} />
               </div>
               <div>
                 <span className={styles.pnlLabel}>{t("dashboard.home.dailyPnl")}</span>
@@ -90,15 +90,15 @@ export default function DashboardHomeClient({
           {/* İstatistik Kartları */}
           <div className={styles.statsGrid}>
             <div className={styles.statCard}>
-              <div className={`${styles.statIconWrapper} ${styles.robotIcon}`}>
-                <Bot size={20} />
+              <div className={styles.statIconWrapper}>
+                <Bot size={18} strokeWidth={1.5} />
               </div>
               <span className={styles.statValue}>{activeRobotCount}</span>
               <span className={styles.statLabel}>{t("dashboard.home.activeRobots")}</span>
             </div>
             <div className={styles.statCard}>
-              <div className={`${styles.statIconWrapper} ${styles.orderIcon}`}>
-                <ClipboardList size={20} />
+              <div className={styles.statIconWrapper}>
+                <ClipboardList size={18} strokeWidth={1.5} />
               </div>
               <span className={styles.statValue}>2</span>
               <span className={styles.statLabel}>{t("dashboard.home.pendingOrders")}</span>
@@ -108,35 +108,22 @@ export default function DashboardHomeClient({
           {/* Aktif Robotlarım */}
           {robots.length > 0 && (
             <div>
-              <h3 className={styles.actionsHeader}>{t("dashboard.home.myActiveRobots")}</h3>
-              <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+              <h3 className={styles.sectionHeader}>{t("dashboard.home.myActiveRobots")}</h3>
+              <div className={styles.tickerList}>
                 {robots.map((r) => (
                   <div key={r.robotId} className={styles.tickerCard}>
                     <div className={styles.tickerInfo}>
-                      <div
-                        className={styles.tickerIcon}
-                        style={{ background: (r.meta?.color ?? "var(--accent-primary)") + "22" }}
-                      >
-                        <Activity size={20} color={r.meta?.color ?? "var(--accent-primary)"} />
+                      <div className={styles.tickerIcon}>
+                        <Activity size={18} strokeWidth={1.5} />
                       </div>
                       <div>
                         <div className={styles.tickerName}>{r.meta?.name ?? r.robotId}</div>
-                        <div
-                          className={styles.tickerPrice}
-                          style={{ fontSize: "0.8rem", color: "var(--text-muted)" }}
-                        >
+                        <div className={styles.tickerPrice}>
                           {r.meta?.tagline}
                         </div>
                       </div>
                     </div>
-                    <div
-                      className={styles.tickerBadge}
-                      style={{
-                        background: "rgba(16,185,129,0.1)",
-                        color: "var(--accent-primary)",
-                        border: "1px solid rgba(16,185,129,0.2)",
-                      }}
-                    >
+                    <div className={styles.tickerBadge}>
                       {r.meta?.monthlyReturn ?? "—"}
                     </div>
                   </div>
@@ -149,60 +136,44 @@ export default function DashboardHomeClient({
           <div className={styles.tickerCard}>
             <div className={styles.tickerInfo}>
               <div className={styles.tickerIcon}>
-                <TrendingDown size={20} />
+                <TrendingDown size={18} strokeWidth={1.5} />
               </div>
               <div>
                 <div className={styles.tickerName}>BIST 100</div>
                 <div className={styles.tickerPrice}>
-                  8.100 <span className={styles.tickerChange}>-0.4%</span>
+                  8.100 <span style={{ color: '#ef4444' }}>-0.4%</span>
                 </div>
               </div>
             </div>
-            <div className={styles.tickerBadge}>{t("dashboard.home.marketClosed")}</div>
+            <div className={styles.tickerBadge} style={{ background: 'rgba(255,255,255,0.05)', color: '#A1A1AA', borderColor: 'transparent' }}>
+              {t("dashboard.home.marketClosed")}
+            </div>
           </div>
 
           {/* Hızlı İşlemler */}
-          <h3 className={styles.actionsHeader}>{t("dashboard.home.quickActions")}</h3>
+          <h3 className={styles.sectionHeader}>{t("dashboard.home.quickActions")}</h3>
           <Link href="/dashboard/robots">
             <button className={styles.actionButton}>
               <div className={styles.actionIcon}>
-                <Plus size={20} />
+                <Plus size={18} strokeWidth={1.5} />
                 {robots.length === 0
                   ? t("dashboard.home.addRobot")
                   : t("dashboard.home.addNewRobot")}
               </div>
-              <ArrowRight size={20} />
+              <ArrowRight size={18} strokeWidth={1.5} />
             </button>
           </Link>
-        </>
-      ) : (
-        /* Zero Data Message */
-        <div style={{
-          marginTop: "2rem",
-          padding: "3rem 2rem",
-          textAlign: "center",
-          background: "rgba(16,185,129,0.03)",
-          border: "1px dashed rgba(16,185,129,0.15)",
-          borderRadius: "20px",
-          color: "var(--text-muted)"
-        }}>
-          <div style={{
-            width: "56px",
-            height: "56px",
-            background: "rgba(16,185,129,0.1)",
-            borderRadius: "50%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            margin: "0 auto 1.25rem",
-            color: "var(--accent-primary)"
-          }}>
-            <Bot size={28} />
+        </div>
+      ) : null}
+      {!hasRobots && (
+        <div className={styles.zeroState}>
+          <div className={styles.zeroIconWrapper}>
+            <Bot size={28} strokeWidth={1.5} />
           </div>
-          <h3 style={{ color: "var(--text-primary)", fontWeight: 600, marginBottom: "0.5rem" }}>
+          <h3 className={styles.zeroTitle}>
             {t("dashboard.home.noRobotsTitle")}
           </h3>
-          <p style={{ fontSize: "0.9rem", maxWidth: "400px", margin: "0 auto" }}>
+          <p className={styles.zeroDesc}>
             {t("dashboard.home.noRobotsDesc")}
           </p>
         </div>
