@@ -27,7 +27,7 @@ export const ROBOT_CATALOG: RobotDef[] = [
     totalTrades: 482,
     riskLevel: "Orta",
     tags: ["AI Tabanlı", "Orta Risk", "Momentum"],
-    color: "#60a5fa",
+    color: "#a1a1aa", // Muted Zinc
   },
   {
     id: "highway",
@@ -40,7 +40,7 @@ export const ROBOT_CATALOG: RobotDef[] = [
     totalTrades: 894,
     riskLevel: "Yüksek",
     tags: ["Hızlı İşlem", "Yüksek Risk", "Trend"],
-    color: "#f472b6",
+    color: "#94a3b8", // Muted Slate
   },
   {
     id: "trademate",
@@ -53,7 +53,7 @@ export const ROBOT_CATALOG: RobotDef[] = [
     totalTrades: 317,
     riskLevel: "Düşük",
     tags: ["Kişiselleştirilebilir", "Düşük Risk", "Hibrit"],
-    color: "#10b981",
+    color: "#a1a1aa",
   },
 ];
 
