@@ -445,10 +445,24 @@
   },
   "forexPage": {
     "pageTitle": "Open Forex Account — BorsaZeka",
+    "riskWarning": "Trading on margin carries a high degree of risk and is not suitable for all investors. Losses can exceed your initial investment. Please ensure you fully understand the risks.",
+    "partnerBadge": "BorsaZeka × Tickmill Partner",
     "heroTag": "Global Trading Infrastructure",
+    "heroTitleLine1": "The",
+    "heroTitleAccent": "new",
+    "heroTitleLine2": "Tickmill experience",
     "heroTitle": "Take a Professional Step into Global Markets",
     "heroSubtitle": "Create your forex account in minutes on the reliable Tickmill infrastructure, fully compatible with BorsaZeka algorithms and low commissions.",
     "ctaButton": "Open Account Now",
+    "ctaDemo": "Demo Account",
+    "stats": {
+      "instruments": "CFD Instruments",
+      "spread": "Min Spread",
+      "years": "Years Experience",
+      "regulated": "Regulated"
+    },
+    "featuresLabel": "Why Tickmill?",
+    "featuresTitle": "Trust, Speed and Flexibility Combined",
     "features": {
       "security": {
         "title": "Corporate Trust",
@@ -464,6 +478,7 @@
       }
     }
   },
+
   "kurulum": {
     "pageTitle": "Account Setup — BorsaZeka",
     "backHome": "Back Home",
