@@ -259,45 +259,59 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
-  padding: 1.1rem 3rem;
+  padding: 1.15rem 4rem;          /* Daha geniş — premium his */
   background: #00ff88;
-  color: #0a0a0a;            /* Koyu metin — mükemmel kontrast */
+  color: #050505;
   border: none;
   border-radius: 100px;
   font-size: 1rem;
   font-weight: 800;
-  letter-spacing: 0.01em;
+  letter-spacing: 0.04em;         /* Biraz hava — daha prestiijli */
   text-decoration: none;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-transform: uppercase;      /* Büyük harf — Tickmill tarzı */
+  transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
   box-shadow:
-    0 0 24px rgba(0, 255, 136, 0.35),
-    0 4px 16px rgba(0, 255, 136, 0.2);
+    0 0 0 1px rgba(0, 255, 136, 0.3),
+    0 0 28px rgba(0, 255, 136, 0.4),
+    0 4px 20px rgba(0, 0, 0, 0.3);
   position: relative;
   overflow: hidden;
 }
 
-/* Hover parlaması */
+/* Shimmer sweep efekti */
 .ctaButton::before {
   content: '';
   position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse at center, rgba(255,255,255,0.25) 0%, transparent 70%);
-  opacity: 0;
-  transition: opacity 0.3s ease;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.3) 50%,
+    transparent 100%
+  );
+  transform: skewX(-20deg);
+  transition: left 0.6s ease;
   border-radius: 100px;
 }
 
 .ctaButton:hover {
-  background: #22ffaa;
-  transform: translateY(-3px);
+  background: #00ffaa;
+  transform: translateY(-2px) scale(1.02);
   box-shadow:
-    0 0 40px rgba(0, 255, 136, 0.6),
-    0 8px 24px rgba(0, 255, 136, 0.3);
+    0 0 0 1px rgba(0, 255, 136, 0.5),
+    0 0 50px rgba(0, 255, 136, 0.55),
+    0 8px 30px rgba(0, 0, 0, 0.35);
 }
 
 .ctaButton:hover::before {
-  opacity: 1;
+  left: 160%;             /* Shimmer soldan sağa geçer */
+}
+
+.ctaButton:active {
+  transform: translateY(0) scale(0.99);
 }
 
 /* İkincil CTA — şeffaf */

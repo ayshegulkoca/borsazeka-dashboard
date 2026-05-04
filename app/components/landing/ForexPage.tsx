@@ -35,11 +35,6 @@ export default function ForexPage() {
 
   return (
     <div className={styles.forexPage}>
-      {/* ── Risk Uyarı Bandı ── */}
-      <div className={styles.riskWarning}>
-        {t("forexPage.riskWarning")}
-      </div>
-
       {/* ── Animated Background ── */}
       <div className={styles.bgContainer}>
         <div className={styles.meshGradient} />
@@ -127,7 +122,6 @@ export default function ForexPage() {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className={styles.ctaGroup}
         >
           <a
             href="https://t.co/kUUMsLhRJZ?amp=1"
@@ -137,15 +131,6 @@ export default function ForexPage() {
             id="forex-open-account-cta"
           >
             {t("forexPage.ctaButton")}
-            <ArrowRight size={18} />
-          </a>
-          <a
-            href="https://t.co/kUUMsLhRJZ?amp=1"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.ctaSecondary}
-          >
-            {t("forexPage.ctaDemo")}
           </a>
         </motion.div>
 

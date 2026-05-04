@@ -462,10 +462,10 @@
   "forexPage": {
     "pageTitle": "Forex Hesabı Aç — BorsaZeka",
     "riskWarning": "Marjinli işlem, yüksek risk içerir ve tüm yatırımcılara uygun değildir. Kayıplarınız başlangıç yatırımınızı aşabilir. Lütfen riskleri tam olarak anlayın.",
-    "partnerBadge": "BorsaZeka × Tickmill Ortakı",
+    "partnerBadge": "BorsaZeka × Tickmill Ortağı",
     "heroTag": "Global İşlem Altyapısı",
-    "heroTitleLine1": "The",
-    "heroTitleAccent": "yeni",
+    "heroTitleLine1": "",
+    "heroTitleAccent": "Yeni",
     "heroTitleLine2": "Tickmill deneyimi",
     "heroTitle": "Global Piyasalara Profesyonel Bir Adım Atın",
     "heroSubtitle": "BorsaZeka algoritmalarıyla tam uyumlu, düşük komisyonlu ve güvenilir Tickmill altyapısında forex hesabınızı dakikalar içinde oluşturun.",
