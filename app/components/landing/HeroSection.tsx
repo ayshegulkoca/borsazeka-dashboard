@@ -32,10 +32,13 @@ export default function HeroSection() {
           <source src="/videos/background.mp4" type="video/mp4" />
         </video>
         
-        {/* Dark Overlay */}
-        <div className={styles.videoOverlay} />
+        {/* Sol→Sağ yumuşak siyah geçiş — robot karanlıktan beliriyor */}
+        <div className={styles.videoFadeLeft} aria-hidden="true" />
 
-        {/* Shadow DOM / Interaction Overlay (Ghost Div) */}
+        {/* Üst/alt sinematik çerçeve karartması */}
+        <div className={styles.videoCinematicEdges} aria-hidden="true" />
+
+        {/* Etkileşim engelleyici — video kontrollerini gizler */}
         <div className={styles.videoInteractionBlocker} aria-hidden="true" />
       </div>
 
