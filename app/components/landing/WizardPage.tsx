@@ -399,6 +399,11 @@ export default function WizardPage() {
 
       {/* Content */}
       <div className={s.stepCard}>
+        {/* ── Triple-Color Glow Orbs (z-1, arkada sabit) ── */}
+        <span className={s.glowOrbBlue}   aria-hidden="true" />
+        <span className={s.glowOrbPurple} aria-hidden="true" />
+        <span className={s.glowOrbPink}   aria-hidden="true" />
+
         <div className={s.stepCardInner}>
 
           {/* ── STEP 1 ── */}
