@@ -202,11 +202,11 @@ export default function SetupWizard({
                 }}
                 onMouseLeave={() => setHoveredStep(null)}
                 animate={{
-                  y: isHovered ? -4 : 0,
+                  y: isHovered ? -3 : 0,
                   boxShadow: isHovered
-                    ? "0 8px 32px rgba(55, 48, 163, 0.15), 0 0 0 1px rgba(55, 48, 163, 0.18)"
+                    ? "0 8px 32px rgba(29, 78, 216, 0.2), 0 0 0 1px rgba(59, 130, 246, 0.25)"
                     : step.done
-                    ? "0 0 0 1px rgba(55, 48, 163, 0.12)"
+                    ? "0 0 0 1px rgba(29, 78, 216, 0.18)"
                     : "none",
                 }}
                 transition={{ duration: 0.25, ease: "easeOut" }}
