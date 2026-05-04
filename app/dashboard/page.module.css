@@ -1,4 +1,4 @@
-﻿/* ============================================================
+/* ============================================================
    BorsaZeka Dashboard Page — Bento Grid & Ultra-Light V5
    ============================================================ */
 
@@ -262,8 +262,8 @@
 .zeroState {
   padding: 5rem 2rem;
   text-align: center;
-  background: #0A0A0A;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(10, 18, 40, 0.6);   /* slate-navy — diğer kartlarla uyumlu */
+  border: 1px solid rgba(59, 130, 246, 0.10);
   border-radius: 32px;
   display: flex;
   flex-direction: column;
@@ -274,17 +274,19 @@
 .zeroIconWrapper {
   width: 64px;
   height: 64px;
-  background: rgba(29, 78, 216, 0.1);
+  background: rgba(59, 130, 246, 0.10);
+  border: 1px solid rgba(59, 130, 246, 0.22);
   border-radius: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #1d4ed8;
+  color: #60a5fa;
+  filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.35));
 }
 
 .zeroTitle {
   font-size: 1.5rem;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: -0.02em;
   color: #ffffff;
 }
@@ -292,7 +294,7 @@
 .zeroDesc {
   font-size: 0.95rem;
   font-weight: 400;
-  color: #ffffff;
+  color: rgba(255, 255, 255, 0.7);
   max-width: 450px;
   line-height: 1.6;
 }
