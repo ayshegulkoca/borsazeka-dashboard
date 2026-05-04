@@ -77,11 +77,16 @@ export default function HeroSection() {
             className="flex items-start justify-start"
           >
             <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.98 }}
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
               transition={{ type: "spring", stiffness: 400, damping: 10 }}
+              className={styles.ctaGlowWrapper}
             >
-              <Link href="/urun-sec" className={styles.heroAsymmetricCTA}>
+              {/* Rotating gradient border layer */}
+              <span className={styles.ctaGlowRing} aria-hidden="true" />
+              {/* Pulse outer glow */}
+              <span className={styles.ctaGlowPulse} aria-hidden="true" />
+              <Link href="/urun-sec" className={styles.ctaGlowBtn}>
                 {t("hero.ctaButton")}
               </Link>
             </motion.div>

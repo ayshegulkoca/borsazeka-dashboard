@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #3730A3;
-  --color-primary-hover: #4338CA;
+  --color-primary: #1d4ed8;
+  --color-primary-hover: #2563eb;
 }
 
 :root {
@@ -12,13 +12,13 @@
   --bg-card-hover: #050505;
   --bg-input: #050505;
   
-  --accent-primary: #3730A3; /* Elegant Dark Royal Purple */
-  --accent-primary-hover: #4338CA;
+  --accent-primary: #1d4ed8; /* Deep Blue */
+  --accent-primary-hover: #2563eb;
   --accent-secondary: #1A1A1A;
   
   --text-primary: #ffffff;
-  --text-secondary: #a1a1aa;
-  --text-muted: #71717a;
+  --text-secondary: #ffffff;
+  --text-muted: #d4d4d8;
   
   --border-subtle: #1A1A1A;
   --border-active: #27272a;
@@ -29,7 +29,7 @@
   --radius-capsule: 9999px;
   
   --shadow-premium: 0 10px 40px rgba(0, 0, 0, 0.9);
-  --shadow-purple-glow: 0 0 40px rgba(79, 70, 229, 0.15);
+  --shadow-blue-glow: 0 0 40px rgba(37, 99, 235, 0.2);
   --shadow-inner: inset 0 1px 1px rgba(255, 255, 255, 0.02);
 }
 
@@ -39,17 +39,21 @@
   padding: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 body {
   background-color: var(--bg-dark);
   color: var(--text-primary);
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  line-height: 1.6;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
-  letter-spacing: 0.01em; /* Ferral / Spacious */
+  letter-spacing: -0.005em;
   position: relative;
 }
 
@@ -61,12 +65,12 @@ body::before {
   width: 100%;
   height: 100%;
   pointer-events: none;
-  opacity: 0.015; /* Extremely subtle noise */
+  opacity: 0.015;
   z-index: 50;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }
 
-/* Subtle Ambient Gradients (Apple Premium Look) */
+/* Subtle Ambient Gradients — Deep Blue */
 body::after {
   content: "";
   position: fixed;
@@ -74,18 +78,18 @@ body::after {
   pointer-events: none;
   z-index: -1;
   background: 
-    radial-gradient(circle at -10% -10%, rgba(79, 70, 229, 0.03) 0%, transparent 40%),
-    radial-gradient(circle at 110% 110%, rgba(79, 70, 229, 0.03) 0%, transparent 40%);
+    radial-gradient(circle at -10% -10%, rgba(29, 78, 216, 0.05) 0%, transparent 40%),
+    radial-gradient(circle at 110% 110%, rgba(29, 78, 216, 0.05) 0%, transparent 40%);
 }
 
 h1, h2, h3, h4, h5, h6 {
-  letter-spacing: 0.03em; /* Elegant spacing */
-  font-weight: 200; /* Extra Light */
+  letter-spacing: -0.01em;
+  font-weight: 500;
   color: #ffffff;
 }
 
 .tracking-tighter {
-  letter-spacing: -0.02em; /* Less tight, still refined */
+  letter-spacing: -0.02em;
 }
 
 a {
@@ -114,8 +118,8 @@ button {
 .text-5xl { font-size: 3rem; line-height: 1; }
 .text-6xl { font-size: 3.75rem; line-height: 1; }
 
-.font-thin { font-weight: 100; }
-.font-light { font-weight: 200; }
+.font-thin { font-weight: 400; }
+.font-light { font-weight: 400; }
 .font-normal { font-weight: 400; }
 .font-medium { font-weight: 500; }
 .font-semibold { font-weight: 600; }
@@ -129,7 +133,7 @@ button {
 .opacity-100 { opacity: 1; }
 .transition-all { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
 
-/* Royal Obsidian Card */
+/* Deep Blue Card */
 .premium-card {
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
@@ -139,7 +143,7 @@ button {
 }
 
 .premium-card:hover {
-  border-color: rgba(79, 70, 229, 0.3);
+  border-color: rgba(37, 99, 235, 0.3);
   background: var(--bg-card-hover);
-  box-shadow: 0 0 30px rgba(79, 70, 229, 0.1), var(--shadow-premium);
+  box-shadow: 0 0 30px rgba(37, 99, 235, 0.12), var(--shadow-premium);
 }

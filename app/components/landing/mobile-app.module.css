@@ -1,4 +1,4 @@
-/* ============================================================
+﻿/* ============================================================
    BorsaZeka — Mobile App CTA Section
    Design: Premium dark, glassmorphism, mesh gradient
    ============================================================ */
@@ -133,14 +133,14 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.45rem 1rem;
-  background: rgba(148, 163, 184, 0.08); /* Silver/Slate 100 base */
+  background: rgba(148, 163, 184, 0.08);
   border: 1px solid rgba(148, 163, 184, 0.18);
   border-radius: 100px;
   font-size: 0.72rem;
-  font-weight: 300;
+  font-weight: 500;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: #94A3B8; /* Silver text */
+  color: #94A3B8;
   width: fit-content;
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
@@ -163,10 +163,10 @@
 /* ── Headline ── */
 .headline {
   font-size: clamp(2.25rem, 5vw, 3.5rem);
-  font-weight: 100; /* Ultra Light */
+  font-weight: 600;
   line-height: 1.1;
-  letter-spacing: 0.04em;
-  color: #E2E8F0; /* slate-200 for eye comfort */
+  letter-spacing: -0.03em;
+  color: #E2E8F0;
   margin: 0;
 }
 
@@ -175,14 +175,14 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   display: inline;
-  font-weight: 300;
+  font-weight: 500;
 }
 
 .headlineSub {
-  color: #94A3B8; /* Silver */
-  font-weight: 200;
+  color: #94A3B8;
+  font-weight: 400;
   font-size: 0.85em;
-  letter-spacing: 0.05em;
+  letter-spacing: -0.01em;
 }
 
 /* ── Description ── */
@@ -228,7 +228,7 @@
 }
 
 .featurePill:hover .featurePillIcon {
-  color: #3730A3; /* Purple only on hover */
+  color: #1d4ed8; /* Purple only on hover */
 }
 
 /* ── Download area ── */
@@ -630,7 +630,7 @@
 
 @keyframes dotPulse {
   0%, 100% { r: 4; opacity: 0.7; }
-  50%       { r: 6; opacity: 1; filter: drop-shadow(0 0 6px #3730A3); }
+  50%       { r: 6; opacity: 1; filter: drop-shadow(0 0 6px #1d4ed8); }
 }
 
 /* Mock stats */

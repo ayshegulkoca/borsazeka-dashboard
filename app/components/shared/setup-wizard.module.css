@@ -1,4 +1,4 @@
-/* ============================================================
+﻿/* ============================================================
    BorsaZeka Setup Wizard — Ultra-Light Aesthetic (V5)
    Final: Horizontal Steps & Vertical Options
    ============================================================ */
@@ -80,16 +80,16 @@
 
 .headerTitle {
   font-size: 0.95rem;
-  font-weight: 200;
-  letter-spacing: 0.02em;
+  font-weight: 500;
+  letter-spacing: -0.01em;
   color: #ffffff;
   margin-bottom: 0;
 }
 
 .headerSub {
   font-size: 0.75rem;
-  font-weight: 300;
-  color: #71717A;
+  font-weight: 400;
+  color: #ffffff;
 }
 
 /* ── Progress Bar ─────────────────────────────────────────── */
@@ -235,7 +235,7 @@
 
 .stepTitle {
   font-size: 11px;
-  font-weight: 300;
+  font-weight: 500;
   color: #ffffff;
   margin-bottom: 0.25rem;
   line-height: 1.2;
@@ -309,8 +309,8 @@
 
 .profileEmail {
   font-size: 10px;
-  font-weight: 300;
-  color: #71717A;
+  font-weight: 400;
+  color: #ffffff;
 }
 
 .profileSwitch {

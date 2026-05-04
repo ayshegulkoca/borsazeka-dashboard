@@ -1,4 +1,4 @@
-/* ============================================================
+﻿/* ============================================================
    BorsaZeka Dashboard Page — Bento Grid & Ultra-Light V5
    ============================================================ */
 
@@ -16,17 +16,17 @@
 .welcomeText {
   font-family: 'Inter', 'Geist', sans-serif;
   font-size: 0.9rem;
-  font-weight: 200; /* Extra Light */
-  color: #64748b; /* slate-500 */
+  font-weight: 400;
+  color: #ffffff;
   margin-right: 0.25rem;
-  letter-spacing: 0.02em;
+  letter-spacing: -0.005em;
 }
 
 .title {
   font-family: 'Inter', 'Geist', sans-serif;
   font-size: 1.5rem;
-  font-weight: 100; /* Thin */
-  letter-spacing: 0.02em;
+  font-weight: 500;
+  letter-spacing: -0.02em;
   color: #ffffff;
   display: flex;
   align-items: baseline;
@@ -50,7 +50,7 @@
 }
 
 .card:hover {
-  border-color: rgba(55, 48, 163, 0.2);
+  border-color: rgba(29, 78, 216, 0.2);
   transform: translateY(-2px);
 }
 
@@ -68,15 +68,15 @@
   justify-content: space-between;
   align-items: center;
   font-size: 0.85rem;
-  font-weight: 300;
-  color: #71717A;
+  font-weight: 400;
+  color: #ffffff;
   margin-bottom: 1.5rem;
 }
 
 .balanceValue {
   font-size: 3rem;
-  font-weight: 100;
-  letter-spacing: 0.02em;
+  font-weight: 500;
+  letter-spacing: -0.02em;
   color: #ffffff;
   margin-bottom: 2rem;
 }
@@ -97,9 +97,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(55, 48, 163, 0.1);
+  background: rgba(29, 78, 216, 0.1);
   border-radius: 50%;
-  color: #3730A3;
+  color: #1d4ed8;
 }
 
 .pnlLabel {
@@ -144,20 +144,20 @@
   justify-content: center;
   background: rgba(255, 255, 255, 0.03);
   border-radius: 12px;
-  color: #3730A3;
+  color: #1d4ed8;
   margin-bottom: 0.5rem;
 }
 
 .statValue {
   font-size: 1.75rem;
-  font-weight: 200;
+  font-weight: 500;
   color: #ffffff;
 }
 
 .statLabel {
   font-size: 0.8rem;
-  font-weight: 300;
-  color: #71717A;
+  font-weight: 400;
+  color: #ffffff;
 }
 
 /* ── Ticker & Action Sections ────────────────────────────── */
@@ -205,19 +205,19 @@
   justify-content: center;
   border-radius: 12px;
   background: rgba(255, 255, 255, 0.03);
-  color: #3730A3;
+  color: #1d4ed8;
 }
 
 .tickerName {
   font-size: 0.95rem;
-  font-weight: 300;
+  font-weight: 400;
   color: #ffffff;
 }
 
 .tickerPrice {
   font-size: 0.85rem;
-  font-weight: 200;
-  color: #71717A;
+  font-weight: 400;
+  color: #ffffff;
 }
 
 .tickerBadge {
@@ -225,9 +225,9 @@
   border-radius: 100px;
   font-size: 0.75rem;
   font-weight: 400;
-  background: rgba(55, 48, 163, 0.1);
-  color: #3730A3;
-  border: 1px solid rgba(55, 48, 163, 0.2);
+  background: rgba(29, 78, 216, 0.1);
+  color: #1d4ed8;
+  border: 1px solid rgba(29, 78, 216, 0.2);
 }
 
 /* ── Action Buttons ───────────────────────────────────────── */
@@ -246,8 +246,8 @@
 }
 
 .actionButton:hover {
-  border-color: #3730A3;
-  background: rgba(55, 48, 163, 0.05);
+  border-color: #1d4ed8;
+  background: rgba(29, 78, 216, 0.05);
 }
 
 .actionIcon {
@@ -255,7 +255,7 @@
   align-items: center;
   gap: 1rem;
   font-size: 1rem;
-  font-weight: 300;
+  font-weight: 400;
 }
 
 /* ── Zero Data State ──────────────────────────────────────── */
@@ -274,25 +274,25 @@
 .zeroIconWrapper {
   width: 64px;
   height: 64px;
-  background: rgba(55, 48, 163, 0.1);
+  background: rgba(29, 78, 216, 0.1);
   border-radius: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #3730A3;
+  color: #1d4ed8;
 }
 
 .zeroTitle {
   font-size: 1.5rem;
-  font-weight: 100;
-  letter-spacing: 0.02em;
+  font-weight: 500;
+  letter-spacing: -0.02em;
   color: #ffffff;
 }
 
 .zeroDesc {
   font-size: 0.95rem;
-  font-weight: 200;
-  color: #71717A;
+  font-weight: 400;
+  color: #ffffff;
   max-width: 450px;
   line-height: 1.6;
 }
