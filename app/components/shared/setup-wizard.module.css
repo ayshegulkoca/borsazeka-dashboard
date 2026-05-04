@@ -16,11 +16,13 @@
 .rootDashboard {
   padding: 1.5rem 2rem;
   border-radius: 24px;
-  background: rgba(255, 255, 255, 0.04);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.10);
-  box-shadow: 0 4px 32px rgba(0, 0, 0, 0.4);
+  background: rgba(13, 27, 53, 0.7);   /* slate-navy — zemin ile uyumlu */
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(59, 130, 246, 0.10);
+  box-shadow:
+    0 4px 32px rgba(2, 6, 23, 0.5),
+    0 0 0 1px rgba(59, 130, 246, 0.05) inset;
 }
 
 .rootLanding {
@@ -154,8 +156,8 @@
 
 .stepCard {
   flex: 1;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  background: rgba(10, 18, 40, 0.6);   /* koyu lacivert katman */
+  border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 16px;
   padding: 1.1rem 1.1rem;
   position: relative;
@@ -168,14 +170,16 @@
 }
 
 .stepCardActive {
-  background: rgba(29, 78, 216, 0.06);
-  border-color: rgba(59, 130, 246, 0.35);
-  box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.15) inset;
+  background: rgba(29, 78, 216, 0.08);
+  border-color: rgba(59, 130, 246, 0.30);
+  box-shadow:
+    0 0 0 1px rgba(59, 130, 246, 0.12) inset,
+    0 4px 20px rgba(59, 130, 246, 0.08);
 }
 
 .stepCardDone {
-  background: rgba(29, 78, 216, 0.04);
-  border-color: rgba(59, 130, 246, 0.2);
+  background: rgba(29, 78, 216, 0.05);
+  border-color: rgba(59, 130, 246, 0.18);
 }
 
 /* Kilitli kart: artık neredeyse tamamen saydamlık değil — okunabilir */

@@ -7,29 +7,29 @@
 }
 
 :root {
-  --bg-dark: #000000;
-  --bg-card: #000000;
-  --bg-card-hover: #050505;
-  --bg-input: #050505;
+  --bg-dark: #020617;          /* Koyu slate-navy — sidebar ile uyumlu */
+  --bg-card: #0d1b35;          /* Kart zemin — bir katman üst */
+  --bg-card-hover: #111e3a;
+  --bg-input: #0a1228;
   
-  --accent-primary: #1d4ed8; /* Deep Blue */
-  --accent-primary-hover: #2563eb;
-  --accent-secondary: #1A1A1A;
+  --accent-primary: #3b82f6;   /* Electric Blue */
+  --accent-primary-hover: #60a5fa;
+  --accent-secondary: #1e293b;
   
   --text-primary: #ffffff;
   --text-secondary: #ffffff;
-  --text-muted: #d4d4d8;
+  --text-muted: #94a3b8;
   
-  --border-subtle: #1A1A1A;
-  --border-active: #27272a;
+  --border-subtle: rgba(59, 130, 246, 0.08);
+  --border-active: rgba(59, 130, 246, 0.18);
   
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 20px;
   --radius-capsule: 9999px;
   
-  --shadow-premium: 0 10px 40px rgba(0, 0, 0, 0.9);
-  --shadow-blue-glow: 0 0 40px rgba(37, 99, 235, 0.2);
+  --shadow-premium: 0 10px 40px rgba(2, 6, 23, 0.9);
+  --shadow-blue-glow: 0 0 40px rgba(59, 130, 246, 0.18);
   --shadow-inner: inset 0 1px 1px rgba(255, 255, 255, 0.02);
 }
 

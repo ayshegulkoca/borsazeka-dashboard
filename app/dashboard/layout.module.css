@@ -6,7 +6,7 @@
 .container {
   display: flex;
   min-height: 100vh;
-  background-color: #000000;
+  background-color: #020617;   /* Koyu slate-navy — sidebar ile uyumlu */
   color: #ffffff;
   font-family: var(--font-inter), sans-serif;
 }
@@ -206,6 +206,12 @@
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  background: linear-gradient(
+    160deg,
+    #020b1d 0%,
+    #020617 55%,
+    #010d1f 100%
+  );
 }
 
 .header {
