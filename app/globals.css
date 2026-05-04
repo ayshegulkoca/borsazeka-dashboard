@@ -70,16 +70,20 @@ body::before {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }
 
-/* Subtle Ambient Gradients — Deep Blue */
+/* Atmospheric Mesh Gradients — Electric Blue + Muted Purple */
 body::after {
   content: "";
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: -1;
-  background: 
-    radial-gradient(circle at -10% -10%, rgba(29, 78, 216, 0.05) 0%, transparent 40%),
-    radial-gradient(circle at 110% 110%, rgba(29, 78, 216, 0.05) 0%, transparent 40%);
+  background:
+    /* Sağ üst — Electric Blue bulutu */
+    radial-gradient(ellipse 70% 60% at 105% -10%, rgba(59, 130, 246, 0.13) 0%, transparent 65%),
+    /* Sol alt — Muted Purple bulutu */
+    radial-gradient(ellipse 65% 55% at -5% 105%,  rgba(124, 58, 237, 0.09) 0%, transparent 60%),
+    /* Merkez derinlik tonu */
+    radial-gradient(ellipse 80% 40% at 50% 120%,  rgba(29, 78, 216, 0.04) 0%, transparent 70%);
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -142,8 +146,42 @@ button {
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+
 .premium-card:hover {
   border-color: rgba(37, 99, 235, 0.3);
   background: var(--bg-card-hover);
   box-shadow: 0 0 30px rgba(37, 99, 235, 0.12), var(--shadow-premium);
+}
+
+/* ── Luminous Icon System — Electric Blue Glow ─────────────── */
+.glow-icon svg,
+.glow-icon {
+  color: #60a5fa;
+  filter: drop-shadow(0 0 6px rgba(59, 130, 246, 0.45));
+  transition: filter 0.25s ease, color 0.25s ease;
+}
+
+.glow-icon:hover svg,
+.glow-icon:hover {
+  color: #93c5fd;
+  filter: drop-shadow(0 0 11px rgba(59, 130, 246, 0.7));
+}
+
+/* Subtle variant — kart içi ikonlar için */
+.glow-icon-subtle svg,
+.glow-icon-subtle {
+  color: rgba(255, 255, 255, 0.7);
+  filter: drop-shadow(0 0 4px rgba(59, 130, 246, 0.28));
+  transition: filter 0.25s ease, color 0.25s ease;
+}
+
+.glow-icon-subtle:hover svg,
+.glow-icon-subtle:hover {
+  color: #60a5fa;
+  filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.55));
+}
+
+/* ── Landing logoIcon svg otomatik glow ─────────────────────── */
+[class*="logoIcon"] svg {
+  filter: drop-shadow(0 0 5px rgba(59, 130, 246, 0.4));
 }

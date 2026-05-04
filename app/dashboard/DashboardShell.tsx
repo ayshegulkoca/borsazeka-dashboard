@@ -112,8 +112,8 @@ export default function DashboardShell({ children, userName, userEmail, userImag
       <aside className={styles.sidebar}>
         <div className={styles.sidebarHeader}>
           <Link href="/" className={styles.logoArea}>
-            <div className={styles.logoIcon}>
-              <Activity color="#3730A3" size={20} strokeWidth={1.5} />
+            <div className={`${styles.logoIcon} glow-icon`}>
+              <Activity color="#3b82f6" size={20} strokeWidth={1.5} />
             </div>
             <span className={styles.title}>BorsaZeka</span>
           </Link>
