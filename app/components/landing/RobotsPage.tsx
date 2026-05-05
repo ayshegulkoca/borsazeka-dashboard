@@ -216,7 +216,7 @@ export default function RobotsPage() {
                 <div
                   key={robot.id}
                   className={`${robotStyles.card} ${robot.comingSoon ? robotStyles.cardComingSoon : ""}`}
-                  style={{ background: robot.gradient, borderColor: robot.border }}
+                  style={{ "--card-accent": robot.color } as React.CSSProperties}
                 >
                   {robot.comingSoon && (
                     <div 
@@ -258,7 +258,7 @@ export default function RobotsPage() {
 
                   {/* Name & desc */}
                   <div className={robotStyles.cardBody}>
-                    <h2 className={robotStyles.cardName} style={{ color: robot.comingSoon ? "#475569" : "var(--text-primary)" }}>
+                    <h2 className={robotStyles.cardName}>
                       {t(robot.nameKey)}
                     </h2>
                     <p className={robotStyles.cardDesc}>{t(robot.descKey)}</p>
@@ -268,21 +268,21 @@ export default function RobotsPage() {
                   <div className={robotStyles.statsRow}>
                     <div className={robotStyles.statItem}>
                       <span className={robotStyles.statLabel}>{t("robots.minBudget")}</span>
-                      <span className={robotStyles.statValue} style={{ color: robot.comingSoon ? "#475569" : robot.color }}>
+                      <span className={robotStyles.statValue} style={{ color: robot.comingSoon ? "#94a3b8" : robot.color }}>
                         {robot.minBudget}
                       </span>
                     </div>
                     {robot.maxCapacity > 0 && (
                       <div className={robotStyles.statItem}>
                         <span className={robotStyles.statLabel}>{t("robots.maxCapacity")}</span>
-                        <span className={robotStyles.statValue} style={{ color: robot.comingSoon ? "#475569" : robot.color }}>
+                        <span className={robotStyles.statValue} style={{ color: robot.comingSoon ? "#94a3b8" : robot.color }}>
                           {robot.maxCapacity}
                         </span>
                       </div>
                     )}
                     <div className={robotStyles.statItem}>
                       <span className={robotStyles.statLabel}>{t("robots.profitShare")}</span>
-                      <span className={robotStyles.statValue} style={{ color: robot.comingSoon ? "#475569" : robot.color }}>
+                      <span className={robotStyles.statValue} style={{ color: robot.comingSoon ? "#94a3b8" : robot.color }}>
                         {robot.profitShare}
                       </span>
                     </div>
@@ -295,8 +295,8 @@ export default function RobotsPage() {
                   <ul className={robotStyles.featureList}>
                     {robot.featureKeys.map((fk) => (
                       <li key={fk} className={robotStyles.featureItem}>
-                        <Check size={13} color={robot.comingSoon ? "#334155" : robot.color} style={{ flexShrink: 0 }} />
-                        <span style={{ color: robot.comingSoon ? "#334155" : "var(--text-secondary)" }}>{t(fk)}</span>
+                        <Check size={13} color={robot.comingSoon ? "#94a3b8" : robot.color} style={{ flexShrink: 0 }} />
+                        <span>{t(fk)}</span>
                       </li>
                     ))}
                   </ul>
@@ -306,18 +306,6 @@ export default function RobotsPage() {
                     className={`${robotStyles.cardCta} ${robot.comingSoon ? robotStyles.cardCtaDisabled : ""}`}
                     disabled={robot.comingSoon}
                     onClick={() => handleSelect(robot.id, robot.comingSoon)}
-                    style={
-                      robot.comingSoon
-                        ? {}
-                        : { 
-                            background: "rgba(255,255,255,0.05)", 
-                            border: `1px solid ${robot.color}40`,
-                            color: "#fff",
-                            "--hover-bg": robot.color,
-                            "--hover-glow": robot.id === "KRIPTTOZEKA" ? `${robot.color}80` : `${robot.color}40`,
-                            boxShadow: robot.id === "KRIPTTOZEKA" ? `0 0 15px ${robot.color}20` : "none"
-                          } as any
-                    }
                   >
                     {robot.comingSoon ? (
                       <>
@@ -348,6 +336,8 @@ export default function RobotsPage() {
           </div>
         </div>
       </section>
+      {/* Gradient fade from light section back to dark footer */}
+      <div className={robotStyles.sectionFadeBottom} />
     </div>
   );
 }

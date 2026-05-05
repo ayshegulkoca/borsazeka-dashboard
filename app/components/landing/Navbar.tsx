@@ -137,7 +137,7 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className={`${styles.navbar} ${scrolled ? styles.scrolled : ""}`}>
+      <nav className={`${styles.navbar} ${scrolled ? styles.scrolled : ""} ${pathname === "/robotlar" ? styles.navbarDark : ""}`}>
         <div className={styles.navInner}>
         {/* Brand: Logo + Dashboard Button (if auth) */}
         <div className={styles.navBrandWrapper}>

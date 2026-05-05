@@ -1,4 +1,4 @@
-﻿/* ============================================================
+/* ============================================================
    BorsaZeka — Mobile App CTA Section
    Design: Premium dark, glassmorphism, mesh gradient
    ============================================================ */
@@ -13,8 +13,8 @@
   background:
     radial-gradient(ellipse 80% 60% at 10% 80%, rgba(139, 92, 246, 0.05) 0%, transparent 60%),
     radial-gradient(ellipse 60% 50% at 90% 20%, rgba(59, 130, 246, 0.04) 0%, transparent 55%),
-    linear-gradient(165deg, #000000 0%, #0a0a0a 40%, #000000 100%);
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
+    linear-gradient(165deg, #020617 0%, #050d1a 40%, #020617 100%);
+  border-top: 1px solid rgba(59, 130, 246, 0.06);
 }
 
 /* ── Scroll-triggered reveal ── */
