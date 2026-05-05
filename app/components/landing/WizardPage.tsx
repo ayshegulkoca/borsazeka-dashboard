@@ -6,6 +6,7 @@ import Link from "next/link";
 import {
   ArrowLeft, ArrowRight, Check, Globe, MapPin,
   Users, Lock, Bot, CheckCircle2, Send, ExternalLink,
+  Shield, TrendingUp, Target, Activity, Zap, Coins, Route,
 } from "lucide-react";
 import { useTranslation, Trans } from "react-i18next";
 import { useSession, signIn } from "next-auth/react";
@@ -25,7 +26,7 @@ import { assignRobotAfterPurchase, markSubscriptionPending } from "@/app/actions
 
 import s from "./wizard.module.css";
 
-// ─── Types ────────────────────────────────────────────────────────────────────
+// --- Types --------------------------------------------------------------------
 interface WState {
   step: number;
   market: Market | null;
@@ -42,7 +43,7 @@ interface WState {
 
 const TOTAL = 6;
 
-// ─── localStorage helpers ────────────────────────────────────────────────────
+// --- localStorage helpers ----------------------------------------------------
 const STORAGE_KEY = "borsazeka_wizard_state";
 
 const DEFAULT_STATE: WState = {
@@ -84,13 +85,13 @@ function clearStorage(): void {
   window.localStorage.removeItem(STORAGE_KEY);
 }
 
-// ─── Main ────────────────────────────────────────────────────────────────────
+// --- Main --------------------------------------------------------------------
 export default function WizardPage() {
   const { t } = useTranslation("common");
   const { data: session } = useSession();
   const searchParams = useSearchParams();
 
-  // ── State — lazy initializer localStorage'dan hidrate eder ─────────────────
+  // --- State - lazy initializer localStorage'dan hidrate eder -----------------
   const [state, setState] = useState<WState>(() => loadFromStorage());
   const [notifyEmail, setNotifyEmail] = useState("");
   const [notifyDone, setNotifyDone] = useState(false);
@@ -366,366 +367,403 @@ export default function WizardPage() {
         </span>
       </div>
 
-      {/* Header */}
-      <div className={s.wizardHeader}>
-        <h1 className={s.wizardTitle}>{t("wizard.title")}</h1>
-        <p className={s.wizardSubtitle}>{t("wizard.subtitle")}</p>
-      </div>
-
-      {/* Stepper */}
-      <div className={s.stepper}>
-        <div className={s.stepperTrack}>
-          {STEP_LABELS.map((label, idx) => {
-            const n = idx + 1;
-            const active = n === state.step;
-            const done = n < state.step;
-            return (
-              <div key={n} style={{ display: "flex", alignItems: "center", flex: n < TOTAL ? "none" : "0" }}>
-                <div className={s.stepperItem}>
-                  <div className={`${s.stepperCircle} ${active ? s.stepperCircleActive : ""} ${done ? s.stepperCircleDone : ""}`}>
-                    {done ? <Check size={14} /> : n}
-                  </div>
-                  <span className={s.stepperLabel}>{label}</span>
-                </div>
-                {n < TOTAL && (
-                  <div className={`${s.stepperConnector} ${done ? s.stepperConnectorFilled : ""}`}
-                    style={{ width: "100%", minWidth: "2rem", flex: 1 }} />
-                )}
-              </div>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* Content */}
-      <div className={s.stepCard}>
-        {/* ── Triple-Color Glow Orbs (z-1, arkada sabit) ── */}
-        <span className={s.glowOrbBlue}   aria-hidden="true" />
-        <span className={s.glowOrbPurple} aria-hidden="true" />
-        <span className={s.glowOrbPink}   aria-hidden="true" />
-
-        <div className={s.stepCardInner}>
-          {/* ── Shared top bar: step indicator (left) + back button (right) ── */}
-          <div className={s.stepTopBar}>
-            <span className={s.stepTag}>
-              {t("wizard.stepOf", { current: state.step, total: TOTAL })}
-            </span>
-            {!submitDone && state.step > 1 && (
-              <button className={s.btnWizardBack} onClick={goBack} id="wizard-back-btn">
-                <ArrowLeft size={15} /> {t("wizard.back")}
-              </button>
-            )}
+      {/* Header & Stepper (Steps 1-5) */}
+      {state.step < 6 && (
+        <>
+          <div className={s.wizardHeader}>
+            <h1 className={s.wizardTitle}>{t("wizard.title")}</h1>
+            <p className={s.wizardSubtitle}>{t("wizard.subtitle")}</p>
           </div>
 
-          {/* ── STEP 1 ── */}
-          {state.step === 1 && (
-            <>
-              <h2 className={s.stepTitle}>{t("wizard.step1.title")}</h2>
-              <div className={s.optionGrid}>
-                <OptionCard selected={state.market === "BIST"}
-                  icon={<MapPin size={22} color="var(--wiz-primary-light)" />}
-                  label={t("wizard.step1.domestic")} desc={t("wizard.step1.domesticDesc")}
-                  onClick={() => autoAdvance({ market: "BIST", subMarket: "BIST", robotId: null, budgetValue: null, managementType: null })} />
-                <OptionCard selected={state.market === "CRYPTO" || state.market === "FOREX"}
-                  icon={<Globe size={22} color="var(--wiz-primary-light)" />}
-                  label={t("wizard.step1.international")} desc={t("wizard.step1.internationalDesc")}
-                  onClick={() => autoAdvance({ market: "CRYPTO", subMarket: null, robotId: null, budgetValue: null, managementType: null })} />
-              </div>
-            </>
-          )}
-
-          {/* ── STEP 2 ── Kripto / Forex 50/50 */}
-          {state.step === 2 && (
-            <>
-              <h2 className={s.stepTitle}>{t("wizard.step2.title")}</h2>
-              {/* 50/50 split grid */}
-              <div className={s.optionGrid50}>
-                <OptionCard selected={state.subMarket === "CRYPTO"}
-                  icon={<Bot size={22} color="var(--wiz-primary-light)" />}
-                  label={t("wizard.step2.crypto")} desc={t("wizard.step2.cryptoDesc")}
-                  onClick={() => autoAdvance({ subMarket: "CRYPTO", market: "CRYPTO", robotId: null, budgetValue: null, budgetCurrency: "USD", managementType: null })} />
-                <OptionCard selected={state.subMarket === "FOREX"}
-                  icon={<Globe size={22} color="var(--wiz-primary-light)" />}
-                  label={t("wizard.step2.forex")} desc={t("wizard.step2.forexDesc")}
-                  onClick={() => autoAdvance({ subMarket: "FOREX", market: "FOREX", robotId: null, budgetValue: null, budgetCurrency: "USD", managementType: null })} />
-              </div>
-            </>
-          )}
-
-          {/* ── STEP 3 ── */}
-          {state.step === 3 && (
-            <>
-              <h2 className={s.stepTitle}>{t("wizard.step3.title")}</h2>
-              <div className={s.optionGrid}>
-                <OptionCard selected={state.managementType === "PREMIUM"}
-                  icon={<Users size={22} color="var(--wiz-primary-light)" />}
-                  label={t("wizard.step3.premium")} desc={t("wizard.step3.premiumDesc")}
-                  onClick={() => autoAdvance({ managementType: "PREMIUM", robotId: null })} />
-                <OptionCard selected={state.managementType === "SELF_SERVICE"}
-                  icon={<Lock size={22} color="var(--wiz-primary-light)" />}
-                  label={t("wizard.step3.selfService")} desc={t("wizard.step3.selfServiceDesc")}
-                  onClick={() => autoAdvance({ managementType: "SELF_SERVICE", robotId: null })} />
-              </div>
-            </>
-          )}
-
-          {/* ── STEP 4 ── */}
-          {state.step === 4 && (
-            <>
-              <h2 className={s.stepTitle}>{t("wizard.step4.title")}</h2>
-              <div style={{ display: "flex", flexDirection: "column", gap: "0.875rem" }}>
-                {availableRobots.map((robot: RobotDefinition) => (
-                  <RobotCard key={robot.id} robot={robot}
-                    selected={state.robotId === robot.id} t={t}
-                    onClick={() => {
-                      const budgetCurrency = robot.market === "BIST" ? "TRY" : "USD";
-                      if (robot.comingSoon) {
-                        // Coming soon: select robot and jump directly to lead-capture (step 6)
-                        setState(prev => ({
-                          ...prev,
-                          robotId: robot.id,
-                          budgetValue: null,
-                          budgetLabel: null,
-                          selectedBudgetComingSoon: false,
-                          budgetCurrency,
-                        }));
-                        setTimeout(() => setState(prev => ({ ...prev, step: 6 })), 220);
-                        return;
-                      }
-                      // Active robot: advance normally to budget step
-                      setState(prev => ({
-                        ...prev,
-                        robotId: robot.id,
-                        budgetValue: null,
-                        budgetLabel: null,
-                        selectedBudgetComingSoon: false,
-                        budgetCurrency,
-                      }));
-                      setTimeout(() => setState(prev => ({ ...prev, step: 5 })), 220);
-                    }} />
-                ))}
-              </div>
-            </>
-          )}
-
-
-          {/* ── STEP 5 ── */}
-          {state.step === 5 && (
-            <>
-              <h2 className={s.stepTitle}>{t("wizard.step5.title")}</h2>
-              {state.robotId === "CLASSIC" ? (
-                <div style={{ padding: "2rem", textAlign: "center", background: "rgba(29, 49, 74, 0.1)", borderRadius: 16, border: "1px dashed rgba(29, 49, 74, 0.4)" }}>
-                  <p style={{ color: "#60a5fa", fontWeight: 600, marginBottom: "0.5rem" }}>
-                    Ücretler Yakında Belirlenecek
-                  </p>
-                  <p style={{ color: "var(--text-secondary)", fontSize: "0.85rem" }}>
-                    BorsaZeka Classic için bütçe aralıkları ve fiyatlandırma modeli lansman öncesi duyurulacaktır.
-                  </p>
-                </div>
-              ) : budgetOptions.length === 0 ? (
-                <p style={{ color: "var(--text-secondary)", fontSize: "0.875rem" }}>
-                  Bu ürün için bütçe bilgisi gerekmiyor.
-                </p>
-              ) : (
-                <>
-                  <p style={{ fontSize: "0.85rem", color: "var(--text-secondary)", marginBottom: "1.25rem" }}>
-                    {t(state.subMarket === "CRYPTO" ? "wizard.step5.cryptoLabel"
-                      : state.subMarket === "FOREX" ? "wizard.step5.forexLabel"
-                      : "wizard.step5.bistLabel")}
-                  </p>
-                  <div className={s.budgetGrid}>
-                    {budgetOptions.map((opt: BudgetOption) => (
-                      <button key={opt.value}
-                        className={`${s.budgetOption}
-                          ${state.budgetValue === opt.value ? s.budgetOptionSelected : ""}
-                          ${opt.comingSoon ? s.budgetOptionComingSoon : ""}`}
-                        disabled={opt.comingSoon}
-                        onClick={() => {
-                          if (opt.comingSoon) return;
-                          setState(prev => ({
-                            ...prev,
-                            budgetValue: opt.value,
-                            budgetLabel: opt.label,
-                            selectedBudgetComingSoon: opt.comingSoon ?? false,
-                          }));
-                          // Auto advance to summary
-                          setTimeout(() => setState(prev => ({ ...prev, step: 6 })), 220);
-                        }}>
-                        {opt.label}
-                        {opt.comingSoon && <span className={s.budgetComingSoonTag}>Yakında</span>}
-                      </button>
-                    ))}
-                  </div>
-                </>
-              )}
-            </>
-          )}
-
-          {/* ── STEP 6 ── */}
-          {state.step === 6 && (
-            <>
-              {submitDone ? (
-                <div style={{ textAlign: "center", padding: "2rem 0" }}>
-                  <h3 style={{ fontSize: "1.3rem", fontWeight: 700, color: "var(--text-primary)", marginBottom: "0.75rem" }}>
-                    Talebiniz Alındı!
-                  </h3>
-                  <p style={{ color: "var(--text-secondary)", lineHeight: 1.6, marginBottom: "1.5rem" }}>
-                    En kısa sürede Telegram veya e-posta ile size ulaşacağız.
-                  </p>
-                  <Link href="/iletisim" style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem", color: "var(--wiz-primary-light)", fontWeight: 600 }}>
-                    İletişim sayfasına git <ArrowRight size={15} />
-                  </Link>
-                </div>
-              ) : (
-                <>
-                  <h2 className={s.stepTitle}>{t("wizard.step6.title")}</h2>
-                  <div className={s.summaryGrid}>
-                    {/* Left: selections */}
-                    <div className={s.summaryCard}>
-                      <div className={s.summaryTitle}>{t("wizard.step6.selectedRobot")}</div>
-                      <div className={s.summaryRow}>
-                        <div className={s.summaryRowLabel}>{t("wizard.step6.selectedRobot")}</div>
-                        <div className={`${s.summaryRowValue} ${s.summaryRowValueAccent}`}>
-                          {selectedRobot ? t(selectedRobot.nameKey) : "—"}
-                          {selectedRobot?.comingSoon && (
-                            <span style={{ fontSize: "0.62rem", marginLeft: 6, padding: "0.15rem 0.5rem", borderRadius: 100, background: "rgba(29, 49, 74, 0.15)", color: "#60a5fa", border: "1px solid rgba(29, 49, 74, 0.25)" }}>
-                              Pek Yakında
-                            </span>
-                          )}
-                        </div>
+          <div className={s.stepper}>
+            <div className={s.stepperTrack}>
+              {STEP_LABELS.map((label, idx) => {
+                const n = idx + 1;
+                const active = n === state.step;
+                const done = n < state.step;
+                return (
+                  <div key={n} style={{ display: "flex", alignItems: "center", flex: n < TOTAL ? "none" : "0" }}>
+                    <div className={s.stepperItem}>
+                      <div className={`${s.stepperCircle} ${active ? s.stepperCircleActive : ""} ${done ? s.stepperCircleDone : ""}`}>
+                        {done ? <Check size={14} /> : n}
                       </div>
-                      <div className={s.summaryRow}>
-                        <div className={s.summaryRowLabel}>{t("wizard.step6.market")}</div>
-                        <div className={s.summaryRowValue}>{state.subMarket ?? state.market}</div>
-                      </div>
-                      {state.budgetLabel && (
-                        <div className={s.summaryRow}>
-                          <div className={s.summaryRowLabel}>{t("wizard.step6.budget")}</div>
-                          <div className={s.summaryRowValue}>{state.budgetLabel}</div>
-                        </div>
-                      )}
-                      {pricing?.note && (
-                        <div style={{ marginTop: "0.75rem", padding: "0.6rem 0.75rem", borderRadius: 8, background: "rgba(16,185,129,0.06)", fontSize: "0.78rem", color: "var(--accent-primary)" }}>
-                          {pricing.note}
-                        </div>
-                      )}
+                      <span className={s.stepperLabel}>{label}</span>
                     </div>
-
-                    {/* Right: pricing or coming-soon */}
-                    {isPaymentBlocked ? (
-                      <ComingSoonPanel
-                        robot={selectedRobot}
-                        notifyEmail={notifyEmail}
-                        notifyDone={notifyDone}
-                        notifySubmitting={notifySubmitting}
-                        onEmailChange={setNotifyEmail}
-                        onNotify={handleNotify}
-                        t={t}
-                      />
-                    ) : pricing ? (
-                      <div className={s.summaryCard}>
-                        <div className={s.summaryTitle}>{t("wizard.step6.title")}</div>
-
-                        <div className={s.summaryInfoList}>
-                          <div className={s.summaryInfoItem}>
-                            <span className={s.summaryInfoLabel}>{t("wizard.step6.summaryRobot")}</span>
-                            <span className={s.summaryInfoValue}>{selectedRobot ? t(selectedRobot.nameKey) : ""}</span>
-                          </div>
-                          <div className={s.summaryInfoItem}>
-                            <span className={s.summaryInfoLabel}>{t("wizard.step6.summaryBudget")}</span>
-                            <span className={s.summaryInfoValue}>{state.budgetLabel ?? ""}</span>
-                          </div>
-                          <div className={s.summaryInfoItem}>
-                            <span className={s.summaryInfoLabel}>{t("wizard.step6.summaryServer")}</span>
-                            <span className={s.summaryInfoValue} style={{ color: "var(--wiz-primary-light)", fontWeight: "bold" }}>
-                              €{pricing.serverCostEUR}
-                            </span>
-                          </div>
-                          {/* Ödeme Detayı satırı */}
-                          <div className={s.summaryInfoItem}>
-                            <span className={s.summaryInfoLabel}>{t("wizard.step6.paymentDetail")}</span>
-                            <span className={s.summaryInfoValue} style={{ color: "var(--wiz-primary-light)", fontWeight: 700 }}>
-                              €{pricing.serverCostDisplay} {t("wizard.step6.perMonth")}
-                            </span>
-                          </div>
-                          <div className={s.summaryInfoItem}>
-                            <span className={s.summaryInfoLabel}>{t("wizard.step6.summaryProfit")}</span>
-                            <span className={s.summaryInfoValue}>
-                              {pricing.profitSharePercent > 0 ? `%${pricing.profitSharePercent}` : t("wizard.step6.profitShareNA")}
-                            </span>
-                          </div>
-                        </div>
-
-                        {state.robotId === "KRIPTTOZEKA_SELF" && pricing.annualCostEUR && pricing.annualStripeLink && (
-                          <AnnualPlanBox
-                            annualCostEUR={pricing.annualCostEUR}
-                            annualStripeLink={pricing.annualStripeLink}
-                            userEmail={session?.user?.email ?? ""}
-                          />
-                        )}
-
-                        <div className={s.summaryDivider} style={{ margin: "1.5rem 0" }} />
-
-                        <div className={s.summaryTotalRow}>
-                          <span className={s.summaryTotalLabel}>{t("wizard.step6.totalMonthly")}</span>
-                          <span className={s.summaryTotalValue}>€{pricing.serverCostDisplay} {t("wizard.step6.perMonth")}</span>
-                        </div>
-
-                        <p className={s.summaryTerms}>{t("wizard.step6.terms")}</p>
-
-                          <button className={s.btnWizardSubmit}
-                            style={{ width: "100%", marginTop: "1rem", justifyContent: "center" }}
-                            onClick={handleSubmit} disabled={submitting || redirecting}>
-                            {redirecting ? "Stripe'a Yönlendiriliyor..." : submitting ? t("wizard.submitting") : (
-                              pricing.stripeLink ? t("wizard.step6.subscribeBtn") : t("wizard.step6.contactBtn")
-                            )}
-                            {(!submitting && !redirecting) && <ArrowRight size={16} />}
-                          </button>
-
-
-                        <div style={{ fontSize: "0.75rem", color: "var(--text-muted)", textAlign: "center", marginTop: "1rem" }}>
-                          <Trans
-                            i18nKey="wizard.step6.agreementNote"
-                            t={t}
-                            components={{
-                              linkTerms: <Link href="/kullanim-kosullari" style={{ color: "var(--wiz-primary-light)", textDecoration: "underline" }} />,
-                              linkPrivacy: <Link href="/gizlilik-politikasi" style={{ color: "var(--wiz-primary-light)", textDecoration: "underline" }} />,
-                            }}
-                          />
-                        </div>
-
-                        <p style={{ fontSize: "0.7rem", color: "var(--text-secondary)", textAlign: "center", marginTop: "0.75rem" }}>
-                          {pricing.stripeLink
-                            ? t("wizard.step6.stripeRedirect")
-                            : t("wizard.step6.contactRedirect")}
-                        </p>
-                      </div>
-                    ) : (
-                      <div className={s.outOfRangeWarn}>{t("wizard.step6.outOfRange")}</div>
+                    {n < TOTAL && (
+                      <div className={`${s.stepperConnector} ${done ? s.stepperConnectorFilled : ""}`}
+                        style={{ width: "100%", minWidth: "2rem", flex: 1 }} />
                     )}
                   </div>
-                </>
-              )}
-            </>
-          )}
-
-          {/* Navigation — Next button only (Back is in top-right corner) */}
-          {!submitDone && state.step === 5 && state.robotId === "CLASSIC" && (
-            <div className={s.wizardNav}>
-              <div />
-              <button className={s.btnWizardNext} onClick={goNext}>
-                {t("wizard.next")} <ArrowRight size={16} />
-              </button>
+                );
+              })}
             </div>
-          )}
+          </div>
+        </>
+      )}
 
+      {/* Content */}
+      {state.step === 6 && !submitDone ? (
+        <div className={s.step6Layout}>
+          {/* --- Triple-Color Glow Orbs (Moved here to stay behind panels) --- */}
+          <span className={s.glowOrbBlue}   aria-hidden="true" />
+          <span className={s.glowOrbPurple} aria-hidden="true" />
+          <span className={s.glowOrbPink}   aria-hidden="true" />
+
+          <div className={s.step6Header}>
+            <div>
+              <span className={s.stepTag}>{t("wizard.stepOf", { current: state.step, total: TOTAL })}</span>
+              <h2 className={s.stepTitle}>{t("wizard.step6.title")}</h2>
+            </div>
+            <button className={s.btnWizardBack} onClick={goBack} id="wizard-back-btn">
+              <ArrowLeft size={15} /> {t("wizard.back")}
+            </button>
+          </div>
+
+          <div className={s.step6Content}>
+            {/* Left: Robot Details Box (Glass Theme) */}
+            <RobotInfoBox robot={selectedRobot} t={t} variant="glass" />
+
+            {/* Right: Pricing or Coming-soon */}
+            <div className={s.priceDetailsPanel}>
+              {isPaymentBlocked ? (
+                <ComingSoonPanel
+                  robot={selectedRobot}
+                  notifyEmail={notifyEmail}
+                  notifyDone={notifyDone}
+                  notifySubmitting={notifySubmitting}
+                  onEmailChange={setNotifyEmail}
+                  onNotify={handleNotify}
+                  t={t}
+                />
+              ) : pricing ? (
+                <>
+                  <div className={s.summaryTitle}>{t("wizard.step6.title")}</div>
+
+                  <div className={s.summaryInfoList}>
+                    <div className={s.summaryInfoItem}>
+                      <span className={s.summaryInfoLabel}>{t("wizard.step6.summaryRobot")}</span>
+                      <span className={s.summaryInfoValue}>{selectedRobot ? t(selectedRobot.nameKey) : ""}</span>
+                    </div>
+                    <div className={s.summaryInfoItem}>
+                      <span className={s.summaryInfoLabel}>{t("wizard.step6.summaryBudget")}</span>
+                      <span className={s.summaryInfoValue}>{state.budgetLabel ?? ""}</span>
+                    </div>
+                    <div className={s.summaryInfoItem}>
+                      <span className={s.summaryInfoLabel}>{t("wizard.step6.summaryServer")}</span>
+                      <span className={s.summaryInfoValue} style={{ color: "var(--wiz-primary-light)", fontWeight: "bold" }}>
+                        €{pricing.serverCostEUR}
+                      </span>
+                    </div>
+                    <div className={s.summaryInfoItem}>
+                      <span className={s.summaryInfoLabel}>{t("wizard.step6.paymentDetail")}</span>
+                      <span className={s.summaryInfoValue} style={{ color: "var(--wiz-primary-light)", fontWeight: 700 }}>
+                        €{pricing.serverCostDisplay} {t("wizard.step6.perMonth")}
+                      </span>
+                    </div>
+                    <div className={s.summaryInfoItem}>
+                      <span className={s.summaryInfoLabel}>{t("wizard.step6.summaryProfit")}</span>
+                      <span className={s.summaryInfoValue}>
+                        {pricing.profitSharePercent > 0 ? `%${pricing.profitSharePercent}` : t("wizard.step6.profitShareNA")}
+                      </span>
+                    </div>
+                  </div>
+
+                  {state.robotId === "KRIPTTOZEKA_SELF" && pricing.annualCostEUR && pricing.annualStripeLink && (
+                    <AnnualPlanBox
+                      annualCostEUR={pricing.annualCostEUR}
+                      annualStripeLink={pricing.annualStripeLink}
+                      userEmail={session?.user?.email ?? ""}
+                    />
+                  )}
+
+                  <div className={s.summaryDivider} style={{ margin: "1.5rem 0" }} />
+
+                  <div className={s.summaryTotalRow}>
+                    <span className={s.summaryTotalLabel}>{t("wizard.step6.totalMonthly")}</span>
+                    <span className={s.summaryTotalValue}>€{pricing.serverCostDisplay} {t("wizard.step6.perMonth")}</span>
+                  </div>
+
+                  <p className={s.summaryTerms}>{t("wizard.step6.terms")}</p>
+
+                  <button className={s.btnWizardSubmit}
+                    style={{ width: "100%", marginTop: "1rem", justifyContent: "center" }}
+                    onClick={handleSubmit} disabled={submitting || redirecting}>
+                    {redirecting ? "Stripe'a Yönlendiriliyor..." : submitting ? t("wizard.submitting") : (
+                      pricing.stripeLink ? t("wizard.step6.subscribeBtn") : t("wizard.step6.contactBtn")
+                    )}
+                    {(!submitting && !redirecting) && <ArrowRight size={16} />}
+                  </button>
+
+                  <div style={{ fontSize: "0.75rem", color: "var(--text-muted)", textAlign: "center", marginTop: "1rem" }}>
+                    <Trans
+                      i18nKey="wizard.step6.agreementNote"
+                      t={t}
+                      components={{
+                        linkTerms: <Link href="/kullanim-kosullari" style={{ color: "var(--wiz-primary-light)", textDecoration: "underline" }} />,
+                        linkPrivacy: <Link href="/gizlilik-politikasi" style={{ color: "var(--wiz-primary-light)", textDecoration: "underline" }} />,
+                      }}
+                    />
+                  </div>
+                </>
+              ) : (
+                <div className={s.outOfRangeWarn}>{t("wizard.step6.outOfRange")}</div>
+              )}
+            </div>
+          </div>
         </div>
+      ) : (
+        <div className={s.stepCard}>
+          {/* --- Triple-Color Glow Orbs (z-1, arkada sabit) --- */}
+          <span className={s.glowOrbBlue}   aria-hidden="true" />
+          <span className={s.glowOrbPurple} aria-hidden="true" />
+          <span className={s.glowOrbPink}   aria-hidden="true" />
+
+          <div className={s.stepCardInner}>
+            {/* --- Shared top bar: step indicator (left) + back button (right) --- */}
+            <div className={s.stepTopBar}>
+              <span className={s.stepTag}>
+                {t("wizard.stepOf", { current: state.step, total: TOTAL })}
+              </span>
+              {!submitDone && state.step > 1 && (
+                <button className={s.btnWizardBack} onClick={goBack} id="wizard-back-btn">
+                  <ArrowLeft size={15} /> {t("wizard.back")}
+                </button>
+              )}
+            </div>
+
+            {/* Success state (Moved inside stepCardInner) */}
+            {submitDone && (
+              <div style={{ textAlign: "center", padding: "2rem 0" }}>
+                <h3 style={{ fontSize: "1.3rem", fontWeight: 700, color: "var(--text-primary)", marginBottom: "0.75rem" }}>
+                  Talebiniz Alındı!
+                </h3>
+                <p className={s.wizardSubtitle} style={{ marginBottom: "1.5rem" }}>
+                  En kısa sürede Telegram veya e-posta ile size ulaşacağız.
+                </p>
+                <Link href="/iletisim" style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem", color: "var(--wiz-primary-light)", fontWeight: 600 }}>
+                  İletişim sayfasına git <ArrowRight size={15} />
+                </Link>
+              </div>
+            )}
+
+            {!submitDone && (
+              <>
+                {/* --- STEP 1 --- */}
+                {state.step === 1 && (
+                  <>
+                    <h2 className={s.stepTitle}>{t("wizard.step1.title")}</h2>
+                    <div className={s.optionGrid}>
+                      <OptionCard selected={state.market === "BIST"}
+                        icon={<MapPin size={22} color="var(--wiz-primary-light)" />}
+                        label={t("wizard.step1.domestic")} desc={t("wizard.step1.domesticDesc")}
+                        onClick={() => autoAdvance({ market: "BIST", subMarket: "BIST", robotId: null, budgetValue: null, managementType: null })} />
+                      <OptionCard selected={state.market === "CRYPTO" || state.market === "FOREX"}
+                        icon={<Globe size={22} color="var(--wiz-primary-light)" />}
+                        label={t("wizard.step1.international")} desc={t("wizard.step1.internationalDesc")}
+                        onClick={() => autoAdvance({ market: "CRYPTO", subMarket: null, robotId: null, budgetValue: null, managementType: null })} />
+                    </div>
+                  </>
+                )}
+
+                {/* --- STEP 2 --- Kripto / Forex 50/50 --- */}
+                {state.step === 2 && (
+                  <>
+                    <h2 className={s.stepTitle}>{t("wizard.step2.title")}</h2>
+                    <div className={s.optionGrid50}>
+                      <OptionCard selected={state.subMarket === "CRYPTO"}
+                        icon={<Bot size={22} color="var(--wiz-primary-light)" />}
+                        label={t("wizard.step2.crypto")} desc={t("wizard.step2.cryptoDesc")}
+                        onClick={() => autoAdvance({ subMarket: "CRYPTO", market: "CRYPTO", robotId: null, budgetValue: null, budgetCurrency: "USD", managementType: null })} />
+                      <OptionCard selected={state.subMarket === "FOREX"}
+                        icon={<Globe size={22} color="var(--wiz-primary-light)" />}
+                        label={t("wizard.step2.forex")} desc={t("wizard.step2.forexDesc")}
+                        onClick={() => autoAdvance({ subMarket: "FOREX", market: "FOREX", robotId: null, budgetValue: null, budgetCurrency: "USD", managementType: null })} />
+                    </div>
+                  </>
+                )}
+
+                {/* --- STEP 3 --- */}
+                {state.step === 3 && (
+                  <>
+                    <h2 className={s.stepTitle}>{t("wizard.step3.title")}</h2>
+                    <div className={s.optionGrid}>
+                      <OptionCard selected={state.managementType === "PREMIUM"}
+                        icon={<Users size={22} color="var(--wiz-primary-light)" />}
+                        label={t("wizard.step3.premium")} desc={t("wizard.step3.premiumDesc")}
+                        onClick={() => autoAdvance({ managementType: "PREMIUM", robotId: null })} />
+                      <OptionCard selected={state.managementType === "SELF_SERVICE"}
+                        icon={<Lock size={22} color="var(--wiz-primary-light)" />}
+                        label={t("wizard.step3.selfService")} desc={t("wizard.step3.selfServiceDesc")}
+                        onClick={() => autoAdvance({ managementType: "SELF_SERVICE", robotId: null })} />
+                    </div>
+                  </>
+                )}
+
+                {/* --- STEP 4 --- */}
+                {state.step === 4 && (
+                  <>
+                    <h2 className={s.stepTitle}>{t("wizard.step4.title")}</h2>
+                    <div style={{ display: "flex", flexDirection: "column", gap: "0.875rem" }}>
+                      {availableRobots.map((robot: RobotDefinition) => (
+                        <RobotCard key={robot.id} robot={robot}
+                          selected={state.robotId === robot.id} t={t}
+                          onClick={() => {
+                            const budgetCurrency = robot.market === "BIST" ? "TRY" : "USD";
+                            if (robot.comingSoon) {
+                              setState(prev => ({
+                                ...prev,
+                                robotId: robot.id,
+                                budgetValue: null,
+                                budgetLabel: null,
+                                selectedBudgetComingSoon: false,
+                                budgetCurrency,
+                              }));
+                              setTimeout(() => setState(prev => ({ ...prev, step: 6 })), 220);
+                              return;
+                            }
+                            setState(prev => ({
+                              ...prev,
+                              robotId: robot.id,
+                              budgetValue: null,
+                              budgetLabel: null,
+                              selectedBudgetComingSoon: false,
+                              budgetCurrency,
+                            }));
+                            setTimeout(() => setState(prev => ({ ...prev, step: 5 })), 220);
+                          }} />
+                      ))}
+                    </div>
+                  </>
+                )}
+
+                {/* --- STEP 5 --- */}
+                {state.step === 5 && (
+                  <>
+                    <h2 className={s.stepTitle}>{t("wizard.step5.title")}</h2>
+                    {state.robotId === "CLASSIC" ? (
+                      <div style={{ padding: "2rem", textAlign: "center", background: "rgba(29, 49, 74, 0.1)", borderRadius: 16, border: "1px dashed rgba(29, 49, 74, 0.4)" }}>
+                        <p style={{ color: "#60a5fa", fontWeight: 600, marginBottom: "0.5rem" }}>
+                          Ücretler Yakında Belirlenecek
+                        </p>
+                        <p style={{ color: "var(--text-secondary)", fontSize: "0.85rem" }}>
+                          BorsaZeka Classic için bütçe aralıkları ve fiyatlandırma modeli lansman öncesi duyurulacaktır.
+                        </p>
+                      </div>
+                    ) : budgetOptions.length === 0 ? (
+                      <p style={{ color: "var(--text-secondary)", fontSize: "0.875rem" }}>
+                        Bu ürün için bütçe bilgisi gerekmiyor.
+                      </p>
+                    ) : (
+                      <>
+                        <p style={{ fontSize: "0.85rem", color: "var(--text-secondary)", marginBottom: "1.25rem" }}>
+                          {t(state.subMarket === "CRYPTO" ? "wizard.step5.cryptoLabel"
+                            : state.subMarket === "FOREX" ? "wizard.step5.forexLabel"
+                            : "wizard.step5.bistLabel")}
+                        </p>
+                        <div className={s.budgetGrid}>
+                          {budgetOptions.map((opt: BudgetOption) => (
+                            <button key={opt.value}
+                              className={`${s.budgetOption}
+                                ${state.budgetValue === opt.value ? s.budgetOptionSelected : ""}
+                                ${opt.comingSoon ? s.budgetOptionComingSoon : ""}`}
+                              disabled={opt.comingSoon}
+                              onClick={() => {
+                                if (opt.comingSoon) return;
+                                setState(prev => ({
+                                  ...prev,
+                                  budgetValue: opt.value,
+                                  budgetLabel: opt.label,
+                                  selectedBudgetComingSoon: opt.comingSoon ?? false,
+                                }));
+                                setTimeout(() => setState(prev => ({ ...prev, step: 6 })), 220);
+                              }}>
+                              {opt.label}
+                              {opt.comingSoon && <span className={s.budgetComingSoonTag}>Yakında</span>}
+                            </button>
+                          ))}
+                        </div>
+                      </>
+                    )}
+                  </>
+                )}
+              </>
+            )}
+
+            {!submitDone && state.step === 5 && state.robotId === "CLASSIC" && (
+              <div className={s.wizardNav}>
+                <div />
+                <button className={s.btnWizardNext} onClick={goNext}>
+                  {t("wizard.next")} <ArrowRight size={16} />
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// --- RobotInfoBox -------------------------------------------------------------
+function RobotInfoBox({ robot, t, variant = "default" }: { robot?: RobotDefinition; t: any; variant?: "default" | "glass" }) {
+  if (!robot) return null;
+
+  const getIcon = () => {
+    switch (robot.id) {
+      case "DARKROOM":
+      case "DARKROOM_SELF":
+        return <Shield size={28} />;
+      case "HIGHWAY":
+      case "HIGHWAY_SELF":
+        return <TrendingUp size={28} />;
+      case "TRADEMATE":
+      case "TRADEMATE_SELF":
+        return <Target size={28} />;
+      case "FABRIKA":
+      case "FABRIKA_SELF":
+        return <Activity size={28} />;
+      case "KRIPTTOZEKA":
+        return <Coins size={28} />;
+      case "KRIPTTOZEKA_ASCENT":
+      case "KRIPTTOZEKA_SELF":
+        return <Bot size={28} />;
+      case "FOREXZEKA":
+        return <Globe size={28} />;
+      default:
+        return <Zap size={28} />;
+    }
+  };
+
+  const containerClass = variant === "glass" ? s.robotDetailsBoxGlass : s.robotDetailsBox;
+
+  return (
+    <div className={containerClass}>
+      <div className={s.robotInfoMain}>
+        <div className={s.robotIconWrapper}>
+          {getIcon()}
+        </div>
+        <div>
+          <h3 className={s.robotNameLarge}>{t(robot.nameKey)}</h3>
+          <p className={s.robotDescShort}>{t(robot.descKey)}</p>
+        </div>
+      </div>
+
+      <div className={s.robotFeaturesList}>
+        <h4 className={s.featuresTitle}>{t("wizard.step6.featuresTitle") || "Robot Özellikleri"}</h4>
+        <ul>
+          {robot.features.map((fKey: string) => (
+            <li key={fKey}>
+              <CheckCircle2 size={16} color="var(--wiz-primary-light)" style={{ flexShrink: 0 }} />
+              <span>{t(fKey)}</span>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );
 }
 
-// ─── ComingSoon Panel ─────────────────────────────────────────────────────────
+// --- ComingSoon Panel ---------------------------------------------------------
 function ComingSoonPanel({ robot, notifyEmail, notifyDone, notifySubmitting, onEmailChange, onNotify, t }: {
   robot?: RobotDefinition;
   notifyEmail: string;
@@ -779,7 +817,7 @@ function ComingSoonPanel({ robot, notifyEmail, notifyDone, notifySubmitting, onE
   );
 }
 
-// ─── OptionCard ───────────────────────────────────────────────────────────────
+// --- OptionCard ---------------------------------------------------------------
 function OptionCard({ selected, icon, label, desc, comingSoon, comingSoonLabel, onClick }: {
   selected: boolean; icon: React.ReactNode; label: string; desc: string;
   comingSoon?: boolean; comingSoonLabel?: string; onClick: () => void;
@@ -798,7 +836,7 @@ function OptionCard({ selected, icon, label, desc, comingSoon, comingSoonLabel, 
   );
 }
 
-// ─── RobotCard ────────────────────────────────────────────────────────────────
+// --- RobotCard ----------------------------------------------------------------
 function RobotCard({ robot, selected, t, onClick }: {
   robot: RobotDefinition; selected: boolean;
   t: (k: string) => string; onClick: () => void;
@@ -848,7 +886,7 @@ function RobotCard({ robot, selected, t, onClick }: {
   );
 }
 
-// ─── AnnualPlanBox ────────────────────────────────────────────────────────────
+// --- AnnualPlanBox ------------------------------------------------------------
 function AnnualPlanBox({
   annualCostEUR,
   annualStripeLink,

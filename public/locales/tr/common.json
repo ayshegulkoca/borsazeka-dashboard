@@ -224,7 +224,8 @@
       "preRegisterBtn": "Ön Kayıt Yaptır",
       "kriptoSelfAnnualNote": "Yıllık ödeme indirimi mevcut: 116€/yıl · 340€/yıl · 564€/yıl (4 ay bedava)",
       "bistSelfAnnualNote": "Sunucu ücreti seçtiğiniz bütçeye göre değişir: 50€ / 100€ / 200€ / 500€ / 1.000€ aylık.",
-      "agreementNote": "Abone olarak <linkTerms>Kullanım Koşullarını</linkTerms> ve <linkPrivacy>Gizlilik Politikasını</linkPrivacy> kabul etmiş sayılırsınız."
+      "agreementNote": "Abone olarak <linkTerms>Kullanım Koşullarını</linkTerms> ve <linkPrivacy>Gizlilik Politikasını</linkPrivacy> kabul etmiş sayılırsınız.",
+      "featuresTitle": "Robot Özellikleri"
     },
     "robots": {
       "darkroom": {
