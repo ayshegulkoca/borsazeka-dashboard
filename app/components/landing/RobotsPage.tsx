@@ -313,10 +313,7 @@ export default function RobotsPage() {
                         {t("robots.comingSoon")}
                       </>
                     ) : (
-                      <>
-                        {t("robots.ctaButton")}
-                        <ArrowRight size={15} />
-                      </>
+                      t("robots.ctaButton")
                     )}
                   </button>
                 </div>
