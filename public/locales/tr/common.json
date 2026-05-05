@@ -829,8 +829,8 @@
     "settings": {
       "title": "Ayarlar",
       "subtitle": "Hesap bilgilerinizi ve aboneliğinizi yönetin.",
-      "tabProfile": "Profil",
-      "tabBilling": "Abonelik & Fatura",
+      "tabProfile": "Profil Bilgilerim",
+      "tabBilling": "Aboneliklerim",
       "profileTitle": "Kişisel Bilgiler",
       "profileDesc": "Hesap bilgilerinizi buradan güncelleyebilirsiniz.",
       "emailNote": "E-posta adresi Google hesabınızdan alınır.",

@@ -813,8 +813,8 @@
     "settings": {
       "title": "Settings",
       "subtitle": "Manage your account information and subscription.",
-      "tabProfile": "Profile",
-      "tabBilling": "Subscription & Billing",
+      "tabProfile": "My Profile",
+      "tabBilling": "My Subscriptions",
       "profileTitle": "Personal Information",
       "profileDesc": "Update your account details here.",
       "emailNote": "Email address is sourced from your Google account.",
