@@ -1,17 +1,16 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, Suspense } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-
-import { usePathname } from "next/navigation";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import Image from "next/image";
-import { Activity, ChevronDown, LayoutDashboard, LogOut, Smartphone, User } from "lucide-react";
+import { ChevronDown, LayoutDashboard, LogOut, Smartphone, User } from "lucide-react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useTranslation } from "react-i18next";
 import styles from "./landing.module.css";
 import MagneticButton from "./MagneticButton";
 
+// ── Avatar Dropdown ────────────────────────────────────────────────────────────
 function AvatarDropdown() {
   const { t } = useTranslation("common");
   const { data: session } = useSession();
@@ -109,7 +108,36 @@ function AvatarDropdown() {
   );
 }
 
-// ── Main Navbar ───────────────────────────────────────────────────────────────
+// ── ScrollToDownload: useSearchParams'ı Suspense sınırı içinde kullanan inner bileşen ──
+function ScrollToDownload() {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    if (pathname !== "/") return;
+    if (searchParams.get("scrollTo") !== "download") return;
+
+    // URL'yi temizle (geçmişe yeni giriş ekleme)
+    router.replace("/", { scroll: false });
+
+    let attempts = 0;
+    const interval = setInterval(() => {
+      const el = document.getElementById("download-section");
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+        clearInterval(interval);
+      }
+      if (++attempts > 30) clearInterval(interval); // maks 3 sn bekle
+    }, 100);
+
+    return () => clearInterval(interval);
+  }, [pathname, searchParams, router]);
+
+  return null; // sadece yan etki, UI yok
+}
+
+// ── Main Navbar ────────────────────────────────────────────────────────────────
 export default function Navbar() {
   const { data: session } = useSession();
   const router = useRouter();
@@ -130,6 +158,18 @@ export default function Navbar() {
 
   if (!mounted) return null;
 
+  /** Herhangi bir sayfadan #download-section'a git */
+  const handleDownloadClick = (closeMobile?: () => void) => {
+    closeMobile?.();
+    if (pathname === "/") {
+      // Zaten ana sayfadaysa → direkt scroll
+      const el = document.getElementById("download-section");
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    } else {
+      // Başka sayfadaysa → ana sayfaya yönlendir + scroll sinyali
+      router.push("/?scrollTo=download");
+    }
+  };
 
   const changeLanguage = (lang: string) => {
     i18n.changeLanguage(lang);
@@ -137,6 +177,11 @@ export default function Navbar() {
 
   return (
     <>
+      {/* Suspense boundary: useSearchParams için gerekli */}
+      <Suspense fallback={null}>
+        <ScrollToDownload />
+      </Suspense>
+
       <nav className={`${styles.navbar} ${scrolled ? styles.scrolled : ""} ${pathname === "/robotlar" ? styles.navbarDark : ""}`}>
         <div className={styles.navInner}>
         {/* Brand: Logo + Dashboard Button (if auth) */}
@@ -191,12 +236,7 @@ export default function Navbar() {
           <button
             id="navbar-download-btn"
             className={styles.btnDownload}
-            onClick={() => {
-              const el = document.getElementById("download-section");
-              if (el) {
-                el.scrollIntoView({ behavior: "smooth", block: "start" });
-              }
-            }}
+            onClick={() => handleDownloadClick()}
             aria-label="Uygulamayı İndir bölümüne git"
           >
             <Smartphone size={13} />
@@ -230,7 +270,6 @@ export default function Navbar() {
               <button
                 className={styles.btnGhost}
                 onClick={() => signIn("google", { callbackUrl: "/dashboard", prompt: "select_account" })}
-
               >
                 {t("navbar.signIn")}
               </button>
@@ -281,19 +320,12 @@ export default function Navbar() {
         <button
           id="mobile-download-btn"
           className={styles.btnDownloadMobile}
-          onClick={() => {
-            setMobileOpen(false);
-            setTimeout(() => {
-              const el = document.getElementById("download-section");
-              if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-            }, 150);
-          }}
+          onClick={() => handleDownloadClick(() => setMobileOpen(false))}
           aria-label="Uygulamayı İndir bölümüne git"
         >
           <Smartphone size={18} />
           {t("navbar.downloadApp")}
         </button>
-
 
         {/* Mobile Language Toggle */}
         <div className={styles.mobileLangToggle}>

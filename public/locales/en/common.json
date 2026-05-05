@@ -131,6 +131,7 @@
     "howItWorks": "How It Works",
     "contact": "Contact",
     "copyright": "© 2025 BorsaZeka. All rights reserved.",
+    "tagline": "The Financial Technologies of the Future",
     "ctaLabel": "Determine Your Strategy",
     "ctaTitle": "Haven't Determined Your Special Strategy Yet?",
     "ctaBtn": "Start Robot Wizard"
@@ -783,7 +784,7 @@
       "title": "My Accounts",
       "subtitle": "Securely manage your exchange and crypto accounts and authorize your robots in seconds.",
       "bistCardTitle": "Add Broker Account",
-      "bistCardDesc": "Connect your accounts at institutions like PhillipCapital, İnfo Yatırım for Borsa İstanbul (BIST) transactions.",
+      "bistCardDesc": "Connect your accounts at institutions like PhillipCapital, Info Yatırım for Borsa İstanbul (BIST) transactions.",
       "bistBtn": "Connect Institution",
       "cryptoCardTitle": "Add Crypto Account",
       "cryptoCardDesc": "Securely integrate your accounts on Binance and other crypto exchanges with API keys.",
@@ -874,5 +875,25 @@
       "invoiceFailed": "Failed",
       "signOut": "Sign out"
     }
+  },
+  "mobileApp": {
+    "badge": "New Update Available",
+    "headline1": "BorsaZeka",
+    "headline2": "In Your Pocket",
+    "headline3": "Never Miss an Analysis",
+    "description": "Real-time market data, AI-powered insights, and robot management — now in your pocket. Download our mobile app and manage your investments anytime, anywhere.",
+    "feature1": "Instant Alerts",
+    "feature2": "Live Charts",
+    "feature3": "Secure & Encrypted",
+    "appStoreSub": "Download on the",
+    "appStoreName": "App Store",
+    "googlePlaySub": "Get it on",
+    "googlePlayName": "Google Play",
+    "orDivider": "or",
+    "qrLabel": "Scan with your phone",
+    "chipLeft": "+12.4% Today",
+    "chipRight": "Robot Active",
+    "mockPortfolio": "Portfolio",
+    "mockStatus": "Running"
   }
 }

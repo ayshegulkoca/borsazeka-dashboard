@@ -18,7 +18,7 @@ export default function GlobalFooter() {
               <Activity size={18} color="#FFFFFF" strokeWidth={2.5} />
               <span>BorsaZeka</span>
             </Link>
-            <p className={s.tagline}>Geleceğin Finansal Teknolojileri</p>
+            <p className={s.tagline}>{t("footer.tagline")}</p>
           </div>
 
           <div className={s.footerLinksGrid}>

@@ -22,7 +22,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="tr">
+    <html lang="en">
       <body className={`${inter.variable} min-h-full flex flex-col`}>
         <AuthProvider>
           <I18nProvider>

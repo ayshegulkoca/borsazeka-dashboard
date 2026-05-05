@@ -279,6 +279,21 @@
   overflow: hidden;
 }
 
+/* ── Shared Top Bar: step indicator + back button ── */
+.stepTopBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+  min-height: 44px;
+}
+
+/* When there's no back button, keep stepTag aligned left */
+.stepTopBar .stepTag {
+  margin-bottom: 0;
+}
+
 /* Üst-sol hafif mavi/mor tonu — camın arkasındaki ışığı destekler */
 .stepCardInner::before {
   content: '';
@@ -782,19 +797,27 @@
 .btnWizardBack {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-  padding: 0.75rem 1.5rem;
+  gap: 0.45rem;
+  padding: 0.55rem 1rem;
+  min-height: 44px; /* mobile touch target */
   border-radius: 10px;
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: var(--text-secondary);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  transition: all 0.2s;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: all 0.2s ease;
+  white-space: nowrap;
 }
 
 .btnWizardBack:hover {
-  border-color: rgba(255, 255, 255, 0.15);
-  color: var(--text-primary);
+  background: rgba(59, 130, 246, 0.15);
+  border-color: rgba(59, 130, 246, 0.45);
+  color: #ffffff;
+  box-shadow: 0 0 16px rgba(59, 130, 246, 0.25), 0 0 0 1px rgba(59, 130, 246, 0.2);
+  transform: translateY(-1px);
 }
 
 .btnWizardNext {
@@ -871,7 +894,14 @@
   .wizardNav {
     gap: 0.75rem;
   }
-  .btnWizardBack,
+  .backBtnWrapper {
+    top: 0.75rem;
+    right: 0.75rem;
+  }
+  .btnWizardBack {
+    padding: 0.5rem 0.875rem;
+    font-size: 0.78rem;
+  }
   .btnWizardNext,
   .btnWizardSubmit {
     padding: 0.75rem 1rem;

@@ -29,7 +29,7 @@ function QRCodePlaceholder() {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={s.qrSvg}
-      aria-label="QR Kod"
+      aria-label="QR Code"
     >
       {/* Outer finder patterns */}
       <rect x="5" y="5" width="30" height="30" rx="3" stroke="rgba(148, 163, 184, 0.7)" strokeWidth="3" fill="none" />
@@ -69,13 +69,13 @@ function QRCodePlaceholder() {
 }
 
 /* ─── App Store Button ───────────────────────────────────────────────────── */
-function AppStoreButton() {
+function AppStoreButton({ sub, name }: { sub: string; name: string }) {
   return (
     <a
       href="#"
       id="mobile-app-appstore-btn"
       className={s.storeBtn}
-      aria-label="App Store'dan İndirin"
+      aria-label={`${sub} ${name}`}
       target="_blank"
       rel="noopener noreferrer"
     >
@@ -83,21 +83,21 @@ function AppStoreButton() {
         <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98l-.09.06c-.22.14-2.19 1.28-2.17 3.82.03 3.02 2.65 4.03 2.68 4.04l-.06.26zM13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
       </svg>
       <div className={s.storeBtnText}>
-        <span className={s.storeBtnSub}>Apple'dan İndirin</span>
-        <span className={s.storeBtnName}>App Store</span>
+        <span className={s.storeBtnSub}>{sub}</span>
+        <span className={s.storeBtnName}>{name}</span>
       </div>
     </a>
   );
 }
 
 /* ─── Google Play Button ─────────────────────────────────────────────────── */
-function GooglePlayButton() {
+function GooglePlayButton({ sub, name }: { sub: string; name: string }) {
   return (
     <a
       href="#"
       id="mobile-app-googleplay-btn"
       className={s.storeBtn}
-      aria-label="Google Play'den İndirin"
+      aria-label={`${sub} ${name}`}
       target="_blank"
       rel="noopener noreferrer"
     >
@@ -113,15 +113,20 @@ function GooglePlayButton() {
         </defs>
       </svg>
       <div className={s.storeBtnText}>
-        <span className={s.storeBtnSub}>Google Play'den</span>
-        <span className={s.storeBtnName}>Google Play</span>
+        <span className={s.storeBtnSub}>{sub}</span>
+        <span className={s.storeBtnName}>{name}</span>
       </div>
     </a>
   );
 }
 
 /* ─── Phone Mockup with Video ────────────────────────────────────────────── */
-function PhoneMockup() {
+function PhoneMockup({ chipLeft, chipRight, portfolio, status }: {
+  chipLeft: string;
+  chipRight: string;
+  portfolio: string;
+  status: string;
+}) {
   return (
     <div className={s.phoneWrapper}>
       {/* Glow behind phone */}
@@ -130,14 +135,14 @@ function PhoneMockup() {
       {/* Floating stat chips */}
       <div className={`${s.floatChip} ${s.floatChipLeft}`} aria-hidden="true">
         <span className={s.floatChipDotBlue} />
-        <span className={s.floatChipTextBlue}>+%12.4 Bugün</span>
+        <span className={s.floatChipTextBlue}>{chipLeft}</span>
       </div>
       <div className={`${s.floatChip} ${s.floatChipRight}`} aria-hidden="true">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
           <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/>
           <polyline points="16 7 22 7 22 13"/>
         </svg>
-        <span>Robot Aktif</span>
+        <span>{chipRight}</span>
       </div>
 
       {/* Phone frame */}
@@ -159,7 +164,7 @@ function PhoneMockup() {
             </div>
           </div>
 
-          {/* Video area — replace src with actual video */}
+          {/* Video area */}
           <div className={s.phoneVideoWrapper}>
             <video
               className={s.phoneVideo}
@@ -167,15 +172,12 @@ function PhoneMockup() {
               loop
               muted
               playsInline
-              aria-label="Borsazeka uygulama önizlemesi"
-              // Buraya gerçek video dosya yolunuzu ekleyin:
-              // src="/videos/borsazeka-demo.mp4"
+              aria-label="Borsazeka app preview"
             >
-              {/* Placeholder: video yoksa fallback görseli */}
               <div />
             </video>
 
-            {/* Fallback overlay — gerçek video eklendiğinde kaldırın */}
+            {/* Fallback overlay */}
             <div className={s.phoneVideoFallback} aria-hidden="true">
               <div className={s.phoneVideoFallbackBg} />
               {/* Mock chart */}
@@ -204,7 +206,7 @@ function PhoneMockup() {
                   <span className={s.mockStatChange}>+%1.24</span>
                 </div>
                 <div className={s.mockStat}>
-                  <span className={s.mockStatLabel}>Portföy</span>
+                  <span className={s.mockStatLabel}>{portfolio}</span>
                   <span className={s.mockStatVal}>₺142.580</span>
                   <span className={s.mockStatChange}>+%3.7</span>
                 </div>
@@ -217,7 +219,7 @@ function PhoneMockup() {
                 <div>
                   <div className={s.mockRobotName}>DarkRoom</div>
                   <div className={s.mockRobotStatus}>
-                    <span className={s.mockRobotDot}/> Çalışıyor
+                    <span className={s.mockRobotDot}/> {status}
                   </div>
                 </div>
                 <div className={s.mockRobotProfit}>+₺4.230</div>
@@ -254,12 +256,18 @@ export default function MobileAppSection() {
   const { ref, inView } = useInView(0.15);
   const { t } = useTranslation("common");
 
+  const features = [
+    { icon: "M13 10V3L4 14h7v7l9-11h-7z", label: t("mobileApp.feature1") },
+    { icon: "M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z", label: t("mobileApp.feature2") },
+    { icon: "M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z", label: t("mobileApp.feature3") },
+  ];
+
   return (
     <section
       ref={ref as React.RefObject<HTMLElement>}
       className={`${s.section} ${inView ? s.sectionVisible : ""}`}
       id="download-section"
-      aria-label="Mobil Uygulama İndirme"
+      aria-label={t("mobileApp.headline2")}
     >
       {/* ── Mesh background ── */}
       <div className={s.meshBg} aria-hidden="true">
@@ -272,7 +280,12 @@ export default function MobileAppSection() {
       <div className={s.inner}>
         {/* ── Left: Phone Mockup ── */}
         <div className={`${s.leftCol} ${inView ? s.leftColVisible : ""}`}>
-          <PhoneMockup />
+          <PhoneMockup
+            chipLeft={t("mobileApp.chipLeft")}
+            chipRight={t("mobileApp.chipRight")}
+            portfolio={t("mobileApp.mockPortfolio")}
+            status={t("mobileApp.mockStatus")}
+          />
         </div>
 
         {/* ── Right: Copy + CTA ── */}
@@ -280,31 +293,25 @@ export default function MobileAppSection() {
           {/* Badge */}
           <div className={s.badge}>
             <span className={s.badgeDot} />
-            Yeni Güncelleme Mevcut
+            {t("mobileApp.badge")}
           </div>
 
           {/* Headline */}
           <h2 className={s.headline}>
-            Borsazeka{" "}
-            <span className={s.headlineAccent}>Cebinizde</span>
+            {t("mobileApp.headline1")}{" "}
+            <span className={s.headlineAccent}>{t("mobileApp.headline2")}</span>
             <br />
-            <span className={s.headlineSub}>Analizleri Kaçırmayın</span>
+            <span className={s.headlineSub}>{t("mobileApp.headline3")}</span>
           </h2>
 
           {/* Description */}
           <p className={s.description}>
-            Anlık borsa verileri, yapay zeka analizleri ve robot yönetimi şimdi
-            cebinizde. Mobil uygulamamızı indirin, yatırımlarınızı her an, her
-            yerden yönetin.
+            {t("mobileApp.description")}
           </p>
 
           {/* Feature pills */}
           <div className={s.features}>
-            {[
-              { icon: "M13 10V3L4 14h7v7l9-11h-7z", label: "Anlık Bildirimler" },
-              { icon: "M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z", label: "Canlı Grafik" },
-              { icon: "M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z", label: "Güvenli Şifreli" },
-            ].map(({ icon, label }) => (
+            {features.map(({ icon, label }) => (
               <div key={label} className={s.featurePill}>
                 <svg className={s.featurePillIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
                   <path d={icon} strokeLinecap="round" strokeLinejoin="round"/>
@@ -317,14 +324,20 @@ export default function MobileAppSection() {
           {/* Store buttons + QR */}
           <div className={s.downloadArea}>
             <div className={s.storeButtons}>
-              <AppStoreButton />
-              <GooglePlayButton />
+              <AppStoreButton
+                sub={t("mobileApp.appStoreSub")}
+                name={t("mobileApp.appStoreName")}
+              />
+              <GooglePlayButton
+                sub={t("mobileApp.googlePlaySub")}
+                name={t("mobileApp.googlePlayName")}
+              />
             </div>
 
             {/* QR Divider */}
             <div className={s.qrDivider} aria-hidden="true">
               <div className={s.qrDividerLine}/>
-              <span className={s.qrDividerText}>veya</span>
+              <span className={s.qrDividerText}>{t("mobileApp.orDivider")}</span>
               <div className={s.qrDividerLine}/>
             </div>
 
@@ -337,7 +350,7 @@ export default function MobileAppSection() {
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
                   <path d="M12 2a10 10 0 1 1 0 20A10 10 0 0 1 12 2zm0 0v20M2 12h20" strokeLinecap="round"/>
                 </svg>
-                Telefonunuzla tarayın
+                {t("mobileApp.qrLabel")}
               </div>
             </div>
           </div>

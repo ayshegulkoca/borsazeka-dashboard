@@ -405,11 +405,21 @@ export default function WizardPage() {
         <span className={s.glowOrbPink}   aria-hidden="true" />
 
         <div className={s.stepCardInner}>
+          {/* ── Shared top bar: step indicator (left) + back button (right) ── */}
+          <div className={s.stepTopBar}>
+            <span className={s.stepTag}>
+              {t("wizard.stepOf", { current: state.step, total: TOTAL })}
+            </span>
+            {!submitDone && state.step > 1 && (
+              <button className={s.btnWizardBack} onClick={goBack} id="wizard-back-btn">
+                <ArrowLeft size={15} /> {t("wizard.back")}
+              </button>
+            )}
+          </div>
 
           {/* ── STEP 1 ── */}
           {state.step === 1 && (
             <>
-              <span className={s.stepTag}>{t("wizard.stepOf", { current: 1, total: TOTAL })}</span>
               <h2 className={s.stepTitle}>{t("wizard.step1.title")}</h2>
               <div className={s.optionGrid}>
                 <OptionCard selected={state.market === "BIST"}
@@ -427,7 +437,6 @@ export default function WizardPage() {
           {/* ── STEP 2 ── Kripto / Forex 50/50 */}
           {state.step === 2 && (
             <>
-              <span className={s.stepTag}>{t("wizard.stepOf", { current: 2, total: TOTAL })}</span>
               <h2 className={s.stepTitle}>{t("wizard.step2.title")}</h2>
               {/* 50/50 split grid */}
               <div className={s.optionGrid50}>
@@ -446,7 +455,6 @@ export default function WizardPage() {
           {/* ── STEP 3 ── */}
           {state.step === 3 && (
             <>
-              <span className={s.stepTag}>{t("wizard.stepOf", { current: 3, total: TOTAL })}</span>
               <h2 className={s.stepTitle}>{t("wizard.step3.title")}</h2>
               <div className={s.optionGrid}>
                 <OptionCard selected={state.managementType === "PREMIUM"}
@@ -464,7 +472,6 @@ export default function WizardPage() {
           {/* ── STEP 4 ── */}
           {state.step === 4 && (
             <>
-              <span className={s.stepTag}>{t("wizard.stepOf", { current: 4, total: TOTAL })}</span>
               <h2 className={s.stepTitle}>{t("wizard.step4.title")}</h2>
               <div style={{ display: "flex", flexDirection: "column", gap: "0.875rem" }}>
                 {availableRobots.map((robot: RobotDefinition) => (
@@ -505,7 +512,6 @@ export default function WizardPage() {
           {/* ── STEP 5 ── */}
           {state.step === 5 && (
             <>
-              <span className={s.stepTag}>{t("wizard.stepOf", { current: 5, total: TOTAL })}</span>
               <h2 className={s.stepTitle}>{t("wizard.step5.title")}</h2>
               {state.robotId === "CLASSIC" ? (
                 <div style={{ padding: "2rem", textAlign: "center", background: "rgba(29, 49, 74, 0.1)", borderRadius: 16, border: "1px dashed rgba(29, 49, 74, 0.4)" }}>
@@ -572,7 +578,6 @@ export default function WizardPage() {
                 </div>
               ) : (
                 <>
-                  <span className={s.stepTag}>{t("wizard.stepOf", { current: 6, total: TOTAL })}</span>
                   <h2 className={s.stepTitle}>{t("wizard.step6.title")}</h2>
                   <div className={s.summaryGrid}>
                     {/* Left: selections */}
@@ -704,21 +709,13 @@ export default function WizardPage() {
             </>
           )}
 
-          {/* Navigation — only show back button; no Next button (auto-advance) */}
-          {!submitDone && (
+          {/* Navigation — Next button only (Back is in top-right corner) */}
+          {!submitDone && state.step === 5 && state.robotId === "CLASSIC" && (
             <div className={s.wizardNav}>
-              {state.step > 1 ? (
-                <button className={s.btnWizardBack} onClick={goBack}>
-                  <ArrowLeft size={16} /> {t("wizard.back")}
-                </button>
-              ) : <div />}
-              {/* Manual next only for step 3 when self-service is selected (can't auto-advance), and step 5 for CLASSIC */}
-              {/* Manual next only for CLASSIC step 5 (no budget options needed) */}
-              {state.step === 5 && state.robotId === "CLASSIC" && (
-                <button className={s.btnWizardNext} onClick={goNext}>
-                  {t("wizard.next")} <ArrowRight size={16} />
-                </button>
-              )}
+              <div />
+              <button className={s.btnWizardNext} onClick={goNext}>
+                {t("wizard.next")} <ArrowRight size={16} />
+              </button>
             </div>
           )}
 

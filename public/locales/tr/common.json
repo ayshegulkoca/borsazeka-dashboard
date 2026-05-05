@@ -131,6 +131,7 @@
     "howItWorks": "Nasıl Çalışır?",
     "contact": "İletişim",
     "copyright": "© 2025 BorsaZeka. Tüm hakları saklıdır.",
+    "tagline": "Geleceğin Finansal Teknolojileri",
     "ctaLabel": "Stratejinizi Belirleyin",
     "ctaTitle": "Size Özel Stratejiyi Henüz Belirlemediniz mi?",
     "ctaBtn": "Robot Sihirbazını Başlat"
@@ -889,5 +890,25 @@
       "invoiceFailed": "Başarısız",
       "signOut": "Çıkış yap"
     }
+  },
+  "mobileApp": {
+    "badge": "Yeni Güncelleme Mevcut",
+    "headline1": "Borsazeka",
+    "headline2": "Cebinizde",
+    "headline3": "Analizleri Kaçırmayın",
+    "description": "Anlık borsa verileri, yapay zeka analizleri ve robot yönetimi şimdi cebinizde. Mobil uygulamamızı indirin, yatırımlarınızı her an, her yerden yönetin.",
+    "feature1": "Anlık Bildirimler",
+    "feature2": "Canlı Grafik",
+    "feature3": "Güvenli Şifreli",
+    "appStoreSub": "Apple'dan İndirin",
+    "appStoreName": "App Store",
+    "googlePlaySub": "Google Play'den",
+    "googlePlayName": "Google Play",
+    "orDivider": "veya",
+    "qrLabel": "Telefonunuzla tarayın",
+    "chipLeft": "+%12.4 Bugün",
+    "chipRight": "Robot Aktif",
+    "mockPortfolio": "Portföy",
+    "mockStatus": "Çalışıyor"
   }
 }

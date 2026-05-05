@@ -53,7 +53,7 @@ export async function syncBrokerAccount(params: SyncBrokerParams) {
       "KriptoZeka Ascent":       "kripttozeka_ascent",
       "ForexZeka":               "forexzeka",
     };
-    const robotId = DISPLAY_TO_ROBOT_ID[params.robotName] ?? params.robotName.toLowerCase();
+    const robotId = DISPLAY_TO_ROBOT_ID[params.robotName] ?? params.robotName.toLocaleLowerCase('en-US');
 
     await prisma.userRobot.upsert({
       where: {

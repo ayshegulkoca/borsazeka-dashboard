@@ -86,7 +86,7 @@ function LangToggle() {
           className={`${styles.langBtn} ${currentLang === lang ? styles.langBtnActive : ""}`}
           aria-pressed={currentLang === lang}
         >
-          {lang.toUpperCase()}
+          {lang.toLocaleUpperCase('en-US')}
         </button>
       ))}
     </div>

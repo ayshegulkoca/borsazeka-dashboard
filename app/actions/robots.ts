@@ -66,7 +66,7 @@ export async function assignRobotAfterPurchase(robotId: RobotId) {
   // 2. Provision server if first robot
   const robotCount = await prisma.userRobot.count({ where: { userId, isActive: true } });
   if (robotCount === 0) {
-    await createPlaceholderServer(userId, robotId.toUpperCase());
+    await createPlaceholderServer(userId, robotId.toLocaleUpperCase('en-US'));
   }
 
   // 3. Upsert robot
@@ -99,7 +99,7 @@ export async function markSubscriptionPending(robotId: string) {
       update: {
         status: "PENDING",
         pendingRobotId: robotId,
-        planType: robotId.toUpperCase() + "_PREMIUM",
+        planType: robotId.toLocaleUpperCase('en-US') + "_PREMIUM",
         updatedAt: new Date()
       },
       create: {
