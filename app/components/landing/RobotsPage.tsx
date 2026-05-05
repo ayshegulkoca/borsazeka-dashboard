@@ -24,7 +24,7 @@ const ROBOT_CATALOG = [
     gradient: "linear-gradient(135deg, #000000 0%, #0a0a0a 100%)",
     border: "rgba(255, 255, 255, 0.08)",
     comingSoon: false,
-    minBudget: "600.000 ₺",
+    minBudget: "600K ₺",
     maxCapacity: 40,
     profitShare: "%50",
     featureKeys: [
@@ -44,7 +44,7 @@ const ROBOT_CATALOG = [
     gradient: "linear-gradient(135deg, #000000 0%, #0a0a0a 100%)",
     border: "rgba(255, 255, 255, 0.08)",
     comingSoon: false,
-    minBudget: "600.000 ₺",
+    minBudget: "600K ₺",
     maxCapacity: 30,
     profitShare: "%50",
     featureKeys: [
@@ -64,7 +64,7 @@ const ROBOT_CATALOG = [
     gradient: "linear-gradient(135deg, #000000 0%, #0a0a0a 100%)",
     border: "rgba(255, 255, 255, 0.08)",
     comingSoon: false,
-    minBudget: "600.000 ₺",
+    minBudget: "600K ₺",
     maxCapacity: 50,
     profitShare: "%50",
     featureKeys: [
@@ -84,7 +84,7 @@ const ROBOT_CATALOG = [
     gradient: "linear-gradient(135deg, #000000 0%, #0a0a0a 100%)",
     border: "rgba(255, 255, 255, 0.08)",
     comingSoon: false,
-    minBudget: "5.000.000 ₺",
+    minBudget: "5M ₺",
     maxCapacity: 20,
     profitShare: "%45–50",
     featureKeys: [
