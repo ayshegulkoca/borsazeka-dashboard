@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import {
@@ -99,6 +99,34 @@ export default function WizardPage() {
   const [notifySubmitting, setNotifySubmitting] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [redirecting, setRedirecting] = useState(false);
+  const [submitDone, setSubmitDone] = useState(false);
+
+  // --- Layout Sync (Step 6) ---------------------------------------------------
+  const pricePanelRef = useRef<HTMLDivElement>(null);
+  const [panelHeight, setPanelHeight] = useState<number | null>(null);
+
+  useEffect(() => {
+    if (state.step !== 6 || submitDone) return;
+    
+    const obs = new ResizeObserver((entries) => {
+      for (let entry of entries) {
+        // offsetHeight use here if borderBoxSize is not enough, 
+        // but entry.borderBoxSize[0].blockSize is standard for height.
+        const height = entry.target.getBoundingClientRect().height;
+        setPanelHeight(height);
+      }
+    });
+    
+    const currentPricePanel = pricePanelRef.current;
+    if (currentPricePanel) {
+      obs.observe(currentPricePanel);
+    }
+    
+    return () => {
+      if (currentPricePanel) obs.unobserve(currentPricePanel);
+      obs.disconnect();
+    };
+  }, [state.step, submitDone]);
 
   const STEP_LABELS = [
     t("wizard.market"),
@@ -108,7 +136,6 @@ export default function WizardPage() {
     t("wizard.budget"),
     t("wizard.summary")
   ];
-  const [submitDone, setSubmitDone] = useState(false);
 
   // ── Güvenlik: session yüklendiğinde userId eşleşmesini kontrol et ───────────
   useEffect(() => {
@@ -420,12 +447,12 @@ export default function WizardPage() {
             </button>
           </div>
 
-          <div className={s.step6Content}>
+          <div className={s.step6Content} style={{ "--right-panel-height": panelHeight ? `${panelHeight}px` : "auto" } as any}>
             {/* Left: Robot Details Box (Glass Theme) */}
             <RobotInfoBox robot={selectedRobot} t={t} variant="glass" />
 
             {/* Right: Pricing or Coming-soon */}
-            <div className={s.priceDetailsPanel}>
+            <div className={s.priceDetailsPanel} ref={pricePanelRef} style={{ flex: 1 }}>
               {isPaymentBlocked ? (
                 <ComingSoonPanel
                   robot={selectedRobot}
@@ -750,7 +777,7 @@ function TradematePremiumPanel({ t }: { t: (k: string) => string }) {
           <Lock size={14} />
           <span>Kurumsal Güvenlik</span>
         </div>
-        <div className={s.featureTagUnified}>{t("wizard.step6.trademate.h1")}</div>
+        <div className={`${s.featureTagUnified} ${s.tagBlue}`}>{t("wizard.step6.trademate.h1")}</div>
       </div>
 
       <div className={s.accordionUnified}>
@@ -868,7 +895,7 @@ function HighwayPremiumPanel({ t }: { t: (k: string) => string }) {
           <Lock size={14} />
           <span>Kurumsal Güvenlik</span>
         </div>
-        <div className={s.featureTagUnified}>{t("wizard.step6.highway.h1")}</div>
+        <div className={`${s.featureTagUnified} ${s.tagBlue}`}>{t("wizard.step6.highway.h1")}</div>
       </div>
 
       <div className={s.accordionUnified}>
@@ -993,7 +1020,7 @@ function KriptozekaPremiumPanel({ t }: { t: (k: string) => string }) {
           <Lock size={14} />
           <span>Kurumsal Güvenlik</span>
         </div>
-        <div className={s.featureTagUnified}>{t("wizard.step6.kriptozeka.h1")}</div>
+        <div className={`${s.featureTagUnified} ${s.tagOrange}`}>{t("wizard.step6.kriptozeka.h1")}</div>
       </div>
 
       <div className={s.accordionUnified}>
@@ -1126,7 +1153,7 @@ function DarkroomPremiumPanel({ t }: { t: (k: string) => string }) {
           <Lock size={14} />
           <span>Kurumsal Güvenlik</span>
         </div>
-        <div className={s.featureTagUnified}>{t("wizard.step6.darkroom.h1")}</div>
+        <div className={`${s.featureTagUnified} ${s.tagPurple}`}>{t("wizard.step6.darkroom.h1")}</div>
       </div>
 
       <div className={s.accordionUnified}>
@@ -1241,7 +1268,7 @@ function DarkroomSelfPanel({ t }: { t: (k: string) => string }) {
           <Activity size={14} />
           <span>Ücretsiz Sunucu</span>
         </div>
-        <div className={s.featureTagUnified}>{t("wizard.step6.darkroomSelf.h3")}</div>
+        <div className={`${s.featureTagUnified} ${s.tagPurple}`}>{t("wizard.step6.darkroomSelf.h3")}</div>
       </div>
 
       <div className={s.accordionUnified}>
@@ -1358,7 +1385,7 @@ function HighwaySelfPanel({ t }: { t: (k: string) => string }) {
           <Activity size={14} />
           <span>Ücretsiz Sunucu</span>
         </div>
-        <div className={s.featureTagUnified}>{t("wizard.step6.highwaySelf.h1")}</div>
+        <div className={`${s.featureTagUnified} ${s.tagBlue}`}>{t("wizard.step6.highwaySelf.h1")}</div>
       </div>
 
       <div className={s.accordionUnified}>
@@ -1580,48 +1607,48 @@ function RobotInfoBox({ robot, t, variant = "default" }: { robot?: RobotDefiniti
     switch (robot.id) {
       case "DARKROOM":
       case "DARKROOM_SELF":
-        return <Shield size={28} />;
+        return <Shield size={32} />;
       case "HIGHWAY":
       case "HIGHWAY_SELF":
-        return <TrendingUp size={28} />;
+        return <TrendingUp size={32} />;
       case "TRADEMATE":
       case "TRADEMATE_SELF":
-        return <Target size={28} />;
+        return <Target size={32} />;
       case "FABRIKA":
       case "FABRIKA_SELF":
-        return <Activity size={28} />;
+        return <Activity size={32} />;
       case "KRIPTTOZEKA":
-        return <Coins size={28} />;
+        return <Coins size={32} />;
       case "KRIPTTOZEKA_ASCENT":
       case "KRIPTTOZEKA_SELF":
-        return <Bot size={28} />;
+        return <Bot size={32} />;
       case "FOREXZEKA":
-        return <Globe size={28} />;
+        return <Globe size={32} />;
       default:
-        return <Zap size={28} />;
+        return <Zap size={32} />;
     }
   };
 
-  const containerClass = variant === "glass" ? s.robotDetailsBoxGlass : s.robotDetailsBox;
-
   return (
-    <div className={containerClass}>
-      <div className={s.robotInfoMain}>
-        <div className={s.robotIconWrapper}>
+    <div className={s.robotDetailsPanelUnified}>
+      <div className={s.tmHeader}>
+        <div className={s.tmIconGlowBlue}>
           {getIcon()}
         </div>
         <div>
-          <h3 className={s.robotNameLarge}>{t(robot.nameKey)}</h3>
-          <p className={s.robotDescShort}>{t(robot.descKey)}</p>
+          <h2 className={`${s.robotNeonTitleUnified} ${s.neonBlue}`}>{t(robot.nameKey)}</h2>
+          <p className={s.robotSloganUnified}>{t(robot.descKey)}</p>
         </div>
       </div>
 
-      <div className={s.robotFeaturesList}>
-        <h4 className={s.featuresTitle}>{t("wizard.step6.featuresTitle") || "Robot Özellikleri"}</h4>
-        <ul>
+      <div className={s.robotFeaturesList} style={{ marginTop: "1rem" }}>
+        <h4 className={s.featuresTitle} style={{ fontSize: "0.9rem", fontWeight: 800, color: "var(--wiz-primary-light)", marginBottom: "1rem" }}>
+          {t("wizard.step6.featuresTitle") || "Robot Özellikleri"}
+        </h4>
+        <ul className={s.unifiedCheckList}>
           {robot.features.map((fKey: string) => (
             <li key={fKey}>
-              <CheckCircle2 size={16} color="var(--wiz-primary-light)" style={{ flexShrink: 0 }} />
+              <CheckCircle2 size={16} className={s.unifiedCheck} style={{ color: "var(--wiz-primary-light)" }} />
               <span>{t(fKey)}</span>
             </li>
           ))}
