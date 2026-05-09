@@ -712,19 +712,24 @@ function TradematePremiumPanel({ t }: { t: (k: string) => string }) {
     setOpenAccordion(prev => (prev === key ? null : key));
   };
 
-  // Renders a translated string that may contain <green>…</green> and <b>…</b> tags
+  // Renders a translated string that may contain <green>, <b>, and <badge> tags
   const renderDesc = (raw: string) => {
-    const parts = raw.split(/(<green>|<\/green>|<b>|<\/b>)/);
+    const parts = raw.split(/(<green>|<\/green>|<b>|<\/b>|<badge>|<\/badge>)/);
     const nodes: React.ReactNode[] = [];
     let inGreen = false;
     let inBold = false;
+    let inBadge = false;
     parts.forEach((part, i) => {
       if (part === "<green>") { inGreen = true; return; }
       if (part === "</green>") { inGreen = false; return; }
       if (part === "<b>") { inBold = true; return; }
       if (part === "</b>") { inBold = false; return; }
+      if (part === "<badge>") { inBadge = true; return; }
+      if (part === "</badge>") { inBadge = false; return; }
+
       if (inGreen) nodes.push(<span key={i} className={s.tmGreen}>{part}</span>);
       else if (inBold) nodes.push(<strong key={i}>{part}</strong>);
+      else if (inBadge) nodes.push(<span key={i} className={s.tmBadge}>{part}</span>);
       else nodes.push(part);
     });
     return <>{nodes}</>;
@@ -829,13 +834,153 @@ function TradematePremiumPanel({ t }: { t: (k: string) => string }) {
   );
 }
 
+// --- Highway Premium Info Panel (Step 6 Left) ---------------------------------
+function HighwayPremiumPanel({ t }: { t: (k: string) => string }) {
+  const [openAccordion, setOpenAccordion] = useState<string | null>(null);
+
+  const toggleAccordion = (key: string) => {
+    setOpenAccordion(prev => (prev === key ? null : key));
+  };
+
+  const renderDesc = (raw: string) => {
+    const parts = raw.split(/(<green>|<\/green>|<b>|<\/b>|<badge>|<\/badge>)/);
+    const nodes: React.ReactNode[] = [];
+    let inGreen = false;
+    let inBold = false;
+    let inBadge = false;
+    parts.forEach((part, i) => {
+      if (part === "<green>") { inGreen = true; return; }
+      if (part === "</green>") { inGreen = false; return; }
+      if (part === "<b>") { inBold = true; return; }
+      if (part === "</b>") { inBold = false; return; }
+      if (part === "<badge>") { inBadge = true; return; }
+      if (part === "</badge>") { inBadge = false; return; }
+
+      if (inGreen) nodes.push(<span key={i} className={s.tmGreen}>{part}</span>);
+      else if (inBold) nodes.push(<strong key={i}>{part}</strong>);
+      else if (inBadge) nodes.push(<span key={i} className={s.tmBadge}>{part}</span>);
+      else nodes.push(part);
+    });
+    return <>{nodes}</>;
+  };
+
+  return (
+    <div className={s.robotDetailsBoxGlass + " " + s.tmPremiumPanel}>
+      {/* ── Header ───────────────────────────────────────────── */}
+      <div className={s.tmHeader}>
+        <div className={s.tmIconGlowBlue}>
+          <TrendingUp size={32} />
+        </div>
+        <div>
+          <h2 className={s.tmTitle} style={{ color: "#fff" }}>Highway Premium</h2>
+          <p className={s.tmSlogan}>{t("wizard.step6.highway.slogan")}</p>
+        </div>
+      </div>
+
+      {/* ── Highlight Cards ────────────────────────────────────────── */}
+      <div className={s.tmHighlights}>
+        <div className={s.tmHighlightCard}>{t("wizard.step6.highway.h1")}</div>
+        <div className={s.tmHighlightCard}>{t("wizard.step6.highway.h2")}</div>
+        <div className={s.tmHighlightCard}>{t("wizard.step6.highway.h3")}</div>
+      </div>
+
+      {/* ── Accordion System ───────────────────────────────────────── */}
+      <div className={s.tmAccordionList}>
+
+        {/* Accordion 1: Foundation */}
+        <div className={s.tmAccordionItem}>
+          <button
+            className={s.tmAccordionTrigger}
+            onClick={() => toggleAccordion("strategy")}
+            aria-expanded={openAccordion === "strategy"}
+          >
+            <span>{t("wizard.step6.highway.strategyTitle")}</span>
+            <span className={`${s.tmAccordionArrow} ${openAccordion === "strategy" ? s.tmAccordionArrowOpen : ""}`}>▾</span>
+          </button>
+          {openAccordion === "strategy" && (
+            <div className={s.tmAccordionBody}>
+              <p className={s.tmAccordionText}>{renderDesc(t("wizard.step6.highway.strategyP1"))}</p>
+              <p className={s.tmAccordionText}>{renderDesc(t("wizard.step6.highway.strategyP2"))}</p>
+            </div>
+          )}
+        </div>
+
+        {/* Accordion 2: Logic */}
+        <div className={s.tmAccordionItem}>
+          <button
+            className={s.tmAccordionTrigger}
+            onClick={() => toggleAccordion("logic")}
+            aria-expanded={openAccordion === "logic"}
+          >
+            <span>{t("wizard.step6.highway.logicTitle")}</span>
+            <span className={`${s.tmAccordionArrow} ${openAccordion === "logic" ? s.tmAccordionArrowOpen : ""}`}>▾</span>
+          </button>
+          {openAccordion === "logic" && (
+            <div className={s.tmAccordionBody}>
+              <ul className={s.tmFeatureList}>
+                {(["l1", "l2", "l3", "l4"] as const).map(k => (
+                  <li key={k}><CheckCircle2 size={14} className={s.tmCheck} /><span>{t(`wizard.step6.highway.${k}`)}</span></li>
+                ))}
+              </ul>
+              <div style={{ marginTop: "1rem", borderTop: "1px solid rgba(255,255,255,0.1)", paddingTop: "1rem" }}>
+                <p style={{ fontSize: "0.8rem", fontWeight: "600", marginBottom: "0.5rem", color: "#3b82f6" }}>
+                  {t("wizard.step6.highway.exitTitle")}
+                </p>
+                <ul className={s.tmFeatureList}>
+                  {(["e1", "e2", "e3", "e4"] as const).map(k => (
+                    <li key={k}><CheckCircle2 size={14} className={s.tmCheck} /><span>{t(`wizard.step6.highway.${k}`)}</span></li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Accordion 3: Terms */}
+        <div className={s.tmAccordionItem}>
+          <button
+            className={s.tmAccordionTrigger}
+            onClick={() => toggleAccordion("terms")}
+            aria-expanded={openAccordion === "terms"}
+          >
+            <span>{t("wizard.step6.highway.termsTitle")}</span>
+            <span className={`${s.tmAccordionArrow} ${openAccordion === "terms" ? s.tmAccordionArrowOpen : ""}`}>▾</span>
+          </button>
+          {openAccordion === "terms" && (
+            <div className={s.tmAccordionBody}>
+              <div className={s.tmRedLine}>
+                {t("wizard.step6.highway.redLine")}
+              </div>
+              <p className={s.tmTermsNote}>{t("wizard.step6.highway.termsNote")}</p>
+              <ol className={s.tmTermsList}>
+                {(["t1", "t2", "t3", "t4", "t5", "t6", "t7", "t8", "t9", "t10", "t11", "t12", "t13", "t14", "t15"] as const).map(k => (
+                  <li key={k}>
+                    <div>
+                      <strong>{t(`wizard.step6.highway.${k}Title`)}</strong>
+                      <p>{renderDesc(t(`wizard.step6.highway.${k}Desc`))}</p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          )}
+        </div>
+
+      </div>
+    </div>
+  );
+}
+
 // --- RobotInfoBox -------------------------------------------------------------
 function RobotInfoBox({ robot, t, variant = "default" }: { robot?: RobotDefinition; t: any; variant?: "default" | "glass" }) {
   if (!robot) return null;
 
-  // TradeMate Premium için özel panel göster
+  // Premium robotlar için özel panel göster
   if (robot.id === "TRADEMATE") {
     return <TradematePremiumPanel t={t} />;
+  }
+  if (robot.id === "HIGHWAY") {
+    return <HighwayPremiumPanel t={t} />;
   }
 
   const getIcon = () => {
