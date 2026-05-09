@@ -957,6 +957,263 @@
   color: var(--wiz-primary-light) !important;
 }
 
+/* ── TradeMate Premium Panel ── */
+.tmPremiumPanel {
+  overflow-y: auto;
+  max-height: calc(100vh - 14rem);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(16, 185, 129, 0.25) transparent;
+  /* Override gap inherited from robotDetailsBoxGlass */
+  gap: 1.5rem;
+  /* Remove top accent line from base class */
+  padding: 2.5rem;
+}
+
+.tmPremiumPanel::-webkit-scrollbar {
+  width: 4px;
+}
+
+.tmPremiumPanel::-webkit-scrollbar-thumb {
+  background: rgba(16, 185, 129, 0.3);
+  border-radius: 2px;
+}
+
+.tmPremiumPanel::before {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.12) 0%, transparent 60%);
+  /* Override blue accent bar from robotDetailsBoxGlass */
+  height: 3px;
+  background: linear-gradient(90deg, #10b981, #059669);
+  opacity: 0.8;
+}
+
+/* Header */
+.tmHeader {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  position: relative;
+  z-index: 1;
+}
+
+.tmIconGlow {
+  width: 64px;
+  height: 64px;
+  flex-shrink: 0;
+  border-radius: 16px;
+  background: rgba(16, 185, 129, 0.12);
+  border: 1.5px solid rgba(16, 185, 129, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #10b981;
+  box-shadow:
+    0 0 24px rgba(16, 185, 129, 0.25),
+    0 0 6px rgba(16, 185, 129, 0.15);
+}
+
+.tmTitle {
+  font-size: 1.65rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+
+.tmSlogan {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.55);
+  margin: 0.3rem 0 0;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+/* Highlight Cards */
+.tmHighlights {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 1;
+}
+
+.tmHighlightCard {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.85rem;
+  border-radius: 8px;
+  background: rgba(16, 185, 129, 0.07);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.8);
+  white-space: nowrap;
+}
+
+/* Accordion */
+.tmAccordionList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  position: relative;
+  z-index: 1;
+}
+
+.tmAccordionItem {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.02);
+  transition: border-color 0.2s;
+}
+
+.tmAccordionItem:has(.tmAccordionTrigger[aria-expanded="true"]) {
+  border-color: rgba(16, 185, 129, 0.25);
+  background: rgba(16, 185, 129, 0.04);
+}
+
+.tmAccordionTrigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.9rem 1.1rem;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: left;
+  gap: 0.5rem;
+  transition: color 0.2s;
+}
+
+.tmAccordionTrigger:hover {
+  color: #10b981;
+}
+
+.tmAccordionArrow {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.35);
+  transition: transform 0.25s ease, color 0.2s;
+  flex-shrink: 0;
+}
+
+.tmAccordionArrowOpen {
+  transform: rotate(180deg);
+  color: #10b981;
+}
+
+.tmAccordionBody {
+  padding: 0 1.1rem 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+  animation: tmSlideDown 0.22s ease;
+}
+
+@keyframes tmSlideDown {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.tmAccordionText {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.65);
+  line-height: 1.65;
+  margin: 0;
+}
+
+.tmFeatureList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.tmFeatureList li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  font-size: 0.83rem;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.55;
+}
+
+.tmFeatureList li strong {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.tmCheck {
+  color: #10b981 !important;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* Green accent for numbers/highlights */
+.tmGreen {
+  color: #10b981;
+  font-weight: 700;
+}
+
+/* Terms */
+.tmTermsNote {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.45);
+  line-height: 1.6;
+  margin: 0;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.tmTermsList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+}
+
+.tmTermsList li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  font-size: 0.83rem;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.55;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.tmTermsList li:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.tmTermsList li div {
+  flex: 1;
+}
+
+.tmTermsList li strong {
+  display: block;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 700;
+  margin-bottom: 0.2rem;
+}
+
+.tmTermsList li p {
+  margin: 0;
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.55;
+}
+
 /* Out of range warning */
 .outOfRangeWarn {
   background: rgba(239, 68, 68, 0.05);

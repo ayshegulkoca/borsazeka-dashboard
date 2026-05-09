@@ -704,9 +704,139 @@ export default function WizardPage() {
   );
 }
 
+// --- TradeMate Premium Info Panel (Step 6 Left) --------------------------------
+function TradematePremiumPanel({ t }: { t: (k: string) => string }) {
+  const [openAccordion, setOpenAccordion] = useState<string | null>(null);
+
+  const toggleAccordion = (key: string) => {
+    setOpenAccordion(prev => (prev === key ? null : key));
+  };
+
+  // Renders a translated string that may contain <green>…</green> and <b>…</b> tags
+  const renderDesc = (raw: string) => {
+    const parts = raw.split(/(<green>|<\/green>|<b>|<\/b>)/);
+    const nodes: React.ReactNode[] = [];
+    let inGreen = false;
+    let inBold = false;
+    parts.forEach((part, i) => {
+      if (part === "<green>") { inGreen = true; return; }
+      if (part === "</green>") { inGreen = false; return; }
+      if (part === "<b>") { inBold = true; return; }
+      if (part === "</b>") { inBold = false; return; }
+      if (inGreen) nodes.push(<span key={i} className={s.tmGreen}>{part}</span>);
+      else if (inBold) nodes.push(<strong key={i}>{part}</strong>);
+      else nodes.push(part);
+    });
+    return <>{nodes}</>;
+  };
+
+  return (
+    <div className={s.robotDetailsBoxGlass + " " + s.tmPremiumPanel}>
+      {/* ── Header ───────────────────────────────────────────── */}
+      <div className={s.tmHeader}>
+        <div className={s.tmIconGlow}>
+          <Target size={32} />
+        </div>
+        <div>
+          <h2 className={s.tmTitle}>TradeMate Premium</h2>
+          <p className={s.tmSlogan}>{t("wizard.step6.trademate.slogan")}</p>
+        </div>
+      </div>
+
+      {/* ── Highlight Cards ────────────────────────────────────────── */}
+      <div className={s.tmHighlights}>
+        <div className={s.tmHighlightCard}>{t("wizard.step6.trademate.h1")}</div>
+        <div className={s.tmHighlightCard}>{t("wizard.step6.trademate.h2")}</div>
+        <div className={s.tmHighlightCard}>{t("wizard.step6.trademate.h3")}</div>
+      </div>
+
+      {/* ── Accordion System ───────────────────────────────────────── */}
+      <div className={s.tmAccordionList}>
+
+        {/* Accordion 1: Strategy */}
+        <div className={s.tmAccordionItem}>
+          <button
+            className={s.tmAccordionTrigger}
+            onClick={() => toggleAccordion("strategy")}
+            aria-expanded={openAccordion === "strategy"}
+          >
+            <span>{t("wizard.step6.trademate.strategyTitle")}</span>
+            <span className={`${s.tmAccordionArrow} ${openAccordion === "strategy" ? s.tmAccordionArrowOpen : ""}`}>▾</span>
+          </button>
+          {openAccordion === "strategy" && (
+            <div className={s.tmAccordionBody}>
+              <p className={s.tmAccordionText}>{renderDesc(t("wizard.step6.trademate.strategyP1"))}</p>
+              <p className={s.tmAccordionText}>{renderDesc(t("wizard.step6.trademate.strategyP2"))}</p>
+              <ul className={s.tmFeatureList}>
+                {(["s1","s2","s3","s4","s5"] as const).map(k => (
+                  <li key={k}><CheckCircle2 size={14} className={s.tmCheck} /><span>{t(`wizard.step6.trademate.${k}`)}</span></li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+
+        {/* Accordion 2: Risk Management */}
+        <div className={s.tmAccordionItem}>
+          <button
+            className={s.tmAccordionTrigger}
+            onClick={() => toggleAccordion("risk")}
+            aria-expanded={openAccordion === "risk"}
+          >
+            <span>{t("wizard.step6.trademate.riskTitle")}</span>
+            <span className={`${s.tmAccordionArrow} ${openAccordion === "risk" ? s.tmAccordionArrowOpen : ""}`}>▾</span>
+          </button>
+          {openAccordion === "risk" && (
+            <div className={s.tmAccordionBody}>
+              <ul className={s.tmFeatureList}>
+                {(["r1","r2","r3","r4","r5","r6","r7"] as const).map(k => (
+                  <li key={k}><CheckCircle2 size={14} className={s.tmCheck} /><span>{t(`wizard.step6.trademate.${k}`)}</span></li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+
+        {/* Accordion 3: Terms */}
+        <div className={s.tmAccordionItem}>
+          <button
+            className={s.tmAccordionTrigger}
+            onClick={() => toggleAccordion("terms")}
+            aria-expanded={openAccordion === "terms"}
+          >
+            <span>{t("wizard.step6.trademate.termsTitle")}</span>
+            <span className={`${s.tmAccordionArrow} ${openAccordion === "terms" ? s.tmAccordionArrowOpen : ""}`}>▾</span>
+          </button>
+          {openAccordion === "terms" && (
+            <div className={s.tmAccordionBody}>
+              <p className={s.tmTermsNote}>{t("wizard.step6.trademate.termsNote")}</p>
+              <ol className={s.tmTermsList}>
+                {(["t1","t2","t3","t4","t5","t6","t7","t8","t9","t10","t11","t12","t13"] as const).map(k => (
+                  <li key={k}>
+                    <div>
+                      <strong>{t(`wizard.step6.trademate.${k}Title`)}</strong>
+                      <p>{renderDesc(t(`wizard.step6.trademate.${k}Desc`))}</p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          )}
+        </div>
+
+      </div>
+    </div>
+  );
+}
+
 // --- RobotInfoBox -------------------------------------------------------------
 function RobotInfoBox({ robot, t, variant = "default" }: { robot?: RobotDefinition; t: any; variant?: "default" | "glass" }) {
   if (!robot) return null;
+
+  // TradeMate Premium için özel panel göster
+  if (robot.id === "TRADEMATE") {
+    return <TradematePremiumPanel t={t} />;
+  }
 
   const getIcon = () => {
     switch (robot.id) {
