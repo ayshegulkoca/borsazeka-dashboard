@@ -971,6 +971,142 @@ function HighwayPremiumPanel({ t }: { t: (k: string) => string }) {
   );
 }
 
+// --- KriptoZeka Premium Info Panel (Step 6 Left) ------------------------------
+function KriptozekaPremiumPanel({ t }: { t: (k: string) => string }) {
+  const [openAccordion, setOpenAccordion] = useState<string | null>(null);
+  const toggleAccordion = (key: string) => setOpenAccordion(prev => (prev === key ? null : key));
+
+  const renderDesc = (raw: string) => {
+    const parts = raw.split(/(<green>|<\/green>|<b>|<\/b>|<badge>|<\/badge>)/);
+    const nodes: React.ReactNode[] = [];
+    let inGreen = false, inBold = false, inBadge = false;
+    parts.forEach((part, i) => {
+      if (part === "<green>") { inGreen = true; return; }
+      if (part === "</green>") { inGreen = false; return; }
+      if (part === "<b>") { inBold = true; return; }
+      if (part === "</b>") { inBold = false; return; }
+      if (part === "<badge>") { inBadge = true; return; }
+      if (part === "</badge>") { inBadge = false; return; }
+
+      if (inGreen) nodes.push(<span key={i} className={s.tmGreen}>{part}</span>);
+      else if (inBold) nodes.push(<strong key={i}>{part}</strong>);
+      else if (inBadge) nodes.push(<span key={i} className={s.tmBadge}>{part}</span>);
+      else nodes.push(part);
+    });
+    return <>{nodes}</>;
+  };
+
+  return (
+    <div className={s.robotDetailsBoxGlass + " " + s.tmPremiumPanel}>
+      <div className={s.tmHeader}>
+        <div className={s.tmIconGlowOrange}>
+          <Coins size={32} />
+        </div>
+        <div>
+          <h2 className={s.tmTitle} style={{ color: "#fff" }}>KriptoZeka Premium</h2>
+          <p className={s.tmSlogan}>{t("wizard.step6.kriptozeka.slogan")}</p>
+        </div>
+      </div>
+
+      <div className={s.tmHighlights}>
+        <div className={s.tmHighlightCard}>{t("wizard.step6.kriptozeka.h1")}</div>
+        <div className={s.tmHighlightCard}>{t("wizard.step6.kriptozeka.h2")}</div>
+        <div className={s.tmHighlightCard}>{t("wizard.step6.kriptozeka.h3")}</div>
+      </div>
+
+      <div className={s.tmAccordionList}>
+        {/* Accordion 1: Foundation */}
+        <div className={s.tmAccordionItem}>
+          <button className={s.tmAccordionTrigger} onClick={() => toggleAccordion("strategy")} aria-expanded={openAccordion === "strategy"}>
+            <span>{t("wizard.step6.kriptozeka.strategyTitle")}</span>
+            <span className={`${s.tmAccordionArrow} ${openAccordion === "strategy" ? s.tmAccordionArrowOpen : ""}`}>▾</span>
+          </button>
+          {openAccordion === "strategy" && (
+            <div className={s.tmAccordionBody}>
+              <p className={s.tmAccordionText}>{renderDesc(t("wizard.step6.kriptozeka.strategyP1"))}</p>
+              <p className={s.tmAccordionText}>{renderDesc(t("wizard.step6.kriptozeka.strategyP2"))}</p>
+            </div>
+          )}
+        </div>
+
+        {/* Accordion 2: Logic */}
+        <div className={s.tmAccordionItem}>
+          <button className={s.tmAccordionTrigger} onClick={() => toggleAccordion("logic")} aria-expanded={openAccordion === "logic"}>
+            <span>{t("wizard.step6.kriptozeka.logicTitle")}</span>
+            <span className={`${s.tmAccordionArrow} ${openAccordion === "logic" ? s.tmAccordionArrowOpen : ""}`}>▾</span>
+          </button>
+          {openAccordion === "logic" && (
+            <div className={s.tmAccordionBody}>
+              <ul className={s.tmFeatureList}>
+                {(["l1", "l2", "l3", "l4"] as const).map(k => (
+                  <li key={k}><CheckCircle2 size={14} className={s.tmCheck} /><span>{t(`wizard.step6.kriptozeka.${k}`)}</span></li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+
+        {/* Accordion 3: Security */}
+        <div className={s.tmAccordionItem}>
+          <button className={s.tmAccordionTrigger} onClick={() => toggleAccordion("security")} aria-expanded={openAccordion === "security"}>
+            <span>{t("wizard.step6.kriptozeka.securityTitle")}</span>
+            <span className={`${s.tmAccordionArrow} ${openAccordion === "security" ? s.tmAccordionArrowOpen : ""}`}>▾</span>
+          </button>
+          {openAccordion === "security" && (
+            <div className={s.tmAccordionBody}>
+              <ul className={s.tmFeatureList}>
+                {(["s1", "s2", "s3", "s4"] as const).map(k => (
+                  <li key={k}><Shield size={14} className={s.tmCheck} style={{ color: "#f59e0b" }} /><span>{t(`wizard.step6.kriptozeka.${k}`)}</span></li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+
+        {/* Accordion 4: Risk Control */}
+        <div className={s.tmAccordionItem}>
+          <button className={s.tmAccordionTrigger} onClick={() => toggleAccordion("risk")} aria-expanded={openAccordion === "risk"}>
+            <span>{t("wizard.step6.kriptozeka.riskTitle")}</span>
+            <span className={`${s.tmAccordionArrow} ${openAccordion === "risk" ? s.tmAccordionArrowOpen : ""}`}>▾</span>
+          </button>
+          {openAccordion === "risk" && (
+            <div className={s.tmAccordionBody}>
+              <ul className={s.tmFeatureList}>
+                {(["r1", "r2", "r3"] as const).map(k => (
+                  <li key={k}><Activity size={14} className={s.tmCheck} /><span>{t(`wizard.step6.kriptozeka.${k}`)}</span></li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+
+        {/* Accordion 5: Terms */}
+        <div className={s.tmAccordionItem}>
+          <button className={s.tmAccordionTrigger} onClick={() => toggleAccordion("terms")} aria-expanded={openAccordion === "terms"}>
+            <span>{t("wizard.step6.kriptozeka.termsTitle")}</span>
+            <span className={`${s.tmAccordionArrow} ${openAccordion === "terms" ? s.tmAccordionArrowOpen : ""}`}>▾</span>
+          </button>
+          {openAccordion === "terms" && (
+            <div className={s.tmAccordionBody}>
+              <p className={s.tmTermsNote}>{t("wizard.step6.kriptozeka.termsNote")}</p>
+              <ol className={s.tmTermsList}>
+                {(["t1", "t2", "t3", "t4", "t5", "t6", "t7", "t8", "t9", "t10", "t11", "t12", "t13", "t14", "t15", "t16", "t17", "t18", "t19", "t20"] as const).map(k => (
+                  <li key={k}>
+                    <div>
+                      <strong>{t(`wizard.step6.kriptozeka.${k}Title`)}</strong>
+                      <p>{renderDesc(t(`wizard.step6.kriptozeka.${k}Desc`))}</p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // --- RobotInfoBox -------------------------------------------------------------
 function RobotInfoBox({ robot, t, variant = "default" }: { robot?: RobotDefinition; t: any; variant?: "default" | "glass" }) {
   if (!robot) return null;
@@ -981,6 +1117,9 @@ function RobotInfoBox({ robot, t, variant = "default" }: { robot?: RobotDefiniti
   }
   if (robot.id === "HIGHWAY") {
     return <HighwayPremiumPanel t={t} />;
+  }
+  if (robot.id === "KRIPTTOZEKA") {
+    return <KriptozekaPremiumPanel t={t} />;
   }
 
   const getIcon = () => {
