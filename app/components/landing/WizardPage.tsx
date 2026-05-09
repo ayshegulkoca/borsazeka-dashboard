@@ -7,6 +7,7 @@ import {
   ArrowLeft, ArrowRight, Check, Globe, MapPin,
   Users, Lock, Bot, CheckCircle2, Send, ExternalLink,
   Shield, TrendingUp, Target, Activity, Zap, Coins, Route, Moon,
+  Smartphone, Bell,
 } from "lucide-react";
 import { useTranslation, Trans } from "react-i18next";
 import { useSession, signIn } from "next-auth/react";
@@ -1210,6 +1211,134 @@ function DarkroomPremiumPanel({ t }: { t: (k: string) => string }) {
   );
 }
 
+// --- DarkRoom Self-Service Info Panel (Step 6 Left) ---------------------------
+function DarkroomSelfPanel({ t }: { t: (k: string) => string }) {
+  const [openAccordion, setOpenAccordion] = useState<string | null>(null);
+  const toggleAccordion = (key: string) => setOpenAccordion(prev => (prev === key ? null : key));
+
+  const renderDesc = (raw: string) => {
+    const parts = raw.split(/(<green>|<\/green>|<b>|<\/b>|<badge>|<\/badge>)/);
+    const nodes: React.ReactNode[] = [];
+    let inGreen = false, inBold = false, inBadge = false;
+    parts.forEach((part, i) => {
+      if (part === "<green>") { inGreen = true; return; }
+      if (part === "</green>") { inGreen = false; return; }
+      if (part === "<b>") { inBold = true; return; }
+      if (part === "</b>") { inBold = false; return; }
+      if (part === "<badge>") { inBadge = true; return; }
+      if (part === "</badge>") { inBadge = false; return; }
+
+      if (inGreen) nodes.push(<span key={i} className={s.tmGreen}>{part}</span>);
+      else if (inBold) nodes.push(<strong key={i}>{part}</strong>);
+      else if (inBadge) nodes.push(<span key={i} className={s.tmBadge} style={{ background: "rgba(16, 185, 129, 0.2)", color: "#10b981", borderColor: "rgba(16, 185, 129, 0.4)" }}>{part}</span>);
+      else nodes.push(part);
+    });
+    return <>{nodes}</>;
+  };
+
+  return (
+    <div className={s.robotDetailsBoxGlass + " " + s.tmPremiumPanel}>
+      <div className={s.tmHeader}>
+        <div className={s.tmIconGlowPurple}>
+          <Smartphone size={32} />
+        </div>
+        <div>
+          <h2 className={s.tmTitle} style={{ color: "#fff" }}>DarkRoom Self-Service</h2>
+          <p className={s.tmHook}>{t("wizard.step6.darkroomSelf.hook")}</p>
+        </div>
+      </div>
+
+      <div className={s.tmHighlights}>
+        <div className={s.tmHighlightCard} style={{ background: "rgba(124, 58, 237, 0.1)" }}>
+          <Zap size={14} style={{ color: "#7c3aed", marginRight: "4px" }} />
+          {t("wizard.step6.darkroomSelf.h3")}
+        </div>
+        <div className={s.tmHighlightCard} style={{ background: "rgba(16, 185, 129, 0.1)" }}>
+          <Shield size={14} style={{ color: "#10b981", marginRight: "4px" }} />
+          {t("wizard.step6.darkroomSelf.h2")}
+        </div>
+        <div className={s.tmHighlightCard}>
+          {t("wizard.step6.darkroomSelf.h1")}
+        </div>
+      </div>
+
+      <div className={s.tmAccordionList}>
+        {/* Accordion 1: Control Features */}
+        <div className={s.tmAccordionItem}>
+          <button className={s.tmAccordionTrigger} onClick={() => toggleAccordion("control")} aria-expanded={openAccordion === "control"}>
+            <span>{t("wizard.step6.darkroomSelf.controlTitle")}</span>
+            <span className={`${s.tmAccordionArrow} ${openAccordion === "control" ? s.tmAccordionArrowOpen : ""}`}>▾</span>
+          </button>
+          {openAccordion === "control" && (
+            <div className={s.tmAccordionBody}>
+              <ul className={s.tmFeatureList}>
+                <li><Zap size={14} className={s.tmCheck} style={{ color: "#7c3aed" }} /><span>{t("wizard.step6.darkroomSelf.c1")}</span></li>
+                <li><Coins size={14} className={s.tmCheck} style={{ color: "#7c3aed" }} /><span>{t("wizard.step6.darkroomSelf.c2")}</span></li>
+                <li><Bell size={14} className={s.tmCheck} style={{ color: "#7c3aed" }} /><span>{t("wizard.step6.darkroomSelf.c3")}</span></li>
+              </ul>
+            </div>
+          )}
+        </div>
+
+        {/* Accordion 2: Strategy */}
+        <div className={s.tmAccordionItem}>
+          <button className={s.tmAccordionTrigger} onClick={() => toggleAccordion("strategy")} aria-expanded={openAccordion === "strategy"}>
+            <span>{t("wizard.step6.darkroomSelf.strategyTitle")}</span>
+            <span className={`${s.tmAccordionArrow} ${openAccordion === "strategy" ? s.tmAccordionArrowOpen : ""}`}>▾</span>
+          </button>
+          {openAccordion === "strategy" && (
+            <div className={s.tmAccordionBody}>
+              <p className={s.tmAccordionText}>{renderDesc(t("wizard.step6.darkroomSelf.strategyP1"))}</p>
+              <p className={s.tmAccordionText}>{renderDesc(t("wizard.step6.darkroomSelf.strategyP2"))}</p>
+            </div>
+          )}
+        </div>
+
+        {/* Accordion 3: Security & Free Infra */}
+        <div className={s.tmAccordionItem}>
+          <button className={s.tmAccordionTrigger} onClick={() => toggleAccordion("security")} aria-expanded={openAccordion === "security"}>
+            <span>{t("wizard.step6.darkroomSelf.securityTitle")}</span>
+            <span className={`${s.tmAccordionArrow} ${openAccordion === "security" ? s.tmAccordionArrowOpen : ""}`}>▾</span>
+          </button>
+          {openAccordion === "security" && (
+            <div className={s.tmAccordionBody}>
+              <ul className={s.tmFeatureList}>
+                {(["s1", "s2", "s3"] as const).map(k => (
+                  <li key={k}><Shield size={14} className={s.tmCheck} style={{ color: "#10b981" }} /><span>{renderDesc(t(`wizard.step6.darkroomSelf.${k}`))}</span></li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+
+        {/* Accordion 4: Terms */}
+        <div className={s.tmAccordionItem}>
+          <button className={s.tmAccordionTrigger} onClick={() => toggleAccordion("terms")} aria-expanded={openAccordion === "terms"}>
+            <span>{t("wizard.step6.darkroomSelf.termsTitle")}</span>
+            <span className={`${s.tmAccordionArrow} ${openAccordion === "terms" ? s.tmAccordionArrowOpen : ""}`}>▾</span>
+          </button>
+          {openAccordion === "terms" && (
+            <div className={s.tmAccordionBody}>
+              <div className={s.tmRedLine} style={{ color: "#fff" }}>{t("wizard.step6.darkroomSelf.redLine")}</div>
+              <p className={s.tmTermsNote}>{t("wizard.step6.darkroomSelf.termsNote")}</p>
+              <ol className={s.tmTermsList}>
+                {(["t1", "t2", "t3", "t4", "t5"] as const).map(k => (
+                  <li key={k}>
+                    <div>
+                      <strong>{t(`wizard.step6.darkroomSelf.${k}Title`)}</strong>
+                      <p>{renderDesc(t(`wizard.step6.darkroomSelf.${k}Desc`))}</p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // --- RobotInfoBox -------------------------------------------------------------
 function RobotInfoBox({ robot, t, variant = "default" }: { robot?: RobotDefinition; t: any; variant?: "default" | "glass" }) {
   if (!robot) return null;
@@ -1226,6 +1355,9 @@ function RobotInfoBox({ robot, t, variant = "default" }: { robot?: RobotDefiniti
   }
   if (robot.id === "DARKROOM") {
     return <DarkroomPremiumPanel t={t} />;
+  }
+  if (robot.id === "DARKROOM_SELF") {
+    return <DarkroomSelfPanel t={t} />;
   }
 
   const getIcon = () => {
