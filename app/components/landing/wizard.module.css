@@ -984,6 +984,46 @@
   color: var(--wiz-primary-light) !important;
 }
 
+/* ── Robot Details Box (Independent Scroll Variant) ── */
+.robotDetailsBoxGlassIndependent {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.03) inset;
+  position: relative;
+  overflow-y: auto;
+  max-height: 60vh;
+  color: #FFFFFF;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(59, 130, 246, 0.4) transparent;
+}
+
+.robotDetailsBoxGlassIndependent::-webkit-scrollbar {
+  width: 6px;
+}
+
+.robotDetailsBoxGlassIndependent::-webkit-scrollbar-thumb {
+  background: rgba(59, 130, 246, 0.3);
+  border-radius: 10px;
+}
+
+.highwayNeonTitle {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: #fff;
+  text-shadow: 0 0 10px rgba(59, 130, 246, 0.8), 0 0 20px rgba(59, 130, 246, 0.4);
+  margin-bottom: 0.3rem;
+  letter-spacing: -0.03em;
+}
+
 /* ── TradeMate Premium Panel ── */
 .tmPremiumPanel {
   overflow-y: auto;
@@ -1460,6 +1500,22 @@
   flex-shrink: 0;
 }
 
+.tmIconGlowGreen {
+  width: 56px;
+  height: 56px;
+  background: rgba(16, 185, 129, 0.1);
+  border: 1.5px solid rgba(16, 185, 129, 0.3);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #10b981;
+  box-shadow: 
+    0 0 20px rgba(16, 185, 129, 0.2),
+    inset 0 0 10px rgba(16, 185, 129, 0.1);
+  flex-shrink: 0;
+}
+
 .tmIconGlowOrange {
   width: 56px;
   height: 56px;
@@ -1527,6 +1583,229 @@
   letter-spacing: 0.02em;
 }
 
-.tmScrollArea {
-  /* Removed to avoid nested scroll issues */
+/* ── BorsaZeka Design System: Step 6 Unified Styles ────────────────────────── */
+
+.robotDetailsPanelUnified {
+  background: rgba(255, 255, 255, 0.05) !important; /* bg-white/5 */
+  backdrop-filter: blur(24px) !important; /* backdrop-blur-md */
+  -webkit-backdrop-filter: blur(24px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important; /* border-white/10 */
+  border-radius: 24px !important;
+  padding: 2.5rem !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 1.5rem !important; /* gap-6 */
+  box-shadow: 
+    0 20px 50px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(255, 255, 255, 0.03) inset !important;
+  position: relative !important;
+  overflow-y: auto !important;
+  max-height: 60vh !important; /* Independent scroll */
+  scrollbar-width: thin !important;
+  scrollbar-color: rgba(255, 255, 255, 0.2) transparent !important;
+}
+
+.robotDetailsPanelUnified::-webkit-scrollbar {
+  width: 6px;
+}
+
+.robotDetailsPanelUnified::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+}
+
+.robotNeonTitleUnified {
+  font-size: 2.25rem !important;
+  font-weight: 800 !important;
+  color: #ffffff !important;
+  margin-bottom: 0.25rem !important;
+  letter-spacing: -0.03em !important;
+  line-height: 1.1 !important;
+}
+
+/* Neon Glow Variants */
+.neonBlue { text-shadow: 0 0 15px rgba(59, 130, 246, 0.5), 0 0 30px rgba(59, 130, 246, 0.2) !important; }
+.neonPurple { text-shadow: 0 0 15px rgba(168, 85, 247, 0.5), 0 0 30px rgba(168, 85, 247, 0.2) !important; }
+.neonOrange { text-shadow: 0 0 15px rgba(245, 158, 11, 0.5), 0 0 30px rgba(245, 158, 11, 0.2) !important; }
+.neonGreen { text-shadow: 0 0 15px rgba(16, 185, 129, 0.5), 0 0 30px rgba(16, 185, 129, 0.2) !important; }
+
+.robotSloganUnified {
+  font-size: 1rem !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  opacity: 0.9 !important;
+  margin-top: 0.25rem !important;
+}
+
+.featureTagUnified {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.6rem !important;
+  padding: 0.6rem 1.1rem !important;
+  border-radius: 12px !important;
+  background: rgba(255, 255, 255, 0.03) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  font-size: 0.85rem !important;
+  font-weight: 800 !important;
+  color: #ffffff !important;
+  white-space: nowrap !important;
+  transition: all 0.2s !important;
+}
+
+.featureTagUnified svg {
+  flex-shrink: 0 !important;
+}
+
+/* Color accents for tags */
+.tagBlue { border-color: rgba(59, 130, 246, 0.3) !important; color: #60a5fa !important; }
+.tagPurple { border-color: rgba(168, 85, 247, 0.3) !important; color: #c084fc !important; }
+.tagOrange { border-color: rgba(245, 158, 11, 0.3) !important; color: #fbbf24 !important; }
+.tagGreen { border-color: rgba(16, 185, 129, 0.3) !important; color: #34d399 !important; }
+
+.accordionUnified {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 1rem !important;
+}
+
+.accordionItemUnified {
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 16px !important;
+  overflow: hidden !important;
+  background: rgba(255, 255, 255, 0.02) !important;
+  transition: all 0.3s ease !important;
+}
+
+.accordionItemUnified:has(.accordionTriggerUnified[aria-expanded="true"]) {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2) !important;
+}
+
+.accordionTriggerUnified {
+  width: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 1.25rem 1.5rem !important;
+  background: none !important;
+  border: none !important;
+  color: #ffffff !important;
+  font-size: 1rem !important;
+  font-weight: 800 !important;
+  cursor: pointer !important;
+  text-align: left !important;
+}
+
+.accordionBodyUnified {
+  padding: 0 1.5rem 1.5rem !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 1rem !important;
+  animation: slideDownUnified 0.3s ease-out !important;
+}
+
+@keyframes slideDownUnified {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.accordionTextUnified {
+  font-size: 0.95rem !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  line-height: 1.6 !important;
+  margin: 0 !important;
+}
+
+.unifiedCheckList {
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.8rem !important;
+}
+
+.unifiedCheckList li {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.8rem !important;
+  font-size: 0.9rem !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+}
+
+.unifiedCheck {
+  flex-shrink: 0 !important;
+}
+
+/* Premium/Self-Service Highlight Box */
+.highlightBoxUnified {
+  display: flex !important;
+  align-items: center !important;
+  gap: 1.25rem !important;
+  padding: 1.25rem 1.5rem !important;
+  background: rgba(255, 255, 255, 0.03) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 16px !important;
+}
+
+.highlightBadgeUnified {
+  padding: 0.5rem 1rem !important;
+  border-radius: 100px !important;
+  font-size: 0.75rem !important;
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  color: #ffffff !important;
+}
+
+.tmRedLineUnified {
+  background: rgba(239, 68, 68, 0.1) !important;
+  border-left: 4px solid #ef4444 !important;
+  padding: 1.25rem 1.5rem !important;
+  border-radius: 0 12px 12px 0 !important;
+  color: #ffffff !important;
+  font-weight: 800 !important;
+  font-size: 0.95rem !important;
+  line-height: 1.5 !important;
+  margin-bottom: 1.5rem !important;
+}
+
+.tmTermsListUnified {
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 1.25rem !important;
+}
+
+.tmTermsItemUnified {
+  display: flex !important;
+  gap: 1rem !important;
+  padding-bottom: 1.25rem !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+.tmTermsItemUnified:last-child {
+  border-bottom: none !important;
+  padding-bottom: 0 !important;
+}
+
+.tmTermsTitleUnified {
+  display: block !important;
+  font-size: 1rem !important;
+  color: #ffffff !important;
+  font-weight: 800 !important;
+  margin-bottom: 0.4rem !important;
+}
+
+.tmTermsDescUnified {
+  font-size: 0.9rem !important;
+  color: rgba(255, 255, 255, 0.8) !important;
+  font-weight: 700 !important;
+  line-height: 1.5 !important;
+  margin: 0 !important;
 }

@@ -470,7 +470,41 @@
         "t4Desc": "Günlük kâr/zarar, işlem sayısı ve başarı oranı mobil uygulama üzerinden raporlanır.",
         "t5Title": "Sorumluluk",
         "t5Desc": "Stratejiyi dilediğiniz günlerde kullanma özgürlüğü size aittir; algoritma BorsaZeka güvencesindedir."
+      },
+      "highwaySelf": {
+        "slogan": "Akıllı Tarama ile Trendi Yakala",
+        "h1": "Çoklu Zaman Kontrolü",
+        "h2": "İzleyen Stop (Trailing Stop)",
+        "h3": "Hız ve Çoklu Tarama",
+        "strategyTitle": "Strateji ve Akıllı Tarama",
+        "strategyP1": "Highway Self-Service, klasik tek gösterge yaklaşımından tamamen farklı olarak çok boyutlu trend analizi yapar. Robot, farklı zaman periyotlarında çoklu algoritma kombinasyonları kullanarak trend yönünü belirler.",
+        "strategyP2": "Sistem, mini trend uyumluluğu ve makro trend doğrulaması ile çifte güvenlik sağlar. Sadece tüm zaman dilimleri aynı yönde sinyal verdiğinde pozisyon açar.",
+        "logicTitle": "Çalışma Mantığı ve Esnek Çıkış",
+        "l1": "Akıllı Tarama: Robot seans içinde aktif olarak piyasayı tarar ve trending hisseleri otomatik tespit eder.",
+        "l2": "Çoklu Zaman Kontrolü: Farklı zaman periyotlarında trend uyumunu doğrular.",
+        "l3": "Dinamik Giriş: Piyasa koşulları ve hisse trendi uygun olduğunda pozisyon açar.",
+        "l4": "Esnek Çıkış Sistemi: Belirlenmiş kâr hedefi ile otomatik satış, izleyen stop ve zaman stop mekanizmaları.",
+        "performanceTitle": "Performans ve Risk Yönetimi",
+        "p1": "Piyasa Uyumlu Çalışma: Ana endeks yönüne göre kâr hedeflerini dinamik olarak optimize eder.",
+        "p2": "Gerçek Zamanlı Adaptasyon: Piyasa volatilitesine göre parametrelerini ayarlar.",
+        "p3": "Risk Yönetimi: Çoklu stop mekanizması ile kayıpları minimize eder.",
+        "p4": "Detaylı İşlem Raporları: Tüm işlemler ve performans metrikleri şeffaf şekilde takip edilir.",
+        "whyTitle": "Neden Highway?",
+        "whyP1": "Highway, trend takipçisi yatırımcılar için ideal bir çözümdür. Gün içi hareketleri kaçırmak istemeyen, ancak sürekli piyasa takibi yapamayan yatırımcılar için tasarlanmıştır.",
+        "whyP2": "Robot, sizin yerinize seans boyunca piyasayı izler, fırsatları tespit eder ve otomatik işlem yapar.",
+        "controlBadge": "Kontrol Sende",
+        "freeInfra": "Ücretsiz Sunucu Altyapısı"
+      },
+      "trademateSelf": {
+        "slogan": "Büyük Portföyler İçin Profesyonel Düzeyde Otomatik Yönetim",
+        "strategyTitle": "Strateji (Overnight & Gün İçi)",
+        "strategyDesc": "TradeMate’in çekirdeğinde <green>Overnight stratejisi</green> bulunur. Robot, akşamdan pozisyon açar, ertesi sabah ise gelişmiş algoritmalarla satış işlemlerini gerçekleştirir. İsteğe bağlı olarak <b>gün içi algoritma modu</b> da etkinleştirilebilir. Böylece kullanıcı, hem gece pozisyonlarından hem de seans içi fırsatlardan yararlanabilir.",
+        "automationTitle": "Tam Otomasyon & Akıllı Dağılım",
+        "automationDesc": "Kullanıcıdan sadece <b>“Aç/Kapat”</b> butonuna dokunması beklenir. Geri kalan her şeyi robot yönetir. <b>Akıllı Portföy Dağılımı:</b> Seçilen hisselere göre portföyü otomatik böler ve optimum fiyatlardan alım yapar. <b>Parçalı İşlem Altyapısı:</b> Büyük emirleri tahtayı bozmadan, kademeli olarak gerçekleştirir. <b>Dinamik Parametreler:</b> Her hisse için ayrı algoritma parametreleri hesaplanır ve gerçek zamanlı uygulanır. <b>Tatil & Yarım Gün Takibi:</b> Özel takvim algoritması sayesinde bu günlerde gerekli aksiyonları kullanıcı müdahalesine gerek kalmadan alır.",
+        "riskTitle": "Risk Yönetimi (Kara Liste & Brüt Takas)",
+        "riskDesc": "<b>Kara Liste:</b> Kullanıcı, işlem yapılmasını istemediği hisseleri kara listeye ekleyerek portföy üzerindeki kontrolü korur. <b>Brüt Takas & Yasaklı Hisseler:</b> Brüt Takas, kredili işlem yasağı veya olağan dışı fiyat hareketi bildirimi (KAP) olan hisselerde işlem yapılmaz. <b>Kredi Kullanımı Kontrolü:</b> Kullanıcı, toplam portföyün kaç katına kadar kredi kullanılabileceğini belirleyebilir. <b>Rezerve Para Yönetimi:</b> T+2 döneminde para çekmek isteyen yatırımcı, robotun kullanacağı miktarı belirleyerek portföy fonlarını kısıtlayabilir. <b>Tavan Hisse Algoritması:</b> Tavan olan hisselerde özel satış algoritması kullanılarak maksimum kâr hedeflenir."
       }
+
     },
     "robots": {
       "darkroom": {
@@ -573,7 +607,7 @@
       },
       "trademateSelf": {
         "name": "TradeMate (Self-Service)",
-        "desc": "Gelişmiş strateji motoru, sabit ücretli model"
+        "desc": "Büyük portföyler için profesyonel düzeyde otomatik yönetim."
       },
       "fabrikaSelf": {
         "name": "Fabrika (Self-Service)",

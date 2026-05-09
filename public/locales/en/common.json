@@ -470,7 +470,41 @@
         "t4Desc": "Daily P&L, trade count, and success rate are reported via the mobile app.",
         "t5Title": "Liability",
         "t5Desc": "You have the freedom to use the strategy whenever you like; the algorithm is powered by BorsaZeka."
+      },
+      "highwaySelf": {
+        "slogan": "Catch the Trend with Smart Scanning",
+        "h1": "Multi-Timeframe Control",
+        "h2": "Trailing Stop",
+        "h3": "Speed and Multi-Scanning",
+        "strategyTitle": "Strategy and Smart Scanning",
+        "strategyP1": "Unlike traditional single-indicator approaches, Highway Self-Service performs multi-dimensional trend analysis using combinations of multiple algorithms across different timeframes.",
+        "strategyP2": "The system provides double security with mini-trend compatibility and macro-trend verification, opening positions only when all timeframes align.",
+        "logicTitle": "Working Logic and Flexible Exit",
+        "l1": "Smart Scanning: The robot actively scans the market during sessions to automatically detect trending stocks.",
+        "l2": "Multi-Timeframe Control: Verifies trend alignment across different periods.",
+        "l3": "Dynamic Entry: Opens positions when market structure and stock trends are aligned.",
+        "l4": "Flexible Exit System: Automated profit targets, trailing stops, and time-based exit mechanisms.",
+        "performanceTitle": "Performance and Risk Management",
+        "p1": "Market-Adaptive: Dynamically optimizes profit targets based on the main index direction.",
+        "p2": "Real-Time Adaptation: Adjusts parameters based on market volatility.",
+        "p3": "Risk Management: Minimizes losses with multiple stop mechanisms.",
+        "p4": "Detailed Reports: Transparent tracking of all trades and performance metrics.",
+        "whyTitle": "Why Highway?",
+        "whyP1": "Highway is the ideal solution for trend-following investors. Designed for those who don't want to miss intraday moves but cannot monitor the market constantly.",
+        "whyP2": "The robot monitors the market for you, detects opportunities, and executes trades automatically.",
+        "controlBadge": "Control is Yours",
+        "freeInfra": "Free Server Infrastructure"
+      },
+      "trademateSelf": {
+        "slogan": "Professional-Grade Automated Management for Large Portfolios",
+        "strategyTitle": "Strategy (Overnight & Intraday)",
+        "strategyDesc": "At the core of TradeMate is the <green>Overnight strategy</green>. The robot opens positions in the evening and executes sell orders the following morning using advanced algorithms. An optional <b>intraday algorithm mode</b> can also be enabled, allowing users to benefit from both overnight positions and session-wide opportunities.",
+        "automationTitle": "Full Automation & Smart Allocation",
+        "automationDesc": "The user is only expected to toggle the <b>'On/Off'</b> button. The robot manages everything else. <b>Smart Portfolio Allocation:</b> Automatically splits the portfolio based on selected stocks and buys at optimum prices. <b>Partial Execution Infrastructure:</b> Executes large orders gradually without disrupting the order book. <b>Dynamic Parameters:</b> Individual algorithm parameters are calculated for each stock and applied in real-time. <b>Holiday & Half-Day Tracking:</b> Handles required actions on these days automatically via a special calendar algorithm.",
+        "riskTitle": "Risk Management (Blacklist & Gross Settlement)",
+        "riskDesc": "<b>Blacklist:</b> Users maintain control by adding stocks they don't want traded to the blacklist. <b>Gross Settlement & Banned Stocks:</b> No trades are executed on stocks with gross settlement, margin trading bans, or unusual price movement notifications (KAP). <b>Credit Usage Control:</b> Users can determine the maximum leverage ratio for the total portfolio. <b>Reserve Cash Management:</b> Investors wanting to withdraw funds in the T+2 period can restrict the amount used by the robot. <b>Ceiling Stock Algorithm:</b> A special selling algorithm is used for stocks hitting their upper limit to target maximum profit."
       }
+
     },
     "robots": {
       "darkroom": {

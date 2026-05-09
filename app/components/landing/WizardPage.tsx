@@ -7,7 +7,7 @@ import {
   ArrowLeft, ArrowRight, Check, Globe, MapPin,
   Users, Lock, Bot, CheckCircle2, Send, ExternalLink,
   Shield, TrendingUp, Target, Activity, Zap, Coins, Route, Moon,
-  Smartphone, Bell,
+  Smartphone, Bell, Settings, BarChart3, Rocket,
 } from "lucide-react";
 import { useTranslation, Trans } from "react-i18next";
 import { useSession, signIn } from "next-auth/react";
@@ -708,18 +708,12 @@ export default function WizardPage() {
 // --- TradeMate Premium Info Panel (Step 6 Left) --------------------------------
 function TradematePremiumPanel({ t }: { t: (k: string) => string }) {
   const [openAccordion, setOpenAccordion] = useState<string | null>(null);
+  const toggleAccordion = (key: string) => setOpenAccordion(prev => (prev === key ? null : key));
 
-  const toggleAccordion = (key: string) => {
-    setOpenAccordion(prev => (prev === key ? null : key));
-  };
-
-  // Renders a translated string that may contain <green>, <b>, and <badge> tags
   const renderDesc = (raw: string) => {
     const parts = raw.split(/(<green>|<\/green>|<b>|<\/b>|<badge>|<\/badge>)/);
     const nodes: React.ReactNode[] = [];
-    let inGreen = false;
-    let inBold = false;
-    let inBadge = false;
+    let inGreen = false, inBold = false, inBadge = false;
     parts.forEach((part, i) => {
       if (part === "<green>") { inGreen = true; return; }
       if (part === "</green>") { inGreen = false; return; }
@@ -728,100 +722,94 @@ function TradematePremiumPanel({ t }: { t: (k: string) => string }) {
       if (part === "<badge>") { inBadge = true; return; }
       if (part === "</badge>") { inBadge = false; return; }
 
-      if (inGreen) nodes.push(<span key={i} className={s.tmGreen}>{part}</span>);
-      else if (inBold) nodes.push(<strong key={i}>{part}</strong>);
-      else if (inBadge) nodes.push(<span key={i} className={s.tmBadge}>{part}</span>);
+      if (inGreen) nodes.push(<span key={i} style={{ color: "#60a5fa" }}>{part}</span>);
+      else if (inBold || inBadge) nodes.push(<strong key={i} style={{ fontWeight: 800 }}>{part}</strong>);
       else nodes.push(part);
     });
     return <>{nodes}</>;
   };
 
   return (
-    <div className={s.robotDetailsBoxGlass + " " + s.tmPremiumPanel}>
-      {/* ── Header ───────────────────────────────────────────── */}
+    <div className={s.robotDetailsPanelUnified}>
       <div className={s.tmHeader}>
-        <div className={s.tmIconGlow}>
+        <div className={s.tmIconGlowBlue}>
           <Target size={32} />
         </div>
         <div>
-          <h2 className={s.tmTitle}>TradeMate Premium</h2>
-          <p className={s.tmSlogan}>{t("wizard.step6.trademate.slogan")}</p>
+          <h2 className={`${s.robotNeonTitleUnified} ${s.neonBlue}`}>TradeMate Premium</h2>
+          <p className={s.robotSloganUnified}>{t("wizard.step6.trademate.slogan")}</p>
         </div>
       </div>
 
-      {/* ── Highlight Cards ────────────────────────────────────────── */}
       <div className={s.tmHighlights}>
-        <div className={s.tmHighlightCard}>{t("wizard.step6.trademate.h1")}</div>
-        <div className={s.tmHighlightCard}>{t("wizard.step6.trademate.h2")}</div>
-        <div className={s.tmHighlightCard}>{t("wizard.step6.trademate.h3")}</div>
+        <div className={`${s.featureTagUnified} ${s.tagBlue}`}>
+          <Users size={14} />
+          <span>Ekip Yönetimi</span>
+        </div>
+        <div className={`${s.featureTagUnified} ${s.tagBlue}`}>
+          <Lock size={14} />
+          <span>Kurumsal Güvenlik</span>
+        </div>
+        <div className={s.featureTagUnified}>{t("wizard.step6.trademate.h1")}</div>
       </div>
 
-      {/* ── Accordion System ───────────────────────────────────────── */}
-      <div className={s.tmAccordionList}>
-
-        {/* Accordion 1: Strategy */}
-        <div className={s.tmAccordionItem}>
-          <button
-            className={s.tmAccordionTrigger}
-            onClick={() => toggleAccordion("strategy")}
-            aria-expanded={openAccordion === "strategy"}
-          >
-            <span>{t("wizard.step6.trademate.strategyTitle")}</span>
+      <div className={s.accordionUnified}>
+        <div className={s.accordionItemUnified}>
+          <button className={s.accordionTriggerUnified} onClick={() => toggleAccordion("strategy")} aria-expanded={openAccordion === "strategy"}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+              <TrendingUp size={18} style={{ color: "#60a5fa" }} />
+              <span>{t("wizard.step6.trademate.strategyTitle")}</span>
+            </div>
             <span className={`${s.tmAccordionArrow} ${openAccordion === "strategy" ? s.tmAccordionArrowOpen : ""}`}>▾</span>
           </button>
           {openAccordion === "strategy" && (
-            <div className={s.tmAccordionBody}>
-              <p className={s.tmAccordionText}>{renderDesc(t("wizard.step6.trademate.strategyP1"))}</p>
-              <p className={s.tmAccordionText}>{renderDesc(t("wizard.step6.trademate.strategyP2"))}</p>
-              <ul className={s.tmFeatureList}>
+            <div className={s.accordionBodyUnified}>
+              <p className={s.accordionTextUnified}>{renderDesc(t("wizard.step6.trademate.strategyP1"))}</p>
+              <ul className={s.unifiedCheckList}>
                 {(["s1","s2","s3","s4","s5"] as const).map(k => (
-                  <li key={k}><CheckCircle2 size={14} className={s.tmCheck} /><span>{t(`wizard.step6.trademate.${k}`)}</span></li>
+                  <li key={k}><CheckCircle2 size={14} className={s.unifiedCheck} style={{ color: "#60a5fa" }} /><span>{t(`wizard.step6.trademate.${k}`)}</span></li>
                 ))}
               </ul>
             </div>
           )}
         </div>
 
-        {/* Accordion 2: Risk Management */}
-        <div className={s.tmAccordionItem}>
-          <button
-            className={s.tmAccordionTrigger}
-            onClick={() => toggleAccordion("risk")}
-            aria-expanded={openAccordion === "risk"}
-          >
-            <span>{t("wizard.step6.trademate.riskTitle")}</span>
+        <div className={s.accordionItemUnified}>
+          <button className={s.accordionTriggerUnified} onClick={() => toggleAccordion("risk")} aria-expanded={openAccordion === "risk"}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+              <Shield size={18} style={{ color: "#60a5fa" }} />
+              <span>{t("wizard.step6.trademate.riskTitle")}</span>
+            </div>
             <span className={`${s.tmAccordionArrow} ${openAccordion === "risk" ? s.tmAccordionArrowOpen : ""}`}>▾</span>
           </button>
           {openAccordion === "risk" && (
-            <div className={s.tmAccordionBody}>
-              <ul className={s.tmFeatureList}>
+            <div className={s.accordionBodyUnified}>
+              <ul className={s.unifiedCheckList}>
                 {(["r1","r2","r3","r4","r5","r6","r7"] as const).map(k => (
-                  <li key={k}><CheckCircle2 size={14} className={s.tmCheck} /><span>{t(`wizard.step6.trademate.${k}`)}</span></li>
+                  <li key={k}><CheckCircle2 size={14} className={s.unifiedCheck} style={{ color: "#60a5fa" }} /><span>{t(`wizard.step6.trademate.${k}`)}</span></li>
                 ))}
               </ul>
             </div>
           )}
         </div>
 
-        {/* Accordion 3: Terms */}
-        <div className={s.tmAccordionItem}>
-          <button
-            className={s.tmAccordionTrigger}
-            onClick={() => toggleAccordion("terms")}
-            aria-expanded={openAccordion === "terms"}
-          >
-            <span>{t("wizard.step6.trademate.termsTitle")}</span>
+        <div className={s.accordionItemUnified}>
+          <button className={s.accordionTriggerUnified} onClick={() => toggleAccordion("terms")} aria-expanded={openAccordion === "terms"}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+              <Activity size={18} style={{ color: "#60a5fa" }} />
+              <span>{t("wizard.step6.trademate.termsTitle")}</span>
+            </div>
             <span className={`${s.tmAccordionArrow} ${openAccordion === "terms" ? s.tmAccordionArrowOpen : ""}`}>▾</span>
           </button>
           {openAccordion === "terms" && (
-            <div className={s.tmAccordionBody}>
-              <p className={s.tmTermsNote}>{t("wizard.step6.trademate.termsNote")}</p>
-              <ol className={s.tmTermsList}>
+            <div className={s.accordionBodyUnified}>
+              <p className={s.tmTermsNote} style={{ color: "#fff", fontWeight: 700 }}>{t("wizard.step6.trademate.termsNote")}</p>
+              <ol className={s.tmTermsListUnified}>
                 {(["t1","t2","t3","t4","t5","t6","t7","t8","t9","t10","t11","t12","t13"] as const).map(k => (
-                  <li key={k}>
+                  <li key={k} className={s.tmTermsItemUnified}>
                     <div>
-                      <strong>{t(`wizard.step6.trademate.${k}Title`)}</strong>
-                      <p>{renderDesc(t(`wizard.step6.trademate.${k}Desc`))}</p>
+                      <strong className={s.tmTermsTitleUnified}>{t(`wizard.step6.trademate.${k}Title`)}</strong>
+                      <p className={s.tmTermsDescUnified}>{renderDesc(t(`wizard.step6.trademate.${k}Desc`))}</p>
                     </div>
                   </li>
                 ))}
@@ -829,26 +817,21 @@ function TradematePremiumPanel({ t }: { t: (k: string) => string }) {
             </div>
           )}
         </div>
-
       </div>
     </div>
   );
 }
 
+
 // --- Highway Premium Info Panel (Step 6 Left) ---------------------------------
 function HighwayPremiumPanel({ t }: { t: (k: string) => string }) {
   const [openAccordion, setOpenAccordion] = useState<string | null>(null);
-
-  const toggleAccordion = (key: string) => {
-    setOpenAccordion(prev => (prev === key ? null : key));
-  };
+  const toggleAccordion = (key: string) => setOpenAccordion(prev => (prev === key ? null : key));
 
   const renderDesc = (raw: string) => {
     const parts = raw.split(/(<green>|<\/green>|<b>|<\/b>|<badge>|<\/badge>)/);
     const nodes: React.ReactNode[] = [];
-    let inGreen = false;
-    let inBold = false;
-    let inBadge = false;
+    let inGreen = false, inBold = false, inBadge = false;
     parts.forEach((part, i) => {
       if (part === "<green>") { inGreen = true; return; }
       if (part === "</green>") { inGreen = false; return; }
@@ -857,79 +840,76 @@ function HighwayPremiumPanel({ t }: { t: (k: string) => string }) {
       if (part === "<badge>") { inBadge = true; return; }
       if (part === "</badge>") { inBadge = false; return; }
 
-      if (inGreen) nodes.push(<span key={i} className={s.tmGreen}>{part}</span>);
-      else if (inBold) nodes.push(<strong key={i}>{part}</strong>);
-      else if (inBadge) nodes.push(<span key={i} className={s.tmBadge}>{part}</span>);
+      if (inGreen) nodes.push(<span key={i} style={{ color: "#60a5fa" }}>{part}</span>);
+      else if (inBold || inBadge) nodes.push(<strong key={i} style={{ fontWeight: 800 }}>{part}</strong>);
       else nodes.push(part);
     });
     return <>{nodes}</>;
   };
 
   return (
-    <div className={s.robotDetailsBoxGlass + " " + s.tmPremiumPanel}>
-      {/* ── Header ───────────────────────────────────────────── */}
+    <div className={s.robotDetailsPanelUnified}>
       <div className={s.tmHeader}>
         <div className={s.tmIconGlowBlue}>
           <TrendingUp size={32} />
         </div>
         <div>
-          <h2 className={s.tmTitle} style={{ color: "#fff" }}>Highway Premium</h2>
-          <p className={s.tmSlogan}>{t("wizard.step6.highway.slogan")}</p>
+          <h2 className={`${s.robotNeonTitleUnified} ${s.neonBlue}`}>Highway Premium</h2>
+          <p className={s.robotSloganUnified}>{t("wizard.step6.highway.slogan")}</p>
         </div>
       </div>
 
-      {/* ── Highlight Cards ────────────────────────────────────────── */}
       <div className={s.tmHighlights}>
-        <div className={s.tmHighlightCard}>{t("wizard.step6.highway.h1")}</div>
-        <div className={s.tmHighlightCard}>{t("wizard.step6.highway.h2")}</div>
-        <div className={s.tmHighlightCard}>{t("wizard.step6.highway.h3")}</div>
+        <div className={`${s.featureTagUnified} ${s.tagBlue}`}>
+          <Users size={14} />
+          <span>Ekip Yönetimi</span>
+        </div>
+        <div className={`${s.featureTagUnified} ${s.tagBlue}`}>
+          <Lock size={14} />
+          <span>Kurumsal Güvenlik</span>
+        </div>
+        <div className={s.featureTagUnified}>{t("wizard.step6.highway.h1")}</div>
       </div>
 
-      {/* ── Accordion System ───────────────────────────────────────── */}
-      <div className={s.tmAccordionList}>
-
-        {/* Accordion 1: Foundation */}
-        <div className={s.tmAccordionItem}>
-          <button
-            className={s.tmAccordionTrigger}
-            onClick={() => toggleAccordion("strategy")}
-            aria-expanded={openAccordion === "strategy"}
-          >
-            <span>{t("wizard.step6.highway.strategyTitle")}</span>
+      <div className={s.accordionUnified}>
+        <div className={s.accordionItemUnified}>
+          <button className={s.accordionTriggerUnified} onClick={() => toggleAccordion("strategy")} aria-expanded={openAccordion === "strategy"}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+              <Zap size={18} style={{ color: "#60a5fa" }} />
+              <span>{t("wizard.step6.highway.strategyTitle")}</span>
+            </div>
             <span className={`${s.tmAccordionArrow} ${openAccordion === "strategy" ? s.tmAccordionArrowOpen : ""}`}>▾</span>
           </button>
           {openAccordion === "strategy" && (
-            <div className={s.tmAccordionBody}>
-              <p className={s.tmAccordionText}>{renderDesc(t("wizard.step6.highway.strategyP1"))}</p>
-              <p className={s.tmAccordionText}>{renderDesc(t("wizard.step6.highway.strategyP2"))}</p>
+            <div className={s.accordionBodyUnified}>
+              <p className={s.accordionTextUnified}>{renderDesc(t("wizard.step6.highway.strategyP1"))}</p>
+              <p className={s.accordionTextUnified}>{renderDesc(t("wizard.step6.highway.strategyP2"))}</p>
             </div>
           )}
         </div>
 
-        {/* Accordion 2: Logic */}
-        <div className={s.tmAccordionItem}>
-          <button
-            className={s.tmAccordionTrigger}
-            onClick={() => toggleAccordion("logic")}
-            aria-expanded={openAccordion === "logic"}
-          >
-            <span>{t("wizard.step6.highway.logicTitle")}</span>
+        <div className={s.accordionItemUnified}>
+          <button className={s.accordionTriggerUnified} onClick={() => toggleAccordion("logic")} aria-expanded={openAccordion === "logic"}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+              <Settings size={18} style={{ color: "#60a5fa" }} />
+              <span>{t("wizard.step6.highway.logicTitle")}</span>
+            </div>
             <span className={`${s.tmAccordionArrow} ${openAccordion === "logic" ? s.tmAccordionArrowOpen : ""}`}>▾</span>
           </button>
           {openAccordion === "logic" && (
-            <div className={s.tmAccordionBody}>
-              <ul className={s.tmFeatureList}>
+            <div className={s.accordionBodyUnified}>
+              <ul className={s.unifiedCheckList}>
                 {(["l1", "l2", "l3", "l4"] as const).map(k => (
-                  <li key={k}><CheckCircle2 size={14} className={s.tmCheck} /><span>{t(`wizard.step6.highway.${k}`)}</span></li>
+                  <li key={k}><CheckCircle2 size={14} className={s.unifiedCheck} style={{ color: "#60a5fa" }} /><span>{t(`wizard.step6.highway.${k}`)}</span></li>
                 ))}
               </ul>
               <div style={{ marginTop: "1rem", borderTop: "1px solid rgba(255,255,255,0.1)", paddingTop: "1rem" }}>
-                <p style={{ fontSize: "0.8rem", fontWeight: "600", marginBottom: "0.5rem", color: "#3b82f6" }}>
+                <p style={{ fontSize: "0.9rem", fontWeight: "800", marginBottom: "0.5rem", color: "#60a5fa" }}>
                   {t("wizard.step6.highway.exitTitle")}
                 </p>
-                <ul className={s.tmFeatureList}>
+                <ul className={s.unifiedCheckList}>
                   {(["e1", "e2", "e3", "e4"] as const).map(k => (
-                    <li key={k}><CheckCircle2 size={14} className={s.tmCheck} /><span>{t(`wizard.step6.highway.${k}`)}</span></li>
+                    <li key={k}><CheckCircle2 size={14} className={s.unifiedCheck} style={{ color: "#60a5fa" }} /><span>{t(`wizard.step6.highway.${k}`)}</span></li>
                   ))}
                 </ul>
               </div>
@@ -937,28 +917,24 @@ function HighwayPremiumPanel({ t }: { t: (k: string) => string }) {
           )}
         </div>
 
-        {/* Accordion 3: Terms */}
-        <div className={s.tmAccordionItem}>
-          <button
-            className={s.tmAccordionTrigger}
-            onClick={() => toggleAccordion("terms")}
-            aria-expanded={openAccordion === "terms"}
-          >
-            <span>{t("wizard.step6.highway.termsTitle")}</span>
+        <div className={s.accordionItemUnified}>
+          <button className={s.accordionTriggerUnified} onClick={() => toggleAccordion("terms")} aria-expanded={openAccordion === "terms"}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+              <Activity size={18} style={{ color: "#60a5fa" }} />
+              <span>{t("wizard.step6.highway.termsTitle")}</span>
+            </div>
             <span className={`${s.tmAccordionArrow} ${openAccordion === "terms" ? s.tmAccordionArrowOpen : ""}`}>▾</span>
           </button>
           {openAccordion === "terms" && (
-            <div className={s.tmAccordionBody}>
-              <div className={s.tmRedLine}>
-                {t("wizard.step6.highway.redLine")}
-              </div>
-              <p className={s.tmTermsNote}>{t("wizard.step6.highway.termsNote")}</p>
-              <ol className={s.tmTermsList}>
+            <div className={s.accordionBodyUnified}>
+              <div className={s.tmRedLineUnified}>{t("wizard.step6.highway.redLine")}</div>
+              <p className={s.tmTermsNote} style={{ color: "#fff", fontWeight: 700 }}>{t("wizard.step6.highway.termsNote")}</p>
+              <ol className={s.tmTermsListUnified}>
                 {(["t1", "t2", "t3", "t4", "t5", "t6", "t7", "t8", "t9", "t10", "t11", "t12", "t13", "t14", "t15"] as const).map(k => (
-                  <li key={k}>
+                  <li key={k} className={s.tmTermsItemUnified}>
                     <div>
-                      <strong>{t(`wizard.step6.highway.${k}Title`)}</strong>
-                      <p>{renderDesc(t(`wizard.step6.highway.${k}Desc`))}</p>
+                      <strong className={s.tmTermsTitleUnified}>{t(`wizard.step6.highway.${k}Title`)}</strong>
+                      <p className={s.tmTermsDescUnified}>{renderDesc(t(`wizard.step6.highway.${k}Desc`))}</p>
                     </div>
                   </li>
                 ))}
@@ -966,11 +942,11 @@ function HighwayPremiumPanel({ t }: { t: (k: string) => string }) {
             </div>
           )}
         </div>
-
       </div>
     </div>
   );
 }
+
 
 // --- KriptoZeka Premium Info Panel (Step 6 Left) ------------------------------
 function KriptozekaPremiumPanel({ t }: { t: (k: string) => string }) {
@@ -989,113 +965,109 @@ function KriptozekaPremiumPanel({ t }: { t: (k: string) => string }) {
       if (part === "<badge>") { inBadge = true; return; }
       if (part === "</badge>") { inBadge = false; return; }
 
-      if (inGreen) nodes.push(<span key={i} className={s.tmGreen}>{part}</span>);
-      else if (inBold) nodes.push(<strong key={i}>{part}</strong>);
-      else if (inBadge) nodes.push(<span key={i} className={s.tmBadge}>{part}</span>);
+      if (inGreen) nodes.push(<span key={i} style={{ color: "#fbbf24" }}>{part}</span>);
+      else if (inBold || inBadge) nodes.push(<strong key={i} style={{ fontWeight: 800 }}>{part}</strong>);
       else nodes.push(part);
     });
     return <>{nodes}</>;
   };
 
   return (
-    <div className={s.robotDetailsBoxGlass + " " + s.tmPremiumPanel}>
+    <div className={s.robotDetailsPanelUnified}>
       <div className={s.tmHeader}>
         <div className={s.tmIconGlowOrange}>
           <Coins size={32} />
         </div>
         <div>
-          <h2 className={s.tmTitle} style={{ color: "#fff" }}>KriptoZeka Premium</h2>
-          <p className={s.tmSlogan}>{t("wizard.step6.kriptozeka.slogan")}</p>
+          <h2 className={`${s.robotNeonTitleUnified} ${s.neonOrange}`}>KriptoZeka Premium</h2>
+          <p className={s.robotSloganUnified}>{t("wizard.step6.kriptozeka.slogan")}</p>
         </div>
       </div>
 
       <div className={s.tmHighlights}>
-        <div className={s.tmHighlightCard}>{t("wizard.step6.kriptozeka.h1")}</div>
-        <div className={s.tmHighlightCard}>{t("wizard.step6.kriptozeka.h2")}</div>
-        <div className={s.tmHighlightCard}>{t("wizard.step6.kriptozeka.h3")}</div>
+        <div className={`${s.featureTagUnified} ${s.tagOrange}`}>
+          <Users size={14} />
+          <span>Ekip Yönetimi</span>
+        </div>
+        <div className={`${s.featureTagUnified} ${s.tagOrange}`}>
+          <Lock size={14} />
+          <span>Kurumsal Güvenlik</span>
+        </div>
+        <div className={s.featureTagUnified}>{t("wizard.step6.kriptozeka.h1")}</div>
       </div>
 
-      <div className={s.tmAccordionList}>
-        {/* Accordion 1: Foundation */}
-        <div className={s.tmAccordionItem}>
-          <button className={s.tmAccordionTrigger} onClick={() => toggleAccordion("strategy")} aria-expanded={openAccordion === "strategy"}>
-            <span>{t("wizard.step6.kriptozeka.strategyTitle")}</span>
+      <div className={s.accordionUnified}>
+        <div className={s.accordionItemUnified}>
+          <button className={s.accordionTriggerUnified} onClick={() => toggleAccordion("strategy")} aria-expanded={openAccordion === "strategy"}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+              <TrendingUp size={18} style={{ color: "#fbbf24" }} />
+              <span>{t("wizard.step6.kriptozeka.strategyTitle")}</span>
+            </div>
             <span className={`${s.tmAccordionArrow} ${openAccordion === "strategy" ? s.tmAccordionArrowOpen : ""}`}>▾</span>
           </button>
           {openAccordion === "strategy" && (
-            <div className={s.tmAccordionBody}>
-              <p className={s.tmAccordionText}>{renderDesc(t("wizard.step6.kriptozeka.strategyP1"))}</p>
-              <p className={s.tmAccordionText}>{renderDesc(t("wizard.step6.kriptozeka.strategyP2"))}</p>
+            <div className={s.accordionBodyUnified}>
+              <p className={s.accordionTextUnified}>{renderDesc(t("wizard.step6.kriptozeka.strategyP1"))}</p>
+              <p className={s.accordionTextUnified}>{renderDesc(t("wizard.step6.kriptozeka.strategyP2"))}</p>
             </div>
           )}
         </div>
 
-        {/* Accordion 2: Logic */}
-        <div className={s.tmAccordionItem}>
-          <button className={s.tmAccordionTrigger} onClick={() => toggleAccordion("logic")} aria-expanded={openAccordion === "logic"}>
-            <span>{t("wizard.step6.kriptozeka.logicTitle")}</span>
+        <div className={s.accordionItemUnified}>
+          <button className={s.accordionTriggerUnified} onClick={() => toggleAccordion("logic")} aria-expanded={openAccordion === "logic"}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+              <Settings size={18} style={{ color: "#fbbf24" }} />
+              <span>{t("wizard.step6.kriptozeka.logicTitle")}</span>
+            </div>
             <span className={`${s.tmAccordionArrow} ${openAccordion === "logic" ? s.tmAccordionArrowOpen : ""}`}>▾</span>
           </button>
           {openAccordion === "logic" && (
-            <div className={s.tmAccordionBody}>
-              <ul className={s.tmFeatureList}>
+            <div className={s.accordionBodyUnified}>
+              <ul className={s.unifiedCheckList}>
                 {(["l1", "l2", "l3", "l4"] as const).map(k => (
-                  <li key={k}><CheckCircle2 size={14} className={s.tmCheck} /><span>{t(`wizard.step6.kriptozeka.${k}`)}</span></li>
+                  <li key={k}><CheckCircle2 size={14} className={s.unifiedCheck} style={{ color: "#fbbf24" }} /><span>{t(`wizard.step6.kriptozeka.${k}`)}</span></li>
                 ))}
               </ul>
             </div>
           )}
         </div>
 
-        {/* Accordion 3: Security */}
-        <div className={s.tmAccordionItem}>
-          <button className={s.tmAccordionTrigger} onClick={() => toggleAccordion("security")} aria-expanded={openAccordion === "security"}>
-            <span>{t("wizard.step6.kriptozeka.securityTitle")}</span>
+        <div className={s.accordionItemUnified}>
+          <button className={s.accordionTriggerUnified} onClick={() => toggleAccordion("security")} aria-expanded={openAccordion === "security"}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+              <Shield size={18} style={{ color: "#fbbf24" }} />
+              <span>{t("wizard.step6.kriptozeka.securityTitle")}</span>
+            </div>
             <span className={`${s.tmAccordionArrow} ${openAccordion === "security" ? s.tmAccordionArrowOpen : ""}`}>▾</span>
           </button>
           {openAccordion === "security" && (
-            <div className={s.tmAccordionBody}>
-              <ul className={s.tmFeatureList}>
+            <div className={s.accordionBodyUnified}>
+              <ul className={s.unifiedCheckList}>
                 {(["s1", "s2", "s3", "s4"] as const).map(k => (
-                  <li key={k}><Shield size={14} className={s.tmCheck} style={{ color: "#f59e0b" }} /><span>{t(`wizard.step6.kriptozeka.${k}`)}</span></li>
+                  <li key={k}><Shield size={14} className={s.unifiedCheck} style={{ color: "#fbbf24" }} /><span>{t(`wizard.step6.kriptozeka.${k}`)}</span></li>
                 ))}
               </ul>
             </div>
           )}
         </div>
 
-        {/* Accordion 4: Risk Control */}
-        <div className={s.tmAccordionItem}>
-          <button className={s.tmAccordionTrigger} onClick={() => toggleAccordion("risk")} aria-expanded={openAccordion === "risk"}>
-            <span>{t("wizard.step6.kriptozeka.riskTitle")}</span>
-            <span className={`${s.tmAccordionArrow} ${openAccordion === "risk" ? s.tmAccordionArrowOpen : ""}`}>▾</span>
-          </button>
-          {openAccordion === "risk" && (
-            <div className={s.tmAccordionBody}>
-              <ul className={s.tmFeatureList}>
-                {(["r1", "r2", "r3"] as const).map(k => (
-                  <li key={k}><Activity size={14} className={s.tmCheck} /><span>{t(`wizard.step6.kriptozeka.${k}`)}</span></li>
-                ))}
-              </ul>
+        <div className={s.accordionItemUnified}>
+          <button className={s.accordionTriggerUnified} onClick={() => toggleAccordion("terms")} aria-expanded={openAccordion === "terms"}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+              <Activity size={18} style={{ color: "#fbbf24" }} />
+              <span>{t("wizard.step6.kriptozeka.termsTitle")}</span>
             </div>
-          )}
-        </div>
-
-        {/* Accordion 5: Terms */}
-        <div className={s.tmAccordionItem}>
-          <button className={s.tmAccordionTrigger} onClick={() => toggleAccordion("terms")} aria-expanded={openAccordion === "terms"}>
-            <span>{t("wizard.step6.kriptozeka.termsTitle")}</span>
             <span className={`${s.tmAccordionArrow} ${openAccordion === "terms" ? s.tmAccordionArrowOpen : ""}`}>▾</span>
           </button>
           {openAccordion === "terms" && (
-            <div className={s.tmAccordionBody}>
-              <p className={s.tmTermsNote}>{t("wizard.step6.kriptozeka.termsNote")}</p>
-              <ol className={s.tmTermsList}>
+            <div className={s.accordionBodyUnified}>
+              <p className={s.tmTermsNote} style={{ color: "#fff", fontWeight: 700 }}>{t("wizard.step6.kriptozeka.termsNote")}</p>
+              <ol className={s.tmTermsListUnified}>
                 {(["t1", "t2", "t3", "t4", "t5", "t6", "t7", "t8", "t9", "t10", "t11", "t12", "t13", "t14", "t15", "t16", "t17", "t18", "t19", "t20"] as const).map(k => (
-                  <li key={k}>
+                  <li key={k} className={s.tmTermsItemUnified}>
                     <div>
-                      <strong>{t(`wizard.step6.kriptozeka.${k}Title`)}</strong>
-                      <p>{renderDesc(t(`wizard.step6.kriptozeka.${k}Desc`))}</p>
+                      <strong className={s.tmTermsTitleUnified}>{t(`wizard.step6.kriptozeka.${k}Title`)}</strong>
+                      <p className={s.tmTermsDescUnified}>{renderDesc(t(`wizard.step6.kriptozeka.${k}Desc`))}</p>
                     </div>
                   </li>
                 ))}
@@ -1107,6 +1079,7 @@ function KriptozekaPremiumPanel({ t }: { t: (k: string) => string }) {
     </div>
   );
 }
+
 
 // --- DarkRoom Premium Info Panel (Step 6 Left) --------------------------------
 function DarkroomPremiumPanel({ t }: { t: (k: string) => string }) {
@@ -1125,80 +1098,91 @@ function DarkroomPremiumPanel({ t }: { t: (k: string) => string }) {
       if (part === "<badge>") { inBadge = true; return; }
       if (part === "</badge>") { inBadge = false; return; }
 
-      if (inGreen) nodes.push(<span key={i} className={s.tmGreen}>{part}</span>);
-      else if (inBold) nodes.push(<strong key={i}>{part}</strong>);
-      else if (inBadge) nodes.push(<span key={i} className={s.tmBadge}>{part}</span>);
+      if (inGreen) nodes.push(<span key={i} style={{ color: "#c084fc" }}>{part}</span>);
+      else if (inBold || inBadge) nodes.push(<strong key={i} style={{ fontWeight: 800 }}>{part}</strong>);
       else nodes.push(part);
     });
     return <>{nodes}</>;
   };
 
   return (
-    <div className={s.robotDetailsBoxGlass + " " + s.tmPremiumPanel}>
+    <div className={s.robotDetailsPanelUnified}>
       <div className={s.tmHeader}>
         <div className={s.tmIconGlowPurple}>
           <Moon size={32} />
         </div>
         <div>
-          <h2 className={s.tmTitle} style={{ color: "#fff" }}>DarkRoom Premium</h2>
-          <p className={s.tmHook}>{t("wizard.step6.darkroom.hook")}</p>
+          <h2 className={`${s.robotNeonTitleUnified} ${s.neonPurple}`}>DarkRoom Premium</h2>
+          <p className={s.robotSloganUnified}>{t("wizard.step6.darkroom.hook")}</p>
         </div>
       </div>
 
       <div className={s.tmHighlights}>
-        <div className={s.tmHighlightCard}>{t("wizard.step6.darkroom.h1")}</div>
-        <div className={s.tmHighlightCard}>{t("wizard.step6.darkroom.h2")}</div>
-        <div className={s.tmHighlightCard}>{t("wizard.step6.darkroom.h3")}</div>
+        <div className={`${s.featureTagUnified} ${s.tagPurple}`}>
+          <Users size={14} />
+          <span>Ekip Yönetimi</span>
+        </div>
+        <div className={`${s.featureTagUnified} ${s.tagPurple}`}>
+          <Lock size={14} />
+          <span>Kurumsal Güvenlik</span>
+        </div>
+        <div className={s.featureTagUnified}>{t("wizard.step6.darkroom.h1")}</div>
       </div>
 
-      <div className={s.tmAccordionList}>
-        {/* Accordion 1: Strategy */}
-        <div className={s.tmAccordionItem}>
-          <button className={s.tmAccordionTrigger} onClick={() => toggleAccordion("strategy")} aria-expanded={openAccordion === "strategy"}>
-            <span>{t("wizard.step6.darkroom.strategyTitle")}</span>
+      <div className={s.accordionUnified}>
+        <div className={s.accordionItemUnified}>
+          <button className={s.accordionTriggerUnified} onClick={() => toggleAccordion("strategy")} aria-expanded={openAccordion === "strategy"}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+              <TrendingUp size={18} style={{ color: "#c084fc" }} />
+              <span>{t("wizard.step6.darkroom.strategyTitle")}</span>
+            </div>
             <span className={`${s.tmAccordionArrow} ${openAccordion === "strategy" ? s.tmAccordionArrowOpen : ""}`}>▾</span>
           </button>
           {openAccordion === "strategy" && (
-            <div className={s.tmAccordionBody}>
-              <p className={s.tmAccordionText}>{renderDesc(t("wizard.step6.darkroom.strategyP1"))}</p>
-              <p className={s.tmAccordionText}>{renderDesc(t("wizard.step6.darkroom.strategyP2"))}</p>
+            <div className={s.accordionBodyUnified}>
+              <p className={s.accordionTextUnified}>{renderDesc(t("wizard.step6.darkroom.strategyP1"))}</p>
+              <p className={s.accordionTextUnified}>{renderDesc(t("wizard.step6.darkroom.strategyP2"))}</p>
             </div>
           )}
         </div>
 
-        {/* Accordion 2: Security */}
-        <div className={s.tmAccordionItem}>
-          <button className={s.tmAccordionTrigger} onClick={() => toggleAccordion("security")} aria-expanded={openAccordion === "security"}>
-            <span>{t("wizard.step6.darkroom.securityTitle")}</span>
+        <div className={s.accordionItemUnified}>
+          <button className={s.accordionTriggerUnified} onClick={() => toggleAccordion("security")} aria-expanded={openAccordion === "security"}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+              <Shield size={18} style={{ color: "#c084fc" }} />
+              <span>{t("wizard.step6.darkroom.securityTitle")}</span>
+            </div>
             <span className={`${s.tmAccordionArrow} ${openAccordion === "security" ? s.tmAccordionArrowOpen : ""}`}>▾</span>
           </button>
           {openAccordion === "security" && (
-            <div className={s.tmAccordionBody}>
-              <ul className={s.tmFeatureList}>
+            <div className={s.accordionBodyUnified}>
+              <ul className={s.unifiedCheckList}>
                 {(["s1", "s2", "s3"] as const).map(k => (
-                  <li key={k}><Shield size={14} className={s.tmCheck} style={{ color: "#7c3aed" }} /><span>{t(`wizard.step6.darkroom.${k}`)}</span></li>
+                  <li key={k}><Shield size={14} className={s.unifiedCheck} style={{ color: "#c084fc" }} /><span>{t(`wizard.step6.darkroom.${k}`)}</span></li>
                 ))}
               </ul>
             </div>
           )}
         </div>
 
-        {/* Accordion 3: Terms */}
-        <div className={s.tmAccordionItem}>
-          <button className={s.tmAccordionTrigger} onClick={() => toggleAccordion("terms")} aria-expanded={openAccordion === "terms"}>
-            <span>{t("wizard.step6.darkroom.termsTitle")}</span>
+        <div className={s.accordionItemUnified}>
+          <button className={s.accordionTriggerUnified} onClick={() => toggleAccordion("terms")} aria-expanded={openAccordion === "terms"}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+              <Activity size={18} style={{ color: "#c084fc" }} />
+              <span>{t("wizard.step6.darkroom.termsTitle")}</span>
+            </div>
             <span className={`${s.tmAccordionArrow} ${openAccordion === "terms" ? s.tmAccordionArrowOpen : ""}`}>▾</span>
           </button>
           {openAccordion === "terms" && (
-            <div className={s.tmAccordionBody}>
-              <div className={s.tmRedLine}>{renderDesc(t("wizard.step6.darkroom.redLine"))}</div>
-              <p className={s.tmTermsNote}>{t("wizard.step6.darkroom.termsNote")}</p>
-              <ol className={s.tmTermsList}>
+            <div className={s.accordionBodyUnified}>
+              <div className={s.tmRedLineUnified}>{renderDesc(t("wizard.step6.darkroom.redLine"))}</div>
+              <p className={s.tmTermsNote} style={{ color: "#fff", fontWeight: 700 }}>{t("wizard.step6.darkroom.termsNote")}</p>
+              <ol className={s.tmTermsListUnified}>
                 {(["t1", "t2", "t3", "t4", "t5", "t6", "t7", "t8", "t9", "t10", "t11", "t12", "t13", "t14", "t15"] as const).map(k => (
-                  <li key={k}>
+                  <li key={k} className={s.tmTermsItemUnified}>
                     <div>
-                      <strong>{t(`wizard.step6.darkroom.${k}Title`)}</strong>
-                      <p>{renderDesc(t(`wizard.step6.darkroom.${k}Desc`))}</p>
+                      <strong className={s.tmTermsTitleUnified}>{t(`wizard.step6.darkroom.${k}Title`)}</strong>
+                      <p className={s.tmTermsDescUnified}>{renderDesc(t(`wizard.step6.darkroom.${k}Desc`))}</p>
                     </div>
                   </li>
                 ))}
@@ -1210,6 +1194,7 @@ function DarkroomPremiumPanel({ t }: { t: (k: string) => string }) {
     </div>
   );
 }
+
 
 // --- DarkRoom Self-Service Info Panel (Step 6 Left) ---------------------------
 function DarkroomSelfPanel({ t }: { t: (k: string) => string }) {
@@ -1228,105 +1213,91 @@ function DarkroomSelfPanel({ t }: { t: (k: string) => string }) {
       if (part === "<badge>") { inBadge = true; return; }
       if (part === "</badge>") { inBadge = false; return; }
 
-      if (inGreen) nodes.push(<span key={i} className={s.tmGreen}>{part}</span>);
-      else if (inBold) nodes.push(<strong key={i}>{part}</strong>);
-      else if (inBadge) nodes.push(<span key={i} className={s.tmBadge} style={{ background: "rgba(16, 185, 129, 0.2)", color: "#10b981", borderColor: "rgba(16, 185, 129, 0.4)" }}>{part}</span>);
+      if (inGreen) nodes.push(<span key={i} style={{ color: "#c084fc" }}>{part}</span>);
+      else if (inBold || inBadge) nodes.push(<strong key={i} style={{ fontWeight: 800 }}>{part}</strong>);
       else nodes.push(part);
     });
     return <>{nodes}</>;
   };
 
   return (
-    <div className={s.robotDetailsBoxGlass + " " + s.tmPremiumPanel}>
+    <div className={s.robotDetailsPanelUnified}>
       <div className={s.tmHeader}>
         <div className={s.tmIconGlowPurple}>
           <Smartphone size={32} />
         </div>
         <div>
-          <h2 className={s.tmTitle} style={{ color: "#fff" }}>DarkRoom Self-Service</h2>
-          <p className={s.tmHook}>{t("wizard.step6.darkroomSelf.hook")}</p>
+          <h2 className={`${s.robotNeonTitleUnified} ${s.neonPurple}`}>DarkRoom Self-Service</h2>
+          <p className={s.robotSloganUnified}>{t("wizard.step6.darkroomSelf.hook")}</p>
         </div>
       </div>
 
       <div className={s.tmHighlights}>
-        <div className={s.tmHighlightCard} style={{ background: "rgba(124, 58, 237, 0.1)" }}>
-          <Zap size={14} style={{ color: "#7c3aed", marginRight: "4px" }} />
-          {t("wizard.step6.darkroomSelf.h3")}
+        <div className={`${s.featureTagUnified} ${s.tagPurple}`}>
+          <Smartphone size={14} />
+          <span>Mobil Uygulama Kontrolü</span>
         </div>
-        <div className={s.tmHighlightCard} style={{ background: "rgba(16, 185, 129, 0.1)" }}>
-          <Shield size={14} style={{ color: "#10b981", marginRight: "4px" }} />
-          {t("wizard.step6.darkroomSelf.h2")}
+        <div className={`${s.featureTagUnified} ${s.tagPurple}`}>
+          <Activity size={14} />
+          <span>Ücretsiz Sunucu</span>
         </div>
-        <div className={s.tmHighlightCard}>
-          {t("wizard.step6.darkroomSelf.h1")}
-        </div>
+        <div className={s.featureTagUnified}>{t("wizard.step6.darkroomSelf.h3")}</div>
       </div>
 
-      <div className={s.tmAccordionList}>
-        {/* Accordion 1: Control Features */}
-        <div className={s.tmAccordionItem}>
-          <button className={s.tmAccordionTrigger} onClick={() => toggleAccordion("control")} aria-expanded={openAccordion === "control"}>
-            <span>{t("wizard.step6.darkroomSelf.controlTitle")}</span>
+      <div className={s.accordionUnified}>
+        <div className={s.accordionItemUnified}>
+          <button className={s.accordionTriggerUnified} onClick={() => toggleAccordion("control")} aria-expanded={openAccordion === "control"}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+              <Zap size={18} style={{ color: "#c084fc" }} />
+              <span>{t("wizard.step6.darkroomSelf.controlTitle")}</span>
+            </div>
             <span className={`${s.tmAccordionArrow} ${openAccordion === "control" ? s.tmAccordionArrowOpen : ""}`}>▾</span>
           </button>
           {openAccordion === "control" && (
-            <div className={s.tmAccordionBody}>
-              <ul className={s.tmFeatureList}>
-                <li><Zap size={14} className={s.tmCheck} style={{ color: "#7c3aed" }} /><span>{t("wizard.step6.darkroomSelf.c1")}</span></li>
-                <li><Coins size={14} className={s.tmCheck} style={{ color: "#7c3aed" }} /><span>{t("wizard.step6.darkroomSelf.c2")}</span></li>
-                <li><Bell size={14} className={s.tmCheck} style={{ color: "#7c3aed" }} /><span>{t("wizard.step6.darkroomSelf.c3")}</span></li>
+            <div className={s.accordionBodyUnified}>
+              <ul className={s.unifiedCheckList}>
+                <li><CheckCircle2 size={14} className={s.unifiedCheck} style={{ color: "#c084fc" }} /><span>{t("wizard.step6.darkroomSelf.c1")}</span></li>
+                <li><CheckCircle2 size={14} className={s.unifiedCheck} style={{ color: "#c084fc" }} /><span>{t("wizard.step6.darkroomSelf.c2")}</span></li>
+                <li><CheckCircle2 size={14} className={s.unifiedCheck} style={{ color: "#c084fc" }} /><span>{t("wizard.step6.darkroomSelf.c3")}</span></li>
               </ul>
             </div>
           )}
         </div>
 
-        {/* Accordion 2: Strategy */}
-        <div className={s.tmAccordionItem}>
-          <button className={s.tmAccordionTrigger} onClick={() => toggleAccordion("strategy")} aria-expanded={openAccordion === "strategy"}>
-            <span>{t("wizard.step6.darkroomSelf.strategyTitle")}</span>
+        <div className={s.accordionItemUnified}>
+          <button className={s.accordionTriggerUnified} onClick={() => toggleAccordion("strategy")} aria-expanded={openAccordion === "strategy"}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+              <TrendingUp size={18} style={{ color: "#c084fc" }} />
+              <span>{t("wizard.step6.darkroomSelf.strategyTitle")}</span>
+            </div>
             <span className={`${s.tmAccordionArrow} ${openAccordion === "strategy" ? s.tmAccordionArrowOpen : ""}`}>▾</span>
           </button>
           {openAccordion === "strategy" && (
-            <div className={s.tmAccordionBody}>
-              <p className={s.tmAccordionText}>{renderDesc(t("wizard.step6.darkroomSelf.strategyP1"))}</p>
-              <p className={s.tmAccordionText}>{renderDesc(t("wizard.step6.darkroomSelf.strategyP2"))}</p>
+            <div className={s.accordionBodyUnified}>
+              <p className={s.accordionTextUnified}>{renderDesc(t("wizard.step6.darkroomSelf.strategyP1"))}</p>
+              <p className={s.accordionTextUnified}>{renderDesc(t("wizard.step6.darkroomSelf.strategyP2"))}</p>
             </div>
           )}
         </div>
 
-        {/* Accordion 3: Security & Free Infra */}
-        <div className={s.tmAccordionItem}>
-          <button className={s.tmAccordionTrigger} onClick={() => toggleAccordion("security")} aria-expanded={openAccordion === "security"}>
-            <span>{t("wizard.step6.darkroomSelf.securityTitle")}</span>
-            <span className={`${s.tmAccordionArrow} ${openAccordion === "security" ? s.tmAccordionArrowOpen : ""}`}>▾</span>
-          </button>
-          {openAccordion === "security" && (
-            <div className={s.tmAccordionBody}>
-              <ul className={s.tmFeatureList}>
-                {(["s1", "s2", "s3"] as const).map(k => (
-                  <li key={k}><Shield size={14} className={s.tmCheck} style={{ color: "#10b981" }} /><span>{renderDesc(t(`wizard.step6.darkroomSelf.${k}`))}</span></li>
-                ))}
-              </ul>
+        <div className={s.accordionItemUnified}>
+          <button className={s.accordionTriggerUnified} onClick={() => toggleAccordion("terms")} aria-expanded={openAccordion === "terms"}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+              <Activity size={18} style={{ color: "#c084fc" }} />
+              <span>{t("wizard.step6.darkroomSelf.termsTitle")}</span>
             </div>
-          )}
-        </div>
-
-        {/* Accordion 4: Terms */}
-        <div className={s.tmAccordionItem}>
-          <button className={s.tmAccordionTrigger} onClick={() => toggleAccordion("terms")} aria-expanded={openAccordion === "terms"}>
-            <span>{t("wizard.step6.darkroomSelf.termsTitle")}</span>
             <span className={`${s.tmAccordionArrow} ${openAccordion === "terms" ? s.tmAccordionArrowOpen : ""}`}>▾</span>
           </button>
           {openAccordion === "terms" && (
-            <div className={s.tmAccordionBody}>
-              <div className={s.tmRedLine} style={{ color: "#fff" }}>{t("wizard.step6.darkroomSelf.redLine")}</div>
-              <p className={s.tmTermsNote}>{t("wizard.step6.darkroomSelf.termsNote")}</p>
-              <ol className={s.tmTermsList}>
+            <div className={s.accordionBodyUnified}>
+              <div className={s.tmRedLineUnified}>{t("wizard.step6.darkroomSelf.redLine")}</div>
+              <p className={s.tmTermsNote} style={{ color: "#fff", fontWeight: 700 }}>{t("wizard.step6.darkroomSelf.termsNote")}</p>
+              <ol className={s.tmTermsListUnified}>
                 {(["t1", "t2", "t3", "t4", "t5"] as const).map(k => (
-                  <li key={k}>
+                  <li key={k} className={s.tmTermsItemUnified}>
                     <div>
-                      <strong>{t(`wizard.step6.darkroomSelf.${k}Title`)}</strong>
-                      <p>{renderDesc(t(`wizard.step6.darkroomSelf.${k}Desc`))}</p>
+                      <strong className={s.tmTermsTitleUnified}>{t(`wizard.step6.darkroomSelf.${k}Title`)}</strong>
+                      <p className={s.tmTermsDescUnified}>{renderDesc(t(`wizard.step6.darkroomSelf.${k}Desc`))}</p>
                     </div>
                   </li>
                 ))}
@@ -1338,6 +1309,245 @@ function DarkroomSelfPanel({ t }: { t: (k: string) => string }) {
     </div>
   );
 }
+
+
+// --- Highway Self-Service Info Panel (Step 6 Left) ----------------------------
+function HighwaySelfPanel({ t }: { t: (k: string) => string }) {
+  const [openAccordion, setOpenAccordion] = useState<string | null>(null);
+  const toggleAccordion = (key: string) => setOpenAccordion(prev => (prev === key ? null : key));
+
+  const renderDesc = (raw: string) => {
+    const parts = raw.split(/(<green>|<\/green>|<b>|<\/b>|<badge>|<\/badge>)/);
+    const nodes: React.ReactNode[] = [];
+    let inGreen = false, inBold = false, inBadge = false;
+    parts.forEach((part, i) => {
+      if (part === "<green>") { inGreen = true; return; }
+      if (part === "</green>") { inGreen = false; return; }
+      if (part === "<b>") { inBold = true; return; }
+      if (part === "</b>") { inBold = false; return; }
+      if (part === "<badge>") { inBadge = true; return; }
+      if (part === "</badge>") { inBadge = false; return; }
+
+      if (inGreen) nodes.push(<span key={i} className={s.tmGreen}>{part}</span>);
+      else if (inBold) nodes.push(<strong key={i} style={{ fontWeight: 800 }}>{part}</strong>);
+      else if (inBadge) nodes.push(<span key={i} className={s.tmBadge} style={{ background: "rgba(59, 130, 246, 0.2)", color: "#60a5fa", borderColor: "rgba(59, 130, 246, 0.4)" }}>{part}</span>);
+      else nodes.push(part);
+    });
+    return <>{nodes}</>;
+  };
+
+  return (
+    <div className={s.robotDetailsPanelUnified}>
+      {/* ── Header ───────────────────────────────────────────── */}
+      <div className={s.tmHeader}>
+        <div className={s.tmIconGlowBlue}>
+          <Route size={32} />
+        </div>
+        <div>
+          <h2 className={`${s.robotNeonTitleUnified} ${s.neonBlue}`}>Highway Self-Service</h2>
+          <p className={s.robotSloganUnified}>{t("wizard.step6.highwaySelf.slogan")}</p>
+        </div>
+      </div>
+
+      <div className={s.tmHighlights}>
+        <div className={`${s.featureTagUnified} ${s.tagBlue}`}>
+          <Smartphone size={14} />
+          <span>Mobil Uygulama Kontrolü</span>
+        </div>
+        <div className={`${s.featureTagUnified} ${s.tagBlue}`}>
+          <Activity size={14} />
+          <span>Ücretsiz Sunucu</span>
+        </div>
+        <div className={s.featureTagUnified}>{t("wizard.step6.highwaySelf.h1")}</div>
+      </div>
+
+      <div className={s.accordionUnified}>
+        {/* Accordion 1: Strategy and Scanning */}
+        <div className={s.accordionItemUnified}>
+          <button className={s.accordionTriggerUnified} onClick={() => toggleAccordion("strategy")} aria-expanded={openAccordion === "strategy"}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+              <Zap size={18} style={{ color: "#60a5fa" }} />
+              <span>{t("wizard.step6.highwaySelf.strategyTitle")}</span>
+            </div>
+            <span className={`${s.tmAccordionArrow} ${openAccordion === "strategy" ? s.tmAccordionArrowOpen : ""}`}>▾</span>
+          </button>
+          {openAccordion === "strategy" && (
+            <div className={s.accordionBodyUnified}>
+              <p className={s.accordionTextUnified}>{renderDesc(t("wizard.step6.highwaySelf.strategyP1"))}</p>
+              <p className={s.accordionTextUnified}>{renderDesc(t("wizard.step6.highwaySelf.strategyP2"))}</p>
+            </div>
+          )}
+        </div>
+
+        {/* Accordion 2: Logic and Exit */}
+        <div className={s.accordionItemUnified}>
+          <button className={s.accordionTriggerUnified} onClick={() => toggleAccordion("logic")} aria-expanded={openAccordion === "logic"}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+              <Settings size={18} style={{ color: "#60a5fa" }} />
+              <span>{t("wizard.step6.highwaySelf.logicTitle")}</span>
+            </div>
+            <span className={`${s.tmAccordionArrow} ${openAccordion === "logic" ? s.tmAccordionArrowOpen : ""}`}>▾</span>
+          </button>
+          {openAccordion === "logic" && (
+            <div className={s.accordionBodyUnified}>
+              <ul className={s.unifiedCheckList}>
+                {["l1", "l2", "l3", "l4"].map(k => (
+                  <li key={k}>
+                    <CheckCircle2 size={14} className={s.unifiedCheck} style={{ color: "#60a5fa" }} />
+                    <span>{t(`wizard.step6.highwaySelf.${k}`)}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+
+        {/* Accordion 3: Performance and Risk */}
+        <div className={s.accordionItemUnified}>
+          <button className={s.accordionTriggerUnified} onClick={() => toggleAccordion("performance")} aria-expanded={openAccordion === "performance"}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+              <BarChart3 size={18} style={{ color: "#60a5fa" }} />
+              <span>{t("wizard.step6.highwaySelf.performanceTitle")}</span>
+            </div>
+            <span className={`${s.tmAccordionArrow} ${openAccordion === "performance" ? s.tmAccordionArrowOpen : ""}`}>▾</span>
+          </button>
+          {openAccordion === "performance" && (
+            <div className={s.accordionBodyUnified}>
+              <ul className={s.unifiedCheckList}>
+                {["p1", "p2", "p3", "p4"].map(k => (
+                  <li key={k}>
+                    <CheckCircle2 size={14} className={s.unifiedCheck} style={{ color: "#10b981" }} />
+                    <span>{t(`wizard.step6.highwaySelf.${k}`)}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+
+        {/* Accordion 4: Why Highway */}
+        <div className={s.accordionItemUnified}>
+          <button className={s.accordionTriggerUnified} onClick={() => toggleAccordion("why")} aria-expanded={openAccordion === "why"}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+              <Rocket size={18} style={{ color: "#60a5fa" }} />
+              <span>{t("wizard.step6.highwaySelf.whyTitle")}</span>
+            </div>
+            <span className={`${s.tmAccordionArrow} ${openAccordion === "why" ? s.tmAccordionArrowOpen : ""}`}>▾</span>
+          </button>
+          {openAccordion === "why" && (
+            <div className={s.accordionBodyUnified}>
+              <p className={s.accordionTextUnified}>{renderDesc(t("wizard.step6.highwaySelf.whyP1"))}</p>
+              <p className={s.accordionTextUnified}>{renderDesc(t("wizard.step6.highwaySelf.whyP2"))}</p>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+
+// --- TradeMate Self-Service Info Panel (Step 6 Left) --------------------------
+function TrademateSelfPanel({ t }: { t: (k: string) => string }) {
+  const [openAccordion, setOpenAccordion] = useState<string | null>(null);
+  const toggleAccordion = (key: string) => setOpenAccordion(prev => (prev === key ? null : key));
+
+  const renderDesc = (raw: string) => {
+    const parts = raw.split(/(<green>|<\/green>|<b>|<\/b>|<badge>|<\/badge>)/);
+    const nodes: React.ReactNode[] = [];
+    let inGreen = false, inBold = false, inBadge = false;
+    parts.forEach((part, i) => {
+      if (part === "<green>") { inGreen = true; return; }
+      if (part === "</green>") { inGreen = false; return; }
+      if (part === "<b>") { inBold = true; return; }
+      if (part === "</b>") { inBold = false; return; }
+      if (part === "<badge>") { inBadge = true; return; }
+      if (part === "</badge>") { inBadge = false; return; }
+
+      if (inGreen) nodes.push(<span key={i} style={{ color: "#10b981" }}>{part}</span>);
+      else if (inBold || inBadge) nodes.push(<strong key={i} style={{ fontWeight: 800 }}>{part}</strong>);
+      else nodes.push(part);
+    });
+    return <>{nodes}</>;
+  };
+
+  return (
+    <div className={s.robotDetailsPanelUnified}>
+      <div className={s.tmHeader}>
+        <div className={s.tmIconGlowGreen}>
+          <Zap size={32} />
+        </div>
+        <div>
+          <h2 className={`${s.robotNeonTitleUnified} ${s.neonGreen}`}>TradeMate Self-Service</h2>
+          <p className={s.robotSloganUnified}>{t("wizard.step6.trademateSelf.slogan")}</p>
+        </div>
+      </div>
+
+      <div className={s.tmHighlights}>
+        <div className={`${s.featureTagUnified} ${s.tagGreen}`}>
+          <Smartphone size={14} />
+          <span>Aç/Kapat Kontrolü</span>
+        </div>
+        <div className={`${s.featureTagUnified} ${s.tagGreen}`}>
+          <Activity size={14} />
+          <span>Kredi Ayarı</span>
+        </div>
+        <div className={`${s.featureTagUnified} ${s.tagGreen}`}>
+          <Coins size={14} />
+          <span>Rezerve Para</span>
+        </div>
+      </div>
+
+      <div className={s.accordionUnified}>
+        <div className={s.accordionItemUnified}>
+          <button className={s.accordionTriggerUnified} onClick={() => toggleAccordion("strategy")} aria-expanded={openAccordion === "strategy"}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+              <Zap size={18} style={{ color: "#10b981" }} />
+              <span>{t("wizard.step6.trademateSelf.strategyTitle")}</span>
+            </div>
+            <span className={`${s.tmAccordionArrow} ${openAccordion === "strategy" ? s.tmAccordionArrowOpen : ""}`}>▾</span>
+          </button>
+          {openAccordion === "strategy" && (
+            <div className={s.accordionBodyUnified}>
+              <p className={s.accordionTextUnified}>{renderDesc(t("wizard.step6.trademateSelf.strategyDesc"))}</p>
+            </div>
+          )}
+        </div>
+
+        <div className={s.accordionItemUnified}>
+          <button className={s.accordionTriggerUnified} onClick={() => toggleAccordion("automation")} aria-expanded={openAccordion === "automation"}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+              <Settings size={18} style={{ color: "#10b981" }} />
+              <span>{t("wizard.step6.trademateSelf.automationTitle")}</span>
+            </div>
+            <span className={`${s.tmAccordionArrow} ${openAccordion === "automation" ? s.tmAccordionArrowOpen : ""}`}>▾</span>
+          </button>
+          {openAccordion === "automation" && (
+            <div className={s.accordionBodyUnified}>
+              <p className={s.accordionTextUnified}>{renderDesc(t("wizard.step6.trademateSelf.automationDesc"))}</p>
+            </div>
+          )}
+        </div>
+
+        <div className={s.accordionItemUnified}>
+          <button className={s.accordionTriggerUnified} onClick={() => toggleAccordion("risk")} aria-expanded={openAccordion === "risk"}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+              <Shield size={18} style={{ color: "#10b981" }} />
+              <span>{t("wizard.step6.trademateSelf.riskTitle")}</span>
+            </div>
+            <span className={`${s.tmAccordionArrow} ${openAccordion === "risk" ? s.tmAccordionArrowOpen : ""}`}>▾</span>
+          </button>
+          {openAccordion === "risk" && (
+            <div className={s.accordionBodyUnified}>
+              <p className={s.accordionTextUnified}>{renderDesc(t("wizard.step6.trademateSelf.riskDesc"))}</p>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 
 // --- RobotInfoBox -------------------------------------------------------------
 function RobotInfoBox({ robot, t, variant = "default" }: { robot?: RobotDefinition; t: any; variant?: "default" | "glass" }) {
@@ -1358,6 +1568,12 @@ function RobotInfoBox({ robot, t, variant = "default" }: { robot?: RobotDefiniti
   }
   if (robot.id === "DARKROOM_SELF") {
     return <DarkroomSelfPanel t={t} />;
+  }
+  if (robot.id === "HIGHWAY_SELF") {
+    return <HighwaySelfPanel t={t} />;
+  }
+  if (robot.id === "TRADEMATE_SELF") {
+    return <TrademateSelfPanel t={t} />;
   }
 
   const getIcon = () => {
