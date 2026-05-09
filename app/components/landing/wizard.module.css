@@ -1476,6 +1476,30 @@
   flex-shrink: 0;
 }
 
+.tmIconGlowPurple {
+  width: 56px;
+  height: 56px;
+  background: rgba(124, 58, 237, 0.1);
+  border: 1.5px solid rgba(124, 58, 237, 0.3);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #7c3aed;
+  box-shadow: 
+    0 0 20px rgba(124, 58, 237, 0.2),
+    inset 0 0 10px rgba(124, 58, 237, 0.1);
+  flex-shrink: 0;
+}
+
+.tmHook {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--wiz-primary-light);
+  margin-top: 0.25rem;
+  letter-spacing: 0.01em;
+}
+
 .tmRedLine {
   background: rgba(239, 68, 68, 0.08);
   border-left: 3px solid #ef4444;
