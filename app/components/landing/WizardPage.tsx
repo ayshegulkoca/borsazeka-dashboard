@@ -7,7 +7,7 @@ import {
   ArrowLeft, ArrowRight, Check, Globe, MapPin,
   Users, Lock, Bot, CheckCircle2, Send, ExternalLink,
   Shield, TrendingUp, Target, Activity, Zap, Coins, Route, Moon,
-  Smartphone, Bell, Settings, BarChart3, Rocket, RotateCcw,
+  Smartphone, Bell, Settings, BarChart3, Rocket, RotateCcw, Home,
 } from "lucide-react";
 import { useTranslation, Trans } from "react-i18next";
 import { useSession, signIn } from "next-auth/react";
@@ -394,10 +394,25 @@ export default function WizardPage() {
     <div className={s.wizardPage}>
       {/* Top bar */}
       <div className={s.wizardTopBar}>
-        <Link href="/" className={s.wizardBackLink}>
-          <ArrowLeft size={16} /> {t("wizard.backHome")}
-        </Link>
-        <span style={{ fontSize: "0.8rem", color: "var(--text-muted)" }}>
+        <div className={s.wizardTopBarLeft}>
+          <Link href="/" className={s.wizardBackLink}>
+            <Home size={15} /> {t("wizard.backHome")}
+          </Link>
+          {state.step > 1 && !submitDone && (
+            <button className={s.btnWizardReset} onClick={goToStart} id="wizard-reset-top">
+              <RotateCcw size={15} /> {t("wizard.goToStart")}
+            </button>
+          )}
+        </div>
+        <span style={{ 
+          fontSize: "0.82rem", 
+          fontWeight: 700, 
+          color: "var(--wiz-primary-light)", 
+          letterSpacing: "0.02em",
+          height: "40px",
+          display: "flex",
+          alignItems: "center"
+        }}>
           {t("wizard.stepOf", { current: state.step, total: TOTAL })}
         </span>
       </div>
@@ -450,9 +465,6 @@ export default function WizardPage() {
               <h2 className={s.stepTitle}>{t("wizard.step6.title")}</h2>
             </div>
             <div className={s.navButtonGroup}>
-              <button className={s.btnWizardReset} onClick={goToStart} id="wizard-reset-btn-step6">
-                <RotateCcw size={14} /> {t("wizard.goToStart")}
-              </button>
               <button className={s.btnWizardBack} onClick={goBack} id="wizard-back-btn">
                 <ArrowLeft size={15} /> {t("wizard.back")}
               </button>
@@ -566,9 +578,6 @@ export default function WizardPage() {
               </span>
               {!submitDone && state.step > 1 && (
                 <div className={s.navButtonGroup}>
-                  <button className={s.btnWizardReset} onClick={goToStart} id="wizard-reset-btn">
-                    <RotateCcw size={14} /> {t("wizard.goToStart")}
-                  </button>
                   <button className={s.btnWizardBack} onClick={goBack} id="wizard-back-btn">
                     <ArrowLeft size={15} /> {t("wizard.back")}
                   </button>
@@ -648,7 +657,7 @@ export default function WizardPage() {
                 {state.step === 4 && (
                   <>
                     <h2 className={s.stepTitle}>{t("wizard.step4.title")}</h2>
-                    <div style={{ display: "flex", flexDirection: "column", gap: "0.875rem" }}>
+                    <div className={s.robotGridList} style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
                       {availableRobots.map((robot: RobotDefinition) => (
                         <RobotCard key={robot.id} robot={robot}
                           selected={state.robotId === robot.id} t={t}
@@ -700,7 +709,7 @@ export default function WizardPage() {
                       </p>
                     ) : (
                       <>
-                        <p style={{ fontSize: "0.85rem", color: "var(--text-secondary)", marginBottom: "1.25rem" }}>
+                        <p style={{ fontSize: "0.85rem", color: "var(--text-secondary)", marginBottom: "0.75rem" }}>
                           {t(state.subMarket === "CRYPTO" ? "wizard.step5.cryptoLabel"
                             : state.subMarket === "FOREX" ? "wizard.step5.forexLabel"
                             : "wizard.step5.bistLabel")}
@@ -1812,18 +1821,7 @@ function AnnualPlanBox({
   const monthlySaving = Math.round((annualCostEUR / 8) * 0.33); // ~4 ay bedava = %33 indirim
 
   return (
-    <div
-      style={{
-        marginTop: "0.875rem",
-        padding: "1rem 1.1rem",
-        borderRadius: 12,
-        background: "linear-gradient(135deg, rgba(139,92,246,0.1) 0%, rgba(109,40,217,0.07) 100%)",
-        border: "1px solid rgba(139,92,246,0.35)",
-        display: "flex",
-        flexDirection: "column",
-        gap: "0.6rem",
-      }}
-    >
+    <div className={s.annualPlanBox}>
       {/* Header */}
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
@@ -1872,31 +1870,7 @@ function AnnualPlanBox({
         target="_blank"
         rel="noopener noreferrer"
         id="annual-plan-btn"
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: "0.45rem",
-          marginTop: "0.25rem",
-          padding: "0.8rem 1.2rem",
-          borderRadius: 10,
-          background: "linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%)",
-          color: "#fff",
-          fontWeight: 700,
-          fontSize: "0.9rem",
-          textDecoration: "none",
-          boxShadow: "0 4px 20px rgba(139,92,246,0.4), 0 0 0 1px rgba(167,139,250,0.2)",
-          transition: "all 0.2s ease",
-          letterSpacing: "0.01em",
-        }}
-        onMouseEnter={e => {
-          (e.currentTarget as HTMLAnchorElement).style.boxShadow = "0 8px 30px rgba(139,92,246,0.65), 0 0 0 1px rgba(167,139,250,0.4)";
-          (e.currentTarget as HTMLAnchorElement).style.transform = "translateY(-1px)";
-        }}
-        onMouseLeave={e => {
-          (e.currentTarget as HTMLAnchorElement).style.boxShadow = "0 4px 20px rgba(139,92,246,0.4), 0 0 0 1px rgba(167,139,250,0.2)";
-          (e.currentTarget as HTMLAnchorElement).style.transform = "translateY(0)";
-        }}
+        className={s.annualPlanBtn}
       >
         ✦ Yıllık Avantajla Satın Al
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">

@@ -42,7 +42,12 @@
 .wizardPage {
   min-height: 100vh;
   background: var(--bg-dark);
-  padding-top: 80px;
+  padding: 120px 0 100px; /* Offset for navbar + 2rem gap */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  overflow-y: auto; /* Enable page scroll */
 
   /* Deep Blue Palette */
   --wiz-primary: #1d4ed8;
@@ -57,37 +62,55 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1.5rem 2rem;
+  padding: 0 2rem 2rem; /* Consistent bottom gap below buttons */
+  width: 100%;
   max-width: 56rem;
   margin: 0 auto;
+}
+
+.wizardTopBarLeft {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
 }
 
 .wizardBackLink {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-  font-size: 0.875rem;
-  color: var(--text-secondary);
-  transition: color 0.2s;
+  gap: 0.5rem;
+  padding: 0.55rem 1rem;
+  border-radius: 10px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: all 0.2s ease;
+  white-space: nowrap;
 }
 
 .wizardBackLink:hover {
-  color: var(--wiz-primary-light);
+  background: rgba(255, 255, 255, 0.09);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  transform: translateY(-1px);
 }
 
 .wizardHeader {
   max-width: 56rem;
   margin: 0 auto;
-  padding: 0 2rem 2.5rem;
+  padding: 0 2rem 1rem; /* Tightened rhythm */
   text-align: center;
 }
 
 .wizardTitle {
-  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-size: clamp(1.5rem, 2.5vw, 2.2rem);
   font-weight: 600;
   letter-spacing: -0.03em;
   color: var(--text-primary);
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.5rem;
 }
 
 .wizardSubtitle {
@@ -100,7 +123,7 @@
 .stepper {
   max-width: 56rem;
   margin: 0 auto;
-  padding: 0 2rem 2.5rem;
+  padding: 0 2rem 1.25rem; /* Reduced padding-bottom by 20% */
 }
 
 .stepperTrack {
@@ -120,15 +143,15 @@
 }
 
 .stepperCircle {
-  width: 36px;
-  height: 36px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   border: 2px solid rgba(255, 255, 255, 0.12);
   background: var(--bg-card);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-weight: 700;
   color: var(--text-muted);
   transition: all 0.3s ease;
@@ -163,7 +186,7 @@
   height: 2px;
   background: rgba(255, 255, 255, 0.08);
   position: relative;
-  top: -9px; /* align with circle center */
+  top: -7px; /* align with smaller circle center */
   z-index: 1;
 }
 
@@ -177,9 +200,11 @@
 .stepCard {
   max-width: 56rem;
   margin: 0 auto;
-  padding: 0 2rem 3rem;
-  position: relative;  /* glow orb'ları için anchor */
-  isolation: isolate;  /* stacking context — glow dışarı taşmaz */
+  padding: 0 2rem 2rem;
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
 }
 
 /* ── Glow Orb 1: Sol-Alt — Mavi ── */
@@ -270,13 +295,12 @@
   -webkit-backdrop-filter: blur(32px);
   border: 1px solid rgba(255, 255, 255, 0.10);
   border-radius: 20px;
-  padding: 2rem;
+  padding: 1.5rem;
   animation: fadeIn 0.25s ease;
   box-shadow:
     0 8px 32px rgba(0, 0, 0, 0.5),
     0 0 0 1px rgba(255, 255, 255, 0.04) inset;
   position: relative;
-  overflow: hidden;
 }
 
 /* ── Shared Top Bar: step indicator + back button ── */
@@ -321,10 +345,10 @@
 }
 
 .stepTitle {
-  font-size: 1.2rem;
+  font-size: 1.15rem;
   font-weight: 500;
   color: var(--text-primary);
-  margin-bottom: 1.75rem;
+  margin-bottom: 1.25rem;
   letter-spacing: -0.01em;
 }
 
@@ -359,7 +383,7 @@
 .optionCard {
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 14px;
-  padding: 1.5rem;
+  padding: 1.25rem;
   cursor: pointer;
   transition: all 0.2s ease;
   background: rgba(255, 255, 255, 0.02);
@@ -396,15 +420,15 @@
 }
 
 .optionIcon {
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
-  background: rgba(29, 49, 74, 0.1);
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: rgba(29, 49, 49, 0.1);
   border: 1px solid rgba(29, 49, 74, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
 }
 
 .optionLabel {
@@ -444,15 +468,15 @@
 }
 
 .comingSoonBadge {
-  position: relative; /* Changed from absolute */
-  font-size: 0.65rem;
+  position: relative;
+  font-size: 0.75rem; /* text-sm equivalent */
   font-weight: 700;
   letter-spacing: 0.06em;
   padding: 0.25rem 0.6rem;
-  border-radius: 100px;
-  background: rgba(100, 116, 139, 0.1);
+  border-radius: 8px; /* rounded-lg */
+  background: rgba(255, 255, 255, 0.05);
   color: var(--text-muted);
-  border: 1px solid rgba(100, 116, 139, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   white-space: nowrap;
 }
 
@@ -460,7 +484,7 @@
 .robotOptionCard {
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 14px;
-  padding: 1.5rem;
+  padding: 1.25rem;
   cursor: pointer;
   transition: all 0.2s ease;
   background: rgba(255, 255, 255, 0.02);
@@ -508,14 +532,15 @@
 }
 
 .robotCapacity {
-  font-size: 0.72rem;
+  font-size: 0.75rem; /* text-sm equivalent */
   font-weight: 600;
-  color: var(--text-muted);
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 100px;
-  padding: 0.2rem 0.6rem;
+  color: var(--wiz-primary-light);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px; /* rounded-lg */
+  padding: 0.25rem 0.6rem;
   white-space: nowrap;
+  letter-spacing: 0.02em;
 }
 
 .robotFeatures {
@@ -579,9 +604,11 @@
 .step6Layout {
   max-width: 68rem;
   margin: 0 auto;
-  padding: 0 2rem 5rem;
+  padding: 0 2rem 4rem;
   position: relative;
   isolation: isolate;
+  display: flex;
+  flex-direction: column;
 }
 
 .step6Header {
@@ -602,6 +629,8 @@
   align-items: flex-start;
   gap: 2rem;
   width: 100%;
+  flex: 1;
+  min-height: 0; /* Important for flex child with overflow */
 }
 
 @media (max-width: 900px) {
@@ -627,10 +656,10 @@
   box-shadow:
     0 20px 50px rgba(0, 0, 0, 0.3),
     0 0 0 1px rgba(255, 255, 255, 0.03) inset;
-  position: sticky;
-  top: 0;
-  overflow: hidden;
+  position: relative; /* Removed sticky to allow internal flex scroll */
+  overflow-y: auto;
   box-sizing: border-box;
+  scrollbar-width: thin;
 }
 
 .priceDetailsPanel::before {
@@ -1414,7 +1443,7 @@
 .btnWizardReset:hover {
   color: #ffffff;
   background: rgba(255, 255, 255, 0.09);
-  border-color: rgba(255, 255, 255, 0.20);
+  border-color: rgba(255, 255, 255, 0.2);
   transform: translateY(-1px);
 }
 
@@ -1471,6 +1500,108 @@
 .btnWizardSubmit:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+.annualPlanBox {
+  margin-top: 0.875rem;
+  padding: 1rem 1.1rem;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(139,92,246,0.1) 0%, rgba(109,40,217,0.07) 100%);
+  border: 1px solid rgba(139,92,246,0.35);
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.annualPlanBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  margin-top: 0.25rem;
+  padding: 0.8rem 1.2rem;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-decoration: none;
+  box-shadow: 0 4px 20px rgba(139,92,246,0.4), 0 0 0 1px rgba(167,139,250,0.2);
+  transition: all 0.2s ease;
+  letter-spacing: 0.01em;
+}
+
+.annualPlanBtn:hover {
+  box-shadow: 0 8px 30px rgba(139,92,246,0.65), 0 0 0 1px rgba(167,139,250,0.4);
+  transform: translateY(-1px);
+}
+
+/* ── Laptop Height Fixes (800px or less) ── */
+@media (max-height: 800px) {
+  .wizardPage {
+    padding: 100px 0 20px;
+  }
+  .wizardHeader {
+    padding-bottom: 1rem;
+  }
+  .stepper {
+    padding-bottom: 1rem;
+  }
+  .wizardTitle {
+    font-size: 1.6rem;
+  }
+  .wizardSubtitle {
+    font-size: 0.9rem;
+  }
+  .stepCardInner {
+    padding: 1.25rem;
+  }
+  .stepTitle {
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+  }
+  .optionCard {
+    padding: 1rem;
+  }
+  .optionLabel {
+    font-size: 0.9rem;
+  }
+  .optionDesc {
+    font-size: 0.75rem;
+  }
+  .robotOptionCard {
+    padding: 1rem;
+  }
+  .robotName {
+    font-size: 1rem;
+  }
+  .robotDesc {
+    font-size: 0.75rem;
+  }
+  .budgetOption {
+    padding: 0.75rem 1rem;
+    font-size: 0.85rem;
+  }
+  .step6Header {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+  }
+  .robotDetailsPanelUnified,
+  .priceDetailsPanel {
+    padding: 1.5rem !important;
+  }
+  .robotNeonTitleUnified {
+    font-size: 1.8rem !important;
+  }
+  .summaryTotalValue {
+    font-size: 1.2rem;
+  }
+  .robotDetailsBoxGlass,
+  .robotDetailsBoxGlassIndependent,
+  .tmPremiumPanel {
+    padding: 1.5rem !important;
+    gap: 1rem !important;
+  }
 }
 
 /* ── Responsive ──────────────────────────────────────────────── */
@@ -1601,11 +1732,11 @@
 
 .tmBadge {
   display: inline-block;
-  padding: 0.15rem 0.45rem;
-  background: rgba(255, 255, 255, 0.07);
+  padding: 0.25rem 0.6rem;
+  background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 4px;
-  font-size: 0.7rem;
+  border-radius: 8px; /* rounded-lg */
+  font-size: 0.75rem; /* text-sm equivalent */
   font-weight: 600;
   color: rgba(255, 255, 255, 0.9);
   vertical-align: middle;
@@ -1630,12 +1761,8 @@
     0 20px 50px rgba(0, 0, 0, 0.4),
     0 0 0 1px rgba(255, 255, 255, 0.03) inset !important;
   position: relative !important;
-  overflow-y: auto !important;
   box-sizing: border-box !important;
-  height: var(--right-panel-height, auto) !important; /* Strict height match */
   flex: 1 !important; /* Ensure 50/50 split */
-  scrollbar-width: thin !important;
-  scrollbar-color: rgba(255, 255, 255, 0.2) transparent !important;
 }
 
 .robotDetailsPanelUnified::-webkit-scrollbar {
@@ -1673,16 +1800,17 @@
 .featureTagUnified {
   display: inline-flex !important;
   align-items: center !important;
-  gap: 0.6rem !important;
-  padding: 0.6rem 1.1rem !important;
-  border-radius: 12px !important;
-  background: rgba(255, 255, 255, 0.03) !important;
+  gap: 0.5rem !important;
+  padding: 0.4rem 0.8rem !important;
+  border-radius: 8px !important; /* rounded-lg */
+  background: rgba(255, 255, 255, 0.05) !important;
   border: 1px solid rgba(255, 255, 255, 0.1) !important;
-  font-size: 0.85rem !important;
-  font-weight: 800 !important;
+  font-size: 0.75rem !important; /* text-sm equivalent */
+  font-weight: 600 !important;
   color: #ffffff !important;
   white-space: nowrap !important;
   transition: all 0.2s !important;
+  opacity: 0.9;
 }
 
 .featureTagUnified svg {
@@ -1795,15 +1923,15 @@
 }
 
 .tmRedLineUnified {
-  background: rgba(239, 68, 68, 0.1) !important;
-  border-left: 4px solid #ef4444 !important;
-  padding: 1.25rem 1.5rem !important;
-  border-radius: 0 12px 12px 0 !important;
-  color: #ffffff !important;
-  font-weight: 800 !important;
-  font-size: 0.95rem !important;
+  background: rgba(239, 68, 68, 0.05) !important;
+  border: 1px solid rgba(239, 68, 68, 0.15) !important;
+  padding: 1rem 1.25rem !important;
+  border-radius: 12px !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+  font-weight: 600 !important;
+  font-size: 0.85rem !important;
   line-height: 1.5 !important;
-  margin-bottom: 1.5rem !important;
+  margin-bottom: 1.25rem !important;
 }
 
 .tmTermsListUnified {
