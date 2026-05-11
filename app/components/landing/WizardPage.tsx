@@ -7,7 +7,7 @@ import {
   ArrowLeft, ArrowRight, Check, Globe, MapPin,
   Users, Lock, Bot, CheckCircle2, Send, ExternalLink,
   Shield, TrendingUp, Target, Activity, Zap, Coins, Route, Moon,
-  Smartphone, Bell, Settings, BarChart3, Rocket,
+  Smartphone, Bell, Settings, BarChart3, Rocket, RotateCcw,
 } from "lucide-react";
 import { useTranslation, Trans } from "react-i18next";
 import { useSession, signIn } from "next-auth/react";
@@ -215,6 +215,13 @@ export default function WizardPage() {
     if (state.step === 6 && state.robotId === "CLASSIC") { patch({ step: 4 }); return; }
     patch({ step: state.step - 1 });
   };
+
+  const goToStart = useCallback(() => {
+    setState(prev => ({
+      ...DEFAULT_STATE,
+      userId: prev.userId,
+    }));
+  }, []);
 
   // ── Auto-advance helper ─────────────────────────────────────────────────────
   const autoAdvance = (updates: Partial<WState>) => {
@@ -442,9 +449,14 @@ export default function WizardPage() {
               <span className={s.stepTag}>{t("wizard.stepOf", { current: state.step, total: TOTAL })}</span>
               <h2 className={s.stepTitle}>{t("wizard.step6.title")}</h2>
             </div>
-            <button className={s.btnWizardBack} onClick={goBack} id="wizard-back-btn">
-              <ArrowLeft size={15} /> {t("wizard.back")}
-            </button>
+            <div className={s.navButtonGroup}>
+              <button className={s.btnWizardReset} onClick={goToStart} id="wizard-reset-btn-step6">
+                <RotateCcw size={14} /> {t("wizard.goToStart")}
+              </button>
+              <button className={s.btnWizardBack} onClick={goBack} id="wizard-back-btn">
+                <ArrowLeft size={15} /> {t("wizard.back")}
+              </button>
+            </div>
           </div>
 
           <div className={s.step6Content} style={{ "--right-panel-height": panelHeight ? `${panelHeight}px` : "auto" } as any}>
@@ -553,9 +565,14 @@ export default function WizardPage() {
                 {t("wizard.stepOf", { current: state.step, total: TOTAL })}
               </span>
               {!submitDone && state.step > 1 && (
-                <button className={s.btnWizardBack} onClick={goBack} id="wizard-back-btn">
-                  <ArrowLeft size={15} /> {t("wizard.back")}
-                </button>
+                <div className={s.navButtonGroup}>
+                  <button className={s.btnWizardReset} onClick={goToStart} id="wizard-reset-btn">
+                    <RotateCcw size={14} /> {t("wizard.goToStart")}
+                  </button>
+                  <button className={s.btnWizardBack} onClick={goBack} id="wizard-back-btn">
+                    <ArrowLeft size={15} /> {t("wizard.back")}
+                  </button>
+                </div>
               )}
             </div>
 

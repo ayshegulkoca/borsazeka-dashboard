@@ -1392,6 +1392,39 @@
   transform: translateY(-1px);
 }
 
+/* ── Başlangıca Dön butonu — Geri ile aynı cam teması, daha soluk renk ── */
+.btnWizardReset {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.55rem 1rem;
+  min-height: 44px;
+  border-radius: 10px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: rgba(156, 163, 175, 1); /* text-gray-400 */
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.btnWizardReset:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.09);
+  border-color: rgba(255, 255, 255, 0.20);
+  transform: translateY(-1px);
+}
+
+/* Buton grubunu (Reset + Back) sağ tarafa hizalamak için yardımcı flex wrapper */
+.navButtonGroup {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 .btnWizardNext {
   display: inline-flex;
   align-items: center;
