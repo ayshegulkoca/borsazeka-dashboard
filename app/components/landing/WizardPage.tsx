@@ -475,91 +475,93 @@ export default function WizardPage() {
             {/* Left: Robot Details Box (Glass Theme) */}
             <RobotInfoBox robot={selectedRobot} t={t} variant="glass" />
 
-            {/* Right: Pricing or Coming-soon */}
-            <div className={s.priceDetailsPanel} ref={pricePanelRef} style={{ flex: 1 }}>
-              {isPaymentBlocked ? (
-                <ComingSoonPanel
-                  robot={selectedRobot}
-                  notifyEmail={notifyEmail}
-                  notifyDone={notifyDone}
-                  notifySubmitting={notifySubmitting}
-                  onEmailChange={setNotifyEmail}
-                  onNotify={handleNotify}
-                  t={t}
-                />
-              ) : pricing ? (
-                <>
-                  <div className={s.summaryTitle}>{t("wizard.step6.title")}</div>
+            {/* Right Side: Dedicated column that stretches to full height to provide a sticky path */}
+            <div className={s.stickySidebarColumn}>
+              <div className={s.priceDetailsPanel} ref={pricePanelRef}>
+                {isPaymentBlocked ? (
+                  <ComingSoonPanel
+                    robot={selectedRobot}
+                    notifyEmail={notifyEmail}
+                    notifyDone={notifyDone}
+                    notifySubmitting={notifySubmitting}
+                    onEmailChange={setNotifyEmail}
+                    onNotify={handleNotify}
+                    t={t}
+                  />
+                ) : pricing ? (
+                  <>
+                    <div className={s.summaryTitle}>{t("wizard.step6.title")}</div>
 
-                  <div className={s.summaryInfoList}>
-                    <div className={s.summaryInfoItem}>
-                      <span className={s.summaryInfoLabel}>{t("wizard.step6.summaryRobot")}</span>
-                      <span className={s.summaryInfoValue}>{selectedRobot ? t(selectedRobot.nameKey) : ""}</span>
+                    <div className={s.summaryInfoList}>
+                      <div className={s.summaryInfoItem}>
+                        <span className={s.summaryInfoLabel}>{t("wizard.step6.summaryRobot")}</span>
+                        <span className={s.summaryInfoValue}>{selectedRobot ? t(selectedRobot.nameKey) : ""}</span>
+                      </div>
+                      <div className={s.summaryInfoItem}>
+                        <span className={s.summaryInfoLabel}>{t("wizard.step6.summaryBudget")}</span>
+                        <span className={s.summaryInfoValue}>{state.budgetLabel ?? ""}</span>
+                      </div>
+                      <div className={s.summaryInfoItem}>
+                        <span className={s.summaryInfoLabel}>{t("wizard.step6.summaryServer")}</span>
+                        <span className={s.summaryInfoValue} style={{ color: "var(--wiz-primary-light)", fontWeight: "bold" }}>
+                          €{pricing.serverCostEUR}
+                        </span>
+                      </div>
+                      <div className={s.summaryInfoItem}>
+                        <span className={s.summaryInfoLabel}>{t("wizard.step6.paymentDetail")}</span>
+                        <span className={s.summaryInfoValue} style={{ color: "var(--wiz-primary-light)", fontWeight: 700 }}>
+                          €{pricing.serverCostDisplay} {t("wizard.step6.perMonth")}
+                        </span>
+                      </div>
+                      <div className={s.summaryInfoItem}>
+                        <span className={s.summaryInfoLabel}>{t("wizard.step6.summaryProfit")}</span>
+                        <span className={s.summaryInfoValue}>
+                          {pricing.profitSharePercent > 0 ? `%${pricing.profitSharePercent}` : t("wizard.step6.profitShareNA")}
+                        </span>
+                      </div>
                     </div>
-                    <div className={s.summaryInfoItem}>
-                      <span className={s.summaryInfoLabel}>{t("wizard.step6.summaryBudget")}</span>
-                      <span className={s.summaryInfoValue}>{state.budgetLabel ?? ""}</span>
-                    </div>
-                    <div className={s.summaryInfoItem}>
-                      <span className={s.summaryInfoLabel}>{t("wizard.step6.summaryServer")}</span>
-                      <span className={s.summaryInfoValue} style={{ color: "var(--wiz-primary-light)", fontWeight: "bold" }}>
-                        €{pricing.serverCostEUR}
-                      </span>
-                    </div>
-                    <div className={s.summaryInfoItem}>
-                      <span className={s.summaryInfoLabel}>{t("wizard.step6.paymentDetail")}</span>
-                      <span className={s.summaryInfoValue} style={{ color: "var(--wiz-primary-light)", fontWeight: 700 }}>
-                        €{pricing.serverCostDisplay} {t("wizard.step6.perMonth")}
-                      </span>
-                    </div>
-                    <div className={s.summaryInfoItem}>
-                      <span className={s.summaryInfoLabel}>{t("wizard.step6.summaryProfit")}</span>
-                      <span className={s.summaryInfoValue}>
-                        {pricing.profitSharePercent > 0 ? `%${pricing.profitSharePercent}` : t("wizard.step6.profitShareNA")}
-                      </span>
-                    </div>
-                  </div>
 
-                  {state.robotId === "KRIPTTOZEKA_SELF" && pricing.annualCostEUR && pricing.annualStripeLink && (
-                    <AnnualPlanBox
-                      annualCostEUR={pricing.annualCostEUR}
-                      annualStripeLink={pricing.annualStripeLink}
-                      userEmail={session?.user?.email ?? ""}
-                    />
-                  )}
-
-                  <div className={s.summaryDivider} style={{ margin: "1.5rem 0" }} />
-
-                  <div className={s.summaryTotalRow}>
-                    <span className={s.summaryTotalLabel}>{t("wizard.step6.totalMonthly")}</span>
-                    <span className={s.summaryTotalValue}>€{pricing.serverCostDisplay} {t("wizard.step6.perMonth")}</span>
-                  </div>
-
-                  <p className={s.summaryTerms}>{t("wizard.step6.terms")}</p>
-
-                  <button className={s.btnWizardSubmit}
-                    style={{ width: "100%", marginTop: "1rem", justifyContent: "center" }}
-                    onClick={handleSubmit} disabled={submitting || redirecting}>
-                    {redirecting ? "Stripe'a Yönlendiriliyor..." : submitting ? t("wizard.submitting") : (
-                      pricing.stripeLink ? t("wizard.step6.subscribeBtn") : t("wizard.step6.contactBtn")
+                    {state.robotId === "KRIPTTOZEKA_SELF" && pricing.annualCostEUR && pricing.annualStripeLink && (
+                      <AnnualPlanBox
+                        annualCostEUR={pricing.annualCostEUR}
+                        annualStripeLink={pricing.annualStripeLink}
+                        userEmail={session?.user?.email ?? ""}
+                      />
                     )}
-                    {(!submitting && !redirecting) && <ArrowRight size={16} />}
-                  </button>
 
-                  <div style={{ fontSize: "0.75rem", color: "var(--text-muted)", textAlign: "center", marginTop: "1rem" }}>
-                    <Trans
-                      i18nKey="wizard.step6.agreementNote"
-                      t={t}
-                      components={{
-                        linkTerms: <Link href="/kullanim-kosullari" style={{ color: "var(--wiz-primary-light)", textDecoration: "underline" }} />,
-                        linkPrivacy: <Link href="/gizlilik-politikasi" style={{ color: "var(--wiz-primary-light)", textDecoration: "underline" }} />,
-                      }}
-                    />
-                  </div>
-                </>
-              ) : (
-                <div className={s.outOfRangeWarn}>{t("wizard.step6.outOfRange")}</div>
-              )}
+                    <div className={s.summaryDivider} style={{ margin: "1.5rem 0" }} />
+
+                    <div className={s.summaryTotalRow}>
+                      <span className={s.summaryTotalLabel}>{t("wizard.step6.totalMonthly")}</span>
+                      <span className={s.summaryTotalValue}>€{pricing.serverCostDisplay} {t("wizard.step6.perMonth")}</span>
+                    </div>
+
+                    <p className={s.summaryTerms}>{t("wizard.step6.terms")}</p>
+
+                    <button className={s.btnWizardSubmit}
+                      style={{ width: "100%", marginTop: "1rem", justifyContent: "center" }}
+                      onClick={handleSubmit} disabled={submitting || redirecting}>
+                      {redirecting ? "Stripe'a Yönlendiriliyor..." : submitting ? t("wizard.submitting") : (
+                        pricing.stripeLink ? t("wizard.step6.subscribeBtn") : t("wizard.step6.contactBtn")
+                      )}
+                      {(!submitting && !redirecting) && <ArrowRight size={16} />}
+                    </button>
+
+                    <div style={{ fontSize: "0.75rem", color: "var(--text-muted)", textAlign: "center", marginTop: "1rem" }}>
+                      <Trans
+                        i18nKey="wizard.step6.agreementNote"
+                        t={t}
+                        components={{
+                          linkTerms: <Link href="/kullanim-kosullari" style={{ color: "var(--wiz-primary-light)", textDecoration: "underline" }} />,
+                          linkPrivacy: <Link href="/gizlilik-politikasi" style={{ color: "var(--wiz-primary-light)", textDecoration: "underline" }} />,
+                        }}
+                      />
+                    </div>
+                  </>
+                ) : (
+                  <div className={s.outOfRangeWarn}>{t("wizard.step6.outOfRange")}</div>
+                )}
+              </div>
             </div>
           </div>
         </div>

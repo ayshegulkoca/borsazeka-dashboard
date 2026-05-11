@@ -626,9 +626,15 @@
 
 .step6Content {
   display: flex;
-  align-items: flex-start;
+  align-items: stretch; /* Essential: Wrapper columns must stretch to full content height */
   width: 100%;
-  gap: 3rem; /* Wide gap between columns */
+  gap: 3rem;
+}
+
+.stickySidebarColumn {
+  flex: 1; /* w-1/3 */
+  position: relative; /* Rail for the sticky child */
+  min-width: 320px;
 }
 
 @media (max-width: 900px) {
@@ -655,7 +661,7 @@
 }
 
 .priceDetailsPanel {
-  flex: 1; /* w-1/3 equivalent */
+  width: 100%;
   background: rgba(255, 255, 255, 0.03);
   backdrop-filter: blur(40px);
   -webkit-backdrop-filter: blur(40px);
@@ -666,7 +672,8 @@
     0 20px 50px rgba(0, 0, 0, 0.3),
     0 0 0 1px rgba(255, 255, 255, 0.03) inset;
   position: sticky;
-  top: 100px; /* Stick below navbar */
+  top: 100px; /* Anchored below the navbar */
+  transition: all 0.3s ease;
   box-sizing: border-box;
 }
 
@@ -1769,7 +1776,7 @@
   display: flex;
   flex-direction: column;
   gap: 2.5rem;
-  padding: 0;
+  padding: 0 0 12rem 0; /* pb-48 equivalent for scroll breathing room */
   background: transparent !important;
   border: none !important;
   box-shadow: none !important;
