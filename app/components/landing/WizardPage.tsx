@@ -8,6 +8,7 @@ import {
   Users, Lock, Bot, CheckCircle2, Send, ExternalLink,
   Shield, TrendingUp, Target, Activity, Zap, Coins, Route, Moon,
   Smartphone, Bell, Settings, BarChart3, Rocket, RotateCcw, Home,
+  Bitcoin, ShieldAlert,
 } from "lucide-react";
 import { useTranslation, Trans } from "react-i18next";
 import { useSession, signIn } from "next-auth/react";
@@ -64,11 +65,21 @@ function loadFromStorage(): WState {
     if (typeof parsed.step !== "number" || parsed.step < 1 || parsed.step > TOTAL) {
       return DEFAULT_STATE;
     }
+    // Step 4+ için market & managementType zorunlu — eksikse sıfırla
+    if (parsed.step >= 4 && (!parsed.market || !parsed.managementType)) {
+      return DEFAULT_STATE;
+    }
+    // Step 6 için: comingSoon olmayan robot seçimlerinde budgetValue zorunlu
+    // (Önceki setState({ budgetValue, budgetLabel }) bug'ı tarafından bozulmuş state'leri temizle)
+    if (parsed.step === 6 && !parsed.robotId) {
+      return DEFAULT_STATE;
+    }
     return parsed;
   } catch {
     return DEFAULT_STATE;
   }
 }
+
 
 /** Mevcut state'i localStorage'a yazar. */
 function saveToStorage(state: WState): void {
@@ -659,13 +670,48 @@ export default function WizardPage() {
                 {state.step === 4 && (
                   <>
                     <h2 className={s.stepTitle}>{t("wizard.step4.title")}</h2>
-                    <div className={s.robotGridList} style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-                      {availableRobots.map((robot: RobotDefinition) => (
-                        <RobotCard key={robot.id} robot={robot}
-                          selected={state.robotId === robot.id} t={t}
-                          onClick={() => {
-                            const budgetCurrency = robot.market === "BIST" ? "TRY" : "USD";
-                            if (robot.comingSoon) {
+                    {availableRobots.length === 0 ? (
+                      // Safety fallback: state bozulmuşsa kullanıcıyı bilgilendir
+                      <div style={{
+                        padding: "2rem",
+                        textAlign: "center",
+                        background: "rgba(239, 68, 68, 0.07)",
+                        borderRadius: 16,
+                        border: "1px dashed rgba(239, 68, 68, 0.3)"
+                      }}>
+                        <p style={{ color: "#f87171", fontWeight: 600, marginBottom: "0.5rem" }}>
+                          {t("wizard.step4.noRobots") || "Bu kategori için uygun robot bulunamadı."}
+                        </p>
+                        <p style={{ color: "var(--text-secondary)", fontSize: "0.82rem", marginBottom: "1rem" }}>
+                          {t("wizard.step4.noRobotsHint") || "Lütfen geri dönüp pazar ve yönetim modelini tekrar seçin."}
+                        </p>
+                        <button
+                          className={s.btnWizardBack}
+                          onClick={goBack}
+                          style={{ margin: "0 auto" }}
+                        >
+                          ← {t("wizard.back") || "Geri"}
+                        </button>
+                      </div>
+                    ) : (
+                      <div className={s.robotGridList} style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+                        {availableRobots.map((robot: RobotDefinition) => (
+                          <RobotCard key={robot.id} robot={robot}
+                            selected={state.robotId === robot.id} t={t}
+                            onClick={() => {
+                              const budgetCurrency = robot.market === "BIST" ? "TRY" : "USD";
+                              if (robot.comingSoon) {
+                                setState(prev => ({
+                                  ...prev,
+                                  robotId: robot.id,
+                                  budgetValue: null,
+                                  budgetLabel: null,
+                                  selectedBudgetComingSoon: false,
+                                  budgetCurrency,
+                                }));
+                                setTimeout(() => setState(prev => ({ ...prev, step: 6 })), 220);
+                                return;
+                              }
                               setState(prev => ({
                                 ...prev,
                                 robotId: robot.id,
@@ -674,21 +720,11 @@ export default function WizardPage() {
                                 selectedBudgetComingSoon: false,
                                 budgetCurrency,
                               }));
-                              setTimeout(() => setState(prev => ({ ...prev, step: 6 })), 220);
-                              return;
-                            }
-                            setState(prev => ({
-                              ...prev,
-                              robotId: robot.id,
-                              budgetValue: null,
-                              budgetLabel: null,
-                              selectedBudgetComingSoon: false,
-                              budgetCurrency,
-                            }));
-                            setTimeout(() => setState(prev => ({ ...prev, step: 5 })), 220);
-                          }} />
-                      ))}
-                    </div>
+                              setTimeout(() => setState(prev => ({ ...prev, step: 5 })), 220);
+                            }} />
+                        ))}
+                      </div>
+                    )}
                   </>
                 )}
 
@@ -725,7 +761,9 @@ export default function WizardPage() {
                               disabled={opt.comingSoon}
                               onClick={() => {
                                 if (opt.comingSoon) return;
+                                // ✅ FIX: Always spread `prev` to preserve robotId, market, etc.
                                 setState(prev => ({
+                                  ...prev,
                                   budgetValue: opt.value,
                                   budgetLabel: opt.label,
                                   selectedBudgetComingSoon: opt.comingSoon ?? false,
