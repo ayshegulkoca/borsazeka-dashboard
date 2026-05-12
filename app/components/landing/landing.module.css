@@ -11,16 +11,20 @@
   right: 0;
   z-index: 1000;
   padding: 0;
-  height: 84px; /* Increased height for breathing room */
+  height: 84px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: transparent;
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  border-bottom: 1px solid transparent;
+  /* ✅ Kalıcı koyu arka plan — tüm sayfalarda şeffaflık yok */
+  background: rgba(2, 6, 23, 0.97);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  transition: box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.4s ease;
 }
 
-/* Bottom Glow Line */
+/* Bottom Glow Line — daima görünür, scroll'da daha belirgin */
 .navbar::after {
   content: '';
   position: absolute;
@@ -28,29 +32,30 @@
   left: 0;
   right: 0;
   height: 1px;
-  background: linear-gradient(90deg, 
-    transparent 0%, 
-    rgba(29, 78, 216, 0.3) 30%, 
-    rgba(37, 99, 235, 0.4) 50%, 
-    rgba(29, 78, 216, 0.3) 70%, 
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(29, 78, 216, 0.25) 30%,
+    rgba(37, 99, 235, 0.35) 50%,
+    rgba(29, 78, 216, 0.25) 70%,
     transparent 100%);
-  opacity: 0;
-  transition: opacity 0.5s ease;
+  opacity: 0.7;
+  transition: opacity 0.4s ease;
   z-index: 1;
 }
 
+/* Scroll'da shadow güçlensin — arka plan zaten koyu */
 .navbar.scrolled {
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 4px 24px rgba(0, 0, 0, 0.5),
+    0 1px 0 rgba(255, 255, 255, 0.04) inset;
+  border-bottom-color: rgba(59, 130, 246, 0.12);
 }
 
 .navbar.scrolled::after {
   opacity: 1;
 }
 
-/* Force dark navbar — used on pages where the hero is light-colored (e.g. /robotlar) */
+/* .navbarDark artık base ile aynı — geriye dönük uyumluluk için tutuluyor */
 .navbarDark {
   background: rgba(2, 6, 23, 0.97) !important;
   backdrop-filter: blur(16px) !important;
@@ -61,6 +66,7 @@
 .navbarDark::after {
   opacity: 1 !important;
 }
+
 
 /* Max-width inner container — prevents elements hugging screen edges */
 .navInner {
