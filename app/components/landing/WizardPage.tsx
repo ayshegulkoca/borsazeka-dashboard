@@ -761,7 +761,6 @@ export default function WizardPage() {
                               disabled={opt.comingSoon}
                               onClick={() => {
                                 if (opt.comingSoon) return;
-                                // ✅ FIX: Always spread `prev` to preserve robotId, market, etc.
                                 setState(prev => ({
                                   ...prev,
                                   budgetValue: opt.value,
@@ -797,100 +796,192 @@ export default function WizardPage() {
   );
 }
 
+
 // --- TradeMate Premium Info Panel (Step 6 Left) --------------------------------
 function TradematePremiumPanel({ t }: { t: (k: string) => string }) {
-  const renderDesc = (raw: string) => {
-    const parts = raw.split(/(<green>|<\/green>|<b>|<\/b>|<badge>|<\/badge>)/);
-    const nodes: React.ReactNode[] = [];
-    let inGreen = false, inBold = false, inBadge = false;
-    parts.forEach((part, i) => {
-      if (part === "<green>") { inGreen = true; return; }
-      if (part === "</green>") { inGreen = false; return; }
-      if (part === "<b>") { inBold = true; return; }
-      if (part === "</b>") { inBold = false; return; }
-      if (part === "<badge>") { inBadge = true; return; }
-      if (part === "</badge>") { inBadge = false; return; }
+  const accentColor = "#60a5fa";
 
-      if (inGreen) nodes.push(<span key={i} style={{ color: "#60a5fa" }}>{part}</span>);
-      else if (inBold || inBadge) nodes.push(<strong key={i} style={{ fontWeight: 800 }}>{part}</strong>);
-      else nodes.push(part);
-    });
-    return <>{nodes}</>;
-  };
+  const Section = ({ title, children }: { title?: string; children: React.ReactNode }) => (
+    <div className={s.contentSectionUnified}>
+      {title && (
+        <h3 className={s.contentSectionTitleUnified} style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+          {title}
+        </h3>
+      )}
+      {children}
+    </div>
+  );
 
   return (
     <div className={s.robotDetailsPanelUnified}>
+      {/* Header */}
       <div className={s.tmHeader}>
-        <div className={s.tmIconGlowBlue}>
-          <TrendingUp size={32} />
-        </div>
+        <div className={s.tmIconGlowBlue}><Target size={32} /></div>
         <div>
           <h2 className={`${s.robotNeonTitleUnified} ${s.neonBlue}`}>TradeMate Premium</h2>
-          <p className={s.robotSloganUnified}>{t("wizard.step6.trademate.slogan")}</p>
+          <p className={s.robotSloganUnified}>Büyük portföyler için BorsaZeka ekibi tarafından yönetilen profesyonel portföy yönetim sistemi.</p>
         </div>
       </div>
 
+      {/* Highlights */}
       <div className={s.tmHighlights}>
-        <div className={`${s.featureTagUnified} ${s.tagBlue}`}>
-          <Target size={14} />
-          <span>{t("wizard.step6.trademate.h1")}</span>
-        </div>
-        <div className={`${s.featureTagUnified} ${s.tagBlue}`}>
-          <Zap size={14} />
-          <span>{t("wizard.step6.trademate.h2")}</span>
-        </div>
-        <div className={`${s.featureTagUnified} ${s.tagBlue}`}>{t("wizard.step6.trademate.h3")}</div>
+        <div className={`${s.featureTagUnified} ${s.tagBlue}`}><Users size={14} /><span>Ekip Yönetimi</span></div>
+        <div className={`${s.featureTagUnified} ${s.tagBlue}`}><Shield size={14} /><span>Risk Kontrolü</span></div>
+        <div className={`${s.featureTagUnified} ${s.tagBlue}`}><span>Portföy Yönetimi</span></div>
       </div>
 
       <div className={s.flatContentUnified}>
-        <div className={s.contentSectionUnified}>
-          <h3 className={s.contentSectionTitleUnified}>
-            <TrendingUp size={18} style={{ color: "#60a5fa" }} />
-            {t("wizard.step6.trademate.strategyTitle")}
-          </h3>
-          <p className={s.accordionTextUnified}>{renderDesc(t("wizard.step6.trademate.strategyP1"))}</p>
+
+        {/* Giriş */}
+        <Section>
+          <p className={s.accordionTextUnified}>
+            TradeMate Premium, BorsaZeka’nın “at-unut” prensibiyle çalışan gelişmiş portföy yönetim robotunun, uzman ekip kontrolüyle sunulan profesyonel versiyonudur.
+          </p>
+          <p className={s.accordionTextUnified}>
+            Self-Service modelinden farklı olarak TradeMate Premium’da robotun kurulumu, takibi, parametre yönetimi, risk kontrolleri, strateji optimizasyonu ve genel portföy yönetim süreci BorsaZeka ekibi tarafından yürütülür.
+          </p>
+          <p className={s.accordionTextUnified}>
+            TradeMate Premium, kapsamlı risk kontrolü, parçalı işlem algoritmaları, otomatik dengeleme sistemi ve ekip kontrollü strateji yönetimiyle büyük portföyleri kullanıcı müdahalesine gerek kalmadan yönetmek için tasarlanmıştır.
+          </p>
+        </Section>
+
+        {/* Strateji */}
+        <Section title="Stratejinin Temeli">
+          <p className={s.accordionTextUnified}>
+            TradeMate Premium’un çekirdeğinde Overnight stratejisi bulunur. Robot, akşamdan pozisyon açar, ertesi sabah ise gelişmiş algoritmalarla satış işlemlerini gerçekleştirir.
+          </p>
+          <p className={s.accordionTextUnified}>
+            Premium versiyonda bu strateji, BorsaZeka ekibi tarafından düzenli olarak takip edilir and piyasa koşullarına göre optimize edilir.
+          </p>
+          <p className={s.accordionTextUnified}>
+            İsteğe bağlı olarak gün içi algoritma modu da etkinleştirilebilir. Böylece yatırımcı, hem gece pozisyonlarından hem de seans içi fırsatlardan profesyonel ekip yönetimiyle faydalanabilir.
+          </p>
+        </Section>
+
+        {/* Çalışma Mantığı */}
+        <Section title="Çalışma Mantığı">
           <ul className={s.unifiedCheckList}>
-            {(["s1","s2","s3","s4","s5"] as const).map(k => (
-              <li key={k}><CheckCircle2 size={14} className={s.unifiedCheck} style={{ color: "#60a5fa" }} /><span>{t(`wizard.step6.trademate.${k}`)}</span></li>
+            {([
+              { label: "Tam Otomasyon:", desc: "Kullanıcının robotu manuel olarak yönetmesine gerek yoktur. TradeMate Premium’un çalışması, takibi ve strateji kontrolü BorsaZeka ekibi tarafından yapılır." },
+              { label: "Akıllı Portföy Dağılımı:", desc: "Seçilen hisselere göre portföy otomatik olarak bölünür ve optimum fiyatlardan alım yapılması hedeflenir." },
+              { label: "Parçalı İşlem Altyapısı:", desc: "Büyük emirler tahtayı bozmadan, kademeli şekilde gerçekleştirilir." },
+              { label: "Ekip Kontrollü Parametre Yönetimi:", desc: "Her hisse için ayrı algoritma parametreleri hesaplanır ve piyasa koşullarına göre takip edilir. Gerekli durumlarda strateji ayarları BorsaZeka ekibi tarafından optimize edilir." },
+              { label: "Risk Günlerinde Önlem:", desc: "Kredi riski yüksek günlerde kredili işlemler otomatik olarak sınırlandırılır veya devre dışı bırakılır." },
+              { label: "Tatil ve Yarım Gün Takibi:", desc: "Özel takvim algoritması sayesinde tatil ve yarım işlem günlerinde gerekli aksiyonlar kullanıcı müdahalesine gerek kalmadan alınır." },
+            ]).map((item, i) => (
+              <li key={i} style={{ flexDirection: "column", alignItems: "flex-start", gap: "0.1rem" }}>
+                <span style={{ color: accentColor, fontWeight: 700, fontSize: "0.8rem" }}>{item.label}</span>
+                <span style={{ paddingLeft: "0.25rem" }}>{item.desc}</span>
+              </li>
             ))}
           </ul>
-        </div>
+        </Section>
 
-        <div className={s.contentSectionUnified}>
-          <h3 className={s.contentSectionTitleUnified}>
-            <Shield size={18} style={{ color: "#60a5fa" }} />
-            {t("wizard.step6.trademate.riskTitle")}
-          </h3>
+        {/* Risk Yönetimi */}
+        <Section title="Risk Yönetimi ve Güvenlik">
           <ul className={s.unifiedCheckList}>
-            {(["r1","r2","r3","r4","r5","r6","r7"] as const).map(k => (
-              <li key={k}><CheckCircle2 size={14} className={s.unifiedCheck} style={{ color: "#60a5fa" }} /><span>{t(`wizard.step6.trademate.${k}`)}</span></li>
+            {([
+              { label: "Kara Liste:", desc: "Kullanıcının işlem yapılmasını istemediği hisseler kara listeye eklenebilir. Böylece portföy üzerinde temel kontrol korunur." },
+              { label: "Brüt Takas ve Yasaklı Hisseler:", desc: "Brüt takas, kredili işlem yasağı veya olağan dışı fiyat hareketi bildirimi olan hisselerde işlem yapılmaz." },
+              { label: "Kredi Kullanımı Kontrolü:", desc: "Toplam portföyün kaç katına kadar kredi kullanılabileceği yatırımcı tercihi ve risk yapısına göre belirlenebilir." },
+              { label: "Rezerve Para Yönetimi:", desc: "T+2 döneminde para çekmek isteyen yatırımcı için robotun kullanacağı miktar sınırlandırılabilir ve portföy fonları buna göre yönetilebilir." },
+              { label: "Tavan Hisse Algoritması:", desc: "Tavan olan hisselerde özel satış algoritması kullanılarak maksimum kâr hedeflenir." },
+              { label: "Ekip Tarafından Risk Takibi:", desc: "TradeMate Premium’da risk yönetimi sadece robot algoritmalarıyla sınırlı değildir. BorsaZeka ekibi, sistemin genel performansını ve risk durumunu düzenli olarak takip eder." },
+            ]).map((item, i) => (
+              <li key={i} style={{ flexDirection: "column", alignItems: "flex-start", gap: "0.1rem" }}>
+                <span style={{ color: accentColor, fontWeight: 700, fontSize: "0.8rem" }}>{item.label}</span>
+                <span style={{ paddingLeft: "0.25rem" }}>{item.desc}</span>
+              </li>
             ))}
           </ul>
+        </Section>
+
+        {/* Neler Yapabilirsin? */}
+        <Section title="TradeMate Premium ile Neler Yapabilirsin?">
+          <ul className={s.unifiedCheckList}>
+            {[
+              "Portföyünü profesyonel ekip yönetimine bırakabilirsin.",
+              "Robotun performansını, işlem geçmişini ve kâr zarar durumunu takip edebilirsin.",
+              "Kredili işlem katsayısı, kara liste ve kullanılacak bütçe gibi temel tercihleri BorsaZeka ekibiyle koordineli şekilde belirleyebilirsin.",
+              "Tüm emirler, güvenli BorsaZeka sunucuları üzerinden BIST’e iletilir.",
+              "Kurulum, takip, optimizasyon ve teknik yönetim BorsaZeka ekibi tarafından gerçekleştirilir.",
+            ].map((item, i) => (
+              <li key={i} style={{ alignItems: "flex-start" }}>
+                <CheckCircle2 size={14} style={{ color: accentColor, flexShrink: 0, marginTop: "2px" }} />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </Section>
+
+        {/* Kimler için */}
+        <Section title="Kimler İçin Uygundur?">
+          <ul className={s.unifiedCheckList}>
+            {[
+              "Büyük portföylere sahip, işlemlerini profesyonel otomasyona bırakmak isteyen yatırımcılar",
+              "Robot yönetimi, parametre takibi ve teknik detaylarla uğraşmak istemeyen kullanıcılar",
+              "Portföy yönetiminde veri temelli karar sistemlerine güvenen profesyonel yatırımcılar",
+              "Günlük takip yapmak istemeyen, ancak güçlü risk yönetimiyle istikrarlı getiri hedefleyen yatırımcılar",
+            ].map((item, i) => (
+              <li key={i} style={{ alignItems: "flex-start" }}>
+                <CheckCircle2 size={14} style={{ color: accentColor, flexShrink: 0, marginTop: "2px" }} />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </Section>
+
+        {/* Özet */}
+        <div className={s.contentSectionUnified} style={{
+          background: "rgba(96, 165, 250, 0.06)",
+          border: "1px solid rgba(96, 165, 250, 0.2)",
+          borderRadius: "12px",
+          padding: "1rem 1.25rem",
+        }}>
+          <p className={s.accordionTextUnified} style={{ margin: 0, color: "#dbeafe", fontStyle: "italic" }}>
+            TradeMate Premium, yüksek hacimli portföyleri BorsaZeka ekibi yönetiminde otomatik olarak değerlendirmek isteyen yatırımcılar için geliştirilmiş profesyonel bir algoritmik yatırım çözümüdür. Kontrol ve strateji yönetimi BorsaZeka ekibinde, portföy takibi yatırımcıdadır.
+          </p>
         </div>
 
-        <div className={s.contentSectionUnified}>
-          <h3 className={s.contentSectionTitleUnified}>
-            <Activity size={18} style={{ color: "#60a5fa" }} />
-            {t("wizard.step6.trademate.termsTitle")}
-          </h3>
-          <p className={s.tmTermsNote} style={{ color: "#fff", fontWeight: 700 }}>{t("wizard.step6.trademate.termsNote")}</p>
+        {/* Kullanım Şartları */}
+        <Section title="TradeMate Robot Kullanım Şartları">
+          <p className={s.accordionTextUnified}>
+            Lütfen aşağıdaki kullanım şartlarını dikkatlice okuyun. Bu şartlar, TradeMate algoritmik yatırım robotunu kullanacak yatırımcılar için geçerlidir. Herhangi bir sorunuz olursa tarafımıza ulaşabilirsiniz.
+          </p>
           <ol className={s.tmTermsListUnified}>
-            {(["t1","t2","t3","t4","t5","t6","t7","t8","t9","t10","t11","t12","t13"] as const).map(k => (
-              <li key={k} className={s.tmTermsItemUnified}>
+            {[
+              { title: "Kullanıcı Sayısı ve Bütçe Sınırı", desc: "TradeMate en fazla 40 kullanıcı ile sınırlandırılmıştır. Kişi sayısından ziyade toplam portföy büyüklüğü önemlidir. Tüm müşterilerin toplam portföyü 1.000.000.000 TL’yi geçmeyecektir." },
+              { title: "Robot Yönetimi", desc: "TradeMate’in yönetimi tamamen tarafımızdan gerçekleştirilecektir. Kullanıcıların robota müdahale etmesine gerek yoktur ve manuel işlem yapılması yasaktır." },
+              { title: "Katılım Bütçesi", desc: "Minimum giriş bütçesi: 600.000 TL · Optimal minimum: 750.000 TL · Maksimum giriş bütçesi: 100.000.000 TL" },
+              { title: "Aracı Kurum ve Komisyon İndirimi", desc: "Katılım sağlamak isteyen yatırımcılar, tarafımızca yönlendirilecek anlaşmalı aracı kurum üzerinden hesap açmalıdır. Bu sayede indirimli komisyon avantajından faydalanılacaktır: Yüzbinde 7. Yüksek işlem hacmi nedeniyle iDeal programı muhtemelen ücretsiz olacaktır. Eğer herhangi bir lisans ücreti çıkarsa, bu masraf doğrudan T2 Overall değerinden düşeceği için bu masrafa ve diğer hesap içi tüm masraflara (komisyon, hesap işletim ücreti vb.) ortak oluyoruz. iDeal lisansı ve gerekli tüm erişim bilgileri, aracı kurumla tarafımızca koordine edilecektir." },
+              { title: "Sunucu Kiralama", desc: "TradeMate için sunucu kiralanması gerekmektedir. Sunucu kiralama işlemi borsazeka.com üzerinden yapılacaktır. Sunucu kurulumu tarafımızca yapılacak, yönetimi ise bize ait olacaktır." },
+              { title: "Sunucu Paketleri", desc: "1.000.000 TL altındaki hesaplar için: 30€’luk sunucu yeterlidir. 1.000.000 TL üzerindeki hesaplar için: 55€’luk sunucu tavsiye edilir. Daha yüksek bütçeler için, portföy yönetim ve işlem performansı açısından 95€’luk üst seviye sunucu tercih edilebilir. Sunucu ücreti kullanıcıya aittir, yönetimi ücretsiz olarak tarafımızca yapılacaktır." },
+              { title: "Kurulum Ücreti", desc: "İlk kurulum için tek seferlik 50€ ücret alınmaktadır. Bu ücret yalnızca başlangıçta talep edilir, sonraki aylarda tekrar edilmez." },
+              { title: "Hesap Takibi", desc: "Yatırımcılar, aracı kurumun web sitesi veya mobil uygulaması üzerinden portföylerini anlık olarak takip edebilecektir." },
+              { title: "Kâr Paylaşımı", desc: "Her ay sonunda, gerçekleşen net kâr üzerinden %50 kâr paylaşımı yapılacaktır. Ay sonlarında, tarafımızca size aylık performans raporu gönderilecektir. Zarar edilen aylarda zarar gelecek aya devredilir. Böylece kullanıcının kara geçene kadar ücret ödemesi gerekmez. Zarar edilen aylarda kullanıcının para çekimi yapması tavsiye edilmez ancak çekim yapılırsa çekim miktarı / toplam portföy oranında zararı kullanıcı realize etmiş olur." },
+              { title: "Manuel İşlem Kısıtı", desc: "Kullanıcı (siz) ve robot yöneticisi (biz) manuel alım-satım işlemi yapmayacaktır. Ancak acil müdahale gerektiren teknik arıza durumlarında, kullanıcıyla koordinasyon halinde işlem yapılabilir." },
+              { title: "Veri Gizliliği", desc: "Robot tarafından alınan veya satılan hisseler öncesinde veya sonrasında hiçbir şekilde paylaşılmayacaktır. Tüm veriler ve işlem detayları gizlilik prensipleri çerçevesinde korunacaktır." },
+              { title: "Para Yatırma ve Çekme İşlemleri", desc: "Kullanıcı, önceden haber vererek istediği zaman para yatırabilir veya çekebilir. Para çekme talepleri için en az 2 gün önceden bilgilendirme zorunludur. Böylece robot, işlem hacmini optimize ederek para çekimi için uygun bir planlama yapabilecektir." },
+              { title: "Şifre Yönetimi", desc: "Aracı kurum şifreleri, güvenli vault sunucularımızda kaydedilecek ve sadece yetkili robot yöneticisi tarafından iDeal içine kaydedilecektir. Pass kurulumu kullanıcı yetkilendirmesi ile yapılacaktır." },
+              { title: "Sorumluluk", desc: "TradeMate, tam otomatik bir algoritmik yatırım sistemidir. Tüm kullanıcıların yatırımları, performans optimizasyonu ve güvenlik standartlarına uygun şekilde yönetilecektir. Sistemin en verimli şekilde çalışması için belirtilen kurallara eksiksiz uymak zorunludur." },
+            ].map((item, i) => (
+              <li key={i} className={s.tmTermsItemUnified}>
                 <div>
-                  <strong className={s.tmTermsTitleUnified}>{t(`wizard.step6.trademate.${k}Title`)}</strong>
-                  <p className={s.tmTermsDescUnified}>{renderDesc(t(`wizard.step6.trademate.${k}Desc`))}</p>
+                  <strong className={s.tmTermsTitleUnified}>
+                    {item.title}
+                  </strong>
+                  <p className={s.tmTermsDescUnified}>{item.desc}</p>
                 </div>
               </li>
             ))}
           </ol>
-        </div>
+        </Section>
       </div>
     </div>
   );
 }
 
-// --- Highway Premium Info Panel (Step 6 Left) ---------------------------------
+
 // --- Highway Premium Info Panel (Step 6 Left) ---------------------------------
 function HighwayPremiumPanel({ t }: { t: (k: string) => string }) {
   const accentColor = "#60a5fa";
@@ -1154,7 +1245,7 @@ function KriptozekaPremiumPanel({ t }: { t: (k: string) => string }) {
 }
 
 
-// --- DarkRoom Premium Info Panel (Step 6 Left) --------------------------------
+
 // --- DarkRoom Premium Info Panel (Step 6 Left) --------------------------------
 function DarkroomPremiumPanel({ t }: { t: (k: string) => string }) {
   const accentColor = "#c084fc";
@@ -1372,89 +1463,161 @@ function DarkroomPremiumPanel({ t }: { t: (k: string) => string }) {
 
 // --- DarkRoom Self-Service Info Panel (Step 6 Left) ---------------------------
 function DarkroomSelfPanel({ t }: { t: (k: string) => string }) {
-  const renderDesc = (raw: string) => {
-    const parts = raw.split(/(<green>|<\/green>|<b>|<\/b>|<badge>|<\/badge>)/);
-    const nodes: React.ReactNode[] = [];
-    let inGreen = false, inBold = false, inBadge = false;
-    parts.forEach((part, i) => {
-      if (part === "<green>") { inGreen = true; return; }
-      if (part === "</green>") { inGreen = false; return; }
-      if (part === "<b>") { inBold = true; return; }
-      if (part === "</b>") { inBold = false; return; }
-      if (part === "<badge>") { inBadge = true; return; }
-      if (part === "</badge>") { inBadge = false; return; }
+  const accentColor = "#c084fc";
 
-      if (inGreen) nodes.push(<span key={i} style={{ color: "#c084fc" }}>{part}</span>);
-      else if (inBold || inBadge) nodes.push(<strong key={i} style={{ fontWeight: 800 }}>{part}</strong>);
-      else nodes.push(part);
-    });
-    return <>{nodes}</>;
-  };
+  const Section = ({ title, children }: { title?: string; children: React.ReactNode }) => (
+    <div className={s.contentSectionUnified}>
+      {title && (
+        <h3 className={s.contentSectionTitleUnified} style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+          {title}
+        </h3>
+      )}
+      {children}
+    </div>
+  );
 
   return (
     <div className={s.robotDetailsPanelUnified}>
+      {/* Header */}
       <div className={s.tmHeader}>
-        <div className={s.tmIconGlowPurple}>
-          <Smartphone size={32} />
-        </div>
+        <div className={s.tmIconGlowPurple}><Smartphone size={32} /></div>
         <div>
           <h2 className={`${s.robotNeonTitleUnified} ${s.neonPurple}`}>DarkRoom Self-Service</h2>
-          <p className={s.robotSloganUnified}>{t("wizard.step6.darkroomSelf.hook")}</p>
+          <p className={s.robotSloganUnified}>Gece alır, sabah satar. Kazanç fırsatını istatistiksel zeka ile yakalar.</p>
         </div>
       </div>
 
+      {/* Highlights */}
       <div className={s.tmHighlights}>
-        <div className={`${s.featureTagUnified} ${s.tagPurple}`}>
-          <Smartphone size={14} />
-          <span>Mobil Uygulama Kontrolü</span>
-        </div>
-        <div className={`${s.featureTagUnified} ${s.tagPurple}`}>
-          <Activity size={14} />
-          <span>Ücretsiz Sunucu</span>
-        </div>
-        <div className={`${s.featureTagUnified} ${s.tagPurple}`}>{t("wizard.step6.darkroomSelf.h3")}</div>
+        <div className={`${s.featureTagUnified} ${s.tagPurple}`}><Smartphone size={14} /><span>Mobil Uygulama Kontrolü</span></div>
+        <div className={`${s.featureTagUnified} ${s.tagPurple}`}><Activity size={14} /><span>Ücretsiz Sunucu</span></div>
+        <div className={`${s.featureTagUnified} ${s.tagPurple}`}><span>Gap Trade Stratejisi</span></div>
       </div>
 
       <div className={s.flatContentUnified}>
-        <div className={s.contentSectionUnified}>
-          <h3 className={s.contentSectionTitleUnified}>
-            <Zap size={18} style={{ color: "#c084fc" }} />
-            {t("wizard.step6.darkroomSelf.controlTitle")}
-          </h3>
+        
+        {/* Mobil App Intro */}
+        <Section title="BorsaZeka Mobile App – Self-Service Robotlar">
+          <p className={s.accordionTextUnified}>
+            Kendi algoritmik robotlarını cebinden yönet! BorsaZeka’nın mobil uygulaması, algoritmik işlem robotlarını kendi kontrolünde kullanmak isteyen yatırımcılar için özel olarak tasarlanmış Self-Service modülünü sunar.
+          </p>
           <ul className={s.unifiedCheckList}>
-            <li><CheckCircle2 size={14} className={s.unifiedCheck} style={{ color: "#c084fc" }} /><span>{t("wizard.step6.darkroomSelf.c1")}</span></li>
-            <li><CheckCircle2 size={14} className={s.unifiedCheck} style={{ color: "#c084fc" }} /><span>{t("wizard.step6.darkroomSelf.c2")}</span></li>
-            <li><CheckCircle2 size={14} className={s.unifiedCheck} style={{ color: "#c084fc" }} /><span>{t("wizard.step6.darkroomSelf.c3")}</span></li>
-          </ul>
-        </div>
-
-        <div className={s.contentSectionUnified}>
-          <h3 className={s.contentSectionTitleUnified}>
-            <TrendingUp size={18} style={{ color: "#c084fc" }} />
-            {t("wizard.step6.darkroomSelf.strategyTitle")}
-          </h3>
-          <p className={s.accordionTextUnified}>{renderDesc(t("wizard.step6.darkroomSelf.strategyP1"))}</p>
-          <p className={s.accordionTextUnified}>{renderDesc(t("wizard.step6.darkroomSelf.strategyP2"))}</p>
-        </div>
-
-        <div className={s.contentSectionUnified}>
-          <h3 className={s.contentSectionTitleUnified}>
-            <Activity size={18} style={{ color: "#c084fc" }} />
-            {t("wizard.step6.darkroomSelf.termsTitle")}
-          </h3>
-          <div className={s.tmRedLineUnified}>{t("wizard.step6.darkroomSelf.redLine")}</div>
-          <p className={s.tmTermsNote} style={{ color: "#fff", fontWeight: 700 }}>{t("wizard.step6.darkroomSelf.termsNote")}</p>
-          <ol className={s.tmTermsListUnified}>
-            {(["t1", "t2", "t3", "t4", "t5"] as const).map(k => (
-              <li key={k} className={s.tmTermsItemUnified}>
-                <div>
-                  <strong className={s.tmTermsTitleUnified}>{t(`wizard.step6.darkroomSelf.${k}Title`)}</strong>
-                  <p className={s.tmTermsDescUnified}>{renderDesc(t(`wizard.step6.darkroomSelf.${k}Desc`))}</p>
-                </div>
+            {[
+              "Robotlarını manuel olarak başlatıp durdurabilir,",
+              "Parametrelerini gerçek zamanlı olarak değiştirebilir,",
+              "Performans takibini doğrudan uygulama üzerinden gerçekleştirebilir.",
+            ].map((item, i) => (
+              <li key={i} style={{ alignItems: "flex-start" }}>
+                <CheckCircle2 size={14} style={{ color: accentColor, flexShrink: 0, marginTop: "2px" }} />
+                <span>{item}</span>
               </li>
             ))}
-          </ol>
+          </ul>
+        </Section>
+
+        {/* Darkroom Giriş */}
+        <Section title="DarkRoom Self-Service Robotu">
+          <p className={s.accordionTextUnified}>
+            DarkRoom, BorsaZeka’nın en popüler ve güvenilir robotlarından biridir. Klasik teknik analiz yaklaşımlarını tamamen geride bırakan bu algoritma, günlük açılış boşluklarından (gap) kazanç elde etmeyi hedefler.
+          </p>
+        </Section>
+
+        {/* Strateji */}
+        <Section title="Stratejinin Temeli">
+          <ul className={s.unifiedCheckList}>
+            {([
+              { label: "Hiçbir teknik gösterge kullanılmaz:", desc: "RSI, MACD veya Bollinger Bands gibi göstergeler bu sistemde yer almaz." },
+              { label: "İstatistiksel zeka:", desc: "Geçmiş binlerce işlem gününe ait veri setlerini analiz eden yapay zeka motoru, yarın yüksek ihtimalle yukarı açılış yapacak hisseleri belirler." },
+            ]).map((item, i) => (
+              <li key={i} style={{ flexDirection: "column", alignItems: "flex-start", gap: "0.1rem" }}>
+                <span style={{ color: accentColor, fontWeight: 700, fontSize: "0.8rem" }}>{item.label}</span>
+                <span style={{ paddingLeft: "0.25rem" }}>{item.desc}</span>
+              </li>
+            ))}
+          </ul>
+        </Section>
+
+        {/* Çalışma Mantığı */}
+        <Section title="Çalışma Mantığı">
+          <ul className={s.unifiedCheckList}>
+            {([
+              { label: "İşlem Zamanı:", desc: "Robot yalnızca günün sonunda (akşam) pozisyon alır." },
+              { label: "Pozisyon Kapatma:", desc: "Alınan tüm pozisyonlar ertesi sabah açılışta otomatik olarak kapatılır." },
+              { label: "Bekleme Yok:", desc: "Hiçbir hisse gün içinde elde tutulmaz. Her işlem, 'gece al – sabah sat' şeklinde kısa vadelidir." },
+              { label: "İstatistiksel Seçim:", desc: "Sistem her akşam yüzlerce hissenin veri desenlerini analiz ederek, gap up (yüksek açılış) ihtimali yüksek olanları seçer." },
+            ]).map((item, i) => (
+              <li key={i} style={{ flexDirection: "column", alignItems: "flex-start", gap: "0.1rem" }}>
+                <span style={{ color: accentColor, fontWeight: 700, fontSize: "0.8rem" }}>{item.label}</span>
+                <span style={{ paddingLeft: "0.25rem" }}>{item.desc}</span>
+              </li>
+            ))}
+          </ul>
+        </Section>
+
+        {/* Neler Yapabilirsin? */}
+        <Section title="DarkRoom Self-Service ile Neler Yapabilirsin?">
+          <p className={s.accordionTextUnified}>
+            BorsaZeka Mobile App üzerinden kullanıcıya tam kontrol sağlanır:
+          </p>
+          <ul className={s.unifiedCheckList}>
+            {([
+              { label: "Robotu Aç / Kapat:", desc: "İstediğin günlerde robotu çalıştırabilir veya durdurabilirsin." },
+              { label: "Bütçe ve Kredi Ayarı:", desc: "Portföyde kullanılacak toplam bütçeyi ve (varsa) kredi limitini belirleyebilirsin." },
+              { label: "İşlem Bildirimleri:", desc: "Pozisyon açıldığında ve kapandığında anlık uyarı alırsın." },
+              { label: "Performans Takibi:", desc: "Günlük kâr/zarar, toplam işlem sayısı ve başarı oranını görüntüleyebilirsin." },
+            ]).map((item, i) => (
+              <li key={i} style={{ flexDirection: "column", alignItems: "flex-start", gap: "0.1rem" }}>
+                <span style={{ color: accentColor, fontWeight: 700, fontSize: "0.8rem" }}>{item.label}</span>
+                <span style={{ paddingLeft: "0.25rem" }}>{item.desc}</span>
+              </li>
+            ))}
+          </ul>
+        </Section>
+
+        {/* Güvenlik */}
+        <Section title="Güvenlik ve Altyapı">
+          <ul className={s.unifiedCheckList}>
+            {([
+              { label: "Güvenli Emir İletimi:", desc: "Emirler, BorsaZeka sunucuları üzerinden, kullanıcıya tahsisli IP adresiyle ücretsiz olarak BIST’e iletilir." },
+              { label: "Veri Güvenliği:", desc: "Hesap bilgileri, güvenli Vault sunucularda tutulur ve erişime kapalıdır." },
+              { label: "Şeffaflık:", desc: "DarkRoom Self-Service yalnızca emir gönderir; kullanıcı, tüm işlemleri aracı kurum platformundan da takip edebilir." },
+            ]).map((item, i) => (
+              <li key={i} style={{ flexDirection: "column", alignItems: "flex-start", gap: "0.1rem" }}>
+                <span style={{ color: accentColor, fontWeight: 700, fontSize: "0.8rem" }}>{item.label}</span>
+                <span style={{ paddingLeft: "0.25rem" }}>{item.desc}</span>
+              </li>
+            ))}
+          </ul>
+        </Section>
+
+        {/* Kimler İçin */}
+        <Section title="Kimler İçin Uygundur?">
+          <ul className={s.unifiedCheckList}>
+            {[
+              "Gece pozisyon açıp sabah satış yapmayı tercih eden kısa vadeli yatırımcılar,",
+              "Teknik analiz yerine istatistiksel modelleme ve yapay zeka temelli stratejilere güvenenler,",
+              "Robotu dilediği zaman açıp kapatmak isteyen, manuel kontrolü önemseyen kullanıcılar.",
+            ].map((item, i) => (
+              <li key={i} style={{ alignItems: "flex-start" }}>
+                <CheckCircle2 size={14} style={{ color: accentColor, flexShrink: 0, marginTop: "2px" }} />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </Section>
+
+        {/* Özet */}
+        <div className={s.contentSectionUnified} style={{
+          background: "rgba(192, 132, 252, 0.06)",
+          border: "1px solid rgba(192, 132, 252, 0.2)",
+          borderRadius: "12px",
+          padding: "1rem 1.25rem",
+        }}>
+          <p className={s.accordionTextUnified} style={{ margin: 0, color: "#e9d5ff", fontStyle: "italic" }}>
+            DarkRoom Self-Service, klasik otomasyonun ötesine geçerek robot stratejisini doğrudan cebinden yönetme imkânı sunar. Kontrol sende, algoritma BorsaZeka’da.
+          </p>
         </div>
+
       </div>
     </div>
   );
