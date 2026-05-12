@@ -891,104 +891,166 @@ function TradematePremiumPanel({ t }: { t: (k: string) => string }) {
 }
 
 // --- Highway Premium Info Panel (Step 6 Left) ---------------------------------
+// --- Highway Premium Info Panel (Step 6 Left) ---------------------------------
 function HighwayPremiumPanel({ t }: { t: (k: string) => string }) {
-  const renderDesc = (raw: string) => {
-    const parts = raw.split(/(<green>|<\/green>|<b>|<\/b>|<badge>|<\/badge>)/);
-    const nodes: React.ReactNode[] = [];
-    let inGreen = false, inBold = false, inBadge = false;
-    parts.forEach((part, i) => {
-      if (part === "<green>") { inGreen = true; return; }
-      if (part === "</green>") { inGreen = false; return; }
-      if (part === "<b>") { inBold = true; return; }
-      if (part === "</b>") { inBold = false; return; }
-      if (part === "<badge>") { inBadge = true; return; }
-      if (part === "</badge>") { inBadge = false; return; }
+  const accentColor = "#60a5fa";
 
-      if (inGreen) nodes.push(<span key={i} style={{ color: "#60a5fa" }}>{part}</span>);
-      else if (inBold || inBadge) nodes.push(<strong key={i} style={{ fontWeight: 800 }}>{part}</strong>);
-      else nodes.push(part);
-    });
-    return <>{nodes}</>;
-  };
+  const Section = ({ title, children }: { title?: string; children: React.ReactNode }) => (
+    <div className={s.contentSectionUnified}>
+      {title && (
+        <h3 className={s.contentSectionTitleUnified} style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+          {title}
+        </h3>
+      )}
+      {children}
+    </div>
+  );
+
+  const Bullets = ({ items }: { items: string[] }) => (
+    <ul className={s.unifiedCheckList}>
+      {items.map((item, i) => (
+        <li key={i} style={{ alignItems: "flex-start" }}>
+          <CheckCircle2 size={14} style={{ color: accentColor, flexShrink: 0, marginTop: "2px" }} />
+          <span>{item}</span>
+        </li>
+      ))}
+    </ul>
+  );
 
   return (
     <div className={s.robotDetailsPanelUnified}>
+      {/* Header */}
       <div className={s.tmHeader}>
-        <div className={s.tmIconGlowBlue}>
-          <TrendingUp size={32} />
-        </div>
+        <div className={s.tmIconGlowBlue}><TrendingUp size={32} /></div>
         <div>
           <h2 className={`${s.robotNeonTitleUnified} ${s.neonBlue}`}>Highway Premium</h2>
-          <p className={s.robotSloganUnified}>{t("wizard.step6.highway.slogan")}</p>
+          <p className={s.robotSloganUnified}>BorsaZeka ekibi tarafından yönetilen profesyonel trend takip sistemi.</p>
         </div>
       </div>
 
+      {/* Highlights */}
       <div className={s.tmHighlights}>
-        <div className={`${s.featureTagUnified} ${s.tagBlue}`}>
-          <Users size={14} />
-          <span>Ekip Yönetimi</span>
-        </div>
-        <div className={`${s.featureTagUnified} ${s.tagBlue}`}>
-          <Lock size={14} />
-          <span>Kurumsal Güvenlik</span>
-        </div>
-        <div className={`${s.featureTagUnified} ${s.tagBlue}`}>{t("wizard.step6.highway.h1")}</div>
+        <div className={`${s.featureTagUnified} ${s.tagBlue}`}><Users size={14} /><span>Ekip Yönetimi</span></div>
+        <div className={`${s.featureTagUnified} ${s.tagBlue}`}><Zap size={14} /><span>Trend Takip</span></div>
+        <div className={`${s.featureTagUnified} ${s.tagBlue}`}><span>Profesyonel Optimizasyon</span></div>
       </div>
 
       <div className={s.flatContentUnified}>
-        <div className={s.contentSectionUnified}>
-          <h3 className={s.contentSectionTitleUnified}>
-            <Zap size={18} style={{ color: "#60a5fa" }} />
-            {t("wizard.step6.highway.strategyTitle")}
-          </h3>
-          <p className={s.accordionTextUnified}>{renderDesc(t("wizard.step6.highway.strategyP1"))}</p>
-          <p className={s.accordionTextUnified}>{renderDesc(t("wizard.step6.highway.strategyP2"))}</p>
-        </div>
 
-        <div className={s.contentSectionUnified}>
-          <h3 className={s.contentSectionTitleUnified}>
-            <Settings size={18} style={{ color: "#60a5fa" }} />
-            {t("wizard.step6.highway.logicTitle")}
-          </h3>
+        {/* Giriş */}
+        <Section>
+          <p className={s.accordionTextUnified}>
+            Highway Premium, BorsaZeka’nın gün içi trend hareketlerini yakalamak için geliştirdiği dinamik ve çok katmanlı tarama sisteminin, uzman ekip yönetimiyle sunulan profesyonel versiyonudur.
+          </p>
+          <p className={s.accordionTextUnified}>
+            Self-Service modelinden farklı olarak Highway Premium’da robotun kurulumu, takibi, parametre yönetimi, piyasa koşullarına göre optimizasyonu ve genel strateji kontrolü BorsaZeka ekibi tarafından yapılır. Yatırımcı, sistemi kendi başına yönetmek zorunda kalmadan profesyonel destekle bu algoritmadan faydalanır.
+          </p>
+        </Section>
+
+        {/* Strateji */}
+        <Section title="Stratejinin Temeli">
+          <p className={s.accordionTextUnified}>
+            Highway Premium, klasik tek gösterge yaklaşımından farklı olarak çok boyutlu trend analizi yapar. Robot, farklı zaman periyotlarında çoklu algoritma kombinasyonları kullanarak trend yönünü belirler.
+          </p>
+          <p className={s.accordionTextUnified}>
+            Sistem, mini trend uyumluluğu ve makro trend doğrulaması ile çifte güvenlik sağlar. Sadece farklı zaman dilimlerinde yeterli trend uyumu oluştuğunda pozisyon açar.
+          </p>
+          <p className={s.accordionTextUnified}>
+            Premium versiyonda bu yapı, BorsaZeka ekibi tarafından düzenli olarak izlenir ve piyasa koşullarına göre optimize edilir.
+          </p>
+        </Section>
+
+        {/* Çalışma Mantığı */}
+        <Section title="Çalışma Mantığı">
           <ul className={s.unifiedCheckList}>
-            {(["l1", "l2", "l3", "l4"] as const).map(k => (
-              <li key={k}><CheckCircle2 size={14} className={s.unifiedCheck} style={{ color: "#60a5fa" }} /><span>{t(`wizard.step6.highway.${k}`)}</span></li>
+            {[
+              "Akıllı Tarama: Robot seans içinde aktif olarak piyasayı tarar ve trending hisseleri otomatik olarak tespit eder.",
+              "Çoklu Zaman Kontrolü: Farklı zaman periyotlarında trend uyumunu kontrol eder ve zayıf sinyalleri filtreler.",
+              "Ekip Kontrollü Optimizasyon: Parametreler ve strateji ayarları, BorsaZeka ekibi tarafından piyasa koşullarına göre takip edilir.",
+              "Dinamik Giriş: Piyasa yapısı ve hisse trendi uygun olduğunda pozisyon açar.",
+            ].map((item, i) => (
+              <li key={i} style={{ alignItems: "flex-start" }}>
+                <CheckCircle2 size={14} style={{ color: accentColor, flexShrink: 0, marginTop: "2px" }} />
+                <span>{item}</span>
+              </li>
             ))}
           </ul>
-          <div style={{ marginTop: "1rem", borderTop: "1px solid rgba(255,255,255,0.1)", paddingTop: "1rem" }}>
-            <p style={{ fontSize: "0.9rem", fontWeight: "800", marginBottom: "0.5rem", color: "#60a5fa" }}>
-              {t("wizard.step6.highway.exitTitle")}
-            </p>
-            <ul className={s.unifiedCheckList}>
-              {(["e1", "e2", "e3", "e4"] as const).map(k => (
-                <li key={k}><CheckCircle2 size={14} className={s.unifiedCheck} style={{ color: "#60a5fa" }} /><span>{t(`wizard.step6.highway.${k}`)}</span></li>
-              ))}
-            </ul>
+          
+          <div style={{ marginTop: "1rem", paddingLeft: "0.5rem" }}>
+            <p style={{ fontSize: "0.85rem", fontWeight: 700, color: accentColor, marginBottom: "0.5rem" }}>Profesyonel Çıkış Yönetimi:</p>
+            <Bullets items={[
+              "Belirlenmiş kar hedefi ile otomatik satış",
+              "İzleyen stop ile güçlü trendleri devam ettirme",
+              "Zaman stop ile risk yönetimi",
+              "Piyasa koşullarına göre ekip tarafından optimize edilen strateji ayarları",
+            ]} />
           </div>
-        </div>
+        </Section>
 
-        <div className={s.contentSectionUnified}>
-          <h3 className={s.contentSectionTitleUnified}>
-            <Activity size={18} style={{ color: "#60a5fa" }} />
-            {t("wizard.step6.highway.termsTitle")}
-          </h3>
-          <div className={s.tmRedLineUnified}>{t("wizard.step6.highway.redLine")}</div>
-          <p className={s.tmTermsNote} style={{ color: "#fff", fontWeight: 700 }}>{t("wizard.step6.highway.termsNote")}</p>
+        {/* Özel Özellikler */}
+        <Section title="Özel Özellikleri">
+          <Bullets items={[
+            "Ekip Tarafından Yönetim: Kurulum, takip ve strateji kontrolü BorsaZeka ekibi tarafından yapılır.",
+            "Farklı Zaman Dilimlerinde Tarama: Her zaman dilimine özel optimizasyon ve tarama stratejileri kullanılır.",
+            "Piyasa Uyumlu Çalışma: Ana endeks yönüne göre kar hedefleri ve risk parametreleri dinamik olarak optimize edilir.",
+            "Gerçek Zamanlı Adaptasyon: Piyasa volatilitesine göre sistem davranışı ayarlanır.",
+            "Risk Yönetimi: Çoklu stop mekanizması ile kayıpların minimize edilmesi hedeflenir.",
+            "Performans Takibi: İşlemler, sonuçlar ve strateji performansı ekip tarafından düzenli olarak izlenir.",
+          ]} />
+        </Section>
+
+        {/* Neden Highway? */}
+        <Section title="Neden Highway Premium?">
+          <p className={s.accordionTextUnified}>
+            Highway Premium, gün içi trend hareketlerinden faydalanmak isteyen ancak robot yönetimi, parametre takibi ve strateji optimizasyonu ile uğraşmak istemeyen yatırımcılar için tasarlanmıştır.
+          </p>
+          <p className={s.accordionTextUnified}>
+            Robot seans boyunca piyasayı tarar, trend fırsatlarını tespit eder ve otomatik işlem yapar. BorsaZeka ekibi ise sistemin doğru çalışmasını, strateji ayarlarını ve piyasa koşullarına uyumunu takip eder.
+          </p>
+          <p className={s.accordionTextUnified}>
+            Highway Premium, dinamik trend takibi ile profesyonel ekip yönetimini bir araya getiren güçlü bir algoritmik yatırım çözümüdür.
+          </p>
+        </Section>
+
+        {/* Kullanım Şartları */}
+        <Section title="Highway Robot Kullanım Şartları">
+          <p className={s.accordionTextUnified}>
+            Lütfen aşağıdaki kullanım şartlarını dikkatlice okuyun. Bu şartlar, Highway algoritmik yatırım robotunu kullanacak yatırımcılar için geçerlidir. Herhangi bir sorunuz olursa tarafımıza ulaşabilirsiniz.
+          </p>
           <ol className={s.tmTermsListUnified}>
-            {(["t1", "t2", "t3", "t4", "t5", "t6", "t7", "t8", "t9", "t10", "t11", "t12", "t13", "t14", "t15"] as const).map(k => (
-              <li key={k} className={s.tmTermsItemUnified}>
+            {[
+              { title: "Kullanıcı Sayısı ve Bütçe Sınırı", desc: "Highway en fazla 40 kullanıcı ile sınırlandırılmıştır. Kişi sayısından ziyade toplam portföy büyüklüğü önemlidir. Tüm müşterilerin toplam portföyü 50.000.000 TL’yi geçmeyecektir." },
+              { title: "Robot Yönetimi", desc: "Highway’in yönetimi tamamen tarafımızdan gerçekleştirilecektir. Kullanıcıların robota müdahale etmesine gerek yoktur ve manuel işlem yapılması yasaktır." },
+              { title: "Katılım Bütçesi", desc: "Minimum giriş bütçesi: 600.000 TL · Optimal minimum: 750.000 TL · Maksimum giriş bütçesi: 5.000.000 TL. 5.000.000 TL üzeri katılım teklifleri kabul edilmemektedir." },
+              { title: "Aracı Kurum ve Komisyon İndirimi", desc: "Katılım sağlamak isteyen yatırımcılar, tarafımızca yönlendirilecek anlaşmalı aracı kurum üzerinden hesap açmalıdır. İndirimli komisyon avantajı: Yüzbinde 7. Yüksek işlem hacmi nedeniyle iDeal programı muhtemelen ücretsiz olacaktır. Lisans ücreti çıkarsa bu masraf T2 Overall değerinden düşeceği için tüm hesap içi masraflara ortak oluyoruz. iDeal lisansı ve gerekli tüm erişim bilgileri, aracı kurumla tarafımızca koordine edilecektir." },
+              { title: "Sunucu Kiralama", desc: "Highway için sunucu kiralanması gerekmektedir. Sunucu kiralama işlemi borsazeka.com üzerinden yapılacaktır. Sunucu kurulumu tarafımızca yapılacak, yönetimi ise bize ait olacaktır." },
+              { title: "Sunucu Paketleri", desc: "1.000.000 TL altındaki hesaplar için 30€’luk sunucu yeterlidir. 1.000.000 TL üzerindeki hesaplar için 55€’luk sunucu tavsiye edilir. Daha yüksek bütçeler için 95€’luk üst seviye sunucu tercih edilebilir. Sunucu ücreti kullanıcıya aittir, yönetimi ücretsiz olarak tarafımızca yapılacaktır." },
+              { title: "Kurulum Ücreti", desc: "İlk kurulum için tek seferlik 50€ ücret alınmaktadır. Bu ücret yalnızca başlangıçta talep edilir, sonraki aylarda tekrar edilmez." },
+              { title: "Hesap Takibi", desc: "Yatırımcılar, aracı kurumun web sitesi veya mobil uygulaması üzerinden portföylerini anlık olarak takip edebilecektir." },
+              { title: "Kâr Paylaşımı", desc: "Her ay sonunda gerçekleşen net kâr üzerinden %50 kâr paylaşımı yapılacaktır. Aylık performans raporu tarafımızca gönderilecektir. Zarar edilen aylarda zarar gelecek aya devredilir; kullanıcının kara geçene kadar ücret ödemesi gerekmez. Zarar edilen aylarda para çekimi tavsiye edilmez; çekim yapılırsa çekim miktarı / toplam portföy oranında zarar realize edilmiş olur." },
+              { title: "Manuel İşlem Kısıtı", desc: "Kullanıcı (siz) ve robot yöneticisi (biz) manuel alım-satım işlemi yapmayacaktır. Ancak acil müdahale gerektiren teknik arıza durumlarında, kullanıcıyla koordinasyon halinde işlem yapılabilir." },
+              { title: "Veri Gizliliği", desc: "Robot tarafından alınan veya satılan hisseler öncesinde veya sonrasında hiçbir şekilde paylaşılmayacaktır. Tüm veriler ve işlem detayları gizlilik prensipleri çerçevesinde korunacaktır." },
+              { title: "Para Yatırma ve Çekme İşlemleri", desc: "Kullanıcı, önceden haber vererek istediği zaman para yatırabilir veya çekebilir. Para çekme talepleri için en az 2 gün önceden bilgilendirme zorunludur. Böylece robot işlem hacmini optimize ederek uygun bir planlama yapabilecektir." },
+              { title: "Şifre Yönetimi", desc: "Aracı kurum şifreleri, güvenli vault sunucularımızda kaydedilecek ve sadece yetkili robot yöneticisi tarafından iDeal içine kaydedilecektir. Pass kurulumu kullanıcı yetkilendirmesi ile yapılacaktır." },
+              { title: "Sorumluluk", desc: "Highway, tam otomatik bir algoritmik yatırım sistemidir. Tüm kullanıcıların yatırımları performans optimizasyonu ve güvenlik standartlarına uygun şekilde yönetilecektir. Sistemin en verimli şekilde çalışması için belirtilen kurallara eksiksiz uymak zorunludur." },
+            ].map((item, i) => (
+              <li key={i} className={s.tmTermsItemUnified}>
                 <div>
-                  <strong className={s.tmTermsTitleUnified}>{t(`wizard.step6.highway.${k}Title`)}</strong>
-                  <p className={s.tmTermsDescUnified}>{renderDesc(t(`wizard.step6.highway.${k}Desc`))}</p>
+                  <strong className={s.tmTermsTitleUnified}>
+                    {item.title}
+                  </strong>
+                  <p className={s.tmTermsDescUnified}>{item.desc}</p>
                 </div>
               </li>
             ))}
           </ol>
-        </div>
+        </Section>
+
       </div>
     </div>
   );
 }
+
 
 // --- KriptoZeka Premium Info Panel (Step 6 Left) ------------------------------
 function KriptozekaPremiumPanel({ t }: { t: (k: string) => string }) {
