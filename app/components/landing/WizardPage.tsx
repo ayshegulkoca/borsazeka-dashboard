@@ -1091,91 +1091,217 @@ function KriptozekaPremiumPanel({ t }: { t: (k: string) => string }) {
   );
 }
 
+
+// --- DarkRoom Premium Info Panel (Step 6 Left) --------------------------------
 // --- DarkRoom Premium Info Panel (Step 6 Left) --------------------------------
 function DarkroomPremiumPanel({ t }: { t: (k: string) => string }) {
-  const renderDesc = (raw: string) => {
-    const parts = raw.split(/(<green>|<\/green>|<b>|<\/b>|<badge>|<\/badge>)/);
-    const nodes: React.ReactNode[] = [];
-    let inGreen = false, inBold = false, inBadge = false;
-    parts.forEach((part, i) => {
-      if (part === "<green>") { inGreen = true; return; }
-      if (part === "</green>") { inGreen = false; return; }
-      if (part === "<b>") { inBold = true; return; }
-      if (part === "</b>") { inBold = false; return; }
-      if (part === "<badge>") { inBadge = true; return; }
-      if (part === "</badge>") { inBadge = false; return; }
+  const accentColor = "#c084fc";
 
-      if (inGreen) nodes.push(<span key={i} style={{ color: "#c084fc" }}>{part}</span>);
-      else if (inBold || inBadge) nodes.push(<strong key={i} style={{ fontWeight: 800 }}>{part}</strong>);
-      else nodes.push(part);
-    });
-    return <>{nodes}</>;
-  };
+  const Section = ({ title, children }: { title?: string; children: React.ReactNode }) => (
+    <div className={s.contentSectionUnified}>
+      {title && (
+        <h3 className={s.contentSectionTitleUnified} style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+          {title}
+        </h3>
+      )}
+      {children}
+    </div>
+  );
+
+  const Bullets = ({ items }: { items: string[] }) => (
+    <ul className={s.unifiedCheckList}>
+      {items.map((item, i) => (
+        <li key={i} style={{ alignItems: "flex-start" }}>
+          <CheckCircle2 size={14} style={{ color: accentColor, flexShrink: 0, marginTop: "2px" }} />
+          <span>{item}</span>
+        </li>
+      ))}
+    </ul>
+  );
 
   return (
     <div className={s.robotDetailsPanelUnified}>
+      {/* Header */}
       <div className={s.tmHeader}>
-        <div className={s.tmIconGlowPurple}>
-          <Moon size={32} />
-        </div>
+        <div className={s.tmIconGlowPurple}><Moon size={32} /></div>
         <div>
           <h2 className={`${s.robotNeonTitleUnified} ${s.neonPurple}`}>DarkRoom Premium</h2>
-          <p className={s.robotSloganUnified}>{t("wizard.step6.darkroom.hook")}</p>
+          <p className={s.robotSloganUnified}>Yönetilen algoritmik yatırım deneyimi.</p>
         </div>
       </div>
 
+      {/* Highlights */}
       <div className={s.tmHighlights}>
-        <div className={`${s.featureTagUnified} ${s.tagPurple}`}>
-          <Users size={14} />
-          <span>Ekip Yönetimi</span>
-        </div>
-        <div className={`${s.featureTagUnified} ${s.tagPurple}`}>
-          <Lock size={14} />
-          <span>Kurumsal Güvenlik</span>
-        </div>
-        <div className={`${s.featureTagUnified} ${s.tagPurple}`}>{t("wizard.step6.darkroom.h1")}</div>
+        <div className={`${s.featureTagUnified} ${s.tagPurple}`}><Users size={14} /><span>Ekip Yönetimi</span></div>
+        <div className={`${s.featureTagUnified} ${s.tagPurple}`}><Lock size={14} /><span>Kurumsal Güvenlik</span></div>
+        <div className={`${s.featureTagUnified} ${s.tagPurple}`}><Moon size={14} /><span>Gece Al – Sabah Sat</span></div>
       </div>
 
       <div className={s.flatContentUnified}>
-        <div className={s.contentSectionUnified}>
-          <h3 className={s.contentSectionTitleUnified}>
-            <TrendingUp size={18} style={{ color: "#c084fc" }} />
-            {t("wizard.step6.darkroom.strategyTitle")}
-          </h3>
-          <p className={s.accordionTextUnified}>{renderDesc(t("wizard.step6.darkroom.strategyP1"))}</p>
-          <p className={s.accordionTextUnified}>{renderDesc(t("wizard.step6.darkroom.strategyP2"))}</p>
-        </div>
 
-        <div className={s.contentSectionUnified}>
-          <h3 className={s.contentSectionTitleUnified}>
-            <Shield size={18} style={{ color: "#c084fc" }} />
-            {t("wizard.step6.darkroom.securityTitle")}
-          </h3>
+        {/* Giriş */}
+        <Section>
+          <p className={s.accordionTextUnified}>
+            DarkRoom Premium, BorsaZeka tarafından uçtan uca yönetilen, sınırlı katılımcıya açık özel bir algoritmik yatırım çözümüdür. Bu yapı, robotu kendi başına yönetmek istemeyen; kurulum, teknik takip, optimizasyon ve operasyon süreçlerinin profesyonel şekilde yürütülmesini tercih eden yatırımcılar için tasarlanmıştır.
+          </p>
+          <p className={s.accordionTextUnified}>
+            DarkRoom Premium&apos;da kullanıcı, sistemi teknik olarak yönetmek zorunda kalmaz. Sunucu kurulumu, robot yönetimi, operasyon takibi ve aylık raporlama süreci BorsaZeka tarafından yürütülür. Yatırımcı ise portföyünü aracı kurum üzerinden şeffaf biçimde izler.
+          </p>
+        </Section>
+
+        {/* Yapı */}
+        <Section title="DarkRoom Premium'un Yapısı">
+          <Bullets items={[
+            "Sınırlı sayıda kullanıcı ile çalışır",
+            "Toplam portföy büyüklüğü kontrollü şekilde yönetilir",
+            "Performansın korunması için kabul süreci seçici şekilde ilerler",
+            "Teknik altyapı ve robot yönetimi tamamen BorsaZeka tarafından sağlanır",
+          ]} />
+        </Section>
+
+        {/* Nedir */}
+        <Section title="DarkRoom Premium Nedir?">
+          <p className={s.accordionTextUnified}>
+            DarkRoom, BorsaZeka&apos;nın en özel ve en güvenilir robotlarından biridir. Klasik teknik analiz yöntemlerini tamamen geride bırakan bu algoritma, akşam alıp sabah satma mantığında çalışan bir gap trade robotudur.
+          </p>
+          <p className={s.accordionTextUnified}>
+            Bu sistemin temel amacı, ertesi gün yüksek ihtimalle yukarı yönlü açılış yapacak hisseleri bir önceki akşamdan tespit ederek pozisyon almak ve ertesi sabah açılışta pozisyonu kapatmaktır.
+          </p>
+        </Section>
+
+        {/* Strateji */}
+        <Section title="Stratejinin Temeli">
+          <p className={s.accordionTextUnified}>
+            DarkRoom, herhangi bir RSI, MACD veya Bollinger Bands gibi indikatörleri kesinlikle kullanmaz. Bunun yerine, geçmiş binlerce işlem gününe ait veri setlerini analiz ederek, yarın yüksek ihtimalle yukarı yönlü açılış yapacak hisseleri belirleyen özel istatistiksel model ve yapay zeka motoru ile çalışır.
+          </p>
+        </Section>
+
+        {/* Çalışma Mantığı */}
+        <Section title="Çalışma Mantığı">
           <ul className={s.unifiedCheckList}>
-            {(["s1", "s2", "s3"] as const).map(k => (
-              <li key={k}><Shield size={14} className={s.unifiedCheck} style={{ color: "#c084fc" }} /><span>{t(`wizard.step6.darkroom.${k}`)}</span></li>
+            {([
+              { label: "İşlem Zamanı:", desc: "Robot yalnızca günün sonunda (akşam) pozisyon alır" },
+              { label: "Pozisyon Kapatma:", desc: "Alınan tüm pozisyonlar ertesi sabah açılışta otomatik olarak kapatılır" },
+              { label: "Bekleme Yok:", desc: "Hiçbir hisse gün içinde elde tutulmaz. Her işlem, gece al – sabah sat şeklinde kısa vadelidir" },
+              { label: "İstatistiksel Seçim:", desc: "Sistem her akşam yüzlerce hissedeki veri desenlerini analiz ederek, gap up (yüksek açılış) ihtimali yüksek olanları seçer" },
+            ]).map((item, i) => (
+              <li key={i} style={{ flexDirection: "column", alignItems: "flex-start", gap: "0.1rem" }}>
+                <span style={{ color: accentColor, fontWeight: 700, fontSize: "0.8rem" }}>{item.label}</span>
+                <span style={{ paddingLeft: "0.25rem" }}>{item.desc}</span>
+              </li>
             ))}
           </ul>
+        </Section>
+
+        {/* Süreç */}
+        <Section title="DarkRoom Premium'da Süreç Nasıl İşler?">
+          <p className={s.accordionTextUnified}>
+            DarkRoom Premium, self-service bir yapı değildir. Burada süreç kullanıcı tarafından değil, doğrudan BorsaZeka tarafından yönetilir.
+          </p>
+          <Bullets items={[
+            "Robotun yönetimi BorsaZeka tarafından yapılır",
+            "Teknik kurulum ve sunucu yönetimi BorsaZeka tarafından sağlanır",
+            "Kullanıcı, manuel müdahale yerine profesyonel yönetim modeliyle ilerler",
+            "Aylık performans sonuçları düzenli olarak raporlanır",
+          ]} />
+        </Section>
+
+        {/* Altyapı */}
+        <Section title="Altyapı ve Emir İletimi">
+          <p className={s.accordionTextUnified}>
+            DarkRoom Premium&apos;da emirler, kullanıcıya tahsisli IP adresli ücretli BorsaZeka sunucuları üzerinden BIST&apos;e iletilir. Abonelik esnasında bütçenize uygun sunucuyu kiralamanız gerekir. Hesap bilgileri, kriptolu bağlantı üzerinden güvenli Vault sunuculara kaydedilir ve erişime kapalıdır.
+          </p>
+          <Bullets items={[
+            "Emir iletimi kontrollü ve güvenli şekilde gerçekleştirilir",
+            "Teknik süreçler merkezi biçimde yönetilir",
+            "Kullanıcı, operasyon tarafıyla uğraşmadan yalnızca sonucuna odaklanır",
+            "Tüm işlemler aracı kurum platformu üzerinden ayrıca takip edilebilir",
+          ]} />
+        </Section>
+
+        {/* Güvenlik */}
+        <Section title="Güvenlik ve Operasyon">
+          <p className={s.accordionTextUnified}>
+            DarkRoom Premium&apos;da güvenlik yalnızca robot tarafında değil, tüm operasyon zincirinde ele alınır.
+          </p>
+          <Bullets items={[
+            "Kullanıcıya özel sunucu altyapısı kullanılır",
+            "Teknik yönetim merkezi olarak yürütülür",
+            "Manuel kullanım sınırlandırılarak sistem disiplini korunur",
+            "Portföy büyüklüğü ve kullanıcı sayısı kontrollü tutulur",
+          ]} />
+        </Section>
+
+        {/* Fark */}
+        <Section title="DarkRoom Premium'un Öne Çıkan Farkı">
+          <p className={s.accordionTextUnified}>
+            DarkRoom Premium, yalnızca bir robot erişimi değil; aynı zamanda yönetilen bir algoritmik yatırım hizmetidir.
+          </p>
+          <Bullets items={[
+            "Kullanıcı sistemi kendi başına kurmaz",
+            "Robotu kendi başına optimize etmez",
+            "Teknik altyapıyı kendi başına takip etmez",
+            "Tüm bu süreçler BorsaZeka tarafından yürütülür",
+          ]} />
+        </Section>
+
+        {/* Kimler için */}
+        <Section title="Kimler İçin Uygundur?">
+          <Bullets items={[
+            "Robotu kendi başına yönetmek istemeyen yatırımcılar",
+            "Akşam al – sabah sat mantığında çalışan kısa vadeli stratejilere ilgi duyanlar",
+            "Teknik analiz yerine veri bilimi ve yapay zeka temelli sistemlere güvenenler",
+            "Kontrollü büyüyen, seçici ve kapalı yapıda ilerleyen sistemleri tercih edenler",
+            "Operasyonel yükü BorsaZeka'ya bırakıp süreci profesyonel şekilde takip etmek isteyenler",
+          ]} />
+        </Section>
+
+        {/* Özet */}
+        <div className={s.contentSectionUnified} style={{
+          background: "rgba(192, 132, 252, 0.06)",
+          border: "1px solid rgba(192, 132, 252, 0.2)",
+          borderRadius: "12px",
+          padding: "1rem 1.25rem",
+        }}>
+          <p className={s.accordionTextUnified} style={{ margin: 0, color: "#e9d5ff", fontStyle: "italic" }}>
+            DarkRoom Premium, klasik bir robot aboneliğinin ötesinde, BorsaZeka tarafından yönetilen özel bir algoritmik yatırım deneyimi sunar. Burada amaç yalnızca işlem yapmak değil; kontrollü, güvenli ve sürdürülebilir bir yapı içinde ilerlemektir.
+          </p>
         </div>
 
-        <div className={s.contentSectionUnified}>
-          <h3 className={s.contentSectionTitleUnified}>
-            <Activity size={18} style={{ color: "#c084fc" }} />
-            {t("wizard.step6.darkroom.termsTitle")}
-          </h3>
-          <div className={s.tmRedLineUnified}>{renderDesc(t("wizard.step6.darkroom.redLine"))}</div>
-          <p className={s.tmTermsNote} style={{ color: "#fff", fontWeight: 700 }}>{t("wizard.step6.darkroom.termsNote")}</p>
+        {/* Kullanım Şartları */}
+        <Section title="DarkRoom Robot Kullanım Şartları">
+          <p className={s.accordionTextUnified}>
+            Lütfen aşağıdaki kullanım şartlarını dikkatlice okuyun. Bu şartlar, DarkRoom algoritmik yatırım robotunu kullanacak yatırımcılar için geçerlidir. Herhangi bir sorunuz olursa tarafımıza ulaşabilirsiniz.
+          </p>
           <ol className={s.tmTermsListUnified}>
-            {(["t1", "t2", "t3", "t4", "t5", "t6", "t7", "t8", "t9", "t10", "t11", "t12", "t13", "t14", "t15"] as const).map(k => (
-              <li key={k} className={s.tmTermsItemUnified}>
+            {([
+              { title: "Kullanıcı Sayısı ve Bütçe Sınırı", desc: "DarkRoom en fazla 40 kullanıcı ile sınırlandırılmıştır. Kişi sayısından ziyade toplam portföy büyüklüğü önemlidir. Tüm müşterilerin toplam portföyü 50.000.000 TL'yi geçmeyecektir." },
+              { title: "Robot Yönetimi", desc: "DarkRoom'un yönetimi tamamen tarafımızdan gerçekleştirilecektir. Kullanıcıların robota müdahale etmesine gerek yoktur ve manuel işlem yapılması yasaktır." },
+              { title: "Katılım Bütçesi", desc: "Minimum giriş bütçesi: 600.000 TL · Optimal minimum: 750.000 TL · Maksimum giriş bütçesi: 5.000.000 TL. 5.000.000 TL üzeri katılım teklifleri kabul edilmemektedir." },
+              { title: "Aracı Kurum ve Komisyon İndirimi", desc: "Katılım sağlamak isteyen yatırımcılar, tarafımızca yönlendirilecek anlaşmalı aracı kurum üzerinden hesap açmalıdır. İndirimli komisyon avantajı: Yüzbinde 7. Yüksek işlem hacmi nedeniyle iDeal programı muhtemelen ücretsiz olacaktır. Lisans ücreti çıkarsa bu masraf T2 Overall değerinden düşeceği için tüm hesap içi masraflara ortak oluyoruz." },
+              { title: "Sunucu Kiralama", desc: "DarkRoom için sunucu kiralanması gerekmektedir. Sunucu kiralama işlemi borsazeka.com üzerinden yapılacaktır. Sunucu kurulumu tarafımızca yapılacak, yönetimi ise bize ait olacaktır." },
+              { title: "Sunucu Paketleri", desc: "1.000.000 TL altındaki hesaplar için 30€'luk sunucu yeterlidir. 1.000.000 TL üzerindeki hesaplar için 55€'luk sunucu tavsiye edilir. Daha yüksek bütçeler için 95€'luk üst seviye sunucu tercih edilebilir. Sunucu ücreti kullanıcıya aittir, yönetimi ücretsiz olarak tarafımızca yapılacaktır." },
+              { title: "Kurulum Ücreti", desc: "İlk kurulum için tek seferlik 50€ ücret alınmaktadır. Bu ücret yalnızca başlangıçta talep edilir, sonraki aylarda tekrar edilmez." },
+              { title: "Hesap Takibi", desc: "Yatırımcılar, aracı kurumun web sitesi veya mobil uygulaması üzerinden portföylerini anlık olarak takip edebilecektir." },
+              { title: "Kâr Paylaşımı", desc: "Her ay sonunda gerçekleşen net kâr üzerinden %50 kâr paylaşımı yapılacaktır. Aylık performans raporu tarafımızca gönderilecektir. Zarar edilen aylarda zarar gelecek aya devredilir; kullanıcının kara geçene kadar ücret ödemesi gerekmez. Zarar edilen aylarda para çekimi tavsiye edilmez; çekim yapılırsa çekim miktarı / toplam portföy oranında zarar realize edilmiş olur." },
+              { title: "Manuel İşlem Kısıtı", desc: "Kullanıcı ve robot yöneticisi manuel alım-satım işlemi yapmayacaktır. Ancak acil müdahale gerektiren teknik arıza durumlarında, kullanıcıyla koordinasyon halinde işlem yapılabilir." },
+              { title: "Veri Gizliliği", desc: "Robot tarafından alınan veya satılan hisseler öncesinde veya sonrasında hiçbir şekilde paylaşılmayacaktır. Tüm veriler ve işlem detayları gizlilik prensipleri çerçevesinde korunacaktır." },
+              { title: "Para Yatırma ve Çekme İşlemleri", desc: "Kullanıcı, önceden haber vererek istediği zaman para yatırabilir veya çekebilir. Para çekme talepleri için en az 2 gün önceden bilgilendirme zorunludur. Böylece robot işlem hacmini optimize ederek uygun bir planlama yapabilecektir." },
+              { title: "Şifre Yönetimi", desc: "Aracı kurum şifreleri, güvenli vault sunucularımızda kaydedilecek ve sadece yetkili robot yöneticisi tarafından iDeal içine kaydedilecektir. Pass kurulumu kullanıcı yetkilendirmesi ile yapılacaktır." },
+              { title: "Sorumluluk", desc: "DarkRoom, tam otomatik bir algoritmik yatırım sistemidir. Tüm kullanıcıların yatırımları performans optimizasyonu ve güvenlik standartlarına uygun şekilde yönetilecektir. Sistemin en verimli şekilde çalışması için belirtilen kurallara eksiksiz uymak zorunludur." },
+            ]).map((item, i) => (
+              <li key={i} className={s.tmTermsItemUnified}>
                 <div>
-                  <strong className={s.tmTermsTitleUnified}>{t(`wizard.step6.darkroom.${k}Title`)}</strong>
-                  <p className={s.tmTermsDescUnified}>{renderDesc(t(`wizard.step6.darkroom.${k}Desc`))}</p>
+                  <strong className={s.tmTermsTitleUnified}>
+                    {item.title}
+                  </strong>
+                  <p className={s.tmTermsDescUnified}>{item.desc}</p>
                 </div>
               </li>
             ))}
           </ol>
-        </div>
+        </Section>
+
       </div>
     </div>
   );
