@@ -939,39 +939,24 @@ function TradematePremiumPanel({ t }: { t: (k: string) => string }) {
           </ul>
         </Section>
 
-        {/* Neler Yapabilirsin? */}
         <Section title="TradeMate Premium ile Neler Yapabilirsin?">
-          <ul className={s.unifiedCheckList}>
-            {[
-              "Portföyünü profesyonel ekip yönetimine bırakabilirsin.",
-              "Robotun performansını, işlem geçmişini ve kâr zarar durumunu takip edebilirsin.",
-              "Kredili işlem katsayısı, kara liste ve kullanılacak bütçe gibi temel tercihleri BorsaZeka ekibiyle koordineli şekilde belirleyebilirsin.",
-              "Tüm emirler, güvenli BorsaZeka sunucuları üzerinden BIST’e iletilir.",
-              "Kurulum, takip, optimizasyon ve teknik yönetim BorsaZeka ekibi tarafından gerçekleştirilir.",
-            ].map((item, i) => (
-              <li key={i} style={{ alignItems: "flex-start" }}>
-                <CheckCircle2 size={14} style={{ color: accentColor, flexShrink: 0, marginTop: "2px" }} />
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
+          <Bullets items={[
+            "Portföyünü profesyonel ekip yönetimine bırakabilirsin.",
+            "Robotun performansını, işlem geçmişini ve kâr zarar durumunu takip edebilirsin.",
+            "Kredili işlem katsayısı, kara liste ve kullanılacak bütçe gibi temel tercihleri BorsaZeka ekibiyle koordineli şekilde belirleyebilirsin.",
+            "Tüm emirler, güvenli BorsaZeka sunucuları üzerinden BIST’e iletilir.",
+            "Kurulum, takip, optimizasyon ve teknik yönetim BorsaZeka ekibi tarafından gerçekleştirilir.",
+          ]} />
         </Section>
 
         {/* Kimler için */}
         <Section title="Kimler İçin Uygundur?">
-          <ul className={s.unifiedCheckList}>
-            {[
-              "Büyük portföylere sahip, işlemlerini profesyonel otomasyona bırakmak isteyen yatırımcılar",
-              "Robot yönetimi, parametre takibi ve teknik detaylarla uğraşmak istemeyen kullanıcılar",
-              "Portföy yönetiminde veri temelli karar sistemlerine güvenen profesyonel yatırımcılar",
-              "Günlük takip yapmak istemeyen, ancak güçlü risk yönetimiyle istikrarlı getiri hedefleyen yatırımcılar",
-            ].map((item, i) => (
-              <li key={i} style={{ alignItems: "flex-start" }}>
-                <CheckCircle2 size={14} style={{ color: accentColor, flexShrink: 0, marginTop: "2px" }} />
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
+          <Bullets items={[
+            "Büyük portföylere sahip, işlemlerini profesyonel otomasyona bırakmak isteyen yatırımcılar",
+            "Robot yönetimi, parametre takibi ve teknik detaylarla uğraşmak istemeyen kullanıcılar",
+            "Portföy yönetiminde veri temelli karar sistemlerine güvenen profesyonel yatırımcılar",
+            "Günlük takip yapmak istemeyen, ancak güçlü risk yönetimiyle istikrarlı getiri hedefleyen yatırımcılar",
+          ]} />
         </Section>
 
         {/* Özet */}
@@ -1586,18 +1571,11 @@ function DarkroomSelfPanel({ t }: { t: (k: string) => string }) {
 
         {/* Kimler İçin */}
         <Section title="Kimler İçin Uygundur?" icon={<Users size={18} />}>
-          <ul className={s.unifiedCheckList}>
-            {[
-              "Gece pozisyon açıp sabah satış yapmayı tercih eden kısa vadeli yatırımcılar,",
-              "Teknik analiz yerine istatistiksel modelleme ve yapay zeka temelli stratejilere güvenenler,",
-              "Robotu dilediği zaman açıp kapatmak isteyen, manuel kontrolü önemseyen kullanıcılar.",
-            ].map((item, i) => (
-              <li key={i} style={{ alignItems: "flex-start", gap: "0.75rem" }}>
-                <CheckCircle2 size={16} style={{ color: "var(--panel-accent)", flexShrink: 0, marginTop: "2px" }} />
-                <span style={{ color: "rgba(255,255,255,0.9)", fontSize: "0.88rem" }}>{item}</span>
-              </li>
-            ))}
-          </ul>
+          <Bullets items={[
+            "Gece pozisyon açıp sabah satış yapmayı tercih eden kısa vadeli yatırımcılar,",
+            "Teknik analiz yerine istatistiksel modelleme ve yapay zeka temelli stratejilere güvenenler,",
+            "Robotu dilediği zaman açıp kapatmak isteyen, manuel kontrolü önemseyen kullanıcılar.",
+          ]} />
         </Section>
 
         {/* Özet */}
@@ -1652,25 +1630,11 @@ function HighwaySelfPanel({ t }: { t: (k: string) => string }) {
         </Section>
 
         <Section title={t("wizard.step6.highwaySelf.logicTitle")} icon={<Settings size={18} />}>
-          <ul className={s.unifiedCheckList}>
-            {["l1", "l2", "l3", "l4"].map(k => (
-              <li key={k} style={{ alignItems: "flex-start", gap: "0.75rem" }}>
-                <CheckCircle2 size={16} style={{ color: "var(--panel-accent)", flexShrink: 0, marginTop: "2px" }} />
-                <span style={{ color: "rgba(255,255,255,0.9)", fontSize: "0.88rem" }}>{t(`wizard.step6.highwaySelf.${k}`)}</span>
-              </li>
-            ))}
-          </ul>
+          <Bullets items={["l1", "l2", "l3", "l4"].map(k => t(`wizard.step6.highwaySelf.${k}`))} />
         </Section>
 
         <Section title={t("wizard.step6.highwaySelf.performanceTitle")} icon={<BarChart3 size={18} />}>
-          <ul className={s.unifiedCheckList}>
-            {["p1", "p2", "p3", "p4"].map(k => (
-              <li key={k} style={{ alignItems: "flex-start", gap: "0.75rem" }}>
-                <CheckCircle2 size={16} style={{ color: "var(--panel-accent)", flexShrink: 0, marginTop: "2px" }} />
-                <span style={{ color: "rgba(255,255,255,0.9)", fontSize: "0.88rem" }}>{t(`wizard.step6.highwaySelf.${k}`)}</span>
-              </li>
-            ))}
-          </ul>
+          <Bullets items={["p1", "p2", "p3", "p4"].map(k => t(`wizard.step6.highwaySelf.${k}`))} />
         </Section>
 
         <Section title={t("wizard.step6.highwaySelf.whyTitle")} icon={<Rocket size={18} />}>
