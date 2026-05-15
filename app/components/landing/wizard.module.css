@@ -1784,7 +1784,7 @@
   display: flex;
   flex-direction: column;
   gap: 2.5rem;
-  padding: 0 0 12rem 0; /* pb-48 equivalent for scroll breathing room */
+  padding: 0 2rem 12rem 2rem; /* px-8 equivalent + scroll breathing room */
   background: transparent !important;
   border: none !important;
   box-shadow: none !important;
@@ -1801,18 +1801,21 @@
 .contentSectionUnified {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 1.5rem; /* space-y-6 equivalent */
 }
 
 .contentSectionTitleUnified {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  font-size: 1.25rem;
-  font-weight: 800;
-  color: #ffffff;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  gap: 0.6rem;
+  font-size: 1.15rem; /* Bir tık büyük ama taşmayan */
+  font-weight: 700;
+  /* Renk: robot aksan rengi (--panel-accent) veya fallback mavi */
+  color: var(--panel-accent, #60a5fa);
+  padding-bottom: 0.875rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  text-align: left; /* Kesinlikle sola hizalı */
+  letter-spacing: -0.01em;
 }
 
 .robotDetailsPanelUnified::-webkit-scrollbar {
@@ -1931,11 +1934,12 @@
 }
 
 .accordionTextUnified {
-  font-size: 0.95rem !important;
+  font-size: 0.9rem !important;
   color: #ffffff !important;
-  font-weight: 700 !important;
-  line-height: 1.6 !important;
+  font-weight: 400 !important; /* Normal ağırlık — hiyerarşi için */
+  line-height: 1.65 !important;
   margin: 0 !important;
+  text-align: left !important;
 }
 
 .unifiedCheckList {
@@ -1944,16 +1948,18 @@
   margin: 0 !important;
   display: flex !important;
   flex-direction: column !important;
-  gap: 0.8rem !important;
+  gap: 1.25rem !important; /* Maddeler arası nefes — space-y-5 */
 }
 
 .unifiedCheckList li {
   display: flex !important;
-  align-items: center !important;
-  gap: 0.8rem !important;
-  font-size: 0.9rem !important;
+  align-items: flex-start !important;
+  gap: 0.75rem !important;
+  font-size: 0.88rem !important;
   color: #ffffff !important;
-  font-weight: 700 !important;
+  font-weight: 400 !important; /* Normal ağırlık — hiyerarşi için */
+  text-align: left !important;
+  line-height: 1.55 !important;
 }
 
 .unifiedCheck {
@@ -2016,16 +2022,31 @@
 
 .tmTermsTitleUnified {
   display: block !important;
-  font-size: 1rem !important;
-  color: #ffffff !important;
-  font-weight: 800 !important;
-  margin-bottom: 0.4rem !important;
+  font-size: 0.95rem !important;
+  color: var(--panel-accent, #60a5fa) !important; /* Robot aksan rengi */
+  font-weight: 700 !important;
+  margin-bottom: 0.35rem !important;
+  text-align: left !important;
 }
 
 .tmTermsDescUnified {
-  font-size: 0.9rem !important;
-  color: rgba(255, 255, 255, 0.8) !important;
-  font-weight: 700 !important;
-  line-height: 1.5 !important;
+  font-size: 0.875rem !important;
+  color: #ffffff !important; /* Saf beyaz, normal ağırlık */
+  font-weight: 400 !important;
+  line-height: 1.55 !important;
   margin: 0 !important;
+  text-align: left !important;
+}
+
+/* Şartlar listesi item spacing artırıldı */
+.tmTermsItemUnified {
+  display: flex !important;
+  gap: 1rem !important;
+  padding-bottom: 1.5rem !important; /* Arttırıldı */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+}
+
+.tmTermsItemUnified:last-child {
+  border-bottom: none !important;
+  padding-bottom: 0 !important;
 }

@@ -801,10 +801,11 @@ export default function WizardPage() {
 function TradematePremiumPanel({ t }: { t: (k: string) => string }) {
   const accentColor = "#60a5fa";
 
-  const Section = ({ title, children }: { title?: string; children: React.ReactNode }) => (
+  const Section = ({ title, icon, children }: { title?: string; icon?: React.ReactNode; children: React.ReactNode }) => (
     <div className={s.contentSectionUnified}>
       {title && (
-        <h3 className={s.contentSectionTitleUnified} style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+        <h3 className={s.contentSectionTitleUnified}>
+          {icon && <span style={{ opacity: 0.8 }}>{icon}</span>}
           {title}
         </h3>
       )}
@@ -813,7 +814,7 @@ function TradematePremiumPanel({ t }: { t: (k: string) => string }) {
   );
 
   return (
-    <div className={s.robotDetailsPanelUnified}>
+    <div className={s.robotDetailsPanelUnified} style={{ '--panel-accent': '#60a5fa' } as React.CSSProperties}>
       {/* Header */}
       <div className={s.tmHeader}>
         <div className={s.tmIconGlowBlue}><Target size={32} /></div>
@@ -846,12 +847,12 @@ function TradematePremiumPanel({ t }: { t: (k: string) => string }) {
         </Section>
 
         {/* Strateji */}
-        <Section title="Stratejinin Temeli">
+        <Section title="Stratejinin Temeli" icon={<Zap size={18} />}>
           <p className={s.accordionTextUnified}>
             TradeMate Premium’un çekirdeğinde Overnight stratejisi bulunur. Robot, akşamdan pozisyon açar, ertesi sabah ise gelişmiş algoritmalarla satış işlemlerini gerçekleştirir.
           </p>
           <p className={s.accordionTextUnified}>
-            Premium versiyonda bu strateji, BorsaZeka ekibi tarafından düzenli olarak takip edilir and piyasa koşullarına göre optimize edilir.
+            Premium versiyonda bu strateji, BorsaZeka ekibi tarafından düzenli olarak takip edilir ve piyasa koşullarına göre optimize edilir.
           </p>
           <p className={s.accordionTextUnified}>
             İsteğe bağlı olarak gün içi algoritma modu da etkinleştirilebilir. Böylece yatırımcı, hem gece pozisyonlarından hem de seans içi fırsatlardan profesyonel ekip yönetimiyle faydalanabilir.
@@ -859,7 +860,7 @@ function TradematePremiumPanel({ t }: { t: (k: string) => string }) {
         </Section>
 
         {/* Çalışma Mantığı */}
-        <Section title="Çalışma Mantığı">
+        <Section title="Çalışma Mantığı" icon={<Settings size={18} />}>
           <ul className={s.unifiedCheckList}>
             {([
               { label: "Tam Otomasyon:", desc: "Kullanıcının robotu manuel olarak yönetmesine gerek yoktur. TradeMate Premium’un çalışması, takibi ve strateji kontrolü BorsaZeka ekibi tarafından yapılır." },
@@ -869,9 +870,11 @@ function TradematePremiumPanel({ t }: { t: (k: string) => string }) {
               { label: "Risk Günlerinde Önlem:", desc: "Kredi riski yüksek günlerde kredili işlemler otomatik olarak sınırlandırılır veya devre dışı bırakılır." },
               { label: "Tatil ve Yarım Gün Takibi:", desc: "Özel takvim algoritması sayesinde tatil ve yarım işlem günlerinde gerekli aksiyonlar kullanıcı müdahalesine gerek kalmadan alınır." },
             ]).map((item, i) => (
-              <li key={i} style={{ flexDirection: "column", alignItems: "flex-start", gap: "0.1rem" }}>
-                <span style={{ color: accentColor, fontWeight: 700, fontSize: "0.8rem" }}>{item.label}</span>
-                <span style={{ paddingLeft: "0.25rem" }}>{item.desc}</span>
+              <li key={i} style={{ flexDirection: "column", alignItems: "flex-start", gap: "0.25rem" }}>
+                <span style={{ color: "var(--panel-accent)", fontWeight: 700, fontSize: "0.95rem", display: "flex", alignItems: "center", gap: "0.4rem" }}>
+                  {item.label}
+                </span>
+                <span style={{ paddingLeft: "0", color: "rgba(255,255,255,0.9)" }}>{item.desc}</span>
               </li>
             ))}
           </ul>
@@ -986,10 +989,11 @@ function TradematePremiumPanel({ t }: { t: (k: string) => string }) {
 function HighwayPremiumPanel({ t }: { t: (k: string) => string }) {
   const accentColor = "#60a5fa";
 
-  const Section = ({ title, children }: { title?: string; children: React.ReactNode }) => (
+  const Section = ({ title, icon, children }: { title?: string; icon?: React.ReactNode; children: React.ReactNode }) => (
     <div className={s.contentSectionUnified}>
       {title && (
-        <h3 className={s.contentSectionTitleUnified} style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+        <h3 className={s.contentSectionTitleUnified}>
+          {icon && <span style={{ opacity: 0.8 }}>{icon}</span>}
           {title}
         </h3>
       )}
@@ -1000,16 +1004,16 @@ function HighwayPremiumPanel({ t }: { t: (k: string) => string }) {
   const Bullets = ({ items }: { items: string[] }) => (
     <ul className={s.unifiedCheckList}>
       {items.map((item, i) => (
-        <li key={i} style={{ alignItems: "flex-start" }}>
-          <CheckCircle2 size={14} style={{ color: accentColor, flexShrink: 0, marginTop: "2px" }} />
-          <span>{item}</span>
+        <li key={i} style={{ alignItems: "flex-start", gap: "0.75rem" }}>
+          <CheckCircle2 size={16} style={{ color: "var(--panel-accent)", flexShrink: 0, marginTop: "2px" }} />
+          <span style={{ color: "rgba(255,255,255,0.9)", fontSize: "0.88rem" }}>{item}</span>
         </li>
       ))}
     </ul>
   );
 
   return (
-    <div className={s.robotDetailsPanelUnified}>
+    <div className={s.robotDetailsPanelUnified} style={{ '--panel-accent': '#60a5fa' } as React.CSSProperties}>
       {/* Header */}
       <div className={s.tmHeader}>
         <div className={s.tmIconGlowBlue}><TrendingUp size={32} /></div>
@@ -1029,7 +1033,7 @@ function HighwayPremiumPanel({ t }: { t: (k: string) => string }) {
       <div className={s.flatContentUnified}>
 
         {/* Giriş */}
-        <Section>
+        <Section title="Giriş" icon={<Activity size={18} />}>
           <p className={s.accordionTextUnified}>
             Highway Premium, BorsaZeka’nın gün içi trend hareketlerini yakalamak için geliştirdiği dinamik ve çok katmanlı tarama sisteminin, uzman ekip yönetimiyle sunulan profesyonel versiyonudur.
           </p>
@@ -1039,7 +1043,7 @@ function HighwayPremiumPanel({ t }: { t: (k: string) => string }) {
         </Section>
 
         {/* Strateji */}
-        <Section title="Stratejinin Temeli">
+        <Section title="Stratejinin Temeli" icon={<Zap size={18} />}>
           <p className={s.accordionTextUnified}>
             Highway Premium, klasik tek gösterge yaklaşımından farklı olarak çok boyutlu trend analizi yapar. Robot, farklı zaman periyotlarında çoklu algoritma kombinasyonları kullanarak trend yönünü belirler.
           </p>
@@ -1052,7 +1056,7 @@ function HighwayPremiumPanel({ t }: { t: (k: string) => string }) {
         </Section>
 
         {/* Çalışma Mantığı */}
-        <Section title="Çalışma Mantığı">
+        <Section title="Çalışma Mantığı" icon={<Settings size={18} />}>
           <ul className={s.unifiedCheckList}>
             {[
               "Akıllı Tarama: Robot seans içinde aktif olarak piyasayı tarar ve trending hisseleri otomatik olarak tespit eder.",
@@ -1060,15 +1064,17 @@ function HighwayPremiumPanel({ t }: { t: (k: string) => string }) {
               "Ekip Kontrollü Optimizasyon: Parametreler ve strateji ayarları, BorsaZeka ekibi tarafından piyasa koşullarına göre takip edilir.",
               "Dinamik Giriş: Piyasa yapısı ve hisse trendi uygun olduğunda pozisyon açar.",
             ].map((item, i) => (
-              <li key={i} style={{ alignItems: "flex-start" }}>
-                <CheckCircle2 size={14} style={{ color: accentColor, flexShrink: 0, marginTop: "2px" }} />
-                <span>{item}</span>
+              <li key={i} style={{ alignItems: "flex-start", gap: "0.75rem" }}>
+                <CheckCircle2 size={16} style={{ color: "var(--panel-accent)", flexShrink: 0, marginTop: "2px" }} />
+                <span style={{ color: "rgba(255,255,255,0.9)", fontSize: "0.88rem" }}>{item}</span>
               </li>
             ))}
           </ul>
           
-          <div style={{ marginTop: "1rem", paddingLeft: "0.5rem" }}>
-            <p style={{ fontSize: "0.85rem", fontWeight: 700, color: accentColor, marginBottom: "0.5rem" }}>Profesyonel Çıkış Yönetimi:</p>
+          <div style={{ marginTop: "1.5rem", paddingLeft: "0" }}>
+            <p style={{ fontSize: "0.95rem", fontWeight: 700, color: "var(--panel-accent)", marginBottom: "0.75rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
+              Profesyonel Çıkış Yönetimi:
+            </p>
             <Bullets items={[
               "Belirlenmiş kar hedefi ile otomatik satış",
               "İzleyen stop ile güçlü trendleri devam ettirme",
@@ -1079,7 +1085,7 @@ function HighwayPremiumPanel({ t }: { t: (k: string) => string }) {
         </Section>
 
         {/* Özel Özellikler */}
-        <Section title="Özel Özellikleri">
+        <Section title="Özel Özellikleri" icon={<BarChart3 size={18} />}>
           <Bullets items={[
             "Ekip Tarafından Yönetim: Kurulum, takip ve strateji kontrolü BorsaZeka ekibi tarafından yapılır.",
             "Farklı Zaman Dilimlerinde Tarama: Her zaman dilimine özel optimizasyon ve tarama stratejileri kullanılır.",
@@ -1091,7 +1097,7 @@ function HighwayPremiumPanel({ t }: { t: (k: string) => string }) {
         </Section>
 
         {/* Neden Highway? */}
-        <Section title="Neden Highway Premium?">
+        <Section title="Neden Highway Premium?" icon={<Rocket size={18} />}>
           <p className={s.accordionTextUnified}>
             Highway Premium, gün içi trend hareketlerinden faydalanmak isteyen ancak robot yönetimi, parametre takibi ve strateji optimizasyonu ile uğraşmak istemeyen yatırımcılar için tasarlanmıştır.
           </p>
@@ -1104,7 +1110,7 @@ function HighwayPremiumPanel({ t }: { t: (k: string) => string }) {
         </Section>
 
         {/* Kullanım Şartları */}
-        <Section title="Highway Robot Kullanım Şartları">
+        <Section title="Highway Robot Kullanım Şartları" icon={<Shield size={18} />}>
           <p className={s.accordionTextUnified}>
             Lütfen aşağıdaki kullanım şartlarını dikkatlice okuyun. Bu şartlar, Highway algoritmik yatırım robotunu kullanacak yatırımcılar için geçerlidir. Herhangi bir sorunuz olursa tarafımıza ulaşabilirsiniz.
           </p>
@@ -1165,7 +1171,7 @@ function KriptozekaPremiumPanel({ t }: { t: (k: string) => string }) {
   };
 
   return (
-    <div className={s.robotDetailsPanelUnified}>
+    <div className={s.robotDetailsPanelUnified} style={{ '--panel-accent': '#60a5fa' } as React.CSSProperties}>
       <div className={s.tmHeader}>
         <div className={s.tmIconGlowBlue}>
           <Bitcoin size={32} />
@@ -1191,7 +1197,7 @@ function KriptozekaPremiumPanel({ t }: { t: (k: string) => string }) {
       <div className={s.flatContentUnified}>
         <div className={s.contentSectionUnified}>
           <h3 className={s.contentSectionTitleUnified}>
-            <Zap size={18} style={{ color: "#fbbf24" }} />
+            <Zap size={18} />
             {t("wizard.step6.kriptozeka.strategyTitle")}
           </h3>
           <p className={s.accordionTextUnified}>{renderDesc(t("wizard.step6.kriptozeka.strategyP1"))}</p>
@@ -1200,34 +1206,40 @@ function KriptozekaPremiumPanel({ t }: { t: (k: string) => string }) {
 
         <div className={s.contentSectionUnified}>
           <h3 className={s.contentSectionTitleUnified}>
-            <Settings size={18} style={{ color: "#fbbf24" }} />
+            <Settings size={18} />
             {t("wizard.step6.kriptozeka.logicTitle")}
           </h3>
           <ul className={s.unifiedCheckList}>
             {(["l1", "l2", "l3", "l4"] as const).map(k => (
-              <li key={k}><CheckCircle2 size={14} className={s.unifiedCheck} style={{ color: "#fbbf24" }} /><span>{t(`wizard.step6.kriptozeka.${k}`)}</span></li>
+              <li key={k} style={{ alignItems: "flex-start", gap: "0.75rem" }}>
+                <CheckCircle2 size={16} style={{ color: "var(--panel-accent)", flexShrink: 0, marginTop: "2px" }} />
+                <span style={{ color: "rgba(255,255,255,0.9)", fontSize: "0.88rem" }}>{t(`wizard.step6.kriptozeka.${k}`)}</span>
+              </li>
             ))}
           </ul>
         </div>
 
         <div className={s.contentSectionUnified}>
           <h3 className={s.contentSectionTitleUnified}>
-            <Shield size={18} style={{ color: "#fbbf24" }} />
+            <Shield size={18} />
             {t("wizard.step6.kriptozeka.securityTitle")}
           </h3>
           <ul className={s.unifiedCheckList}>
             {(["s1", "s2", "s3", "s4"] as const).map(k => (
-              <li key={k}><Shield size={14} className={s.unifiedCheck} style={{ color: "#fbbf24" }} /><span>{t(`wizard.step6.kriptozeka.${k}`)}</span></li>
+              <li key={k} style={{ alignItems: "flex-start", gap: "0.75rem" }}>
+                <Shield size={16} style={{ color: "var(--panel-accent)", flexShrink: 0, marginTop: "2px" }} />
+                <span style={{ color: "rgba(255,255,255,0.9)", fontSize: "0.88rem" }}>{t(`wizard.step6.kriptozeka.${k}`)}</span>
+              </li>
             ))}
           </ul>
         </div>
 
         <div className={s.contentSectionUnified}>
           <h3 className={s.contentSectionTitleUnified}>
-            <Activity size={18} style={{ color: "#fbbf24" }} />
+            <Activity size={18} />
             {t("wizard.step6.kriptozeka.termsTitle")}
           </h3>
-          <p className={s.tmTermsNote} style={{ color: "#fff", fontWeight: 700 }}>{t("wizard.step6.kriptozeka.termsNote")}</p>
+          <p className={s.tmTermsNote} style={{ color: "#fff", fontWeight: 700, fontSize: "0.9rem", marginBottom: "1rem" }}>{t("wizard.step6.kriptozeka.termsNote")}</p>
           <ol className={s.tmTermsListUnified}>
             {(["t1", "t2", "t3", "t4", "t5", "t6", "t7", "t8", "t9", "t10", "t11", "t12", "t13", "t14", "t15", "t16", "t17", "t18", "t19", "t20"] as const).map(k => (
               <li key={k} className={s.tmTermsItemUnified}>
@@ -1250,10 +1262,11 @@ function KriptozekaPremiumPanel({ t }: { t: (k: string) => string }) {
 function DarkroomPremiumPanel({ t }: { t: (k: string) => string }) {
   const accentColor = "#c084fc";
 
-  const Section = ({ title, children }: { title?: string; children: React.ReactNode }) => (
+  const Section = ({ title, icon, children }: { title?: string; icon?: React.ReactNode; children: React.ReactNode }) => (
     <div className={s.contentSectionUnified}>
       {title && (
-        <h3 className={s.contentSectionTitleUnified} style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+        <h3 className={s.contentSectionTitleUnified}>
+          {icon && <span style={{ opacity: 0.8 }}>{icon}</span>}
           {title}
         </h3>
       )}
@@ -1273,7 +1286,7 @@ function DarkroomPremiumPanel({ t }: { t: (k: string) => string }) {
   );
 
   return (
-    <div className={s.robotDetailsPanelUnified}>
+    <div className={s.robotDetailsPanelUnified} style={{ '--panel-accent': '#c084fc' } as React.CSSProperties}>
       {/* Header */}
       <div className={s.tmHeader}>
         <div className={s.tmIconGlowPurple}><Moon size={32} /></div>
@@ -1303,7 +1316,7 @@ function DarkroomPremiumPanel({ t }: { t: (k: string) => string }) {
         </Section>
 
         {/* Yapı */}
-        <Section title="DarkRoom Premium'un Yapısı">
+        <Section title="DarkRoom Premium'un Yapısı" icon={<Activity size={18} />}>
           <Bullets items={[
             "Sınırlı sayıda kullanıcı ile çalışır",
             "Toplam portföy büyüklüğü kontrollü şekilde yönetilir",
@@ -1313,9 +1326,9 @@ function DarkroomPremiumPanel({ t }: { t: (k: string) => string }) {
         </Section>
 
         {/* Nedir */}
-        <Section title="DarkRoom Premium Nedir?">
+        <Section title="DarkRoom Premium Nedir?" icon={<Target size={18} />}>
           <p className={s.accordionTextUnified}>
-            DarkRoom, BorsaZeka&apos;nın en özel ve en güvenilir robotlarından biridir. Klasik teknik analiz yöntemlerini tamamen geride bırakan bu algoritma, akşam alıp sabah satma mantığında çalışan bir gap trade robotudur.
+            DarkRoom, BorsaZeka'nın en özel ve en güvenilir robotlarından biridir. Klasik teknik analiz yöntemlerini tamamen geride bırakan bu algoritma, akşam alıp sabah satma mantığında çalışan bir gap trade robotudur.
           </p>
           <p className={s.accordionTextUnified}>
             Bu sistemin temel amacı, ertesi gün yüksek ihtimalle yukarı yönlü açılış yapacak hisseleri bir önceki akşamdan tespit ederek pozisyon almak ve ertesi sabah açılışta pozisyonu kapatmaktır.
@@ -1330,17 +1343,19 @@ function DarkroomPremiumPanel({ t }: { t: (k: string) => string }) {
         </Section>
 
         {/* Çalışma Mantığı */}
-        <Section title="Çalışma Mantığı">
+        <Section title="Çalışma Mantığı" icon={<Settings size={18} />}>
           <ul className={s.unifiedCheckList}>
             {([
-              { label: "İşlem Zamanı:", desc: "Robot yalnızca günün sonunda (akşam) pozisyon alır" },
-              { label: "Pozisyon Kapatma:", desc: "Alınan tüm pozisyonlar ertesi sabah açılışta otomatik olarak kapatılır" },
-              { label: "Bekleme Yok:", desc: "Hiçbir hisse gün içinde elde tutulmaz. Her işlem, gece al – sabah sat şeklinde kısa vadelidir" },
+              { label: "İşlem Zamanı:",      desc: "Robot yalnızca günün sonunda (akşam) pozisyon alır" },
+              { label: "Pozisyon Kapatma:",  desc: "Alınan tüm pozisyonlar ertesi sabah açılışta otomatik olarak kapatılır" },
+              { label: "Bekleme Yok:",       desc: "Hiçbir hisse gün içinde elde tutulmaz. Her işlem, 'gece al – sabah sat' şeklinde kısa vadelidir" },
               { label: "İstatistiksel Seçim:", desc: "Sistem her akşam yüzlerce hissedeki veri desenlerini analiz ederek, gap up (yüksek açılış) ihtimali yüksek olanları seçer" },
             ]).map((item, i) => (
-              <li key={i} style={{ flexDirection: "column", alignItems: "flex-start", gap: "0.1rem" }}>
-                <span style={{ color: accentColor, fontWeight: 700, fontSize: "0.8rem" }}>{item.label}</span>
-                <span style={{ paddingLeft: "0.25rem" }}>{item.desc}</span>
+              <li key={i} style={{ flexDirection: "column", alignItems: "flex-start", gap: "0.25rem" }}>
+                <span style={{ color: "var(--panel-accent)", fontWeight: 700, fontSize: "0.95rem", display: "flex", alignItems: "center", gap: "0.4rem" }}>
+                  {item.label}
+                </span>
+                <span style={{ paddingLeft: "0", color: "rgba(255,255,255,0.9)" }}>{item.desc}</span>
               </li>
             ))}
           </ul>
@@ -1465,10 +1480,11 @@ function DarkroomPremiumPanel({ t }: { t: (k: string) => string }) {
 function DarkroomSelfPanel({ t }: { t: (k: string) => string }) {
   const accentColor = "#c084fc";
 
-  const Section = ({ title, children }: { title?: string; children: React.ReactNode }) => (
+  const Section = ({ title, icon, children }: { title?: string; icon?: React.ReactNode; children: React.ReactNode }) => (
     <div className={s.contentSectionUnified}>
       {title && (
-        <h3 className={s.contentSectionTitleUnified} style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+        <h3 className={s.contentSectionTitleUnified}>
+          {icon && <span style={{ opacity: 0.8 }}>{icon}</span>}
           {title}
         </h3>
       )}
@@ -1477,7 +1493,7 @@ function DarkroomSelfPanel({ t }: { t: (k: string) => string }) {
   );
 
   return (
-    <div className={s.robotDetailsPanelUnified}>
+    <div className={s.robotDetailsPanelUnified} style={{ '--panel-accent': '#c084fc' } as React.CSSProperties}>
       {/* Header */}
       <div className={s.tmHeader}>
         <div className={s.tmIconGlowPurple}><Smartphone size={32} /></div>
@@ -1497,7 +1513,7 @@ function DarkroomSelfPanel({ t }: { t: (k: string) => string }) {
       <div className={s.flatContentUnified}>
         
         {/* Mobil App Intro */}
-        <Section title="BorsaZeka Mobile App – Self-Service Robotlar">
+        <Section title="BorsaZeka Mobile App – Self-Service Robotlar" icon={<Smartphone size={18} />}>
           <p className={s.accordionTextUnified}>
             Kendi algoritmik robotlarını cebinden yönet! BorsaZeka’nın mobil uygulaması, algoritmik işlem robotlarını kendi kontrolünde kullanmak isteyen yatırımcılar için özel olarak tasarlanmış Self-Service modülünü sunar.
           </p>
@@ -1507,55 +1523,59 @@ function DarkroomSelfPanel({ t }: { t: (k: string) => string }) {
               "Parametrelerini gerçek zamanlı olarak değiştirebilir,",
               "Performans takibini doğrudan uygulama üzerinden gerçekleştirebilir.",
             ].map((item, i) => (
-              <li key={i} style={{ alignItems: "flex-start" }}>
-                <CheckCircle2 size={14} style={{ color: accentColor, flexShrink: 0, marginTop: "2px" }} />
-                <span>{item}</span>
+              <li key={i} style={{ alignItems: "flex-start", gap: "0.75rem" }}>
+                <CheckCircle2 size={16} style={{ color: "var(--panel-accent)", flexShrink: 0, marginTop: "2px" }} />
+                <span style={{ color: "rgba(255,255,255,0.9)", fontSize: "0.88rem" }}>{item}</span>
               </li>
             ))}
           </ul>
         </Section>
 
         {/* Darkroom Giriş */}
-        <Section title="DarkRoom Self-Service Robotu">
+        <Section title="DarkRoom Self-Service Robotu" icon={<Moon size={18} />}>
           <p className={s.accordionTextUnified}>
             DarkRoom, BorsaZeka’nın en popüler ve güvenilir robotlarından biridir. Klasik teknik analiz yaklaşımlarını tamamen geride bırakan bu algoritma, günlük açılış boşluklarından (gap) kazanç elde etmeyi hedefler.
           </p>
         </Section>
 
         {/* Strateji */}
-        <Section title="Stratejinin Temeli">
+        <Section title="Stratejinin Temeli" icon={<Zap size={18} />}>
           <ul className={s.unifiedCheckList}>
             {([
               { label: "Hiçbir teknik gösterge kullanılmaz:", desc: "RSI, MACD veya Bollinger Bands gibi göstergeler bu sistemde yer almaz." },
               { label: "İstatistiksel zeka:", desc: "Geçmiş binlerce işlem gününe ait veri setlerini analiz eden yapay zeka motoru, yarın yüksek ihtimalle yukarı açılış yapacak hisseleri belirler." },
             ]).map((item, i) => (
-              <li key={i} style={{ flexDirection: "column", alignItems: "flex-start", gap: "0.1rem" }}>
-                <span style={{ color: accentColor, fontWeight: 700, fontSize: "0.8rem" }}>{item.label}</span>
-                <span style={{ paddingLeft: "0.25rem" }}>{item.desc}</span>
+              <li key={i} style={{ flexDirection: "column", alignItems: "flex-start", gap: "0.25rem" }}>
+                <span style={{ color: "var(--panel-accent)", fontWeight: 700, fontSize: "0.95rem", display: "flex", alignItems: "center", gap: "0.4rem" }}>
+                  {item.label}
+                </span>
+                <span style={{ paddingLeft: "0", color: "rgba(255,255,255,0.9)" }}>{item.desc}</span>
               </li>
             ))}
           </ul>
         </Section>
 
         {/* Çalışma Mantığı */}
-        <Section title="Çalışma Mantığı">
+        <Section title="Çalışma Mantığı" icon={<Settings size={18} />}>
           <ul className={s.unifiedCheckList}>
             {([
-              { label: "İşlem Zamanı:", desc: "Robot yalnızca günün sonunda (akşam) pozisyon alır." },
-              { label: "Pozisyon Kapatma:", desc: "Alınan tüm pozisyonlar ertesi sabah açılışta otomatik olarak kapatılır." },
-              { label: "Bekleme Yok:", desc: "Hiçbir hisse gün içinde elde tutulmaz. Her işlem, 'gece al – sabah sat' şeklinde kısa vadelidir." },
+              { label: "İşlem Zamanı:",      desc: "Robot yalnızca günün sonunda (akşam) pozisyon alır." },
+              { label: "Pozisyon Kapatma:",  desc: "Alınan tüm pozisyonlar ertesi sabah açılışta otomatik olarak kapatılır." },
+              { label: "Bekleme Yok:",       desc: "Hiçbir hisse gün içinde elde tutulmaz. Her işlem, 'gece al – sabah sat' şeklinde kısa vadelidir." },
               { label: "İstatistiksel Seçim:", desc: "Sistem her akşam yüzlerce hissenin veri desenlerini analiz ederek, gap up (yüksek açılış) ihtimali yüksek olanları seçer." },
             ]).map((item, i) => (
-              <li key={i} style={{ flexDirection: "column", alignItems: "flex-start", gap: "0.1rem" }}>
-                <span style={{ color: accentColor, fontWeight: 700, fontSize: "0.8rem" }}>{item.label}</span>
-                <span style={{ paddingLeft: "0.25rem" }}>{item.desc}</span>
+              <li key={i} style={{ flexDirection: "column", alignItems: "flex-start", gap: "0.25rem" }}>
+                <span style={{ color: "var(--panel-accent)", fontWeight: 700, fontSize: "0.95rem", display: "flex", alignItems: "center", gap: "0.4rem" }}>
+                  {item.label}
+                </span>
+                <span style={{ paddingLeft: "0", color: "rgba(255,255,255,0.9)" }}>{item.desc}</span>
               </li>
             ))}
           </ul>
         </Section>
 
         {/* Neler Yapabilirsin? */}
-        <Section title="DarkRoom Self-Service ile Neler Yapabilirsin?">
+        <Section title="DarkRoom Self-Service ile Neler Yapabilirsin?" icon={<Rocket size={18} />}>
           <p className={s.accordionTextUnified}>
             BorsaZeka Mobile App üzerinden kullanıcıya tam kontrol sağlanır:
           </p>
@@ -1566,41 +1586,45 @@ function DarkroomSelfPanel({ t }: { t: (k: string) => string }) {
               { label: "İşlem Bildirimleri:", desc: "Pozisyon açıldığında ve kapandığında anlık uyarı alırsın." },
               { label: "Performans Takibi:", desc: "Günlük kâr/zarar, toplam işlem sayısı ve başarı oranını görüntüleyebilirsin." },
             ]).map((item, i) => (
-              <li key={i} style={{ flexDirection: "column", alignItems: "flex-start", gap: "0.1rem" }}>
-                <span style={{ color: accentColor, fontWeight: 700, fontSize: "0.8rem" }}>{item.label}</span>
-                <span style={{ paddingLeft: "0.25rem" }}>{item.desc}</span>
+              <li key={i} style={{ flexDirection: "column", alignItems: "flex-start", gap: "0.25rem" }}>
+                <span style={{ color: "var(--panel-accent)", fontWeight: 700, fontSize: "0.95rem", display: "flex", alignItems: "center", gap: "0.4rem" }}>
+                  {item.label}
+                </span>
+                <span style={{ paddingLeft: "0", color: "rgba(255,255,255,0.9)" }}>{item.desc}</span>
               </li>
             ))}
           </ul>
         </Section>
 
         {/* Güvenlik */}
-        <Section title="Güvenlik ve Altyapı">
+        <Section title="Güvenlik ve Altyapı" icon={<Shield size={18} />}>
           <ul className={s.unifiedCheckList}>
             {([
               { label: "Güvenli Emir İletimi:", desc: "Emirler, BorsaZeka sunucuları üzerinden, kullanıcıya tahsisli IP adresiyle ücretsiz olarak BIST’e iletilir." },
               { label: "Veri Güvenliği:", desc: "Hesap bilgileri, güvenli Vault sunucularda tutulur ve erişime kapalıdır." },
               { label: "Şeffaflık:", desc: "DarkRoom Self-Service yalnızca emir gönderir; kullanıcı, tüm işlemleri aracı kurum platformundan da takip edebilir." },
             ]).map((item, i) => (
-              <li key={i} style={{ flexDirection: "column", alignItems: "flex-start", gap: "0.1rem" }}>
-                <span style={{ color: accentColor, fontWeight: 700, fontSize: "0.8rem" }}>{item.label}</span>
-                <span style={{ paddingLeft: "0.25rem" }}>{item.desc}</span>
+              <li key={i} style={{ flexDirection: "column", alignItems: "flex-start", gap: "0.25rem" }}>
+                <span style={{ color: "var(--panel-accent)", fontWeight: 700, fontSize: "0.95rem", display: "flex", alignItems: "center", gap: "0.4rem" }}>
+                  {item.label}
+                </span>
+                <span style={{ paddingLeft: "0", color: "rgba(255,255,255,0.9)" }}>{item.desc}</span>
               </li>
             ))}
           </ul>
         </Section>
 
         {/* Kimler İçin */}
-        <Section title="Kimler İçin Uygundur?">
+        <Section title="Kimler İçin Uygundur?" icon={<Users size={18} />}>
           <ul className={s.unifiedCheckList}>
             {[
               "Gece pozisyon açıp sabah satış yapmayı tercih eden kısa vadeli yatırımcılar,",
               "Teknik analiz yerine istatistiksel modelleme ve yapay zeka temelli stratejilere güvenenler,",
               "Robotu dilediği zaman açıp kapatmak isteyen, manuel kontrolü önemseyen kullanıcılar.",
             ].map((item, i) => (
-              <li key={i} style={{ alignItems: "flex-start" }}>
-                <CheckCircle2 size={14} style={{ color: accentColor, flexShrink: 0, marginTop: "2px" }} />
-                <span>{item}</span>
+              <li key={i} style={{ alignItems: "flex-start", gap: "0.75rem" }}>
+                <CheckCircle2 size={16} style={{ color: "var(--panel-accent)", flexShrink: 0, marginTop: "2px" }} />
+                <span style={{ color: "rgba(255,255,255,0.9)", fontSize: "0.88rem" }}>{item}</span>
               </li>
             ))}
           </ul>
@@ -1612,8 +1636,9 @@ function DarkroomSelfPanel({ t }: { t: (k: string) => string }) {
           border: "1px solid rgba(192, 132, 252, 0.2)",
           borderRadius: "12px",
           padding: "1rem 1.25rem",
+          textAlign: "left"
         }}>
-          <p className={s.accordionTextUnified} style={{ margin: 0, color: "#e9d5ff", fontStyle: "italic" }}>
+          <p className={s.accordionTextUnified} style={{ margin: 0, color: "#e9d5ff", fontStyle: "italic", textAlign: "left" }}>
             DarkRoom Self-Service, klasik otomasyonun ötesine geçerek robot stratejisini doğrudan cebinden yönetme imkânı sunar. Kontrol sende, algoritma BorsaZeka’da.
           </p>
         </div>
@@ -1647,7 +1672,7 @@ function HighwaySelfPanel({ t }: { t: (k: string) => string }) {
   };
 
   return (
-    <div className={s.robotDetailsPanelUnified}>
+    <div className={s.robotDetailsPanelUnified} style={{ '--panel-accent': '#60a5fa' } as React.CSSProperties}>
       <div className={s.tmHeader}>
         <div className={s.tmIconGlowBlue}>
           <Route size={32} />
@@ -1673,7 +1698,7 @@ function HighwaySelfPanel({ t }: { t: (k: string) => string }) {
       <div className={s.flatContentUnified}>
         <div className={s.contentSectionUnified}>
           <h3 className={s.contentSectionTitleUnified}>
-            <Zap size={18} style={{ color: "#60a5fa" }} />
+            <Zap size={18} />
             {t("wizard.step6.highwaySelf.strategyTitle")}
           </h3>
           <p className={s.accordionTextUnified}>{renderDesc(t("wizard.step6.highwaySelf.strategyP1"))}</p>
@@ -1682,14 +1707,14 @@ function HighwaySelfPanel({ t }: { t: (k: string) => string }) {
 
         <div className={s.contentSectionUnified}>
           <h3 className={s.contentSectionTitleUnified}>
-            <Settings size={18} style={{ color: "#60a5fa" }} />
+            <Settings size={18} />
             {t("wizard.step6.highwaySelf.logicTitle")}
           </h3>
           <ul className={s.unifiedCheckList}>
             {["l1", "l2", "l3", "l4"].map(k => (
-              <li key={k}>
-                <CheckCircle2 size={14} className={s.unifiedCheck} style={{ color: "#60a5fa" }} />
-                <span>{t(`wizard.step6.highwaySelf.${k}`)}</span>
+              <li key={k} style={{ alignItems: "flex-start", gap: "0.75rem" }}>
+                <CheckCircle2 size={16} style={{ color: "var(--panel-accent)", flexShrink: 0, marginTop: "2px" }} />
+                <span style={{ color: "rgba(255,255,255,0.9)", fontSize: "0.88rem" }}>{t(`wizard.step6.highwaySelf.${k}`)}</span>
               </li>
             ))}
           </ul>
@@ -1697,14 +1722,14 @@ function HighwaySelfPanel({ t }: { t: (k: string) => string }) {
 
         <div className={s.contentSectionUnified}>
           <h3 className={s.contentSectionTitleUnified}>
-            <BarChart3 size={18} style={{ color: "#60a5fa" }} />
+            <BarChart3 size={18} />
             {t("wizard.step6.highwaySelf.performanceTitle")}
           </h3>
           <ul className={s.unifiedCheckList}>
             {["p1", "p2", "p3", "p4"].map(k => (
-              <li key={k}>
-                <CheckCircle2 size={14} className={s.unifiedCheck} style={{ color: "#60a5fa" }} />
-                <span>{t(`wizard.step6.highwaySelf.${k}`)}</span>
+              <li key={k} style={{ alignItems: "flex-start", gap: "0.75rem" }}>
+                <CheckCircle2 size={16} style={{ color: "var(--panel-accent)", flexShrink: 0, marginTop: "2px" }} />
+                <span style={{ color: "rgba(255,255,255,0.9)", fontSize: "0.88rem" }}>{t(`wizard.step6.highwaySelf.${k}`)}</span>
               </li>
             ))}
           </ul>
@@ -1712,7 +1737,7 @@ function HighwaySelfPanel({ t }: { t: (k: string) => string }) {
 
         <div className={s.contentSectionUnified}>
           <h3 className={s.contentSectionTitleUnified}>
-            <Rocket size={18} style={{ color: "#60a5fa" }} />
+            <Rocket size={18} />
             {t("wizard.step6.highwaySelf.whyTitle")}
           </h3>
           <p className={s.accordionTextUnified}>{renderDesc(t("wizard.step6.highwaySelf.whyP1"))}</p>
@@ -1727,7 +1752,7 @@ function HighwaySelfPanel({ t }: { t: (k: string) => string }) {
 // --- TradeMate Self-Service Info Panel (Step 6 Left) --------------------------
 function TrademateSelfPanel({ t }: { t: (k: string) => string }) {
   return (
-    <div className={s.robotDetailsPanelUnified}>
+    <div className={s.robotDetailsPanelUnified} style={{ '--panel-accent': '#60a5fa' } as React.CSSProperties}>
       <div className={s.tmHeader}>
         <div className={s.tmIconGlowBlue}>
           <Cpu size={32} />
@@ -1753,26 +1778,32 @@ function TrademateSelfPanel({ t }: { t: (k: string) => string }) {
       <div className={s.flatContentUnified}>
         <div className={s.contentSectionUnified}>
           <h3 className={s.contentSectionTitleUnified}>
-            <TrendingUp size={18} style={{ color: "#10b981" }} />
+            <TrendingUp size={18} />
             {t("wizard.step6.trademateSelf.strategyTitle")}
           </h3>
-          <p className={s.accordionTextUnified}>{t("wizard.step6.trademateSelf.strategyDesc")}</p>
+          <p className={s.accordionTextUnified} style={{ color: "rgba(255,255,255,0.9)", lineHeight: 1.6 }}>
+            {t("wizard.step6.trademateSelf.strategyDesc")}
+          </p>
         </div>
 
         <div className={s.contentSectionUnified}>
           <h3 className={s.contentSectionTitleUnified}>
-            <Settings size={18} style={{ color: "#10b981" }} />
+            <Settings size={18} />
             {t("wizard.step6.trademateSelf.automationTitle")}
           </h3>
-          <p className={s.accordionTextUnified}>{t("wizard.step6.trademateSelf.automationDesc")}</p>
+          <p className={s.accordionTextUnified} style={{ color: "rgba(255,255,255,0.9)", lineHeight: 1.6 }}>
+            {t("wizard.step6.trademateSelf.automationDesc")}
+          </p>
         </div>
 
         <div className={s.contentSectionUnified}>
           <h3 className={s.contentSectionTitleUnified}>
-            <Shield size={18} style={{ color: "#10b981" }} />
+            <Shield size={18} />
             {t("wizard.step6.trademateSelf.riskTitle")}
           </h3>
-          <p className={s.accordionTextUnified}>{t("wizard.step6.trademateSelf.riskDesc")}</p>
+          <p className={s.accordionTextUnified} style={{ color: "rgba(255,255,255,0.9)", lineHeight: 1.6 }}>
+            {t("wizard.step6.trademateSelf.riskDesc")}
+          </p>
         </div>
       </div>
     </div>
@@ -1834,7 +1865,7 @@ function RobotInfoBox({ robot, t, variant = "default" }: { robot?: RobotDefiniti
   };
 
   return (
-    <div className={s.robotDetailsPanelUnified}>
+    <div className={s.robotDetailsPanelUnified} style={{ '--panel-accent': 'var(--wiz-primary-light)' } as React.CSSProperties}>
       <div className={s.tmHeader}>
         <div className={s.tmIconGlowBlue}>
           {getIcon()}
@@ -1845,18 +1876,21 @@ function RobotInfoBox({ robot, t, variant = "default" }: { robot?: RobotDefiniti
         </div>
       </div>
 
-      <div className={s.robotFeaturesList} style={{ marginTop: "1rem" }}>
-        <h4 className={s.featuresTitle} style={{ fontSize: "0.9rem", fontWeight: 800, color: "var(--wiz-primary-light)", marginBottom: "1rem" }}>
-          {t("wizard.step6.featuresTitle") || "Robot Özellikleri"}
-        </h4>
-        <ul className={s.unifiedCheckList}>
-          {robot.features.map((fKey: string) => (
-            <li key={fKey}>
-              <CheckCircle2 size={16} className={s.unifiedCheck} style={{ color: "var(--wiz-primary-light)" }} />
-              <span>{t(fKey)}</span>
-            </li>
-          ))}
-        </ul>
+      <div className={s.flatContentUnified} style={{ marginTop: "2rem" }}>
+        <div className={s.contentSectionUnified}>
+          <h3 className={s.contentSectionTitleUnified}>
+            <Zap size={18} />
+            {t("wizard.step6.featuresTitle") || "Robot Özellikleri"}
+          </h3>
+          <ul className={s.unifiedCheckList}>
+            {robot.features.map((fKey: string) => (
+              <li key={fKey} style={{ alignItems: "flex-start", gap: "0.75rem" }}>
+                <CheckCircle2 size={16} style={{ color: "var(--panel-accent)", flexShrink: 0, marginTop: "2px" }} />
+                <span style={{ color: "rgba(255,255,255,0.9)", fontSize: "0.88rem" }}>{t(fKey)}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
   );
@@ -2050,7 +2084,7 @@ function AnnualPlanBox({
         id="annual-plan-btn"
         className={s.annualPlanBtn}
       >
-        ✦ Yıllık Avantajla Satın Al
+        Yıllık Avantajla Satın Al
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
           <path d="M5 12h14M12 5l7 7-7 7" />
         </svg>
