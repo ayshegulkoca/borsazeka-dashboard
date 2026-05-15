@@ -8,7 +8,7 @@ import {
   Users, Lock, Bot, CheckCircle2, Send, ExternalLink,
   Shield, TrendingUp, Target, Activity, Zap, Coins, Route, Moon,
   Smartphone, Bell, Settings, BarChart3, Rocket, RotateCcw, Home,
-  Bitcoin, ShieldAlert,
+  Bitcoin, ShieldAlert, Cpu,
 } from "lucide-react";
 import { useTranslation, Trans } from "react-i18next";
 import { useSession, signIn } from "next-auth/react";
@@ -95,6 +95,60 @@ function saveToStorage(state: WState): void {
 function clearStorage(): void {
   if (typeof window === "undefined") return;
   window.localStorage.removeItem(STORAGE_KEY);
+}
+
+// --- Shared Helper Components for Step 6 Panels ------------------------------
+
+/** Bölüm başlığı ve içeriği için standart container */
+function Section({ title, icon, children }: { title?: string; icon?: React.ReactNode; children: React.ReactNode }) {
+  return (
+    <div className={s.contentSectionUnified}>
+      {title && (
+        <h3 className={s.contentSectionTitleUnified}>
+          {icon && <span style={{ opacity: 0.8 }}>{icon}</span>}
+          {title}
+        </h3>
+      )}
+      {children}
+    </div>
+  );
+}
+
+/** Standart check ikonlu liste */
+function Bullets({ items }: { items: string[] }) {
+  return (
+    <ul className={s.unifiedCheckList}>
+      {items.map((item, i) => (
+        <li key={i} style={{ alignItems: "flex-start", gap: "0.75rem" }}>
+          <CheckCircle2 size={16} style={{ color: "var(--panel-accent)", flexShrink: 0, marginTop: "2px" }} />
+          <span style={{ color: "rgba(255,255,255,0.9)", fontSize: "0.88rem" }}>{item}</span>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+/** i18n metinlerindeki <green>, <b>, <badge> taglerini React node'larına dönüştürür */
+function renderDesc(raw: string) {
+  if (!raw) return null;
+  const parts = raw.split(/(<green>|<\/green>|<b>|<\/b>|<badge>|<\/badge>)/);
+  const nodes: React.ReactNode[] = [];
+  let inGreen = false, inBold = false, inBadge = false;
+
+  parts.forEach((part, i) => {
+    if (part === "<green>") { inGreen = true; return; }
+    if (part === "</green>") { inGreen = false; return; }
+    if (part === "<b>") { inBold = true; return; }
+    if (part === "</b>") { inBold = false; return; }
+    if (part === "<badge>") { inBadge = true; return; }
+    if (part === "</badge>") { inBadge = false; return; }
+
+    if (inGreen) nodes.push(<span key={i} className={s.tmGreen}>{part}</span>);
+    else if (inBold) nodes.push(<strong key={i} style={{ fontWeight: 800 }}>{part}</strong>);
+    else if (inBadge) nodes.push(<span key={i} className={s.tmBadge}>{part}</span>);
+    else nodes.push(part);
+  });
+  return <>{nodes}</>;
 }
 
 // --- Main --------------------------------------------------------------------
@@ -799,20 +853,6 @@ export default function WizardPage() {
 
 // --- TradeMate Premium Info Panel (Step 6 Left) --------------------------------
 function TradematePremiumPanel({ t }: { t: (k: string) => string }) {
-  const accentColor = "#60a5fa";
-
-  const Section = ({ title, icon, children }: { title?: string; icon?: React.ReactNode; children: React.ReactNode }) => (
-    <div className={s.contentSectionUnified}>
-      {title && (
-        <h3 className={s.contentSectionTitleUnified}>
-          {icon && <span style={{ opacity: 0.8 }}>{icon}</span>}
-          {title}
-        </h3>
-      )}
-      {children}
-    </div>
-  );
-
   return (
     <div className={s.robotDetailsPanelUnified} style={{ '--panel-accent': '#60a5fa' } as React.CSSProperties}>
       {/* Header */}
@@ -892,7 +932,7 @@ function TradematePremiumPanel({ t }: { t: (k: string) => string }) {
               { label: "Ekip Tarafından Risk Takibi:", desc: "TradeMate Premium’da risk yönetimi sadece robot algoritmalarıyla sınırlı değildir. BorsaZeka ekibi, sistemin genel performansını ve risk durumunu düzenli olarak takip eder." },
             ]).map((item, i) => (
               <li key={i} style={{ flexDirection: "column", alignItems: "flex-start", gap: "0.1rem" }}>
-                <span style={{ color: accentColor, fontWeight: 700, fontSize: "0.8rem" }}>{item.label}</span>
+                <span style={{ color: "var(--panel-accent)", fontWeight: 700, fontSize: "0.8rem" }}>{item.label}</span>
                 <span style={{ paddingLeft: "0.25rem" }}>{item.desc}</span>
               </li>
             ))}
@@ -987,31 +1027,6 @@ function TradematePremiumPanel({ t }: { t: (k: string) => string }) {
 
 // --- Highway Premium Info Panel (Step 6 Left) ---------------------------------
 function HighwayPremiumPanel({ t }: { t: (k: string) => string }) {
-  const accentColor = "#60a5fa";
-
-  const Section = ({ title, icon, children }: { title?: string; icon?: React.ReactNode; children: React.ReactNode }) => (
-    <div className={s.contentSectionUnified}>
-      {title && (
-        <h3 className={s.contentSectionTitleUnified}>
-          {icon && <span style={{ opacity: 0.8 }}>{icon}</span>}
-          {title}
-        </h3>
-      )}
-      {children}
-    </div>
-  );
-
-  const Bullets = ({ items }: { items: string[] }) => (
-    <ul className={s.unifiedCheckList}>
-      {items.map((item, i) => (
-        <li key={i} style={{ alignItems: "flex-start", gap: "0.75rem" }}>
-          <CheckCircle2 size={16} style={{ color: "var(--panel-accent)", flexShrink: 0, marginTop: "2px" }} />
-          <span style={{ color: "rgba(255,255,255,0.9)", fontSize: "0.88rem" }}>{item}</span>
-        </li>
-      ))}
-    </ul>
-  );
-
   return (
     <div className={s.robotDetailsPanelUnified} style={{ '--panel-accent': '#60a5fa' } as React.CSSProperties}>
       {/* Header */}
@@ -1057,19 +1072,12 @@ function HighwayPremiumPanel({ t }: { t: (k: string) => string }) {
 
         {/* Çalışma Mantığı */}
         <Section title="Çalışma Mantığı" icon={<Settings size={18} />}>
-          <ul className={s.unifiedCheckList}>
-            {[
-              "Akıllı Tarama: Robot seans içinde aktif olarak piyasayı tarar ve trending hisseleri otomatik olarak tespit eder.",
-              "Çoklu Zaman Kontrolü: Farklı zaman periyotlarında trend uyumunu kontrol eder ve zayıf sinyalleri filtreler.",
-              "Ekip Kontrollü Optimizasyon: Parametreler ve strateji ayarları, BorsaZeka ekibi tarafından piyasa koşullarına göre takip edilir.",
-              "Dinamik Giriş: Piyasa yapısı ve hisse trendi uygun olduğunda pozisyon açar.",
-            ].map((item, i) => (
-              <li key={i} style={{ alignItems: "flex-start", gap: "0.75rem" }}>
-                <CheckCircle2 size={16} style={{ color: "var(--panel-accent)", flexShrink: 0, marginTop: "2px" }} />
-                <span style={{ color: "rgba(255,255,255,0.9)", fontSize: "0.88rem" }}>{item}</span>
-              </li>
-            ))}
-          </ul>
+          <Bullets items={[
+            "Akıllı Tarama: Robot seans içinde aktif olarak piyasayı tarar ve trending hisseleri otomatik olarak tespit eder.",
+            "Çoklu Zaman Kontrolü: Farklı zaman periyotlarında trend uyumunu kontrol eder ve zayıf sinyalleri filtreler.",
+            "Ekip Kontrollü Optimizasyon: Parametreler ve strateji ayarları, BorsaZeka ekibi tarafından piyasa koşullarına göre takip edilir.",
+            "Dinamik Giriş: Piyasa yapısı ve hisse trendi uygun olduğunda pozisyon açar.",
+          ]} />
           
           <div style={{ marginTop: "1.5rem", paddingLeft: "0" }}>
             <p style={{ fontSize: "0.95rem", fontWeight: 700, color: "var(--panel-accent)", marginBottom: "0.75rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
@@ -1204,11 +1212,7 @@ function KriptozekaPremiumPanel({ t }: { t: (k: string) => string }) {
           <p className={s.accordionTextUnified}>{renderDesc(t("wizard.step6.kriptozeka.strategyP2"))}</p>
         </div>
 
-        <div className={s.contentSectionUnified}>
-          <h3 className={s.contentSectionTitleUnified}>
-            <Settings size={18} />
-            {t("wizard.step6.kriptozeka.logicTitle")}
-          </h3>
+        <Section title={t("wizard.step6.kriptozeka.logicTitle")} icon={<Settings size={18} />}>
           <ul className={s.unifiedCheckList}>
             {(["l1", "l2", "l3", "l4"] as const).map(k => (
               <li key={k} style={{ alignItems: "flex-start", gap: "0.75rem" }}>
@@ -1217,13 +1221,9 @@ function KriptozekaPremiumPanel({ t }: { t: (k: string) => string }) {
               </li>
             ))}
           </ul>
-        </div>
+        </Section>
 
-        <div className={s.contentSectionUnified}>
-          <h3 className={s.contentSectionTitleUnified}>
-            <Shield size={18} />
-            {t("wizard.step6.kriptozeka.securityTitle")}
-          </h3>
+        <Section title={t("wizard.step6.kriptozeka.securityTitle")} icon={<Shield size={18} />}>
           <ul className={s.unifiedCheckList}>
             {(["s1", "s2", "s3", "s4"] as const).map(k => (
               <li key={k} style={{ alignItems: "flex-start", gap: "0.75rem" }}>
@@ -1232,13 +1232,9 @@ function KriptozekaPremiumPanel({ t }: { t: (k: string) => string }) {
               </li>
             ))}
           </ul>
-        </div>
+        </Section>
 
-        <div className={s.contentSectionUnified}>
-          <h3 className={s.contentSectionTitleUnified}>
-            <Activity size={18} />
-            {t("wizard.step6.kriptozeka.termsTitle")}
-          </h3>
+        <Section title={t("wizard.step6.kriptozeka.termsTitle")} icon={<Activity size={18} />}>
           <p className={s.tmTermsNote} style={{ color: "#fff", fontWeight: 700, fontSize: "0.9rem", marginBottom: "1rem" }}>{t("wizard.step6.kriptozeka.termsNote")}</p>
           <ol className={s.tmTermsListUnified}>
             {(["t1", "t2", "t3", "t4", "t5", "t6", "t7", "t8", "t9", "t10", "t11", "t12", "t13", "t14", "t15", "t16", "t17", "t18", "t19", "t20"] as const).map(k => (
@@ -1250,41 +1246,15 @@ function KriptozekaPremiumPanel({ t }: { t: (k: string) => string }) {
               </li>
             ))}
           </ol>
-        </div>
+        </Section>
       </div>
     </div>
   );
 }
 
 
-
 // --- DarkRoom Premium Info Panel (Step 6 Left) --------------------------------
 function DarkroomPremiumPanel({ t }: { t: (k: string) => string }) {
-  const accentColor = "#c084fc";
-
-  const Section = ({ title, icon, children }: { title?: string; icon?: React.ReactNode; children: React.ReactNode }) => (
-    <div className={s.contentSectionUnified}>
-      {title && (
-        <h3 className={s.contentSectionTitleUnified}>
-          {icon && <span style={{ opacity: 0.8 }}>{icon}</span>}
-          {title}
-        </h3>
-      )}
-      {children}
-    </div>
-  );
-
-  const Bullets = ({ items }: { items: string[] }) => (
-    <ul className={s.unifiedCheckList}>
-      {items.map((item, i) => (
-        <li key={i} style={{ alignItems: "flex-start" }}>
-          <CheckCircle2 size={14} style={{ color: accentColor, flexShrink: 0, marginTop: "2px" }} />
-          <span>{item}</span>
-        </li>
-      ))}
-    </ul>
-  );
-
   return (
     <div className={s.robotDetailsPanelUnified} style={{ '--panel-accent': '#c084fc' } as React.CSSProperties}>
       {/* Header */}
@@ -1651,26 +1621,6 @@ function DarkroomSelfPanel({ t }: { t: (k: string) => string }) {
 
 // --- Highway Self-Service Info Panel (Step 6 Left) ----------------------------
 function HighwaySelfPanel({ t }: { t: (k: string) => string }) {
-  const renderDesc = (raw: string) => {
-    const parts = raw.split(/(<green>|<\/green>|<b>|<\/b>|<badge>|<\/badge>)/);
-    const nodes: React.ReactNode[] = [];
-    let inGreen = false, inBold = false, inBadge = false;
-    parts.forEach((part, i) => {
-      if (part === "<green>") { inGreen = true; return; }
-      if (part === "</green>") { inGreen = false; return; }
-      if (part === "<b>") { inBold = true; return; }
-      if (part === "</b>") { inBold = false; return; }
-      if (part === "<badge>") { inBadge = true; return; }
-      if (part === "</badge>") { inBadge = false; return; }
-
-      if (inGreen) nodes.push(<span key={i} className={s.tmGreen}>{part}</span>);
-      else if (inBold) nodes.push(<strong key={i} style={{ fontWeight: 800 }}>{part}</strong>);
-      else if (inBadge) nodes.push(<span key={i} className={s.tmBadge} style={{ background: "rgba(59, 130, 246, 0.2)", color: "#60a5fa", borderColor: "rgba(59, 130, 246, 0.4)" }}>{part}</span>);
-      else nodes.push(part);
-    });
-    return <>{nodes}</>;
-  };
-
   return (
     <div className={s.robotDetailsPanelUnified} style={{ '--panel-accent': '#60a5fa' } as React.CSSProperties}>
       <div className={s.tmHeader}>
@@ -1696,20 +1646,12 @@ function HighwaySelfPanel({ t }: { t: (k: string) => string }) {
       </div>
 
       <div className={s.flatContentUnified}>
-        <div className={s.contentSectionUnified}>
-          <h3 className={s.contentSectionTitleUnified}>
-            <Zap size={18} />
-            {t("wizard.step6.highwaySelf.strategyTitle")}
-          </h3>
+        <Section title={t("wizard.step6.highwaySelf.strategyTitle")} icon={<Zap size={18} />}>
           <p className={s.accordionTextUnified}>{renderDesc(t("wizard.step6.highwaySelf.strategyP1"))}</p>
           <p className={s.accordionTextUnified}>{renderDesc(t("wizard.step6.highwaySelf.strategyP2"))}</p>
-        </div>
+        </Section>
 
-        <div className={s.contentSectionUnified}>
-          <h3 className={s.contentSectionTitleUnified}>
-            <Settings size={18} />
-            {t("wizard.step6.highwaySelf.logicTitle")}
-          </h3>
+        <Section title={t("wizard.step6.highwaySelf.logicTitle")} icon={<Settings size={18} />}>
           <ul className={s.unifiedCheckList}>
             {["l1", "l2", "l3", "l4"].map(k => (
               <li key={k} style={{ alignItems: "flex-start", gap: "0.75rem" }}>
@@ -1718,13 +1660,9 @@ function HighwaySelfPanel({ t }: { t: (k: string) => string }) {
               </li>
             ))}
           </ul>
-        </div>
+        </Section>
 
-        <div className={s.contentSectionUnified}>
-          <h3 className={s.contentSectionTitleUnified}>
-            <BarChart3 size={18} />
-            {t("wizard.step6.highwaySelf.performanceTitle")}
-          </h3>
+        <Section title={t("wizard.step6.highwaySelf.performanceTitle")} icon={<BarChart3 size={18} />}>
           <ul className={s.unifiedCheckList}>
             {["p1", "p2", "p3", "p4"].map(k => (
               <li key={k} style={{ alignItems: "flex-start", gap: "0.75rem" }}>
@@ -1733,16 +1671,12 @@ function HighwaySelfPanel({ t }: { t: (k: string) => string }) {
               </li>
             ))}
           </ul>
-        </div>
+        </Section>
 
-        <div className={s.contentSectionUnified}>
-          <h3 className={s.contentSectionTitleUnified}>
-            <Rocket size={18} />
-            {t("wizard.step6.highwaySelf.whyTitle")}
-          </h3>
+        <Section title={t("wizard.step6.highwaySelf.whyTitle")} icon={<Rocket size={18} />}>
           <p className={s.accordionTextUnified}>{renderDesc(t("wizard.step6.highwaySelf.whyP1"))}</p>
           <p className={s.accordionTextUnified}>{renderDesc(t("wizard.step6.highwaySelf.whyP2"))}</p>
-        </div>
+        </Section>
       </div>
     </div>
   );
@@ -1776,35 +1710,23 @@ function TrademateSelfPanel({ t }: { t: (k: string) => string }) {
       </div>
 
       <div className={s.flatContentUnified}>
-        <div className={s.contentSectionUnified}>
-          <h3 className={s.contentSectionTitleUnified}>
-            <TrendingUp size={18} />
-            {t("wizard.step6.trademateSelf.strategyTitle")}
-          </h3>
+        <Section title={t("wizard.step6.trademateSelf.strategyTitle")} icon={<TrendingUp size={18} />}>
           <p className={s.accordionTextUnified} style={{ color: "rgba(255,255,255,0.9)", lineHeight: 1.6 }}>
             {t("wizard.step6.trademateSelf.strategyDesc")}
           </p>
-        </div>
+        </Section>
 
-        <div className={s.contentSectionUnified}>
-          <h3 className={s.contentSectionTitleUnified}>
-            <Settings size={18} />
-            {t("wizard.step6.trademateSelf.automationTitle")}
-          </h3>
+        <Section title={t("wizard.step6.trademateSelf.automationTitle")} icon={<Settings size={18} />}>
           <p className={s.accordionTextUnified} style={{ color: "rgba(255,255,255,0.9)", lineHeight: 1.6 }}>
             {t("wizard.step6.trademateSelf.automationDesc")}
           </p>
-        </div>
+        </Section>
 
-        <div className={s.contentSectionUnified}>
-          <h3 className={s.contentSectionTitleUnified}>
-            <Shield size={18} />
-            {t("wizard.step6.trademateSelf.riskTitle")}
-          </h3>
+        <Section title={t("wizard.step6.trademateSelf.riskTitle")} icon={<Shield size={18} />}>
           <p className={s.accordionTextUnified} style={{ color: "rgba(255,255,255,0.9)", lineHeight: 1.6 }}>
             {t("wizard.step6.trademateSelf.riskDesc")}
           </p>
-        </div>
+        </Section>
       </div>
     </div>
   );
