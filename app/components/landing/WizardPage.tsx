@@ -8,7 +8,7 @@ import {
   Users, Lock, Bot, CheckCircle2, Send, ExternalLink,
   Shield, TrendingUp, Target, Activity, Zap, Coins, Route, Moon,
   Smartphone, Bell, Settings, BarChart3, Rocket, RotateCcw, Home,
-  Bitcoin, ShieldAlert, Cpu,
+  Bitcoin, ShieldAlert, Cpu, Info,
 } from "lucide-react";
 import { useTranslation, Trans } from "react-i18next";
 import { useSession, signIn } from "next-auth/react";
@@ -583,6 +583,17 @@ export default function WizardPage() {
                         <span className={s.summaryInfoValue}>
                           {pricing.profitSharePercent > 0 ? `%${pricing.profitSharePercent}` : t("wizard.step6.profitShareNA")}
                         </span>
+                      </div>
+
+                      <div className={s.summaryInfoItemColumn}>
+                        <div className={s.summaryInfoRow}>
+                          <span className={s.summaryInfoLabel}>{t("wizard.step6.setupFee")}</span>
+                          <span className={s.summaryInfoValue} style={{ color: "var(--wiz-primary-light)" }}>€50</span>
+                        </div>
+                        <div className={s.summaryInfoNote}>
+                          <Info size={12} />
+                          <span>{t("wizard.step6.setupFeeDisclaimer")}</span>
+                        </div>
                       </div>
                     </div>
 

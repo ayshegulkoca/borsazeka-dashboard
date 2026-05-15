@@ -833,6 +833,36 @@
   font-size: 0.9rem;
 }
 
+.summaryInfoItemColumn {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.35rem;
+  padding: 0.25rem 0;
+}
+
+.summaryInfoRow {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+}
+
+.summaryInfoNote {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 0.72rem;
+  line-height: 1.4;
+  font-weight: 400;
+}
+
+.summaryInfoNote svg {
+  flex-shrink: 0;
+  opacity: 0.8;
+}
+
 .summaryInfoLabel {
   color: var(--wiz-text-slate);
 }
