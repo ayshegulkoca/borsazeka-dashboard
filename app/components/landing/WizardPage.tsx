@@ -949,25 +949,27 @@ export default function WizardPage() {
                         </div>
 
                         {/* Setup Fee Note */}
-                        <div style={{
-                          display: "flex",
-                          alignItems: "center",
-                          gap: "0.5rem",
-                          background: "rgba(96, 165, 250, 0.05)",
-                          border: "1px solid rgba(96, 165, 250, 0.15)",
-                          padding: "0.75rem 1rem",
-                          borderRadius: "10px",
-                          fontSize: "0.82rem",
-                          color: "var(--wiz-primary-light)",
-                          marginBottom: "1.5rem"
-                        }}>
-                          <Info size={16} />
-                          <span>
-                            {i18n.language === "tr"
-                              ? "Not: Tüm kurulumlarda geçerli olan 50 Euro tek seferlik kurulum ücreti mevcuttur."
-                              : "Note: A €50 one-time setup fee applies to all configurations."}
-                          </span>
-                        </div>
+                        {state.managementType === "PREMIUM" && (
+                          <div style={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "0.5rem",
+                            background: "rgba(96, 165, 250, 0.05)",
+                            border: "1px solid rgba(96, 165, 250, 0.15)",
+                            padding: "0.75rem 1rem",
+                            borderRadius: "10px",
+                            fontSize: "0.82rem",
+                            color: "var(--wiz-primary-light)",
+                            marginBottom: "1.5rem"
+                          }}>
+                            <Info size={16} />
+                            <span>
+                              {i18n.language === "tr"
+                                ? "Not: Tüm kurulumlarda geçerli olan 50 Euro tek seferlik kurulum ücreti mevcuttur."
+                                : "Note: A €50 one-time setup fee applies to all configurations."}
+                            </span>
+                          </div>
+                        )}
                       </>
                     )}
                   </>
