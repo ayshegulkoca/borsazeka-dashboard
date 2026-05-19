@@ -560,7 +560,6 @@ export const BUDGET_BIST_SELF_SHARED: BudgetOption[] = [
 ];
 
 export const BUDGET_BIST_SELF_FABRIKA: BudgetOption[] = [
-  ...BUDGET_BIST_SELF_SHARED,
   { label: "600.000 – 3.000.000 ₺ (Fabrika)", min: 600_001, max: 3_000_000, value: 1_000_000 },
   { label: "3.000.000 – 5.000.000 ₺",          min: 3_000_001, max: 5_000_000, value: 4_000_000 },
 ];

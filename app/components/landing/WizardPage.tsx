@@ -153,12 +153,68 @@ function renderDesc(raw: string) {
 
 // --- Main --------------------------------------------------------------------
 export default function WizardPage() {
-  const { t } = useTranslation("common");
+  const { t, i18n } = useTranslation("common");
   const { data: session } = useSession();
   const searchParams = useSearchParams();
 
-  // --- State - lazy initializer localStorage'dan hidrate eder -----------------
-  const [state, setState] = useState<WState>(() => loadFromStorage());
+  // --- State - lazy initializer localStorage'dan hidrate eder ama isLoading ile güvenceye alırız ---
+  const [state, setState] = useState<WState>(DEFAULT_STATE);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Client'da yüklendiğinde (veya back/forward cache'den döndüğünde)
+  useEffect(() => {
+    // 1. Pageshow Event Listener (BFCache Bypass)
+    const handlePageShow = (event: PageTransitionEvent) => {
+      if (event.persisted) {
+        window.location.reload();
+      }
+    };
+    window.addEventListener("pageshow", handlePageShow);
+
+    // 2. Navigation Type Check (Kullanıcı Geri Tuşuyla Gelmişse)
+    let isBackNavigation = false;
+    try {
+      const perfEntries = performance.getEntriesByType("navigation");
+      if (perfEntries.length > 0) {
+        const navEntry = perfEntries[0] as PerformanceNavigationTiming;
+        if (navEntry.type === "back_forward") {
+          isBackNavigation = true;
+        }
+      } else if (performance.navigation && performance.navigation.type === 2) {
+        isBackNavigation = true;
+      }
+    } catch (e) {
+      // ignore
+    }
+
+    // 3. Persistent Storage Check
+    const saved = loadFromStorage();
+    if (saved && saved.step > 1) {
+      setState(saved);
+    }
+    
+    // Eğer back navigation ise ekranı zorla yenile (Next.js dynamic import hatasını çözer)
+    if (isBackNavigation) {
+      window.location.reload();
+      return; // Reload bitene kadar component mount olmasın
+    }
+
+    // Normal yüklendiyse ekranı göster
+    setIsLoading(false);
+
+    // popstate yedek olarak
+    const handlePopState = () => {
+      const stored = loadFromStorage();
+      if (stored) setState(stored);
+    };
+    window.addEventListener("popstate", handlePopState);
+
+    return () => {
+      window.removeEventListener("pageshow", handlePageShow);
+      window.removeEventListener("popstate", handlePopState);
+    };
+  }, []);
+
   const [notifyEmail, setNotifyEmail] = useState("");
   const [notifyDone, setNotifyDone] = useState(false);
   const [notifySubmitting, setNotifySubmitting] = useState(false);
@@ -394,11 +450,14 @@ export default function WizardPage() {
         }
         // --- SYNC END ---
 
-        // Stripe'a geçmeden önce wizard state'ini temizle (ödeme sonrası sıfır başlangıç)
-        clearStorage();
         // Give a tiny moment for DB state to propagate before browser leaves the page
+        // NOT: localStorage bilerek temizlenmiyor ki kullanıcı "Geri" dönerse 6. adımı görsün
+        // Eğer gerekiyorsa manuel saveToStorage yapalım
+        saveToStorage(state);
+        
         setTimeout(() => {
-          window.location.href = finalLink;
+          // target=_self yerine assign kullanarak redirect atıyoruz
+          window.location.assign(finalLink);
         }, 300);
         return;
 
@@ -455,6 +514,15 @@ export default function WizardPage() {
   };
 
   // ── render ──────────────────────────────────────────────────────────────────
+  if (isLoading) {
+    return (
+      <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "var(--bg-dark)" }}>
+        <div style={{ width: "40px", height: "40px", border: "3px solid rgba(255,255,255,0.1)", borderTopColor: "var(--wiz-primary-light)", borderRadius: "50%", animation: "spin 1s linear infinite" }} />
+        <style>{`@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }`}</style>
+      </div>
+    );
+  }
+
   return (
     <div className={s.wizardPage}>
       {/* Top bar */}
@@ -814,32 +882,91 @@ export default function WizardPage() {
                       </p>
                     ) : (
                       <>
-                        <p style={{ fontSize: "0.85rem", color: "var(--text-secondary)", marginBottom: "0.75rem" }}>
-                          {t(state.subMarket === "CRYPTO" ? "wizard.step5.cryptoLabel"
-                            : state.subMarket === "FOREX" ? "wizard.step5.forexLabel"
-                            : "wizard.step5.bistLabel")}
-                        </p>
-                        <div className={s.budgetGrid}>
-                          {budgetOptions.map((opt: BudgetOption) => (
-                            <button key={opt.value}
-                              className={`${s.budgetOption}
-                                ${state.budgetValue === opt.value ? s.budgetOptionSelected : ""}
-                                ${opt.comingSoon ? s.budgetOptionComingSoon : ""}`}
-                              disabled={opt.comingSoon}
-                              onClick={() => {
-                                if (opt.comingSoon) return;
-                                setState(prev => ({
-                                  ...prev,
-                                  budgetValue: opt.value,
-                                  budgetLabel: opt.label,
-                                  selectedBudgetComingSoon: opt.comingSoon ?? false,
-                                }));
-                                setTimeout(() => setState(prev => ({ ...prev, step: 6 })), 220);
-                              }}>
-                              {opt.label}
-                              {opt.comingSoon && <span className={s.budgetComingSoonTag}>Yakında</span>}
-                            </button>
-                          ))}
+                        <div 
+                          className={
+                            budgetOptions.length === 2 ? s.optionGrid50 :
+                            budgetOptions.length % 3 === 0 ? `${s.optionGrid} ${s.optionGrid3}` :
+                            s.optionGrid
+                          } 
+                          style={{ gap: "1rem", marginBottom: "1.5rem" }}
+                        >
+                          {budgetOptions.map((opt: BudgetOption) => {
+                            const pricing = state.robotId ? calcPriceForRobot(state.robotId, opt.value) : null;
+                            const isSelected = state.budgetValue === opt.value;
+                            const isTr = i18n.language === "tr";
+                            
+                            const serverCost = pricing ? `${pricing.serverCostDisplay}€ / ${isTr ? "ay" : "month"}` : "—";
+                            const profitShare = pricing && pricing.profitSharePercent > 0 
+                              ? (isTr ? `%${pricing.profitSharePercent} kâr paylaşımı` : `%${pricing.profitSharePercent} profit share`)
+                              : (isTr ? "Kâr paylaşımı yok" : "No profit share");
+
+                            return (
+                              <div
+                                key={opt.value}
+                                className={`${s.optionCard} ${isSelected ? s.optionCardSelected : ""} ${opt.comingSoon ? s.optionCardDisabled : ""}`}
+                                onClick={() => {
+                                  if (opt.comingSoon) return;
+                                  
+                                  setState(prev => ({
+                                    ...prev,
+                                    budgetValue: opt.value,
+                                    budgetLabel: opt.label,
+                                    selectedBudgetComingSoon: opt.comingSoon ?? false,
+                                  }));
+
+                                  // Auto-advance helper can be used
+                                  setTimeout(() => {
+                                    setState(prev => ({ ...prev, step: 6 }));
+                                  }, 220);
+                                }}
+                                style={{ 
+                                  padding: "1.25rem", 
+                                  minHeight: "110px", 
+                                  display: "flex", 
+                                  flexDirection: "column", 
+                                  justifyContent: "center",
+                                  alignItems: "flex-start",
+                                  textAlign: "left"
+                                }}
+                              >
+                                <div className={s.optionLabel} style={{ fontWeight: "bold", fontSize: "1.05rem", marginBottom: "0.4rem" }}>
+                                  {opt.label}
+                                </div>
+                                <div className={s.optionDesc} style={{ fontSize: "0.82rem", display: "flex", flexDirection: "column", gap: "0.2rem" }}>
+                                  <span style={{ color: "#fff", fontWeight: 500 }}>
+                                    {isTr ? "Aylık Maliyet: " : "Monthly Cost: "}{serverCost}
+                                  </span>
+                                  <span style={{ color: "var(--wiz-primary-light)" }}>{profitShare}</span>
+                                </div>
+                                {isSelected && (
+                                  <div className={s.optionCheck} style={{ opacity: 1 }}>
+                                    <Check size={12} />
+                                  </div>
+                                )}
+                              </div>
+                            );
+                          })}
+                        </div>
+
+                        {/* Setup Fee Note */}
+                        <div style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "0.5rem",
+                          background: "rgba(96, 165, 250, 0.05)",
+                          border: "1px solid rgba(96, 165, 250, 0.15)",
+                          padding: "0.75rem 1rem",
+                          borderRadius: "10px",
+                          fontSize: "0.82rem",
+                          color: "var(--wiz-primary-light)",
+                          marginBottom: "1.5rem"
+                        }}>
+                          <Info size={16} />
+                          <span>
+                            {i18n.language === "tr"
+                              ? "Not: Tüm kurulumlarda geçerli olan 50 Euro tek seferlik kurulum ücreti mevcuttur."
+                              : "Note: A €50 one-time setup fee applies to all configurations."}
+                          </span>
                         </div>
                       </>
                     )}
@@ -848,10 +975,15 @@ export default function WizardPage() {
               </>
             )}
 
-            {!submitDone && state.step === 5 && state.robotId === "CLASSIC" && (
+            {!submitDone && state.step === 5 && (
               <div className={s.wizardNav}>
                 <div />
-                <button className={s.btnWizardNext} onClick={goNext}>
+                <button 
+                  className={s.btnWizardNext} 
+                  onClick={goNext}
+                  disabled={state.robotId !== "CLASSIC" && !state.budgetValue}
+                  title={!state.budgetValue ? "Lütfen bütçe seçiniz" : ""}
+                >
                   {t("wizard.next")} <ArrowRight size={16} />
                 </button>
               </div>
