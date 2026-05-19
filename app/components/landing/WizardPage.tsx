@@ -536,13 +536,15 @@ export default function WizardPage() {
             </div>
           </div>
 
-          <div className={s.step6Content} style={{ "--right-panel-height": panelHeight ? `${panelHeight}px` : "auto" } as any}>
-            {/* Left: Robot Details Box (Glass Theme) */}
-            <RobotInfoBox robot={selectedRobot} t={t} variant="glass" />
+          <div className={`${s.step6Content} !items-start`}>
+            {/* Left: Robot Details Box (Glass Theme) with Internal Scroll */}
+            <div className={`flex-[2] max-h-[calc(100vh-250px)] overflow-y-auto pr-4 ${s.customScrollbar}`}>
+              <RobotInfoBox robot={selectedRobot} t={t} variant="glass" />
+            </div>
 
-            {/* Right Side: Dedicated column that stretches to full height to provide a sticky path */}
-            <div className={s.stickySidebarColumn}>
-              <div className={s.priceDetailsPanel} ref={pricePanelRef}>
+            {/* Right Side: Dedicated column that is now static and persistent */}
+            <div className={`${s.stickySidebarColumn} !static`}>
+              <div className={`${s.priceDetailsPanel} !static !top-auto !mt-0`} ref={pricePanelRef}>
                 {isPaymentBlocked ? (
                   <ComingSoonPanel
                     robot={selectedRobot}
