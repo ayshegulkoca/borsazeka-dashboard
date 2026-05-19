@@ -111,10 +111,14 @@ export default function DashboardShell({ children, userName, userEmail, userImag
       {/* Sidebar */}
       <aside className={styles.sidebar}>
         <div className={styles.sidebarHeader}>
-          <Link href="/" className={styles.logoArea}>
-            <div className={`${styles.logoIcon} glow-icon`}>
-              <Activity color="#3b82f6" size={20} strokeWidth={1.5} />
-            </div>
+          <Link href="/" className={`${styles.logoArea} flex items-center`}>
+            <Image
+              src="/images/logo.png"
+              alt="BorsaZeka Logo"
+              width={40}
+              height={40}
+              className="h-10 w-10 mr-3 drop-shadow-[0_0_8px_rgba(59,130,246,0.5)] object-contain"
+            />
             <span className={styles.title}>BorsaZeka</span>
           </Link>
 

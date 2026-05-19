@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Activity } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import Image from "next/image";
 import s from "./global-footer.module.css";
 
 export default function GlobalFooter() {
@@ -14,8 +15,14 @@ export default function GlobalFooter() {
         {/* Minimalist Top Footer Bar */}
         <div className={s.footerTop}>
           <div className={s.footerBrand}>
-            <Link href="/" className={s.logo}>
-              <Activity size={18} color="#FFFFFF" strokeWidth={2.5} />
+            <Link href="/" className={`${s.logo} flex items-center`}>
+              <Image
+                src="/images/logo.png"
+                alt="BorsaZeka Logo"
+                width={32}
+                height={32}
+                className="h-8 w-8 mr-2 drop-shadow-[0_0_8px_rgba(59,130,246,0.5)] object-contain"
+              />
               <span>BorsaZeka</span>
             </Link>
             <p className={s.tagline}>{t("footer.tagline")}</p>

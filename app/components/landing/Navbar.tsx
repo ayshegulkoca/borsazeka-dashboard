@@ -186,7 +186,14 @@ export default function Navbar() {
         <div className={styles.navInner}>
         {/* Brand: Logo + Dashboard Button (if auth) */}
         <div className={styles.navBrandWrapper}>
-          <Link href="/" className={styles.navLogo}>
+          <Link href="/" className={`${styles.navLogo} flex items-center`}>
+            <Image
+              src="/images/logo.png"
+              alt="BorsaZeka Logo"
+              width={40}
+              height={40}
+              className="h-10 w-10 mr-3 drop-shadow-[0_0_8px_rgba(59,130,246,0.5)] object-contain"
+            />
             <span>BorsaZeka</span>
           </Link>
 

@@ -1668,7 +1668,7 @@ function TrademateSelfPanel({ t }: { t: (k: string) => string }) {
         </div>
         <div>
           <h2 className={`${s.robotNeonTitleUnified} ${s.neonBlue}`}>TradeMate Self-Service</h2>
-          <p className={s.robotSloganUnified}>{t("wizard.step6.trademateSelf.slogan")}</p>
+          <p className={s.robotSloganUnified}>Büyük Portföyler İçin Profesyonel Düzeyde Otomatik Yönetim</p>
         </div>
       </div>
 
@@ -1681,26 +1681,70 @@ function TrademateSelfPanel({ t }: { t: (k: string) => string }) {
           <Activity size={14} />
           <span>Ücretsiz Sunucu</span>
         </div>
-        <div className={`${s.featureTagUnified} ${s.tagBlue}`}>{t("wizard.step6.trademateSelf.h1")}</div>
+        <div className={`${s.featureTagUnified} ${s.tagBlue}`}>
+          Yüksek Hacimli İşlem
+        </div>
       </div>
 
       <div className={s.flatContentUnified}>
-        <Section title={t("wizard.step6.trademateSelf.strategyTitle")} icon={<TrendingUp size={18} />}>
-          <p className={s.accordionTextUnified} style={{ color: "rgba(255,255,255,0.9)", lineHeight: 1.6 }}>
-            {t("wizard.step6.trademateSelf.strategyDesc")}
-          </p>
+        <Section title="Strateji (Overnight & Gün İçi)" icon={<TrendingUp size={18} />}>
+          <div className={s.accordionTextUnified} style={{ color: "rgba(255,255,255,0.9)", lineHeight: 1.6 }}>
+            <p className="mb-2">
+              TradeMate'in çekirdeğinde <span className="text-green-400 font-semibold">Overnight stratejisi</span> bulunur. Robot, akşamdan pozisyon açar, ertesi sabah ise gelişmiş algoritmalarla satış işlemlerini gerçekleştirir.
+            </p>
+            <p>
+              İsteğe bağlı olarak <span className="font-bold text-white">gün içi algoritma modu</span> da etkinleştirilebilir. Böylece kullanıcı, hem gece pozisyonlarından hem de seans içi fırsatlardan yararlanabilir.
+            </p>
+          </div>
         </Section>
 
-        <Section title={t("wizard.step6.trademateSelf.automationTitle")} icon={<Settings size={18} />}>
-          <p className={s.accordionTextUnified} style={{ color: "rgba(255,255,255,0.9)", lineHeight: 1.6 }}>
-            {t("wizard.step6.trademateSelf.automationDesc")}
-          </p>
+        <Section title="Tam Otomasyon & Akıllı Dağılım" icon={<Settings size={18} />}>
+          <div className={s.accordionTextUnified} style={{ color: "rgba(255,255,255,0.9)", lineHeight: 1.6 }}>
+            <p className="mb-3">
+              Kullanıcıdan sadece <span className="font-bold text-white">"Aç/Kapat"</span> butonuna dokunması beklenir. Geri kalan her şeyi robot yönetir:
+            </p>
+            <ul className="space-y-2 ml-1">
+              <li className="flex items-start gap-2">
+                <CheckCircle2 size={16} className="text-blue-400 mt-1 flex-shrink-0" />
+                <span><span className="font-bold text-white">Akıllı Portföy Dağılımı:</span> Seçilen hisselere göre portföyü otomatik böler ve optimum fiyatlardan alım yapar.</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <CheckCircle2 size={16} className="text-blue-400 mt-1 flex-shrink-0" />
+                <span><span className="font-bold text-white">Parçalı İşlem Altyapısı:</span> Büyük emirleri tahtayı bozmadan, kademeli olarak gerçekleştirir.</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <CheckCircle2 size={16} className="text-blue-400 mt-1 flex-shrink-0" />
+                <span><span className="font-bold text-white">Dinamik Parametreler:</span> Her hisse için ayrı algoritma parametreleri hesaplanır ve gerçek zamanlı uygulanır.</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <CheckCircle2 size={16} className="text-blue-400 mt-1 flex-shrink-0" />
+                <span><span className="font-bold text-white">Tatil & Yarım Gün Takibi:</span> Özel takvim algoritması sayesinde müdahaleye gerek kalmadan yönetir.</span>
+              </li>
+            </ul>
+          </div>
         </Section>
 
-        <Section title={t("wizard.step6.trademateSelf.riskTitle")} icon={<Shield size={18} />}>
-          <p className={s.accordionTextUnified} style={{ color: "rgba(255,255,255,0.9)", lineHeight: 1.6 }}>
-            {t("wizard.step6.trademateSelf.riskDesc")}
-          </p>
+        <Section title="Risk Yönetimi" icon={<Shield size={18} />}>
+          <div className={s.accordionTextUnified} style={{ color: "rgba(255,255,255,0.9)", lineHeight: 1.6 }}>
+            <ul className="space-y-2 ml-1">
+              <li className="flex items-start gap-2">
+                <ShieldAlert size={16} className="text-blue-400 mt-1 flex-shrink-0" />
+                <span><span className="font-bold text-white">Kara Liste & Brüt Takas:</span> İstenmeyen hisselerde işlem yapılmaz, brüt takas/yasaklı hisseler filtrelenir.</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <ShieldAlert size={16} className="text-blue-400 mt-1 flex-shrink-0" />
+                <span><span className="font-bold text-white">Kredi Kullanımı Kontrolü:</span> Portföyün kaç katına kadar kredi kullanılacağı kullanıcı tarafından belirlenir.</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <ShieldAlert size={16} className="text-blue-400 mt-1 flex-shrink-0" />
+                <span><span className="font-bold text-white">Rezerve Para Yönetimi:</span> T+2 döneminde para çekmek için portföy fonları kısıtlanabilir.</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <ShieldAlert size={16} className="text-blue-400 mt-1 flex-shrink-0" />
+                <span><span className="font-bold text-white">Tavan Hisse Algoritması:</span> Tavan olan hisselerde özel satış algoritması ile maksimum kâr hedeflenir.</span>
+              </li>
+            </ul>
+          </div>
         </Section>
       </div>
     </div>
