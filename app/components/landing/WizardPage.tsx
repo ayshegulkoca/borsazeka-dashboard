@@ -992,7 +992,7 @@ export default function WizardPage() {
                                   <div className={s.optionLabel} style={{ fontWeight: "bold", fontSize: "1.05rem", margin: 0 }}>
                                     {opt.label}
                                   </div>
-                                  {pricing?.annualCostEUR && (
+                                  {state.billingCycle === "annual" && pricing?.annualCostEUR && (
                                     <span className={s.discountBadge}>
                                       {t("wizard.step5.fourMonthsFree")}
                                     </span>
