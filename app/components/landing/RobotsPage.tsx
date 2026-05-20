@@ -271,7 +271,7 @@ export default function RobotsPage() {
           className={`${robotStyles.tabButton} ${activeTab === "SELF_SERVICE" ? robotStyles.tabButtonActive : ""}`}
           onClick={() => setActiveTab("SELF_SERVICE")}
         >
-          {t("wizard.step3.selfService") || "Self-Service: Kendi Yönet"}
+          {t("wizard.step3.selfService") || "Self-Service: Kendiniz Yönetin"}
         </button>
       </div>
 
