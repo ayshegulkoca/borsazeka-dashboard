@@ -5,7 +5,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
   Activity, Bot, TrendingUp, Zap, Shield, Target,
-  Coins, Globe, ArrowRight, Check, Lock, Cpu, Route
+  Coins, Globe, ArrowRight, Check, Lock, Cpu, Route,
+  Users, Settings, Percent
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import Navbar from "./Navbar";
@@ -57,6 +58,105 @@ const MARKET_LABELS: Record<string, { tr: string; en: string }> = {
   BIST:   { tr: "BIST", en: "BIST" },
   CRYPTO: { tr: "Kripto", en: "Crypto" },
   FOREX:  { tr: "Forex", en: "Forex" },
+};
+
+interface SpecItem {
+  icon: any;
+  label: { tr: string; en: string };
+  value: { tr: string; en: string };
+}
+
+const ROBOT_SPECS: Record<string, SpecItem[]> = {
+  DARKROOM: [
+    { icon: TrendingUp, label: { tr: "Strateji", en: "Strategy" }, value: { tr: "Akşam Al - Sabah Sat (Gap Trade). İstatistiksel model ve Yapay Zeka motoru (İndikatör kullanmaz).", en: "Overnight Buy - Morning Sell (Gap Trade). Statistical model & AI engine (No indicators)." } },
+    { icon: Cpu, label: { tr: "Yönetim", en: "Management" }, value: { tr: "Tamamen BorsaZeka yönetimli (Kurulum ve Takip dahil).", en: "Fully BorsaZeka managed (Setup and Monitoring included)." } },
+    { icon: Coins, label: { tr: "Bütçe", en: "Budget" }, value: { tr: "600.000 TL - 5.000.000 TL", en: "600,000 TRY - 5,000,000 TRY" } },
+    { icon: Percent, label: { tr: "Maliyet", en: "Cost" }, value: { tr: "%50 Kâr Paylaşımı + Sunucu (€30-€95)", en: "50% Profit Share + Server (€30-€95)" } },
+    { icon: Users, label: { tr: "Kapasite", en: "Capacity" }, value: { tr: "40 Kişilik", en: "40 Users" } }
+  ],
+  HIGHWAY: [
+    { icon: TrendingUp, label: { tr: "Strateji", en: "Strategy" }, value: { tr: "Çok Boyutlu Trend Analizi. Farklı zaman periyotlarında çoklu algoritma doğrulaması.", en: "Multi-Dimensional Trend Analysis. Multi-algorithm confirmation across timeframes." } },
+    { icon: Cpu, label: { tr: "Yönetim", en: "Management" }, value: { tr: "BorsaZeka Ekip Kontrollü Optimizasyon ve Takip.", en: "BorsaZeka Team-Controlled Optimization & Monitoring." } },
+    { icon: Coins, label: { tr: "Bütçe", en: "Budget" }, value: { tr: "600.000 TL - 5.000.000 TL", en: "600,000 TRY - 5,000,000 TRY" } },
+    { icon: Percent, label: { tr: "Maliyet", en: "Cost" }, value: { tr: "%50 Kâr Paylaşımı + Sunucu (€30-€95)", en: "50% Profit Share + Server (€30-€95)" } },
+    { icon: Users, label: { tr: "Kapasite", en: "Capacity" }, value: { tr: "40 Kişilik", en: "40 Users" } }
+  ],
+  TRADEMATE: [
+    { icon: TrendingUp, label: { tr: "Strateji", en: "Strategy" }, value: { tr: "Gelişmiş Portföy Yönetimi (Overnight + Gün İçi). Büyük portföyler için parçalı işlem altyapısı.", en: "Advanced Portfolio Management (Overnight + Intraday). Split-order engine for large portfolios." } },
+    { icon: Cpu, label: { tr: "Yönetim", en: "Management" }, value: { tr: "Uzman Ekip Kontrollü Risk ve Parametre Yönetimi.", en: "Expert Team-Controlled Risk & Parameter Management." } },
+    { icon: Coins, label: { tr: "Bütçe", en: "Budget" }, value: { tr: "600.000 TL - 100.000.000 TL", en: "600,000 TRY - 100,000,000 TRY" } },
+    { icon: Percent, label: { tr: "Maliyet", en: "Cost" }, value: { tr: "%50 Kâr Paylaşımı + Sunucu (€30-€95)", en: "50% Profit Share + Server (€30-€95)" } },
+    { icon: Users, label: { tr: "Kapasite", en: "Capacity" }, value: { tr: "40 Kişilik", en: "40 Users" } }
+  ],
+  FABRIKA: [
+    { icon: TrendingUp, label: { tr: "Strateji", en: "Strategy" }, value: { tr: "Çoklu Zaman Dilimli Kurumsal Portföy Stratejisi. En optimize parametrelerle üst düzey yönetim.", en: "Multi-Timeframe Institutional Portfolio Strategy. Top-tier management with optimized parameters." } },
+    { icon: Cpu, label: { tr: "Yönetim", en: "Management" }, value: { tr: "Tamamen BorsaZeka yönetimli ve Yakın Takip (Kurumsal Seviye).", en: "Fully BorsaZeka managed with close monitoring (Institutional Level)." } },
+    { icon: Coins, label: { tr: "Bütçe", en: "Budget" }, value: { tr: "5.000.000 TL - 100.000.000 TL", en: "5,000,000 TRY - 100,000,000 TRY" } },
+    { icon: Percent, label: { tr: "Maliyet", en: "Cost" }, value: { tr: "%50 Kâr Paylaşımı + Sunucu (€95-€320)", en: "50% Profit Share + Server (€95-€320)" } },
+    { icon: Users, label: { tr: "Kapasite", en: "Capacity" }, value: { tr: "20 Kişilik", en: "20 Users" } }
+  ],
+  KRIPTTOZEKA: [
+    { icon: TrendingUp, label: { tr: "Strateji", en: "Strategy" }, value: { tr: "Kripto Para Trend Takibi ve Volatilite Algoritması.", en: "Cryptocurrency Trend Following & Volatility Algorithm." } },
+    { icon: Cpu, label: { tr: "Yönetim", en: "Management" }, value: { tr: "BorsaZeka Kontrollü Otomatik Entegrasyon ve Optimizasyon.", en: "BorsaZeka-Controlled Automated Integration & Optimization." } },
+    { icon: Coins, label: { tr: "Bütçe", en: "Budget" }, value: { tr: "$5.000 - $100.000", en: "$5,000 - $100,000" } },
+    { icon: Percent, label: { tr: "Maliyet", en: "Cost" }, value: { tr: "%50 Kâr Paylaşımı + Sunucu (€11-€67)", en: "50% Profit Share + Server (€11-€67)" } },
+    { icon: Users, label: { tr: "Kapasite", en: "Capacity" }, value: { tr: "20 Kişilik", en: "20 Users" } }
+  ],
+  KRIPTTOZEKA_SELF: [
+    { icon: TrendingUp, label: { tr: "Strateji", en: "Strategy" }, value: { tr: "KriptoZeka Ascent Premium Gelişmiş Algoritma Altyapısı.", en: "KriptoZeka Ascent Premium Advanced Algorithmic Infrastructure." } },
+    { icon: Cpu, label: { tr: "Yönetim", en: "Management" }, value: { tr: "BorsaZeka Kontrollü Otomatik Entegrasyon ve Optimizasyon.", en: "BorsaZeka-Controlled Automated Integration & Optimization." } },
+    { icon: Coins, label: { tr: "Bütçe", en: "Budget" }, value: { tr: "$0 - $5.000", en: "$0 - $5,000" } },
+    { icon: Percent, label: { tr: "Maliyet", en: "Cost" }, value: { tr: "€7 - €67/ay (Sabit Ücret, Kâr Paylaşımı Yok)", en: "€7 - €67/mo (Fixed Fee, No Profit Share)" } },
+    { icon: Users, label: { tr: "Kapasite", en: "Capacity" }, value: { tr: "50 Kişilik", en: "50 Users" } }
+  ],
+
+  // Self-Service Robots
+  DARKROOM_SELF: [
+    { icon: TrendingUp, label: { tr: "Strateji", en: "Strategy" }, value: { tr: "Gap / Boşluk Ticareti ana algoritması.", en: "Gap Trading main algorithm." } },
+    { icon: Cpu, label: { tr: "Yönetim", en: "Management" }, value: { tr: "Kullanıcı Kontrollü (Mobil Uygulamadan Aç/Kapat, Parametre Değiştir).", en: "User Controlled (App On/Off, parameter changes)." } },
+    { icon: Coins, label: { tr: "Bütçe", en: "Budget" }, value: { tr: "Kullanıcı odaklı esnek bütçe ve kredi ayarı.", en: "User-oriented flexible budget and leverage setting." } },
+    { icon: Percent, label: { tr: "Maliyet", en: "Cost" }, value: { tr: "Aylık Sabit Ücret (Kurulum Ücreti Yok).", en: "Fixed Monthly Fee (No Setup Fee)." } },
+    { icon: Users, label: { tr: "Kapasite", en: "Capacity" }, value: { tr: "Sınırsız / Uygulama Bazlı", en: "Unlimited / App-based" } }
+  ],
+  HIGHWAY_SELF: [
+    { icon: TrendingUp, label: { tr: "Strateji", en: "Strategy" }, value: { tr: "Çok Boyutlu Trend Analizi ana algoritması.", en: "Multi-dimensional Trend Analysis main algorithm." } },
+    { icon: Cpu, label: { tr: "Yönetim", en: "Management" }, value: { tr: "Kullanıcı Kontrollü (Mobil Uygulamadan Aç/Kapat, Parametre Değiştir).", en: "User Controlled (App On/Off, parameter changes)." } },
+    { icon: Coins, label: { tr: "Bütçe", en: "Budget" }, value: { tr: "Kullanıcı odaklı esnek bütçe ve kredi ayarı.", en: "User-oriented flexible budget and leverage setting." } },
+    { icon: Percent, label: { tr: "Maliyet", en: "Cost" }, value: { tr: "Aylık Sabit Ücret (Kurulum Ücreti Yok).", en: "Fixed Monthly Fee (No Setup Fee)." } },
+    { icon: Users, label: { tr: "Kapasite", en: "Capacity" }, value: { tr: "Sınırsız / Uygulama Bazlı", en: "Unlimited / App-based" } }
+  ],
+  TRADEMATE_SELF: [
+    { icon: TrendingUp, label: { tr: "Strateji", en: "Strategy" }, value: { tr: "Gelişmiş Portföy Yönetimi (Overnight + Gün İçi) ana algoritması.", en: "Advanced Portfolio Management (Overnight + Intraday) main algorithm." } },
+    { icon: Cpu, label: { tr: "Yönetim", en: "Management" }, value: { tr: "Kullanıcı Kontrollü (Mobil Uygulamadan Aç/Kapat, Parametre Değiştir).", en: "User Controlled (App On/Off, parameter changes)." } },
+    { icon: Coins, label: { tr: "Bütçe", en: "Budget" }, value: { tr: "Kullanıcı odaklı esnek bütçe ve kredi ayarı.", en: "User-oriented flexible budget and leverage setting." } },
+    { icon: Percent, label: { tr: "Maliyet", en: "Cost" }, value: { tr: "Aylık Sabit Ücret (Kurulum Ücreti Yok).", en: "Fixed Monthly Fee (No Setup Fee)." } },
+    { icon: Users, label: { tr: "Kapasite", en: "Capacity" }, value: { tr: "Sınırsız / Uygulama Bazlı", en: "Unlimited / App-based" } }
+  ],
+  FABRIKA_SELF: [
+    { icon: TrendingUp, label: { tr: "Strateji", en: "Strategy" }, value: { tr: "Çoklu Zaman Dilimli Kurumsal Portföy Stratejisi ana algoritması.", en: "Multi-Timeframe Institutional Portfolio Strategy main algorithm." } },
+    { icon: Cpu, label: { tr: "Yönetim", en: "Management" }, value: { tr: "Kullanıcı Kontrollü (Mobil Uygulamadan Aç/Kapat, Parametre Değiştir).", en: "User Controlled (App On/Off, parameter changes)." } },
+    { icon: Coins, label: { tr: "Bütçe", en: "Budget" }, value: { tr: "Kullanıcı odaklı esnek bütçe ve kredi ayarı.", en: "User-oriented flexible budget and leverage setting." } },
+    { icon: Percent, label: { tr: "Maliyet", en: "Cost" }, value: { tr: "Aylık Sabit Ücret (Kurulum Ücreti Yok).", en: "Fixed Monthly Fee (No Setup Fee)." } },
+    { icon: Users, label: { tr: "Kapasite", en: "Capacity" }, value: { tr: "Sınırsız / Uygulama Bazlı", en: "Unlimited / App-based" } }
+  ],
+  KRIPTTOZEKA_ASCENT: [
+    { icon: TrendingUp, label: { tr: "Strateji", en: "Strategy" }, value: { tr: "KriptoZeka Ascent Self-Service Temel Algoritması.", en: "KriptoZeka Ascent Self-Service Base Algorithm." } },
+    { icon: Cpu, label: { tr: "Yönetim", en: "Management" }, value: { tr: "Kullanıcı Kontrollü (Mobil Uygulamadan Aç/Kapat, Parametre Değiştir).", en: "User Controlled (App On/Off, parameter changes)." } },
+    { icon: Coins, label: { tr: "Bütçe", en: "Budget" }, value: { tr: "Kullanıcı odaklı esnek bütçe ve kredi ayarı.", en: "User-oriented flexible budget and leverage setting." } },
+    { icon: Percent, label: { tr: "Maliyet", en: "Cost" }, value: { tr: "Aylık Sabit Ücret (Kurulum Ücreti Yok).", en: "Fixed Monthly Fee (No Setup Fee)." } },
+    { icon: Users, label: { tr: "Kapasite", en: "Capacity" }, value: { tr: "Sınırsız / Uygulama Bazlı", en: "Unlimited / App-based" } }
+  ]
+};
+
+const defaultSpecs = (robotId: string, lang: "tr" | "en") => {
+  const isTr = lang === "tr";
+  return [
+    { icon: TrendingUp, label: { tr: "Strateji", en: "Strategy" }, value: { tr: "Yakında Belirlenecek", en: "TBD" } },
+    { icon: Cpu, label: { tr: "Yönetim", en: "Management" }, value: { tr: "Geliştirme Aşamasında", en: "Under Development" } },
+    { icon: Coins, label: { tr: "Bütçe", en: "Budget" }, value: { tr: "Belirlenecek", en: "TBD" } },
+    { icon: Percent, label: { tr: "Maliyet", en: "Cost" }, value: { tr: "Belirlenecek", en: "TBD" } },
+    { icon: Users, label: { tr: "Kapasite", en: "Capacity" }, value: { tr: "Belirlenecek", en: "TBD" } }
+  ];
 };
 
 function getRobotPricingDetails(robotId: string, lang: "tr" | "en") {
@@ -250,33 +350,20 @@ export default function RobotsPage() {
                     <p className={robotStyles.cardDesc}>{t(robot.descKey)}</p>
                   </div>
 
-                  {/* Dynamic Technical Details & Pricing */}
-                  <div className={robotStyles.techInfoContainer}>
-                    <div className={robotStyles.techInfoItem}>
-                      <span className={robotStyles.techInfoLabel}>{lang === "tr" ? "Strateji" : "Strategy"}</span>
-                      <span className={robotStyles.techInfoValue}>{strategySummary}</span>
-                    </div>
-                    <div className={robotStyles.techInfoItem}>
-                      <span className={robotStyles.techInfoLabel}>{lang === "tr" ? "Bütçe Aralığı" : "Budget Range"}</span>
-                      <span className={robotStyles.techInfoValue}>{budgetRange}</span>
-                    </div>
-                    <div className={robotStyles.techInfoItem}>
-                      <span className={robotStyles.techInfoLabel}>{lang === "tr" ? "Maliyet" : "Cost"}</span>
-                      <span className={robotStyles.techInfoValue}>{costDisplay}</span>
-                    </div>
-                  </div>
-
-                  {/* Divider */}
-                  <div className={robotStyles.divider} />
-
-                  {/* Features */}
-                  <ul className={robotStyles.featureList}>
-                    {robot.features.slice(0, 3).map((fk: string) => (
-                      <li key={fk} className={robotStyles.featureItem}>
-                        <Check size={12} color={robot.comingSoon ? "#94a3b8" : styleConfig.color} style={{ flexShrink: 0 }} />
-                        <span>{t(fk)}</span>
-                      </li>
-                    ))}
+                  {/* Specifications List */}
+                  <ul className={robotStyles.specList}>
+                    {(ROBOT_SPECS[robot.id] || defaultSpecs(robot.id, lang)).map((item, idx) => {
+                      const ItemIcon = item.icon;
+                      return (
+                        <li key={idx} className={robotStyles.specItem}>
+                          <span className={robotStyles.specIcon}>
+                            <ItemIcon size={13} color={robot.comingSoon ? "#94a3b8" : styleConfig.color} />
+                          </span>
+                          <span className={robotStyles.specLabel}>{item.label[lang]}:</span>
+                          <span className={robotStyles.specValue}>{item.value[lang]}</span>
+                        </li>
+                      );
+                    })}
                   </ul>
 
                   {/* CTA */}

@@ -433,3 +433,43 @@
   color: #2563eb;
   text-transform: uppercase;
 }
+
+/* SPECIFICATIONS LIST FOR CARDS */
+.specList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  margin: 1.25rem 0;
+  flex: 1;
+}
+
+.specItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  font-size: 0.76rem;
+  line-height: 1.45;
+}
+
+.specIcon {
+  margin-top: 2px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.85;
+}
+
+.specLabel {
+  font-weight: 700;
+  color: #555770;
+  margin-right: 0.25rem;
+  white-space: nowrap;
+}
+
+.specValue {
+  font-weight: 500;
+  color: #1D1D1F;
+}
+
