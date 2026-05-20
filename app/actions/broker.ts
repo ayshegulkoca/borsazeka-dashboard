@@ -51,7 +51,7 @@ export async function syncBrokerAccount(params: SyncBrokerParams) {
       "KriptoZeka":              "kripttozeka",
       "KriptoZeka Ascent Self":  "kripttozeka_self",
       "KriptoZeka Ascent Premium": "kripttozeka_self",
-      "KriptoZeka Ascent":       "kripttozeka_ascent",
+      "KriptoZeka Self-Service":       "kripttozeka_ascent",
       "ForexZeka":               "forexzeka",
     };
     const robotId = DISPLAY_TO_ROBOT_ID[params.robotName] ?? params.robotName.toLocaleLowerCase('en-US');

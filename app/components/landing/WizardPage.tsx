@@ -1599,6 +1599,116 @@ function KriptozekaAscentPremiumPanel({ t }: { t: (k: string) => string }) {
 }
 
 
+// --- KriptoZeka Self-Service Info Panel (Step 6 Left) -------------------------
+function KriptozekaSelfServicePanel({ t }: { t: (k: string) => string }) {
+  return (
+    <div className={s.robotDetailsPanelUnified} style={{ '--panel-accent': '#60a5fa' } as React.CSSProperties}>
+      {/* Header */}
+      <div className={s.tmHeader}>
+        <div className={s.tmIconGlowBlue}>
+          <Bot size={32} />
+        </div>
+        <div>
+          <h2 className={`${s.robotNeonTitleUnified} ${s.neonBlue}`}>KriptoZeka Self-Service</h2>
+          <p className={s.robotSloganUnified}>Stratejisini kendi yonetmek ve dizginleri elinde tutmak isteyen yatirimcilar icin gelistirilmis guclu islem terminali.</p>
+        </div>
+      </div>
+
+      {/* Highlights */}
+      <div className={s.tmHighlights}>
+        <div className={`${s.featureTagUnified} ${s.tagBlue}`}><Settings size={14} /><span>Tam Denetim</span></div>
+        <div className={`${s.featureTagUnified} ${s.tagBlue}`}><Activity size={14} /><span>Kisisellestirilebilir</span></div>
+        <div className={`${s.featureTagUnified} ${s.tagBlue}`}><Smartphone size={14} /><span>Guclu Altyapi</span></div>
+      </div>
+
+      <div className={s.flatContentUnified}>
+        {/* Intro */}
+        <Section>
+          <p className={s.accordionTextUnified}>
+            KriptoZeka Self-Service, Tam Denetim ve Kisilestirilebilir Strateji prensibiyle calisan, profesyonel trading altyapimizi kendi tercihlerine gore sekillendirmek isteyen kullanicilar icin tasarlanmistir.
+          </p>
+          <p className={s.accordionTextUnified}>
+            Premium modelinden farkli olarak; robotun aktivasyonu, parametre ayarlari, piyasa takibi ve tum optimizasyon surecleri tamamen kullanicinin kendi sorumlulugundadir. KriptoZeka altyapisini bir arac olarak kullanir, stratejik kararlari siz verirsiniz.
+          </p>
+        </Section>
+
+        {/* Stratejinin Temeli */}
+        <Section title="Stratejinin Temeli" icon={<Zap size={18} />}>
+          <p className={s.accordionTextUnified}>
+            KriptoZeka Self-Service’in cekirdeginde, coklu zaman dilimi (multi-timeframe) ve onlarca teknik indikatoru isleyen ham algoritmik guc bulunur.
+          </p>
+          <Bullets items={[
+            "Esnek Aktivasyon: Piyasanin yonune gore robotu ne zaman calistiracaginizi veya ne zaman durduracaginizi siz belirlersiniz.",
+            "Kisisel Optimizasyon: Strateji parametrelerini (kar al, stop seviyeleri, indikator hassasiyeti) kendi risk istahiniza gore optimize etmek sizin elinizdedir.",
+            "Analiz Gucu: Robot piyasayi tarar, ancak son onay ve yonetim dugmesi her zaman sizdedir."
+          ]} />
+        </Section>
+
+        {/* Çalışma Mantığı ve Sorumluluklar */}
+        <Section title="Calisma Mantigi ve Sorumluluklar" icon={<Settings size={18} />}>
+          <ul className={s.unifiedCheckList}>
+            {([
+              { label: "Kullanici Kontrollu Yonetim:", desc: "Robotun kurulumu, baslatilmasi ve durdurulmasi tamamen sizin manuel mudahalenizle gerceklesir." },
+              { label: "Portfoy Dagilim Tercihi:", desc: "Bakiyenizin hangi coinlerde, hangi oranlarda dagilacagina ve kac parcali islem (DCA) acilacagina bizzat karar verirsiniz." },
+              { label: "Manuel Parametre Yonetimi:", desc: "Her parite icin algoritma ayarlarini piyasa kosullarina gore takip etmek ve gerekli guncellemeleri yapmak kullanicinin sorumlulugundadir." },
+              { label: "7/24 Teknik Altyapi:", desc: "Siz robotu acik biraktiginiz surece sistem kesintisiz calisir; ancak piyasadaki ani degisimleri takip etmek sizin gorevinizdir." }
+            ]).map((item, idx) => (
+              <li key={idx} style={{ flexDirection: "column", alignItems: "flex-start", gap: "0.25rem" }}>
+                <span style={{ color: "var(--panel-accent)", fontWeight: 700, fontSize: "0.95rem", display: "flex", alignItems: "center", gap: "0.4rem" }}>
+                  {item.label}
+                </span>
+                <span style={{ paddingLeft: "0", color: "rgba(255,255,255,0.9)" }}>{item.desc}</span>
+              </li>
+            ))}
+          </ul>
+        </Section>
+
+        {/* Risk Yönetimi ve Kriz Durumları */}
+        <Section title="Risk Yonetimi ve Kriz Durumlari" icon={<Shield size={18} />}>
+          <ul className={s.unifiedCheckList}>
+            {([
+              { label: "Kriz Yonetimi:", desc: "Piyasadaki sert dususler veya olaganustu volatilite durumlarinda gerekli onlemleri (robotu durdurma, nakde gecme vb.) kullanici kendisi alir." },
+              { label: "Risk Limitleri:", desc: "Kaldirac oranlari, stop-loss seviyeleri ve maksimum butce kullanimi gibi tum guvenlik sinirlari kullanici tarafindan belirlenir." },
+              { label: "Varlik Secimi:", desc: "Islem yapilacak coinlerin guvenilirligini kontrol etmek kullanicinin kendi inisiyatifindedir." },
+              { label: "Performans Takibi:", desc: "Stratejinin verimliligini olcmek ve karliligi surdurmek icin gerekli ayarlamalari yapmak tamamen sizin yonetiminizdedir." }
+            ]).map((item, idx) => (
+              <li key={idx} style={{ flexDirection: "column", alignItems: "flex-start", gap: "0.25rem" }}>
+                <span style={{ color: "var(--panel-accent)", fontWeight: 700, fontSize: "0.95rem", display: "flex", alignItems: "center", gap: "0.4rem" }}>
+                  {item.label}
+                </span>
+                <span style={{ paddingLeft: "0", color: "rgba(255,255,255,0.9)" }}>{item.desc}</span>
+              </li>
+            ))}
+          </ul>
+        </Section>
+
+        {/* Neler Yapabilirsin? */}
+        <Section title="KriptoZeka Self-Service ile Neler Yapabilirsin?" icon={<Rocket size={18} />}>
+          <Bullets items={[
+            "Robotun tum ayarlarini seffaf bir sekilde gorebilir ve anlik mudahale edebilirsin.",
+            "API anahtarlari uzerinden fonlarini kendi borsanda guvenle tutarsin.",
+            "Istedigin an strateji degistirip farkli risk profillerini test edebilirsin."
+          ]} />
+        </Section>
+
+        {/* Kimler Için Uygundur? */}
+        <Section title="Kimler Icin Uygundur?" icon={<Users size={18} />}>
+          <Bullets items={[
+            "Teknik analiz bilgisine sahip ve bot yonetimini hobi veya is edinenler.",
+            "Islemlerinde dugmeye basan kisi olmak isteyen tam kontrol tutkunlari.",
+            "Kendi risk yonetimini yapabilen ve piyasa krizlerini takip etmeyi seven deneyimli yatirimcilar.",
+            "Hazir stratejileri kendi ayarlariyla kisilestirmek isteyen kullanicilar."
+          ]} />
+          <p className={s.accordionTextUnified} style={{ fontStyle: "italic", fontWeight: 700, color: "#60a5fa", marginTop: "1rem" }}>
+            KriptoZeka Self-Service ile Kendi Stratejinizin Mimari Olun.
+          </p>
+        </Section>
+      </div>
+    </div>
+  );
+}
+
+
 // --- DarkRoom Premium Info Panel (Step 6 Left) --------------------------------
 function DarkroomPremiumPanel({ t }: { t: (k: string) => string }) {
   return (
@@ -2118,6 +2228,9 @@ function RobotInfoBox({ robot, t, variant = "default" }: { robot?: RobotDefiniti
   }
   if (robot.id === "KRIPTTOZEKA_SELF") {
     return <KriptozekaAscentPremiumPanel t={t} />;
+  }
+  if (robot.id === "KRIPTTOZEKA_ASCENT") {
+    return <KriptozekaSelfServicePanel t={t} />;
   }
   if (robot.id === "DARKROOM") {
     return <DarkroomPremiumPanel t={t} />;

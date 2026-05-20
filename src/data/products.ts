@@ -497,10 +497,10 @@ export const ROBOTS: RobotDefinition[] = [
     descKey: "wizard.robots.kriptoZekaAscent.desc",
     market: "CRYPTO",
     managementType: "SELF_SERVICE",
-    comingSoon: true,
-    paymentBlocked: true,
+    comingSoon: false,
+    paymentBlocked: false,
     maxCapacity: 20,
-    minBudgetUSD: 5000,
+    minBudgetUSD: 0,
     features: ["wizard.robots.kriptoZekaAscent.f1","wizard.robots.kriptoZekaAscent.f2","wizard.robots.kriptoZekaAscent.f3","wizard.robots.kriptoZekaAscent.f4"],
   },
   // ── Kripto Premium: KriptoZeka Ascent Premium ────────────────
@@ -604,7 +604,7 @@ export function getBudgetOptionsForRobot(robotId: RobotId | null): BudgetOption[
     case "TRADEMATE_SELF": return BUDGET_BIST_SELF_SHARED;
     case "FABRIKA_SELF":   return BUDGET_BIST_SELF_FABRIKA;
     case "KRIPTTOZEKA":         return BUDGET_KRIPTO_PREMIUM;
-    case "KRIPTTOZEKA_ASCENT":  return BUDGET_KRIPTO_PREMIUM;
+    case "KRIPTTOZEKA_ASCENT":
     case "KRIPTTOZEKA_SELF":    return BUDGET_KRIPTO_SELF;
     case "FOREXZEKA":    return BUDGET_FOREXZEKA;
     case "CLASSIC":      return []; // bütçe seçimi yok
@@ -629,7 +629,7 @@ export function calcPriceForRobot(
     case "FABRIKA_SELF": return calcBISTSelfPrice(budgetValue);
     case "KRIPTTOZEKA_PREMIUM": return calcKriptoPremiumPrice();
     case "KRIPTTOZEKA":         return calcKriptoPremiumPrice();
-    case "KRIPTTOZEKA_ASCENT":  return calcKriptoPremiumPrice();
+    case "KRIPTTOZEKA_ASCENT":
     case "KRIPTTOZEKA_SELF": return calcKriptoSelfPrice(budgetValue, billingCycle);
     case "FOREXZEKA":  return calcForexZekaPrice(budgetValue);
     case "CLASSIC":    return {

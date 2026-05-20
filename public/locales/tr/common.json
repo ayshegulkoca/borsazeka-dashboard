@@ -520,6 +520,14 @@
         "f3": "Günlük P&L raporlama",
         "f4": "iDeal program entegrasyonu"
       },
+      "kriptoZekaAscent": {
+        "name": "KriptoZeka Self-Service",
+        "desc": "Stratejisini kendi yonetmek ve dizginleri elinde tutmak isteyen yatirimcilar icin gelistirilmis guclu islem terminali.",
+        "f1": "Robotun tum ayarlarini seffaf bir sekilde gorebilir ve anlik mudahale edebilirsin.",
+        "f2": "API anahtarlari uzerinden fonlarini kendi borsanda guvenle tutarsin.",
+        "f3": "Istedigin an strateji degistirip farkli risk profillerini test edebilirsin.",
+        "f4": "Kendi risk yonetimini yapabilen deneyimli yatirimcilar."
+      },
       "highway": {
         "name": "Highway Premium",
         "desc": "Hız odaklı trend takibi, yüksek hacimli piyasalar için",
@@ -569,14 +577,6 @@
         "f2": "%50 kâr paylaşımı modeli",
         "f3": "7/24 uzman ekip yönetimi",
         "f4": "Çoklu token desteği"
-      },
-      "kriptoZekaAscent": {
-        "name": "KriptoZeka Ascent",
-        "desc": "5.000$+ portföy için gelişmiş kripto yönetimi, yüksek performans",
-        "f1": "KriptoZeka Ascent gelişmiş stratejisi",
-        "f2": "%50 kâr paylaşımı modeli",
-        "f3": "7/24 uzman ekip yönetimi",
-        "f4": "Öncelikli portföy yönetimi"
       },
       "kriptoPremium": {
         "name": "KriptoZeka & KriptoZeka Ascent",

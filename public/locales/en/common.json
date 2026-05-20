@@ -571,12 +571,12 @@
         "f4": "Multi-token support"
       },
       "kriptoZekaAscent": {
-        "name": "KriptoZeka Ascent",
-        "desc": "Advanced crypto management for $5,000+ portfolios, high performance",
-        "f1": "KriptoZeka Ascent advanced strategy",
-        "f2": "50% profit sharing model",
-        "f3": "24/7 expert team management",
-        "f4": "Priority portfolio management"
+        "name": "KriptoZeka Self-Service",
+        "desc": "Powerful trading terminal developed for investors who want to manage their own strategy and keep the reins.",
+        "f1": "Monitor and manage all settings of the robot transparently.",
+        "f2": "Keep your funds safely on your own exchange via API keys.",
+        "f3": "Change strategies at any time and test different risk profiles.",
+        "f4": "Suitable for experienced investors who can manage their own risk."
       },
       "kriptoPremium": {
         "name": "KriptoZeka & KriptoZeka Ascent",

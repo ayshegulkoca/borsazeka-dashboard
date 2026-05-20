@@ -49,7 +49,7 @@ const STRATEGY_SUMMARIES: Record<string, { tr: string; en: string }> = {
   FABRIKA_SELF: { tr: "Çoklu Zaman Dilimi Trendi", en: "Multi-Timeframe Trend" },
   CLASSIC: { tr: "Standart Trend Takip", en: "Standard Trend Following" },
   KRIPTTOZEKA: { tr: "Kripto Portföy & Hızlı Trend", en: "Crypto Portfolio & Trend" },
-  KRIPTTOZEKA_ASCENT: { tr: "Kripto Trend & Yapay Zeka", en: "Crypto Trend & AI" },
+  KRIPTTOZEKA_ASCENT: { tr: "Kripto Self-Service", en: "Crypto Self-Service" },
   KRIPTTOZEKA_SELF: { tr: "Gelişmiş Kripto Portföy", en: "Advanced Crypto Portfolio" },
   FOREXZEKA: { tr: "Global Pariteler & Emtia Arbitraj", en: "Global FX & Commodity" },
 };
@@ -140,10 +140,10 @@ const ROBOT_SPECS: Record<string, SpecItem[]> = {
     { icon: Users, label: { tr: "Kapasite", en: "Capacity" }, value: { tr: "Sınırsız / Uygulama Bazlı", en: "Unlimited / App-based" } }
   ],
   KRIPTTOZEKA_ASCENT: [
-    { icon: TrendingUp, label: { tr: "Strateji", en: "Strategy" }, value: { tr: "KriptoZeka Ascent Self-Service Temel Algoritması.", en: "KriptoZeka Ascent Self-Service Base Algorithm." } },
-    { icon: Cpu, label: { tr: "Yönetim", en: "Management" }, value: { tr: "Kullanıcı Kontrollü (Mobil Uygulamadan Aç/Kapat, Parametre Değiştir).", en: "User Controlled (App On/Off, parameter changes)." } },
-    { icon: Coins, label: { tr: "Bütçe", en: "Budget" }, value: { tr: "Kullanıcı odaklı esnek bütçe ve kredi ayarı.", en: "User-oriented flexible budget and leverage setting." } },
-    { icon: Percent, label: { tr: "Maliyet", en: "Cost" }, value: { tr: "Aylık Sabit Ücret (Kurulum Ücreti Yok).", en: "Fixed Monthly Fee (No Setup Fee)." } },
+    { icon: TrendingUp, label: { tr: "Strateji", en: "Strategy" }, value: { tr: "Çoklu Zaman Dilimli ve Gelişmiş Teknik İndikatör Algoritması.", en: "Multi-Timeframe & Advanced Technical Indicator Algorithm." } },
+    { icon: Cpu, label: { tr: "Yönetim", en: "Management" }, value: { tr: "Kullanıcı Kontrollü (Kurulum, parametre ayarları ve piyasa takibi).", en: "User Controlled (Activation, parameter settings and monitoring)." } },
+    { icon: Coins, label: { tr: "Bütçe", en: "Budget" }, value: { tr: "$0'dan Başlayan Esnek Portföy Bütçesi", en: "Flexible Portfolio Budget starting from $0" } },
+    { icon: Percent, label: { tr: "Maliyet", en: "Cost" }, value: { tr: "€7/ay'dan Başlayan Sabit Mini Sunucu Ücreti (Kâr Paylaşımı Yok)", en: "Fixed Mini Server Fee starting from €7/mo (No Profit Share)" } },
     { icon: Users, label: { tr: "Kapasite", en: "Capacity" }, value: { tr: "Sınırsız / Uygulama Bazlı", en: "Unlimited / App-based" } }
   ]
 };
