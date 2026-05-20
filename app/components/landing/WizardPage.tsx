@@ -1451,6 +1451,154 @@ function KriptozekaPremiumPanel({ t }: { t: (k: string) => string }) {
 }
 
 
+// --- KriptoZeka Ascent Premium Info Panel (Step 6 Left) -----------------------
+function KriptozekaAscentPremiumPanel({ t }: { t: (k: string) => string }) {
+  return (
+    <div className={s.robotDetailsPanelUnified} style={{ '--panel-accent': '#60a5fa' } as React.CSSProperties}>
+      {/* Header */}
+      <div className={s.tmHeader}>
+        <div className={s.tmIconGlowBlue}>
+          <Bot size={32} />
+        </div>
+        <div>
+          <h2 className={`${s.robotNeonTitleUnified} ${s.neonBlue}`}>KriptoZeka Ascent Premium</h2>
+          <p className={s.robotSloganUnified}>Buyuk portfoyler ve her butceden yatirimcilar icin uzman ekibimiz tarafindan yonetilen profesyonel kripto portfoy yonetim sistemi.</p>
+        </div>
+      </div>
+
+      {/* Highlights */}
+      <div className={s.tmHighlights}>
+        <div className={`${s.featureTagUnified} ${s.tagBlue}`}><Users size={14} /><span>Ekip Yonetimi</span></div>
+        <div className={`${s.featureTagUnified} ${s.tagBlue}`}><Shield size={14} /><span>Risk Kontrolu</span></div>
+        <div className={`${s.featureTagUnified} ${s.tagBlue}`}><Activity size={14} /><span>Otonom Yonetim</span></div>
+      </div>
+
+      <div className={s.flatContentUnified}>
+        {/* Intro */}
+        <Section>
+          <p className={s.accordionTextUnified}>
+            KriptoZeka Ascent Premium, Zamanin ve Konforun On Planda Oldugu Tam Otonom Yonetim Disiplini ile calisan gelismis kripto portfoy yonetim robotumuzun, uzman ekip kontroluyle sunulan profesyonel versiyonudur.
+          </p>
+          <p className={s.accordionTextUnified}>
+            Self-Service modellerinden farkli olarak; robotun borsa entegrasyonu, 7/24 takibi, parametre yonetimi, risk kontrolleri ve strateji optimizasyonu dogrudan KriptoZeka Ascent uzman ekibi tarafindan yurutulur.
+          </p>
+        </Section>
+
+        {/* Stratejinin Temeli */}
+        <Section title="Stratejinin Temeli" icon={<Zap size={18} />}>
+          <p className={s.accordionTextUnified}>
+            KriptoZeka Ascent Premium’un cekirdeginde, coklu zaman dilimi (multi-timeframe) ve onlarca gelismis teknik indikatoru eszamanli analiz eden dinamik bir algoritma bulunur.
+          </p>
+          <Bullets items={[
+            "7/24 Piyasa Taramasi: Robot, firsatlari yakalamak icin piyasayi surekli tarar.",
+            "Dinamik Optimizasyon: Strateji, boga veya ayi sezonu fark etmerez piyasa kosullarina gore ekibimizce anlik olarak guncellenir.",
+            "Esnek Modlar: Istege bagli spot veya kontrollu marjin secenekleriyle hem yukselis hem duzeltme firsatlari degerlendirilir."
+          ]} />
+        </Section>
+
+        {/* Esnek Bütçe ve Paket Seçenekleri */}
+        <Section title="Esnek Butce ve Paket Secenekleri" icon={<BarChart3 size={18} />}>
+          <p className={s.accordionTextUnified}>
+            Butcenize en uygun paketi secerek hemen baslayabilirsiniz:
+          </p>
+          
+          <div style={{ marginTop: "1.25rem", marginBottom: "1.25rem" }}>
+            <h4 style={{ color: "#60a5fa", fontWeight: 700, fontSize: "0.95rem", marginBottom: "0.6rem" }}>Aylik Abonelik Planlari</h4>
+            <Bullets items={[
+              "0 - 100 $: 7 Euro / Ay (Ucretsiz Robot + 7 Euro Mini Sunucu)",
+              "100 - 500 $: 11 Euro / Ay (4 Euro Robot + 7 Euro Mini Sunucu)",
+              "500 - 2500 $: 39 Euro / Ay (32 Euro Robot + 7 Euro Mini Sunucu)",
+              "2500 - 5000 $: 67 Euro / Ay (60 Euro Robot + 7 Euro Mini Sunucu)"
+            ]} />
+          </div>
+
+          <div style={{ marginTop: "1.25rem", marginBottom: "1.25rem" }}>
+            <h4 style={{ color: "#60a5fa", fontWeight: 700, fontSize: "0.95rem", marginBottom: "0.6rem" }}>Yillik Abonelik Planlari (4 Ay Robot Ucreti Bedava!)</h4>
+            <Bullets items={[
+              "100 - 500 $: 116 Euro / Yil",
+              "500 - 2500 $: 340 Euro / Yil",
+              "2500 - 5000 $: 564 Euro / Yil"
+            ]} />
+          </div>
+
+          <p className={s.accordionTextUnified} style={{ fontStyle: "italic", fontSize: "0.85rem", opacity: 0.8, marginTop: "0.75rem" }}>
+            Not: 5000 $ ve uzeri buyuk portfoyler icin uzman ekibimizle dogrudan iletisime gecerek ozel Premium entegrasyon sureclerini baslatabilirsiniz.
+          </p>
+        </Section>
+
+        {/* Çalışma Mantığı */}
+        <Section title="Calisma Mantigi" icon={<Settings size={18} />}>
+          <ul className={s.unifiedCheckList}>
+            {([
+              { label: "Tam Otomasyon:", desc: "Manuel mudahaleye son! Tum surec ekibimizce yonetilir." },
+              { label: "Akilli Portfoy Dagilimi:", desc: "Bakiyeniz pariteler arasinda optimum sekilde bolunur." },
+              { label: "Parcali Islem Altyapisi:", desc: "Buyuk emirler DCA mantigiyla kademeli olarak iletilir." },
+              { label: "Ekip Kontrollu Parametreler:", desc: "Piyasa durumuna gore aninda guncellenen katsayilar." },
+              { label: "Volatilite Kalkani:", desc: "Yuksek riskli durumlarda robot otomatik olarak stablecoin moduna gecer." },
+              { label: "Kesintisiz Erisim:", desc: "Hafta sonu ve tatiller dahil 7/24 gorev basindadir." }
+            ]).map((item, idx) => (
+              <li key={idx} style={{ flexDirection: "column", alignItems: "flex-start", gap: "0.25rem" }}>
+                <span style={{ color: "var(--panel-accent)", fontWeight: 700, fontSize: "0.95rem", display: "flex", alignItems: "center", gap: "0.4rem" }}>
+                  {item.label}
+                </span>
+                <span style={{ paddingLeft: "0", color: "rgba(255,255,255,0.9)" }}>{item.desc}</span>
+              </li>
+            ))}
+          </ul>
+        </Section>
+
+        {/* Risk Yönetimi ve Güvenlik */}
+        <Section title="Risk Yonetimi ve Guvenlik" icon={<Shield size={18} />}>
+          <ul className={s.unifiedCheckList}>
+            {([
+              { label: "Guvenli Varlik Secimi:", desc: "Hacimsiz veya manipulatif coinlerde islem yapilmaz." },
+              { label: "Kaldirac Kontrolü:", desc: "Marjin islemlerinde risk istahina gore kullanim siniri belirlenir." },
+              { label: "Rezerve Bakiye:", desc: "Robotun kullanacagi miktar sizin tercihinize gore sinirlandirilabilir." },
+              { label: "Kar Maksimizasyonu:", desc: "Takip Eden Stop (Trailing Stop) ile maksimum kazanc hedeflenir." },
+              { label: "Uzman Denetimi:", desc: "Kodlarin yani sira uzman ekibimizin global piyasa takibi destegi." }
+            ]).map((item, idx) => (
+              <li key={idx} style={{ flexDirection: "column", alignItems: "flex-start", gap: "0.25rem" }}>
+                <span style={{ color: "var(--panel-accent)", fontWeight: 700, fontSize: "0.95rem", display: "flex", alignItems: "center", gap: "0.4rem" }}>
+                  {item.label}
+                </span>
+                <span style={{ paddingLeft: "0", color: "rgba(255,255,255,0.9)" }}>{item.desc}</span>
+              </li>
+            ))}
+          </ul>
+        </Section>
+
+        {/* Kullanım Şartları */}
+        <Section title="KriptoZeka Ascent Robot Kullanim Sartlari" icon={<Activity size={18} />}>
+          <ol className={s.tmTermsListUnified}>
+            {([
+              { title: "Kullanici Sayisi ve Kontenjan", desc: "Kaliteyi korumak adina kontenjanli ilerlenir." },
+              { title: "Robot Yonetimi", desc: "Teknik kurulum ve sunucu yonetimi tamamen uzman ekibimizce yapilir. Kullanici mudahalesi gerekmez." },
+              { title: "Katilim Butcesi ve Paketler", desc: "Binance hesabinda pakete uygun USDT ve yaklasik 50 USDT degerinde BNB bulundurulmalidir." },
+              { title: "Binance Global Hesabi", desc: "Robot islemleri icin aktif bir Binance Global hesabi gereklidir." },
+              { title: "Sunucu Kiralama Sistemi", desc: "0 - 5000$ arasi paketlerde mini sunucu ucreti abonelige dahildir. 5000$ uzeri icin ozel sunucu tercih edilebilir." },
+              { title: "Kurulum Ucreti", desc: "Standart paketlerde kurulum ucreti yoktur. 5000$ uzeri VIP kurulumlarda tek seferlik 50 Euro talep edilebilir." },
+              { title: "Binance API Olusturma", desc: "Para cekme yetkisi KESINLIKLE kapali olmalidir. Sadece Spot Alim-Satim yetkisi acilir." },
+              { title: "API ve Secret Bilgilerinin Kaydi", desc: "Bilgiler yuksek guvenlikli veritabaninda saklanir." },
+              { title: "Hesap ve Islem Takibi", desc: "Binance uzerinden anlik takip mumkundur. Ayrica kisisel Telegram takip grubu kurulur." },
+              { title: "Ucretlendirme ve Kar Paylasimi", desc: "0 - 5000$ arasi paketlerde kar paylasimi alinmaz. 5000$ uzeri buyuk portfoylerde %50 kar paylasimi uygulanabilir." },
+              { title: "Manuel Islem Kisiti", desc: "Robotun bagli oldugu hesapta manuel islem yapilmamalidir; bu durum algoritmayi bozar." },
+              { title: "Sorumluluk Reddi", desc: "Kripto piyasalari risklidir; robotun amaci riskleri sistematik sekilde yoneterek profesyonel fon yonetimi sunmaktir." }
+            ]).map((item, idx) => (
+              <li key={idx} className={s.tmTermsItemUnified}>
+                <div>
+                  <strong className={s.tmTermsTitleUnified}>{item.title}</strong>
+                  <p className={s.tmTermsDescUnified}>{item.desc}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </Section>
+      </div>
+    </div>
+  );
+}
+
+
 // --- DarkRoom Premium Info Panel (Step 6 Left) --------------------------------
 function DarkroomPremiumPanel({ t }: { t: (k: string) => string }) {
   return (
@@ -1967,6 +2115,9 @@ function RobotInfoBox({ robot, t, variant = "default" }: { robot?: RobotDefiniti
   }
   if (robot.id === "KRIPTTOZEKA") {
     return <KriptozekaPremiumPanel t={t} />;
+  }
+  if (robot.id === "KRIPTTOZEKA_SELF") {
+    return <KriptozekaAscentPremiumPanel t={t} />;
   }
   if (robot.id === "DARKROOM") {
     return <DarkroomPremiumPanel t={t} />;
