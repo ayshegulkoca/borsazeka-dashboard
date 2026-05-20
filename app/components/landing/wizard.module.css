@@ -639,6 +639,13 @@
   gap: 3rem;
 }
 
+.step6ContentComingSoon {
+  display: flex;
+  align-items: center !important;
+  width: 100%;
+  gap: 3rem;
+}
+
 .stickySidebarColumn {
   flex: 1; /* w-1/3 */
   position: relative; /* Rail for the sticky child */
@@ -1407,25 +1414,30 @@
 
 .notifyForm {
   display: flex;
+  flex-direction: column;
   gap: 0.75rem;
-  max-width: 440px;
+  width: 100%;
+  max-width: 100%;
   margin: 0 auto;
 }
 
 .notifyInput {
-  flex: 1;
-  padding: 0.75rem 1rem;
+  width: 100%;
+  padding: 0.85rem 1rem;
   border-radius: 10px;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.1);
   color: var(--text-primary);
-  font-size: 0.875rem;
+  font-size: 0.9rem;
   outline: none;
-  transition: border-color 0.2s;
+  transition: all 0.25s ease;
+  text-align: center;
 }
 
 .notifyInput:focus {
-  border-color: var(--wiz-primary);
+  border-color: var(--wiz-primary-light);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.15);
 }
 
 .notifyInput::placeholder {
@@ -1433,18 +1445,22 @@
 }
 
 .notifyBtn {
-  padding: 0.75rem 1.25rem;
+  width: 100%;
+  padding: 0.85rem 1.25rem;
   border-radius: 10px;
   background: var(--wiz-primary);
   color: #ffffff;
-  font-size: 0.875rem;
-  font-weight: 600;
-  white-space: nowrap;
-  transition: all 0.2s;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.2);
 }
 
 .notifyBtn:hover {
   background: var(--wiz-primary-light);
+  box-shadow: 0 4px 20px rgba(59, 130, 246, 0.35);
 }
 
 /* ── Navigation Buttons ──────────────────────────────────────── */
@@ -1880,6 +1896,26 @@
 .neonPurple { text-shadow: 0 0 15px rgba(168, 85, 247, 0.5), 0 0 30px rgba(168, 85, 247, 0.2) !important; }
 .neonOrange { text-shadow: 0 0 15px rgba(245, 158, 11, 0.5), 0 0 30px rgba(245, 158, 11, 0.2) !important; }
 .neonGreen { text-shadow: 0 0 15px rgba(16, 185, 129, 0.5), 0 0 30px rgba(16, 185, 129, 0.2) !important; }
+.neonMuted {
+  text-shadow: none !important;
+  color: #94a3b8 !important;
+  opacity: 0.65 !important;
+}
+
+.tmIconGlowMuted {
+  width: 56px;
+  height: 56px;
+  background: rgba(255, 255, 255, 0.02) !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #94a3b8 !important;
+  box-shadow: none !important;
+  flex-shrink: 0;
+  opacity: 0.65;
+}
 
 .robotSloganUnified {
   font-size: 1rem !important;

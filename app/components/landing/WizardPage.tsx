@@ -300,7 +300,8 @@ export default function WizardPage() {
     const managementType = found.managementType;
     const budgetCurrency: "TRY" | "USD" = (market === "BIST") ? "TRY" : "USD";
 
-    // Jump to budget step (5) with pre-fills
+    // Jump to step 5 (or step 6 if coming soon) with pre-fills
+    const targetStep = found.comingSoon ? 6 : 5;
     patch({
       market,
       subMarket,
@@ -309,7 +310,7 @@ export default function WizardPage() {
       budgetCurrency,
       budgetValue: null,
       budgetLabel: null,
-      step: 5,
+      step: targetStep,
     });
   }, [searchParams, patch]);
 
@@ -600,8 +601,17 @@ export default function WizardPage() {
 
           <div className={s.step6Header}>
             <div>
-              <span className={s.stepTag}>{t("wizard.stepOf", { current: state.step, total: TOTAL })}</span>
-              <h2 className={s.stepTitle}>{t("wizard.step6.title")}</h2>
+              <span className={s.stepTag}>
+                {t("wizard.stepOf", {
+                  current: selectedRobot?.comingSoon ? 5 : state.step,
+                  total: selectedRobot?.comingSoon ? 5 : TOTAL
+                })}
+              </span>
+              <h2 className={s.stepTitle}>
+                {selectedRobot?.comingSoon
+                  ? (i18n.language === "tr" ? "Geliştirme Aşamasında" : "Under Development")
+                  : t("wizard.step6.title")}
+              </h2>
             </div>
             <div className={s.navButtonGroup}>
               <button className={s.btnWizardBack} onClick={goBack} id="wizard-back-btn">
@@ -610,7 +620,7 @@ export default function WizardPage() {
             </div>
           </div>
 
-          <div className={`${s.step6Content} !items-start`}>
+          <div className={`${s.step6Content} ${selectedRobot?.comingSoon ? s.step6ContentComingSoon : "!items-start"}`}>
             {/* Left: Robot Details Box (Glass Theme) with Internal Scroll */}
             <div className={`flex-[2] max-h-[calc(100vh-250px)] overflow-y-auto pr-4 ${s.customScrollbar}`}>
               <RobotInfoBox robot={selectedRobot} t={t} variant="glass" />
@@ -1995,14 +2005,14 @@ function RobotInfoBox({ robot, t, variant = "default" }: { robot?: RobotDefiniti
   };
 
   return (
-    <div className={s.robotDetailsPanelUnified} style={{ '--panel-accent': 'var(--wiz-primary-light)' } as React.CSSProperties}>
+    <div className={s.robotDetailsPanelUnified} style={{ '--panel-accent': robot.comingSoon ? 'var(--text-muted)' : 'var(--wiz-primary-light)' } as React.CSSProperties}>
       <div className={s.tmHeader}>
-        <div className={s.tmIconGlowBlue}>
+        <div className={robot.comingSoon ? s.tmIconGlowMuted : s.tmIconGlowBlue}>
           {getIcon()}
         </div>
         <div>
-          <h2 className={`${s.robotNeonTitleUnified} ${s.neonBlue}`}>{t(robot.nameKey)}</h2>
-          <p className={s.robotSloganUnified}>{t(robot.descKey)}</p>
+          <h2 className={`${s.robotNeonTitleUnified} ${robot.comingSoon ? s.neonMuted : s.neonBlue}`}>{t(robot.nameKey)}</h2>
+          <p className={s.robotSloganUnified} style={robot.comingSoon ? { opacity: 0.65 } : {}}>{t(robot.descKey)}</p>
         </div>
       </div>
 
