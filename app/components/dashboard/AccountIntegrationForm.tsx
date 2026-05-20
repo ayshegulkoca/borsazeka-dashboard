@@ -33,7 +33,7 @@ const ROBOT_CATALOG: { robotId: string; name: string; market: "BIST" | "BINANCE"
   { robotId: "classic",        name: "BorsaZeka Classic",  market: "BIST" },
   // Binance / Kripto + Forex robots
   { robotId: "kripttozeka",      name: "KriptoZeka",            market: "BINANCE" },
-  { robotId: "kripttozeka_self", name: "KriptoZeka Ascent Self", market: "BINANCE" },
+  { robotId: "kripttozeka_self", name: "KriptoZeka Ascent Premium", market: "BINANCE" },
   { robotId: "kripttozeka_ascent", name: "KriptoZeka Ascent",   market: "BINANCE" },
   { robotId: "forexzeka",        name: "ForexZeka",             market: "BINANCE" },
 ];

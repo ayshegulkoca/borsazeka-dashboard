@@ -50,6 +50,7 @@ export async function syncBrokerAccount(params: SyncBrokerParams) {
       "BorsaZeka Classic":       "classic",
       "KriptoZeka":              "kripttozeka",
       "KriptoZeka Ascent Self":  "kripttozeka_self",
+      "KriptoZeka Ascent Premium": "kripttozeka_self",
       "KriptoZeka Ascent":       "kripttozeka_ascent",
       "ForexZeka":               "forexzeka",
     };

@@ -39,6 +39,7 @@ interface WState {
   budgetLabel: string | null;
   budgetCurrency: "TRY" | "USD";
   selectedBudgetComingSoon: boolean;
+  billingCycle: "monthly" | "annual";
   /** Güvenlik: localStorage kaydedilirken hangi kullanıcıya ait olduğu */
   userId?: string | null;
 }
@@ -52,6 +53,7 @@ const DEFAULT_STATE: WState = {
   step: 1, market: null, subMarket: null, managementType: null,
   robotId: null, budgetValue: null, budgetLabel: null,
   budgetCurrency: "TRY", selectedBudgetComingSoon: false, userId: null,
+  billingCycle: "monthly",
 };
 
 /** localStorage'dan state yükler. Parse hatası veya veri yoksa default döner. */
@@ -74,7 +76,11 @@ function loadFromStorage(): WState {
     if (parsed.step === 6 && !parsed.robotId) {
       return DEFAULT_STATE;
     }
-    return parsed;
+    return {
+      ...DEFAULT_STATE,
+      ...parsed,
+      billingCycle: parsed.billingCycle || "monthly",
+    };
   } catch {
     return DEFAULT_STATE;
   }
@@ -370,7 +376,7 @@ export default function WizardPage() {
 
   const pricing: PricingResult | null =
     state.robotId === "CLASSIC" ? calcPriceForRobot("CLASSIC", 0)
-    : state.robotId && state.budgetValue !== null ? calcPriceForRobot(state.robotId, state.budgetValue)
+    : state.robotId && state.budgetValue !== null ? calcPriceForRobot(state.robotId, state.budgetValue, state.billingCycle)
     : null;
 
   const isPaymentBlocked =
@@ -625,62 +631,74 @@ export default function WizardPage() {
                   />
                 ) : pricing ? (
                   <>
-                    <div className={s.summaryTitle}>{t("wizard.step6.title")}</div>
+                    {(() => {
+                      const isTr = i18n.language === "tr";
+                      const isAnnual = state.billingCycle === "annual" && !!pricing.annualCostEUR;
+                      return (
+                        <>
+                          <div className={s.summaryTitle}>{t("wizard.step6.title")}</div>
 
-                    <div className={s.summaryInfoList}>
-                      <div className={s.summaryInfoItem}>
-                        <span className={s.summaryInfoLabel}>{t("wizard.step6.summaryRobot")}</span>
-                        <span className={s.summaryInfoValue}>{selectedRobot ? t(selectedRobot.nameKey) : ""}</span>
-                      </div>
-                      <div className={s.summaryInfoItem}>
-                        <span className={s.summaryInfoLabel}>{t("wizard.step6.summaryBudget")}</span>
-                        <span className={s.summaryInfoValue}>{state.budgetLabel ?? ""}</span>
-                      </div>
-                      <div className={s.summaryInfoItem}>
-                        <span className={s.summaryInfoLabel}>{t("wizard.step6.summaryServer")}</span>
-                        <span className={s.summaryInfoValue} style={{ color: "var(--wiz-primary-light)", fontWeight: "bold" }}>
-                          €{pricing.serverCostEUR}
-                        </span>
-                      </div>
-                      <div className={s.summaryInfoItem}>
-                        <span className={s.summaryInfoLabel}>{t("wizard.step6.paymentDetail")}</span>
-                        <span className={s.summaryInfoValue} style={{ color: "var(--wiz-primary-light)", fontWeight: 700 }}>
-                          €{pricing.serverCostDisplay} {t("wizard.step6.perMonth")}
-                        </span>
-                      </div>
-                      <div className={s.summaryInfoItem}>
-                        <span className={s.summaryInfoLabel}>{t("wizard.step6.summaryProfit")}</span>
-                        <span className={s.summaryInfoValue}>
-                          {pricing.profitSharePercent > 0 ? `%${pricing.profitSharePercent}` : t("wizard.step6.profitShareNA")}
-                        </span>
-                      </div>
+                          <div className={s.summaryInfoList}>
+                            <div className={s.summaryInfoItem}>
+                              <span className={s.summaryInfoLabel}>{t("wizard.step6.summaryRobot")}</span>
+                              <span className={s.summaryInfoValue}>{selectedRobot ? t(selectedRobot.nameKey) : ""}</span>
+                            </div>
+                            <div className={s.summaryInfoItem}>
+                              <span className={s.summaryInfoLabel}>{t("wizard.step6.summaryBudget")}</span>
+                              <span className={s.summaryInfoValue}>{state.budgetLabel ?? ""}</span>
+                            </div>
+                            <div className={s.summaryInfoItem}>
+                              <span className={s.summaryInfoLabel}>
+                                {isAnnual ? (isTr ? "Yıllık Ücret:" : "Annual Fee:") : t("wizard.step6.summaryServer")}
+                              </span>
+                              <span className={s.summaryInfoValue} style={{ color: "var(--wiz-primary-light)", fontWeight: "bold" }}>
+                                €{pricing.serverCostEUR}
+                              </span>
+                            </div>
+                            <div className={s.summaryInfoItem}>
+                              <span className={s.summaryInfoLabel}>{t("wizard.step6.paymentDetail")}</span>
+                              <span className={s.summaryInfoValue} style={{ color: "var(--wiz-primary-light)", fontWeight: 700 }}>
+                                €{pricing.serverCostDisplay} {isAnnual ? (isTr ? "/ yıllık" : "/ year") : t("wizard.step6.perMonth")}
+                              </span>
+                            </div>
+                            <div className={s.summaryInfoItem}>
+                              <span className={s.summaryInfoLabel}>{t("wizard.step6.summaryProfit")}</span>
+                              <span className={s.summaryInfoValue}>
+                                {pricing.profitSharePercent > 0 ? `%${pricing.profitSharePercent}` : t("wizard.step6.profitShareNA")}
+                              </span>
+                            </div>
 
-                      <div className={s.summaryInfoItemColumn}>
-                        <div className={s.summaryInfoRow}>
-                          <span className={s.summaryInfoLabel}>{t("wizard.step6.setupFee")}</span>
-                          <span className={s.summaryInfoValue} style={{ color: "var(--wiz-primary-light)" }}>€50</span>
-                        </div>
-                        <div className={s.summaryInfoNote}>
-                          <Info size={12} />
-                          <span>{t("wizard.step6.setupFeeDisclaimer")}</span>
-                        </div>
-                      </div>
-                    </div>
+                            <div className={s.summaryInfoItemColumn}>
+                              <div className={s.summaryInfoRow}>
+                                <span className={s.summaryInfoLabel}>{t("wizard.step6.setupFee")}</span>
+                                <span className={s.summaryInfoValue} style={{ color: "var(--wiz-primary-light)" }}>€50</span>
+                              </div>
+                              <div className={s.summaryInfoNote}>
+                                <Info size={12} />
+                                <span>{t("wizard.step6.setupFeeDisclaimer")}</span>
+                              </div>
+                            </div>
+                          </div>
 
-                    {state.robotId === "KRIPTTOZEKA_SELF" && pricing.annualCostEUR && pricing.annualStripeLink && (
-                      <AnnualPlanBox
-                        annualCostEUR={pricing.annualCostEUR}
-                        annualStripeLink={pricing.annualStripeLink}
-                        userEmail={session?.user?.email ?? ""}
-                      />
-                    )}
+                          {!isAnnual && state.robotId === "KRIPTTOZEKA_SELF" && pricing.annualCostEUR && pricing.annualStripeLink && (
+                            <AnnualPlanBox
+                              annualCostEUR={pricing.annualCostEUR}
+                              annualStripeLink={pricing.annualStripeLink}
+                              userEmail={session?.user?.email ?? ""}
+                            />
+                          )}
 
-                    <div className={s.summaryDivider} style={{ margin: "1.5rem 0" }} />
+                          <div className={s.summaryDivider} style={{ margin: "1.5rem 0" }} />
 
-                    <div className={s.summaryTotalRow}>
-                      <span className={s.summaryTotalLabel}>{t("wizard.step6.totalMonthly")}</span>
-                      <span className={s.summaryTotalValue}>€{pricing.serverCostDisplay} {t("wizard.step6.perMonth")}</span>
-                    </div>
+                          <div className={s.summaryTotalRow}>
+                            <span className={s.summaryTotalLabel}>
+                              {isAnnual ? (isTr ? "Yıllık Sabit Maliyet" : "Annual Fixed Cost") : t("wizard.step6.totalMonthly")}
+                            </span>
+                            <span className={s.summaryTotalValue}>€{pricing.serverCostDisplay} {isAnnual ? (isTr ? "/ yıllık" : "/ year") : t("wizard.step6.perMonth")}</span>
+                          </div>
+                        </>
+                      );
+                    })()}
 
                     <p className={s.summaryTerms}>{t("wizard.step6.terms")}</p>
 
@@ -867,6 +885,27 @@ export default function WizardPage() {
                 {state.step === 5 && (
                   <>
                     <h2 className={s.stepTitle}>{t("wizard.step5.title")}</h2>
+
+                    {state.robotId === "KRIPTTOZEKA_SELF" && (
+                      <div className={s.billingToggleContainer}>
+                        <button
+                          type="button"
+                          className={`${s.billingToggleButton} ${state.billingCycle === "monthly" ? s.billingToggleButtonActive : ""}`}
+                          onClick={() => patch({ billingCycle: "monthly" })}
+                        >
+                          {t("wizard.step5.monthly")}
+                        </button>
+                        <button
+                          type="button"
+                          className={`${s.billingToggleButton} ${state.billingCycle === "annual" ? s.billingToggleButtonActive : ""}`}
+                          onClick={() => patch({ billingCycle: "annual" })}
+                        >
+                          {t("wizard.step5.yearly")}
+                          <span className={s.toggleBadge}>{t("wizard.step5.fourMonthsFree")}</span>
+                        </button>
+                      </div>
+                    )}
+
                     {state.robotId === "CLASSIC" ? (
                       <div style={{ padding: "2rem", textAlign: "center", background: "rgba(29, 49, 74, 0.1)", borderRadius: 16, border: "1px dashed rgba(29, 49, 74, 0.4)" }}>
                         <p style={{ color: "#60a5fa", fontWeight: 600, marginBottom: "0.5rem" }}>
@@ -891,11 +930,18 @@ export default function WizardPage() {
                           style={{ gap: "1rem", marginBottom: "1.5rem" }}
                         >
                           {budgetOptions.map((opt: BudgetOption) => {
-                            const pricing = state.robotId ? calcPriceForRobot(state.robotId, opt.value) : null;
+                            const pricing = state.robotId ? calcPriceForRobot(state.robotId, opt.value, state.billingCycle) : null;
                             const isSelected = state.budgetValue === opt.value;
                             const isTr = i18n.language === "tr";
                             
-                            const serverCost = pricing ? `${pricing.serverCostDisplay}€ / ${isTr ? "ay" : "month"}` : "—";
+                            const isAnnual = state.billingCycle === "annual" && pricing?.annualCostEUR;
+                            const periodText = isAnnual 
+                              ? (isTr ? "yıl" : "year") 
+                              : (isTr ? "ay" : "month");
+                            const costLabel = isAnnual
+                              ? (isTr ? "Yıllık Maliyet: " : "Yearly Cost: ")
+                              : (isTr ? "Aylık Maliyet: " : "Monthly Cost: ");
+                            const serverCost = pricing ? `${pricing.serverCostDisplay}€ / ${periodText}` : "—";
                             const profitShare = pricing && pricing.profitSharePercent > 0 
                               ? (isTr ? `%${pricing.profitSharePercent} kâr paylaşımı` : `%${pricing.profitSharePercent} profit share`)
                               : (isTr ? "Kâr paylaşımı yok" : "No profit share");
@@ -929,12 +975,19 @@ export default function WizardPage() {
                                   textAlign: "left"
                                 }}
                               >
-                                <div className={s.optionLabel} style={{ fontWeight: "bold", fontSize: "1.05rem", marginBottom: "0.4rem" }}>
-                                  {opt.label}
+                                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", marginBottom: "0.4rem" }}>
+                                  <div className={s.optionLabel} style={{ fontWeight: "bold", fontSize: "1.05rem", margin: 0 }}>
+                                    {opt.label}
+                                  </div>
+                                  {pricing?.annualCostEUR && (
+                                    <span className={s.discountBadge}>
+                                      {t("wizard.step5.fourMonthsFree")}
+                                    </span>
+                                  )}
                                 </div>
                                 <div className={s.optionDesc} style={{ fontSize: "0.82rem", display: "flex", flexDirection: "column", gap: "0.2rem" }}>
                                   <span style={{ color: "#fff", fontWeight: 500 }}>
-                                    {isTr ? "Aylık Maliyet: " : "Monthly Cost: "}{serverCost}
+                                    {costLabel}{serverCost}
                                   </span>
                                   <span style={{ color: "var(--wiz-primary-light)" }}>{profitShare}</span>
                                 </div>

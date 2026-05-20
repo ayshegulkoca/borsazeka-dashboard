@@ -490,28 +490,28 @@ export const ROBOTS: RobotDefinition[] = [
     minBudgetUSD: 5000,
     features: ["wizard.robots.kriptoZeka.f1","wizard.robots.kriptoZeka.f2","wizard.robots.kriptoZeka.f3","wizard.robots.kriptoZeka.f4"],
   },
-  // ── Kripto Premium: KriptoZeka Ascent (Pek Yakında) ──────────────────────
+  // ── Kripto Self-Service: KriptoZeka Ascent (Pek Yakında) ──────────────────────
   {
     id: "KRIPTTOZEKA_ASCENT",
     nameKey: "wizard.robots.kriptoZekaAscent.name",
     descKey: "wizard.robots.kriptoZekaAscent.desc",
     market: "CRYPTO",
-    managementType: "PREMIUM",
+    managementType: "SELF_SERVICE",
     comingSoon: true,
     paymentBlocked: true,
     maxCapacity: 20,
     minBudgetUSD: 5000,
     features: ["wizard.robots.kriptoZekaAscent.f1","wizard.robots.kriptoZekaAscent.f2","wizard.robots.kriptoZekaAscent.f3","wizard.robots.kriptoZekaAscent.f4"],
   },
-  // ── Kripto Self-Service: KriptoZeka Ascent (Pek Yakında) ────────────────
+  // ── Kripto Premium: KriptoZeka Ascent Premium ────────────────
   {
     id: "KRIPTTOZEKA_SELF",
     nameKey: "wizard.robots.kriptoSelf.name",
     descKey: "wizard.robots.kriptoSelf.desc",
     market: "CRYPTO",
-    managementType: "SELF_SERVICE",
-    comingSoon: true,       // ✅ Aktif etmek için: false yap
-    paymentBlocked: true,   // ✅ Aktif etmek için: false yap
+    managementType: "PREMIUM",
+    comingSoon: false,       // ✅ Aktif etmek için: false yap
+    paymentBlocked: false,   // ✅ Aktif etmek için: false yap
     maxCapacity: 50,
     minBudgetUSD: 0,
     features: ["wizard.robots.kriptoSelf.f1","wizard.robots.kriptoSelf.f2","wizard.robots.kriptoSelf.f3","wizard.robots.kriptoSelf.f4"],

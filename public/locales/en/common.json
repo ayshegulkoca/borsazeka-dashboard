@@ -190,7 +190,10 @@
       "title": "Select your budget",
       "bistLabel": "Select your investment budget (TRY)",
       "cryptoLabel": "Select your investment budget (USD)",
-      "forexLabel": "Select your starting capital (USD)"
+      "forexLabel": "Select your starting capital (USD)",
+      "monthly": "Pay Monthly",
+      "yearly": "Pay Yearly",
+      "fourMonthsFree": "4 Months Free"
     },
     "step6": {
       "title": "Your Price Summary",
@@ -584,7 +587,7 @@
         "f4": "Multi-token support"
       },
       "kriptoSelf": {
-        "name": "KriptoZeka Ascent Self-Service",
+        "name": "KriptoZeka Ascent Premium",
         "desc": "Manage your own crypto robot, start with a small budget",
         "f1": "Robot + mini server package",
         "f2": "Monthly or annual payment option",

@@ -190,7 +190,10 @@
       "title": "Bütçenizi seçin",
       "bistLabel": "Yatırım bütçenizi seçin (TL)",
       "cryptoLabel": "Yatırım bütçenizi seçin (USD)",
-      "forexLabel": "Başlangıç sermayenizi seçin (USD)"
+      "forexLabel": "Başlangıç sermayenizi seçin (USD)",
+      "monthly": "Aylık Öde",
+      "yearly": "Yıllık Öde",
+      "fourMonthsFree": "4 Ay Bedava"
     },
     "step6": {
       "title": "Fiyat Özetiniz",
@@ -584,7 +587,7 @@
         "f4": "Çoklu token desteği"
       },
       "kriptoSelf": {
-        "name": "KriptoZeka Ascent Self-Service",
+        "name": "KriptoZeka Ascent Premium",
         "desc": "Kendi kripto robotunuzu yönetin, düşük sermayeden başlayın",
         "f1": "Robot + mini sunucu paketi",
         "f2": "Aylık veya yıllık ödeme seçeneği",
