@@ -402,6 +402,7 @@ export default function WizardPage() {
       budgetLabel: state.budgetLabel,
       pricing: pricing
         ? {
+            setupFeeEUR: pricing.setupFeeEUR,
             serverCostEUR: pricing.serverCostEUR,
             profitSharePercent: pricing.profitSharePercent,
             totalMonthlyCostEUR: pricing.totalMonthlyCostEUR,
@@ -678,16 +679,18 @@ export default function WizardPage() {
                               </span>
                             </div>
 
-                            <div className={s.summaryInfoItemColumn}>
-                              <div className={s.summaryInfoRow}>
-                                <span className={s.summaryInfoLabel}>{t("wizard.step6.setupFee")}</span>
-                                <span className={s.summaryInfoValue} style={{ color: "var(--wiz-primary-light)" }}>€50</span>
+                            {selectedRobot?.managementType !== "SELF_SERVICE" && (
+                              <div className={s.summaryInfoItemColumn}>
+                                <div className={s.summaryInfoRow}>
+                                  <span className={s.summaryInfoLabel}>{t("wizard.step6.setupFee")}</span>
+                                  <span className={s.summaryInfoValue} style={{ color: "var(--wiz-primary-light)" }}>€50</span>
+                                </div>
+                                <div className={s.summaryInfoNote}>
+                                  <Info size={12} />
+                                  <span>{t("wizard.step6.setupFeeDisclaimer")}</span>
+                                </div>
                               </div>
-                              <div className={s.summaryInfoNote}>
-                                <Info size={12} />
-                                <span>{t("wizard.step6.setupFeeDisclaimer")}</span>
-                              </div>
-                            </div>
+                            )}
                           </div>
 
                           {!isAnnual && state.robotId === "KRIPTTOZEKA_SELF" && pricing.annualCostEUR && pricing.annualStripeLink && (
