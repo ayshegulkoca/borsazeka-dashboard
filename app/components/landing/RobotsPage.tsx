@@ -1,196 +1,150 @@
 "use client";
 
+import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
   Activity, Bot, TrendingUp, Zap, Shield, Target,
-  Coins, Globe, ArrowRight, Check, Lock,
+  Coins, Globe, ArrowRight, Check, Lock, Cpu, Route
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import Navbar from "./Navbar";
 import styles from "./landing.module.css";
 import robotStyles from "./robots.module.css";
 
-// Robot catalog data — display layer (not wizard data layer)
-const ROBOT_CATALOG = [
-  // ── BIST Premium ──────────────────────────────────────────────────────────
-  {
-    id: "DARKROOM",
-    nameKey: "wizard.robots.darkroom.name",
-    descKey: "wizard.robots.darkroom.desc",
-    market: "BIST",
-    icon: Shield,
-    color: "#a855f7", // Deep Purple
-    gradient: "linear-gradient(135deg, #000000 0%, #0a0a0a 100%)",
-    border: "rgba(255, 255, 255, 0.08)",
-    comingSoon: false,
-    minBudget: "600K ₺",
-    maxCapacity: 40,
-    profitShare: "%50",
-    featureKeys: [
-      "wizard.robots.darkroom.f1",
-      "wizard.robots.darkroom.f2",
-      "wizard.robots.darkroom.f3",
-      "wizard.robots.darkroom.f4",
-    ],
-  },
-  {
-    id: "HIGHWAY",
-    nameKey: "wizard.robots.highway.name",
-    descKey: "wizard.robots.highway.desc",
-    market: "BIST",
-    icon: TrendingUp,
-    color: "#3b82f6", // Vibrant Blue
-    gradient: "linear-gradient(135deg, #000000 0%, #0a0a0a 100%)",
-    border: "rgba(255, 255, 255, 0.08)",
-    comingSoon: false,
-    minBudget: "600K ₺",
-    maxCapacity: 30,
-    profitShare: "%50",
-    featureKeys: [
-      "wizard.robots.highway.f1",
-      "wizard.robots.highway.f2",
-      "wizard.robots.highway.f3",
-      "wizard.robots.highway.f4",
-    ],
-  },
-  {
-    id: "TRADEMATE",
-    nameKey: "wizard.robots.trademate.name",
-    descKey: "wizard.robots.trademate.desc",
-    market: "BIST",
-    icon: Target,
-    color: "#10b981", // Emerald Green
-    gradient: "linear-gradient(135deg, #000000 0%, #0a0a0a 100%)",
-    border: "rgba(255, 255, 255, 0.08)",
-    comingSoon: false,
-    minBudget: "600K ₺",
-    maxCapacity: 50,
-    profitShare: "%50",
-    featureKeys: [
-      "wizard.robots.trademate.f1",
-      "wizard.robots.trademate.f2",
-      "wizard.robots.trademate.f3",
-      "wizard.robots.trademate.f4",
-    ],
-  },
-  {
-    id: "FABRIKA",
-    nameKey: "wizard.robots.fabrika.name",
-    descKey: "wizard.robots.fabrika.desc",
-    market: "BIST",
-    icon: Activity,
-    color: "#f59e0b", // Gold
-    gradient: "linear-gradient(135deg, #000000 0%, #0a0a0a 100%)",
-    border: "rgba(255, 255, 255, 0.08)",
-    comingSoon: false,
-    minBudget: "5M ₺",
-    maxCapacity: 20,
-    profitShare: "%45–50",
-    featureKeys: [
-      "wizard.robots.fabrika.f1",
-      "wizard.robots.fabrika.f2",
-      "wizard.robots.fabrika.f3",
-      "wizard.robots.fabrika.f5",
-    ],
-  },
-  {
-    id: "CLASSIC",
-    nameKey: "wizard.robots.classic.name",
-    descKey: "wizard.robots.classic.desc",
-    market: "BIST",
-    icon: Zap,
-    color: "#94a3b8", // Slate Silver
-    gradient: "linear-gradient(135deg, #050505 0%, #000000 100%)",
-    border: "rgba(100,116,139,0.2)",
-    comingSoon: true,
-    minBudget: "—",
-    maxCapacity: 0,
-    profitShare: "—",
-    featureKeys: [
-      "wizard.robots.classic.f1",
-      "wizard.robots.classic.f2",
-      "wizard.robots.classic.f3",
-    ],
-  },
-  // ── Kripto ────────────────────────────────────────────────────────────────
-  {
-    id: "KRIPTTOZEKA",
-    nameKey: "wizard.robots.kriptoZeka.name",
-    descKey: "wizard.robots.kriptoZeka.desc",
-    market: "CRYPTO",
-    icon: Coins,
-    color: "#f59e0b", // Neon Orange (Bitcoin)
-    gradient: "linear-gradient(135deg, #000000 0%, #0a0a0a 100%)",
-    border: "rgba(255, 255, 255, 0.08)",
-    comingSoon: false,
-    minBudget: "$5,000",
-    maxCapacity: 20,
-    profitShare: "%50",
-    featureKeys: [
-      "wizard.robots.kriptoZeka.f1",
-      "wizard.robots.kriptoZeka.f2",
-      "wizard.robots.kriptoZeka.f3",
-      "wizard.robots.kriptoZeka.f4",
-    ],
-  },
-  {
-    id: "KRIPTTOZEKA_ASCENT",
-    nameKey: "wizard.robots.kriptoZekaAscent.name",
-    descKey: "wizard.robots.kriptoZekaAscent.desc",
-    market: "CRYPTO",
-    icon: Bot,
-    color: "#f59e0b", // Neon Orange
-    gradient: "linear-gradient(135deg, #000000 0%, #0a0a0a 100%)",
-    border: "rgba(255, 255, 255, 0.08)",
-    comingSoon: true,
-    minBudget: "$5,000",
-    maxCapacity: 20,
-    profitShare: "%50",
-    featureKeys: [
-      "wizard.robots.kriptoZekaAscent.f1",
-      "wizard.robots.kriptoZekaAscent.f2",
-      "wizard.robots.kriptoZekaAscent.f3",
-      "wizard.robots.kriptoZekaAscent.f4",
-    ],
-  },
-  // ── Forex ─────────────────────────────────────────────────────────────────
-  {
-    id: "FOREXZEKA",
-    nameKey: "wizard.robots.forexZeka.name",
-    descKey: "wizard.robots.forexZeka.desc",
-    market: "FOREX",
-    icon: Globe,
-    color: "#0d9488", // Ocean Green
-    gradient: "linear-gradient(135deg, #000000 0%, #0a0a0a 100%)",
-    border: "rgba(255, 255, 255, 0.08)",
-    comingSoon: true,
-    minBudget: "—",
-    maxCapacity: 0,
-    profitShare: "—",
-    featureKeys: [
-      "wizard.robots.forexZeka.f2",
-      "wizard.robots.forexZeka.f3",
-      "wizard.robots.forexZeka.f4",
-    ],
-  },
-];
+// Dynamic Wizard Data Source
+import { ROBOTS, getBudgetOptionsForRobot, calcPriceForRobot, type RobotDefinition } from "@/src/data/products";
 
-const MARKET_LABELS: Record<string, { tr: string; en: string; color: string }> = {
-  BIST:   { tr: "BIST", en: "BIST", color: "#4338CA" },
-  CRYPTO: { tr: "Kripto", en: "Crypto", color: "#a1a1aa" },
-  FOREX:  { tr: "Forex", en: "Forex", color: "#a1a1aa" },
+const ROBOT_STYLE_MAP: Record<string, {
+  icon: any;
+  color: string;
+  gradient: string;
+  border: string;
+}> = {
+  DARKROOM: { icon: Shield, color: "#a855f7", gradient: "linear-gradient(135deg, #000000 0%, #0a0a0a 100%)", border: "rgba(255, 255, 255, 0.08)" },
+  DARKROOM_SELF: { icon: Shield, color: "#a855f7", gradient: "linear-gradient(135deg, #000000 0%, #0a0a0a 100%)", border: "rgba(255, 255, 255, 0.08)" },
+  HIGHWAY: { icon: TrendingUp, color: "#3b82f6", gradient: "linear-gradient(135deg, #000000 0%, #0a0a0a 100%)", border: "rgba(255, 255, 255, 0.08)" },
+  HIGHWAY_SELF: { icon: TrendingUp, color: "#3b82f6", gradient: "linear-gradient(135deg, #000000 0%, #0a0a0a 100%)", border: "rgba(255, 255, 255, 0.08)" },
+  TRADEMATE: { icon: Target, color: "#10b981", gradient: "linear-gradient(135deg, #000000 0%, #0a0a0a 100%)", border: "rgba(255, 255, 255, 0.08)" },
+  TRADEMATE_SELF: { icon: Target, color: "#10b981", gradient: "linear-gradient(135deg, #000000 0%, #0a0a0a 100%)", border: "rgba(255, 255, 255, 0.08)" },
+  FABRIKA: { icon: Activity, color: "#f59e0b", gradient: "linear-gradient(135deg, #000000 0%, #0a0a0a 100%)", border: "rgba(255, 255, 255, 0.08)" },
+  FABRIKA_SELF: { icon: Activity, color: "#f59e0b", gradient: "linear-gradient(135deg, #000000 0%, #0a0a0a 100%)", border: "rgba(255, 255, 255, 0.08)" },
+  CLASSIC: { icon: Zap, color: "#94a3b8", gradient: "linear-gradient(135deg, #050505 0%, #000000 100%)", border: "rgba(100,116,139,0.2)" },
+  KRIPTTOZEKA: { icon: Coins, color: "#f59e0b", gradient: "linear-gradient(135deg, #000000 0%, #0a0a0a 100%)", border: "rgba(255, 255, 255, 0.08)" },
+  KRIPTTOZEKA_ASCENT: { icon: Bot, color: "#f97316", gradient: "linear-gradient(135deg, #000000 0%, #0a0a0a 100%)", border: "rgba(255, 255, 255, 0.08)" },
+  KRIPTTOZEKA_SELF: { icon: Bot, color: "#a855f7", gradient: "linear-gradient(135deg, #000000 0%, #0a0a0a 100%)", border: "rgba(255, 255, 255, 0.08)" },
+  FOREXZEKA: { icon: Globe, color: "#0d9488", gradient: "linear-gradient(135deg, #000000 0%, #0a0a0a 100%)", border: "rgba(255, 255, 255, 0.08)" },
 };
+
+// Localized Strategy Summaries for dynamic cards
+const STRATEGY_SUMMARIES: Record<string, { tr: string; en: string }> = {
+  DARKROOM: { tr: "Gap / Boşluk Ticareti", en: "Gap Trading" },
+  DARKROOM_SELF: { tr: "Gap / Boşluk Ticareti", en: "Gap Trading" },
+  HIGHWAY: { tr: "Trend Takip Algoritması", en: "Trend Following Algorithm" },
+  HIGHWAY_SELF: { tr: "Trend Takip Algoritması", en: "Trend Following Algorithm" },
+  TRADEMATE: { tr: "Overnight & Gün İçi Algoritma", en: "Overnight & Intraday Algorithm" },
+  TRADEMATE_SELF: { tr: "Overnight & Gün İçi Algoritma", en: "Overnight & Intraday Algorithm" },
+  FABRIKA: { tr: "Çoklu Zaman Dilimi Trendi", en: "Multi-Timeframe Trend" },
+  FABRIKA_SELF: { tr: "Çoklu Zaman Dilimi Trendi", en: "Multi-Timeframe Trend" },
+  CLASSIC: { tr: "Standart Trend Takip", en: "Standard Trend Following" },
+  KRIPTTOZEKA: { tr: "Kripto Portföy & Hızlı Trend", en: "Crypto Portfolio & Trend" },
+  KRIPTTOZEKA_ASCENT: { tr: "Kripto Trend & Yapay Zeka", en: "Crypto Trend & AI" },
+  KRIPTTOZEKA_SELF: { tr: "Gelişmiş Kripto Portföy", en: "Advanced Crypto Portfolio" },
+  FOREXZEKA: { tr: "Global Pariteler & Emtia Arbitraj", en: "Global FX & Commodity" },
+};
+
+const MARKET_LABELS: Record<string, { tr: string; en: string }> = {
+  BIST:   { tr: "BIST", en: "BIST" },
+  CRYPTO: { tr: "Kripto", en: "Crypto" },
+  FOREX:  { tr: "Forex", en: "Forex" },
+};
+
+function getRobotPricingDetails(robotId: string, lang: "tr" | "en") {
+  const isTr = lang === "tr";
+  
+  if (robotId === "CLASSIC") {
+    return {
+      budgetRange: isTr ? "Yakında Belirlenecek" : "TBD",
+      costDisplay: isTr ? "Yakında Belirlenecek" : "TBD",
+    };
+  }
+
+  const options = getBudgetOptionsForRobot(robotId as any);
+  if (options.length === 0) {
+    return {
+      budgetRange: "—",
+      costDisplay: "—",
+    };
+  }
+
+  let finalBudget = "";
+  if (robotId === "DARKROOM" || robotId === "HIGHWAY") {
+    finalBudget = isTr ? "600K - 5M ₺" : "600K - 5M ₺";
+  } else if (robotId === "TRADEMATE") {
+    finalBudget = isTr ? "600K - 100M ₺" : "600K - 100M ₺";
+  } else if (robotId === "FABRIKA") {
+    finalBudget = isTr ? "5M - 100M ₺" : "5M - 100M ₺";
+  } else if (robotId === "DARKROOM_SELF" || robotId === "HIGHWAY_SELF" || robotId === "TRADEMATE_SELF") {
+    finalBudget = isTr ? "0 - 600K ₺" : "0 - 600K ₺";
+  } else if (robotId === "FABRIKA_SELF") {
+    finalBudget = isTr ? "600K - 5M ₺" : "600K - 5M ₺";
+  } else if (robotId === "KRIPTTOZEKA" || robotId === "KRIPTTOZEKA_ASCENT") {
+    finalBudget = isTr ? "$5K - $50K+" : "$5K - $50K+";
+  } else if (robotId === "KRIPTTOZEKA_SELF") {
+    finalBudget = isTr ? "$0 - $5K" : "$0 - $5K";
+  } else if (robotId === "FOREXZEKA") {
+    finalBudget = isTr ? "$500 - $5K+" : "$500 - $5K+";
+  } else {
+    const minOpt = options[0];
+    const maxOpt = options[options.length - 1];
+    const firstLabel = minOpt.label.replace("₺", " ₺").replace("$", "$ ");
+    const lastLabel = maxOpt.label.replace("₺", " ₺").replace("$", "$ ");
+    finalBudget = `${firstLabel.split(" – ")[0]} - ${lastLabel.split(" – ").pop()}`;
+  }
+
+  const minOpt = options[0];
+  const maxOpt = options[options.length - 1];
+  const minPrice = calcPriceForRobot(robotId as any, minOpt.value);
+  const maxPrice = calcPriceForRobot(robotId as any, maxOpt.value);
+  
+  let costDisplay = "";
+  if (minPrice && maxPrice) {
+    const hasProfitShare = minPrice.profitSharePercent > 0 || maxPrice.profitSharePercent > 0;
+    const profitShareStr = hasProfitShare
+      ? (minPrice.profitSharePercent === maxPrice.profitSharePercent
+          ? ` + %${minPrice.profitSharePercent} ${isTr ? "Kâr Paylaşımı" : "Profit Share"}`
+          : ` + %${minPrice.profitSharePercent}–%${maxPrice.profitSharePercent} ${isTr ? "Kâr Paylaşımı" : "Profit Share"}`)
+      : "";
+      
+    const perPeriod = isTr ? "/ay" : "/mo";
+    
+    if (minPrice.serverCostEUR === maxPrice.serverCostEUR) {
+      costDisplay = `€${minPrice.serverCostEUR}${perPeriod}${profitShareStr}`;
+    } else {
+      costDisplay = `€${minPrice.serverCostEUR} - €${maxPrice.serverCostEUR}${perPeriod}${profitShareStr}`;
+    }
+  } else {
+    costDisplay = "—";
+  }
+  
+  return {
+    budgetRange: finalBudget,
+    costDisplay,
+  };
+}
 
 export default function RobotsPage() {
   const { t, i18n } = useTranslation("common");
   const lang = i18n.language?.startsWith("tr") ? "tr" : "en";
   const router = useRouter();
+  const [activeTab, setActiveTab] = useState<"PREMIUM" | "SELF_SERVICE">("PREMIUM");
 
   const handleSelect = (robotId: string, comingSoon: boolean) => {
     if (comingSoon) return;
     router.push(`/urun-sec?robot=${robotId}`);
   };
+
+  const filteredRobots = ROBOTS.filter((r: RobotDefinition) => r.managementType === activeTab);
 
   return (
     <div className={robotStyles.page}>
@@ -205,30 +159,55 @@ export default function RobotsPage() {
         </div>
       </section>
 
+      {/* Robot Filtering Tabs */}
+      <div className={robotStyles.tabContainer}>
+        <button
+          className={`${robotStyles.tabButton} ${activeTab === "PREMIUM" ? robotStyles.tabButtonActive : ""}`}
+          onClick={() => setActiveTab("PREMIUM")}
+        >
+          {t("wizard.step3.premium") || "Premium: Biz Yönetelim"}
+        </button>
+        <button
+          className={`${robotStyles.tabButton} ${activeTab === "SELF_SERVICE" ? robotStyles.tabButtonActive : ""}`}
+          onClick={() => setActiveTab("SELF_SERVICE")}
+        >
+          {t("wizard.step3.selfService") || "Self-Service: Kendi Yönet"}
+        </button>
+      </div>
+
       {/* Robot Grid */}
       <section className={robotStyles.section}>
         <div className={robotStyles.container}>
           <div className={robotStyles.grid}>
-            {ROBOT_CATALOG.map((robot) => {
-              const Icon = robot.icon;
+            {filteredRobots.map((robot: RobotDefinition) => {
+              const styleConfig = ROBOT_STYLE_MAP[robot.id] || {
+                icon: Cpu,
+                color: "#94a3b8",
+                gradient: "linear-gradient(135deg, #000000 0%, #0a0a0a 100%)",
+                border: "rgba(255, 255, 255, 0.08)",
+              };
+              const Icon = styleConfig.icon;
               const mktLabel = MARKET_LABELS[robot.market];
+              const { budgetRange, costDisplay } = getRobotPricingDetails(robot.id, lang);
+              const strategySummary = STRATEGY_SUMMARIES[robot.id]?.[lang] || "—";
+
               return (
                 <div
                   key={robot.id}
                   className={`${robotStyles.card} ${robot.comingSoon ? robotStyles.cardComingSoon : ""}`}
-                  style={{ "--card-accent": robot.color } as React.CSSProperties}
+                  style={{ "--card-accent": styleConfig.color } as React.CSSProperties}
                 >
                   {robot.comingSoon && (
                     <div 
                       className={robotStyles.comingSoonOverlay}
                       style={{ 
-                        color: robot.color, 
-                        background: `${robot.color}15`, 
-                        borderColor: `${robot.color}30` 
+                        color: styleConfig.color, 
+                        background: `${styleConfig.color}15`, 
+                        borderColor: `${styleConfig.color}30` 
                       }}
                     >
-                      <Lock size={14} color={robot.color} />
-                      {t("robots.comingSoon")}
+                      <Lock size={12} color={styleConfig.color} />
+                      {t("wizard.comingSoonBadge") || "Pek Yakında"}
                     </div>
                   )}
 
@@ -236,24 +215,31 @@ export default function RobotsPage() {
                   <div className={robotStyles.cardTop}>
                     <div
                       className={robotStyles.iconWrap}
-                      style={{ background: `${robot.color}10`, border: `1px solid ${robot.color}33` }}
+                      style={{ background: `${styleConfig.color}10`, border: `1px solid ${styleConfig.color}33` }}
                     >
                       <div 
                         className={robotStyles.iconGlow} 
-                        style={{ background: robot.color }}
+                        style={{ background: styleConfig.color }}
                       />
-                      <Icon size={22} color={robot.color} style={{ position: "relative", zIndex: 1 }} />
+                      <Icon size={18} color={styleConfig.color} style={{ position: "relative", zIndex: 1 }} />
                     </div>
-                    <span
-                      className={robotStyles.marketBadge}
-                      style={{ 
-                        color: robot.comingSoon ? `${robot.color}80` : robot.color, 
-                        background: `${robot.color}10`, 
-                        borderColor: `${robot.color}25` 
-                      }}
-                    >
-                      {mktLabel[lang]}
-                    </span>
+                    <div className={robotStyles.badgeRow}>
+                      {robot.maxCapacity > 0 && !robot.comingSoon && (
+                        <span className={robotStyles.capacityBadge}>
+                          {lang === "tr" ? `${robot.maxCapacity} Kişilik` : `${robot.maxCapacity} Users`}
+                        </span>
+                      )}
+                      <span
+                        className={robotStyles.marketBadge}
+                        style={{ 
+                          color: robot.comingSoon ? `${styleConfig.color}80` : styleConfig.color, 
+                          background: `${styleConfig.color}10`, 
+                          borderColor: `${styleConfig.color}25` 
+                        }}
+                      >
+                        {mktLabel[lang]}
+                      </span>
+                    </div>
                   </div>
 
                   {/* Name & desc */}
@@ -264,27 +250,19 @@ export default function RobotsPage() {
                     <p className={robotStyles.cardDesc}>{t(robot.descKey)}</p>
                   </div>
 
-                  {/* Stats row */}
-                  <div className={robotStyles.statsRow}>
-                    <div className={robotStyles.statItem}>
-                      <span className={robotStyles.statLabel}>{t("robots.minBudget")}</span>
-                      <span className={robotStyles.statValue} style={{ color: robot.comingSoon ? "#94a3b8" : robot.color }}>
-                        {robot.minBudget}
-                      </span>
+                  {/* Dynamic Technical Details & Pricing */}
+                  <div className={robotStyles.techInfoContainer}>
+                    <div className={robotStyles.techInfoItem}>
+                      <span className={robotStyles.techInfoLabel}>{lang === "tr" ? "Strateji" : "Strategy"}</span>
+                      <span className={robotStyles.techInfoValue}>{strategySummary}</span>
                     </div>
-                    {robot.maxCapacity > 0 && (
-                      <div className={robotStyles.statItem}>
-                        <span className={robotStyles.statLabel}>{t("robots.maxCapacity")}</span>
-                        <span className={robotStyles.statValue} style={{ color: robot.comingSoon ? "#94a3b8" : robot.color }}>
-                          {robot.maxCapacity}
-                        </span>
-                      </div>
-                    )}
-                    <div className={robotStyles.statItem}>
-                      <span className={robotStyles.statLabel}>{t("robots.profitShare")}</span>
-                      <span className={robotStyles.statValue} style={{ color: robot.comingSoon ? "#94a3b8" : robot.color }}>
-                        {robot.profitShare}
-                      </span>
+                    <div className={robotStyles.techInfoItem}>
+                      <span className={robotStyles.techInfoLabel}>{lang === "tr" ? "Bütçe Aralığı" : "Budget Range"}</span>
+                      <span className={robotStyles.techInfoValue}>{budgetRange}</span>
+                    </div>
+                    <div className={robotStyles.techInfoItem}>
+                      <span className={robotStyles.techInfoLabel}>{lang === "tr" ? "Maliyet" : "Cost"}</span>
+                      <span className={robotStyles.techInfoValue}>{costDisplay}</span>
                     </div>
                   </div>
 
@@ -293,9 +271,9 @@ export default function RobotsPage() {
 
                   {/* Features */}
                   <ul className={robotStyles.featureList}>
-                    {robot.featureKeys.map((fk) => (
+                    {robot.features.slice(0, 3).map((fk: string) => (
                       <li key={fk} className={robotStyles.featureItem}>
-                        <Check size={13} color={robot.comingSoon ? "#94a3b8" : robot.color} style={{ flexShrink: 0 }} />
+                        <Check size={12} color={robot.comingSoon ? "#94a3b8" : styleConfig.color} style={{ flexShrink: 0 }} />
                         <span>{t(fk)}</span>
                       </li>
                     ))}
@@ -309,11 +287,11 @@ export default function RobotsPage() {
                   >
                     {robot.comingSoon ? (
                       <>
-                        <Lock size={14} />
-                        {t("robots.comingSoon")}
+                        <Lock size={12} style={{ marginRight: "4px" }} />
+                        {t("wizard.comingSoonBadge") || "Pek Yakında"}
                       </>
                     ) : (
-                      t("robots.ctaButton")
+                      lang === "tr" ? "Detayları Gör" : "View Details"
                     )}
                   </button>
                 </div>

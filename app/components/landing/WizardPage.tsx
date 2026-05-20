@@ -2117,6 +2117,7 @@ function RobotCard({ robot, selected, t, onClick }: {
   robot: RobotDefinition; selected: boolean;
   t: (k: string) => string; onClick: () => void;
 }) {
+  const { i18n } = useTranslation("common");
   return (
     <div
       className={`${s.robotOptionCard} ${selected ? s.optionCardSelected : ""} ${robot.comingSoon ? s.robotCardComingSoon : ""}`}
@@ -2144,7 +2145,7 @@ function RobotCard({ robot, selected, t, onClick }: {
           )}
           {robot.maxCapacity > 0 && (
             <span className={s.robotCapacity}>
-              {t("wizard.step4.capacity")}: {robot.maxCapacity} {t("wizard.step4.capacityUnit")}
+              {i18n.language === "tr" ? `${robot.maxCapacity} Kişilik` : `${robot.maxCapacity} Users`}
             </span>
           )}
         </div>
