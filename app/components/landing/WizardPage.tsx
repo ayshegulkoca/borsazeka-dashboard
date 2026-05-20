@@ -679,7 +679,7 @@ export default function WizardPage() {
                               </span>
                             </div>
 
-                            {selectedRobot?.managementType !== "SELF_SERVICE" && (
+                            {selectedRobot?.market === "BIST" && selectedRobot?.managementType === "PREMIUM" && (
                               <div className={s.summaryInfoItemColumn}>
                                 <div className={s.summaryInfoRow}>
                                   <span className={s.summaryInfoLabel}>{t("wizard.step6.setupFee")}</span>
@@ -1015,7 +1015,7 @@ export default function WizardPage() {
                         </div>
 
                         {/* Setup Fee Note */}
-                        {state.managementType === "PREMIUM" && (
+                        {selectedRobot?.market === "BIST" && state.managementType === "PREMIUM" && (
                           <div style={{
                             display: "flex",
                             alignItems: "center",
