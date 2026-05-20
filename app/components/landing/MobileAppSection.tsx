@@ -266,7 +266,7 @@ export default function MobileAppSection() {
     <section
       ref={ref as React.RefObject<HTMLElement>}
       className={`${s.section} ${inView ? s.sectionVisible : ""}`}
-      id="download-section"
+      id="download-app"
       aria-label={t("mobileApp.headline2")}
     >
       {/* ── Mesh background ── */}

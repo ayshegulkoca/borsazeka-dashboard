@@ -116,14 +116,15 @@ function ScrollToDownload() {
 
   useEffect(() => {
     if (pathname !== "/") return;
-    if (searchParams.get("scrollTo") !== "download") return;
+    const target = searchParams.get("scrollTo");
+    if (target !== "download" && target !== "download-app") return;
 
     // URL'yi temizle (geçmişe yeni giriş ekleme)
     router.replace("/", { scroll: false });
 
     let attempts = 0;
     const interval = setInterval(() => {
-      const el = document.getElementById("download-section");
+      const el = document.getElementById("download-app");
       if (el) {
         el.scrollIntoView({ behavior: "smooth", block: "start" });
         clearInterval(interval);
@@ -158,16 +159,16 @@ export default function Navbar() {
 
   if (!mounted) return null;
 
-  /** Herhangi bir sayfadan #download-section'a git */
+  /** Herhangi bir sayfadan #download-app'e git */
   const handleDownloadClick = (closeMobile?: () => void) => {
     closeMobile?.();
     if (pathname === "/") {
       // Zaten ana sayfadaysa → direkt scroll
-      const el = document.getElementById("download-section");
+      const el = document.getElementById("download-app");
       if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
     } else {
       // Başka sayfadaysa → ana sayfaya yönlendir + scroll sinyali
-      router.push("/?scrollTo=download");
+      router.push("/?scrollTo=download-app");
     }
   };
 
