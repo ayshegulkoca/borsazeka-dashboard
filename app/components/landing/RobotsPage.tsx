@@ -386,15 +386,17 @@ export default function RobotsPage() {
             })}
           </div>
 
-          {/* Bottom CTA */}
-          <div className={robotStyles.bottomCta}>
-            <p className={robotStyles.bottomCtaText}>
-              {t("wizardCta.subtitle")}
-            </p>
-            <Link href="/urun-sec" className={robotStyles.bottomCtaBtn} id="robots-wizard-btn">
-              {t("hero.ctaButton")}
-              <ArrowRight size={18} />
-            </Link>
+          {/* Sticky Bottom CTA Bar */}
+          <div className={robotStyles.stickyCtaBar}>
+            <div className={robotStyles.stickyCtaInner}>
+              <p className={robotStyles.stickyCtaText}>
+                {t("wizardCta.subtitle")}
+              </p>
+              <Link href="/urun-sec" className={robotStyles.stickyCtaBtn} id="robots-wizard-btn">
+                {t("hero.ctaButton")}
+                <ArrowRight size={16} />
+              </Link>
+            </div>
           </div>
         </div>
       </section>
