@@ -114,6 +114,7 @@ function ScrollToDownload() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
+  // 1. URL'de scrollTo=download-app varsa (eski uyumluluk için destekliyoruz)
   useEffect(() => {
     if (pathname !== "/") return;
     const target = searchParams.get("scrollTo");
@@ -134,6 +135,51 @@ function ScrollToDownload() {
 
     return () => clearInterval(interval);
   }, [pathname, searchParams, router]);
+
+  // 2. /app sayfasına direkt girildiğinde veya geçiş yapıldığında otomatik kaydır
+  useEffect(() => {
+    if (pathname !== "/app") return;
+
+    let attempts = 0;
+    const interval = setInterval(() => {
+      const el = document.getElementById("download-app");
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+        clearInterval(interval);
+      }
+      if (++attempts > 30) clearInterval(interval); // maks 3 sn bekle
+    }, 100);
+
+    return () => clearInterval(interval);
+  }, [pathname]);
+
+  // 3. Scroll pozisyonuna göre URL senkronizasyonu (/app <-> /)
+  useEffect(() => {
+    if (pathname !== "/" && pathname !== "/app") return;
+
+    const el = document.getElementById("download-app");
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          if (window.location.pathname !== "/app") {
+            window.history.replaceState(null, "", "/app");
+          }
+        } else {
+          if (window.location.pathname === "/app") {
+            window.history.replaceState(null, "", "/");
+          }
+        }
+      },
+      {
+        threshold: 0.15,
+      }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [pathname]);
 
   return null; // sadece yan etki, UI yok
 }
@@ -158,19 +204,6 @@ export default function Navbar() {
   }, []);
 
   if (!mounted) return null;
-
-  /** Herhangi bir sayfadan #download-app'e git */
-  const handleDownloadClick = (closeMobile?: () => void) => {
-    closeMobile?.();
-    if (pathname === "/") {
-      // Zaten ana sayfadaysa → direkt scroll
-      const el = document.getElementById("download-app");
-      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-    } else {
-      // Başka sayfadaysa → ana sayfaya yönlendir + scroll sinyali
-      router.push("/?scrollTo=download-app");
-    }
-  };
 
   const changeLanguage = (lang: string) => {
     i18n.changeLanguage(lang);
@@ -241,15 +274,25 @@ export default function Navbar() {
         {/* Right Actions */}
         <div className={styles.navActions}>
           {/* 📲 Uygulamayı İndir */}
-          <button
+          <Link
+            href="/app"
             id="navbar-download-btn"
             className={styles.btnDownload}
-            onClick={() => handleDownloadClick()}
             aria-label="Uygulamayı İndir bölümüne git"
+            onClick={(e) => {
+              if (pathname === "/" || pathname === "/app") {
+                e.preventDefault();
+                const el = document.getElementById("download-app");
+                if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+                if (window.location.pathname !== "/app") {
+                  window.history.pushState(null, "", "/app");
+                }
+              }
+            }}
           >
             <Smartphone size={13} />
             {t("navbar.downloadApp")}
-          </button>
+          </Link>
 
           {/* Language Toggle */}
           <div className={styles.langToggle}>
@@ -325,15 +368,26 @@ export default function Navbar() {
         </Link>
 
         {/* 📲 Uygulamayı İndir — mobil için belirgin buton */}
-        <button
+        <Link
+          href="/app"
           id="mobile-download-btn"
           className={styles.btnDownloadMobile}
-          onClick={() => handleDownloadClick(() => setMobileOpen(false))}
           aria-label="Uygulamayı İndir bölümüne git"
+          onClick={(e) => {
+            setMobileOpen(false);
+            if (pathname === "/" || pathname === "/app") {
+              e.preventDefault();
+              const el = document.getElementById("download-app");
+              if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+              if (window.location.pathname !== "/app") {
+                window.history.pushState(null, "", "/app");
+              }
+            }
+          }}
         >
           <Smartphone size={18} />
           {t("navbar.downloadApp")}
-        </button>
+        </Link>
 
         {/* Mobile Language Toggle */}
         <div className={styles.mobileLangToggle}>
