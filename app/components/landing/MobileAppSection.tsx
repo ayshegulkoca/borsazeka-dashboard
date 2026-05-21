@@ -267,7 +267,7 @@ export default function MobileAppSection() {
       ref={ref as React.RefObject<HTMLElement>}
       className={`${s.section} ${inView ? s.sectionVisible : ""}`}
       id="download-app"
-      aria-label={t("mobileApp.headline2")}
+      aria-label={`${t("mobileApp.headline1")} ${t("mobileApp.headline2")}`}
     >
       {/* ── Mesh background ── */}
       <div className={s.meshBg} aria-hidden="true">
@@ -300,8 +300,12 @@ export default function MobileAppSection() {
           <h2 className={s.headline}>
             {t("mobileApp.headline1")}{" "}
             <span className={s.headlineAccent}>{t("mobileApp.headline2")}</span>
-            <br />
-            <span className={s.headlineSub}>{t("mobileApp.headline3")}</span>
+            {t("mobileApp.headline3") && (
+              <>
+                <br />
+                <span className={s.headlineSub}>{t("mobileApp.headline3")}</span>
+              </>
+            )}
           </h2>
 
           {/* Description */}

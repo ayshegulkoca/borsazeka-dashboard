@@ -188,7 +188,7 @@
 /* ── Description ── */
 .description {
   font-size: 1rem;
-  line-height: 1.75;
+  line-height: 1.85;
   color: var(--text-secondary);
   max-width: 460px;
   margin: 0;
