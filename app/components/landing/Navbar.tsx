@@ -140,17 +140,21 @@ function ScrollToDownload() {
   useEffect(() => {
     if (pathname !== "/app") return;
 
-    let attempts = 0;
-    const interval = setInterval(() => {
-      const el = document.getElementById("download-app");
-      if (el) {
-        el.scrollIntoView({ behavior: "smooth", block: "start" });
-        clearInterval(interval);
-      }
-      if (++attempts > 30) clearInterval(interval); // maks 3 sn bekle
-    }, 100);
+    // Next.js scroll restoration'ın tamamlanması için kısa bir süre bekleyip sonra kaydırıyoruz
+    const timer = setTimeout(() => {
+      let attempts = 0;
+      const interval = setInterval(() => {
+        const el = document.getElementById("download-app");
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth", block: "start" });
+          clearInterval(interval);
+        }
+        if (++attempts > 30) clearInterval(interval); // maks 3 sn bekle
+      }, 50);
+      return () => clearInterval(interval);
+    }, 150);
 
-    return () => clearInterval(interval);
+    return () => clearTimeout(timer);
   }, [pathname]);
 
   // 3. Scroll pozisyonuna göre URL senkronizasyonu (/app <-> /)
@@ -160,25 +164,33 @@ function ScrollToDownload() {
     const el = document.getElementById("download-app");
     if (!el) return;
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          if (window.location.pathname !== "/app") {
-            window.history.replaceState(null, "", "/app");
-          }
-        } else {
-          if (window.location.pathname === "/app") {
-            window.history.replaceState(null, "", "/");
-          }
-        }
-      },
-      {
-        threshold: 0.15,
-      }
-    );
+    // Otomatik kaydırma sırasında URL'in titremesini (flicker) engellemek için
+    // /app rotasında observer kurulumunu geciktiriyoruz.
+    const delay = pathname === "/app" ? 1000 : 0;
 
-    observer.observe(el);
-    return () => observer.disconnect();
+    const timer = setTimeout(() => {
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            if (window.location.pathname !== "/app") {
+              window.history.replaceState(null, "", "/app");
+            }
+          } else {
+            if (window.location.pathname === "/app") {
+              window.history.replaceState(null, "", "/");
+            }
+          }
+        },
+        {
+          threshold: 0.15,
+        }
+      );
+
+      observer.observe(el);
+      return () => observer.disconnect();
+    }, delay);
+
+    return () => clearTimeout(timer);
   }, [pathname]);
 
   return null; // sadece yan etki, UI yok
