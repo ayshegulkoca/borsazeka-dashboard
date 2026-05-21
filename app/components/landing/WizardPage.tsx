@@ -386,8 +386,29 @@ export default function WizardPage() {
     (pricing?.isComingSoon ?? false);
 
   // ── submit (Stripe ödeme / iletişim yönlendirmesi) ────────────────────────
-  const handleSubmit = async () => {
+  const handleSubmit = async (overrideBillingCycle?: "monthly" | "annual") => {
     if (submitting || isPaymentBlocked) return;
+
+    const cycle = overrideBillingCycle ?? state.billingCycle;
+    const activePricing =
+      state.robotId === "CLASSIC"
+        ? calcPriceForRobot("CLASSIC", 0)
+        : state.robotId && state.budgetValue !== null
+        ? calcPriceForRobot(state.robotId, state.budgetValue, cycle)
+        : null;
+
+    // 1. Stripe Link redirection check & Sync Tab open
+    let finalLink = "";
+    if (activePricing?.stripeLink && !isPaymentBlocked) {
+      if (!session?.user?.email) {
+        signIn("google", { callbackUrl: window.location.href });
+        return;
+      }
+      finalLink = getPrefilledStripeLink(activePricing.stripeLink, session.user.email);
+      // Open Stripe in a new window immediately to avoid browser popup blocker
+      window.open(finalLink, "_blank", "noopener,noreferrer");
+    }
+
     setSubmitting(true);
 
     const payload = {
@@ -400,13 +421,13 @@ export default function WizardPage() {
       budgetValue: state.budgetValue ?? 0,
       budgetCurrency: state.budgetCurrency,
       budgetLabel: state.budgetLabel,
-      pricing: pricing
+      pricing: activePricing
         ? {
-            setupFeeEUR: pricing.setupFeeEUR,
-            serverCostEUR: pricing.serverCostEUR,
-            profitSharePercent: pricing.profitSharePercent,
-            totalMonthlyCostEUR: pricing.totalMonthlyCostEUR,
-            stripeLink: pricing.stripeLink,
+            setupFeeEUR: activePricing.setupFeeEUR,
+            serverCostEUR: activePricing.serverCostEUR,
+            profitSharePercent: activePricing.profitSharePercent,
+            totalMonthlyCostEUR: activePricing.totalMonthlyCostEUR,
+            stripeLink: activePricing.stripeLink,
           }
         : null,
       timestamp: new Date().toISOString(),
@@ -435,16 +456,7 @@ export default function WizardPage() {
       }).catch(() => {});
 
       // 3. Stripe yönlendirmesi
-      if (pricing?.stripeLink && !isPaymentBlocked) {
-        // Oturum açılmamışsa giriş sayfasına yönlendir, sonra buraya geri dön
-        if (!session?.user?.email) {
-          signIn("google", { callbackUrl: window.location.href });
-          return;
-        }
-
-        // Oturum açılmışsa e-posta bilgisini Stripe linkine ekle
-        const finalLink = getPrefilledStripeLink(pricing.stripeLink, session.user.email);
-        
+      if (activePricing?.stripeLink && !isPaymentBlocked) {
         // --- SYNC START ---
         // Mark as PENDING so dashboard can show "checking payment" state
         if (state.robotId) {
@@ -458,17 +470,21 @@ export default function WizardPage() {
         }
         // --- SYNC END ---
 
-        // Give a tiny moment for DB state to propagate before browser leaves the page
+        if (overrideBillingCycle && overrideBillingCycle !== state.billingCycle) {
+          setState(prev => ({ ...prev, billingCycle: overrideBillingCycle }));
+        }
+
         // NOT: localStorage bilerek temizlenmiyor ki kullanıcı "Geri" dönerse 6. adımı görsün
-        // Eğer gerekiyorsa manuel saveToStorage yapalım
-        saveToStorage(state);
+        saveToStorage({
+          ...state,
+          ...(overrideBillingCycle ? { billingCycle: overrideBillingCycle } : {})
+        });
         
         setTimeout(() => {
-          // target=_self yerine assign kullanarak redirect atıyoruz
-          window.location.assign(finalLink);
-        }, 300);
+          // target=_self yerine assign kullanarak /dashboard'a redirect atıyoruz
+          window.location.assign("/dashboard");
+        }, 800);
         return;
-
       }
 
       // Stripe linki yoksa (İletişim/Manual flow)
@@ -698,6 +714,10 @@ export default function WizardPage() {
                               annualCostEUR={pricing.annualCostEUR}
                               annualStripeLink={pricing.annualStripeLink}
                               userEmail={session?.user?.email ?? ""}
+                              onClick={(e) => {
+                                e.preventDefault();
+                                handleSubmit("annual");
+                              }}
                             />
                           )}
 
@@ -717,7 +737,7 @@ export default function WizardPage() {
 
                     <button className={s.btnWizardSubmit}
                       style={{ width: "100%", marginTop: "1rem", justifyContent: "center" }}
-                      onClick={handleSubmit} disabled={submitting || redirecting}>
+                      onClick={() => handleSubmit()} disabled={submitting || redirecting}>
                       {redirecting ? "Stripe'a Yönlendiriliyor..." : submitting ? t("wizard.submitting") : (
                         pricing.stripeLink ? t("wizard.step6.subscribeBtn") : t("wizard.step6.contactBtn")
                       )}
@@ -2432,10 +2452,12 @@ function AnnualPlanBox({
   annualCostEUR,
   annualStripeLink,
   userEmail,
+  onClick,
 }: {
   annualCostEUR: number;
   annualStripeLink: string;
   userEmail: string;
+  onClick?: (e: React.MouseEvent) => void;
 }) {
   const finalUrl = getPrefilledStripeLink(annualStripeLink, userEmail);
   const monthlySaving = Math.round((annualCostEUR / 8) * 0.33); // ~4 ay bedava = %33 indirim
@@ -2491,6 +2513,7 @@ function AnnualPlanBox({
         rel="noopener noreferrer"
         id="annual-plan-btn"
         className={s.annualPlanBtn}
+        onClick={onClick}
       >
         Yıllık Avantajla Satın Al
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
