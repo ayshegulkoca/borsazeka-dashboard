@@ -258,7 +258,7 @@ export default function EducationPage() {
             <div className={styles.podcastEmbed}>
               {/* Spotify Embed Placeholder — replace show ID when available */}
               <iframe
-                src="https://open.spotify.com/embed/show/4rOoJ6Egrf8K2IrywzwOMk?utm_source=generator&theme=0"
+                src="https://open.spotify.com/embed/show/7C2IDqAmrfl5UJ76IFyZIx?utm_source=generator&theme=0"
                 width="100%"
                 height="232"
                 allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
@@ -296,7 +296,6 @@ export default function EducationPage() {
 
           {/* COMING SOON */}
           <div className={styles.comingSoonWidget}>
-            <div className={styles.comingSoonEmoji}>🎓</div>
             <p className={styles.comingSoonTitle}>Canlı Eğitimler Geliyor</p>
             <p className={styles.comingSoonDesc}>
               Uzmanlarımızla interaktif webinarlar ve canlı soru-cevap oturumları
