@@ -16,7 +16,7 @@ import {
   LayoutGrid,
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { useSession, signOut } from "next-auth/react";
+import { useSession, signOut, signIn } from "next-auth/react";
 import Image from "next/image";
 import s from "./setup-wizard.module.css";
 
@@ -300,7 +300,10 @@ export default function SetupWizard({
                     </div>
                     <button 
                       className={s.profileSwitch}
-                      onClick={() => signOut({ callbackUrl: "/" })}
+                      onClick={async () => {
+                        await signOut({ redirect: false });
+                        signIn("google", { callbackUrl: "/dashboard" });
+                      }}
                     >
                       {t("onboardingSteps.step1.switchAccount")}
                     </button>
