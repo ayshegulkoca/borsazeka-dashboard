@@ -545,6 +545,101 @@
   display: block;
 }
 
+/* ── Iframe wrapper with image overlay ──────────────────────── */
+.podcastEmbedWrap {
+  position: relative;
+  padding: 0 1.25rem 1.25rem;
+  border-radius: 0 0 20px 20px;
+  overflow: hidden;
+}
+
+.podcastEmbedWrap iframe {
+  display: block;
+  border-radius: 12px;
+  width: 100%;
+}
+
+/* Covers the left 152px artwork area in the Spotify 152px player.
+   Maintains corporate look, shows animated waveform and mic icon. */
+.podcastImageOverlay {
+  position: absolute;
+  top: 0;
+  left: 1.25rem;
+  width: 152px;
+  height: 152px;
+  background: #090e1a; /* Matches the dark widget background, hides artwork completely */
+  border-radius: 12px 0 0 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  box-sizing: border-box;
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+  z-index: 5;
+  cursor: default;
+}
+
+/* Waveform inside the overlay */
+.overlayWaveform {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  height: 20px;
+  margin-bottom: 0.75rem;
+}
+
+.overlayWaveBar {
+  display: block;
+  width: 3px;
+  border-radius: 100px;
+  background: linear-gradient(to top, #1db954, #10b981);
+  animation: overlayWavePulse 1.4s ease-in-out infinite alternate;
+  min-height: 3px;
+}
+
+@keyframes overlayWavePulse {
+  0%   { transform: scaleY(0.4); opacity: 0.5; }
+  100% { transform: scaleY(1.2);   opacity: 1; }
+}
+
+.overlayTextWrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  margin-bottom: 0.15rem;
+  width: 100%;
+}
+
+.overlayMicIcon {
+  flex-shrink: 0;
+  animation: micPulse 2s ease-in-out infinite;
+}
+
+@keyframes micPulse {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.1); opacity: 1; filter: drop-shadow(0 0 4px rgba(29, 185, 84, 0.5)); }
+}
+
+.overlayLabel {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.overlaySublabel {
+  font-size: 0.6rem;
+  color: rgba(255, 255, 255, 0.45);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
 /* ── QUICK LINKS WIDGET ────────────────────────────────────── */
 .quickLinksWidget {
   background: rgba(13, 27, 53, 0.5);

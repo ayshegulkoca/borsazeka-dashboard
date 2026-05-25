@@ -5,7 +5,7 @@ import Link from "next/link";
 import {
   BookOpen, Play, Clock, ChevronRight, Bell,
   TrendingUp, Bot, BarChart2, Headphones,
-  PlayCircle, Layers, Cpu,
+  PlayCircle, Layers, Cpu, Mic,
   Video,
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
@@ -226,6 +226,7 @@ export default function EducationPage() {
 
           {/* SPOTIFY PODCAST */}
           <div className={styles.podcastWidget}>
+            {/* Custom corporate header */}
             <div className={styles.podcastHeader}>
               <div className={styles.podcastIcon}>
                 <Headphones size={18} color="#ffffff" />
@@ -242,16 +243,34 @@ export default function EducationPage() {
               </span>
             </div>
 
-            <div className={styles.podcastEmbed}>
+            {/* Spotify embed — compact 152px mode (no artwork) */}
+            <div className={styles.podcastEmbedWrap}>
               <iframe
-                src="https://open.spotify.com/embed/show/7C2IDqAmrfl5UJ76IFyZIx?utm_source=generator&theme=0"
+                src="https://open.spotify.com/embed/show/7C2IDqAmrfl5UJ76IFyZIx?utm_source=generator&theme=0&view=list"
                 width="100%"
-                height="232"
+                height="152"
                 allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
                 loading="lazy"
                 title={t("education.podcastTitle")}
-                style={{ borderRadius: 14 }}
+                style={{ display: "block", border: "none" }}
               />
+              {/* Overlay: covers the left 152px artwork area, showing custom mic icon and wave */}
+              <div className={styles.podcastImageOverlay} aria-hidden="true">
+                <div className={styles.overlayWaveform}>
+                  {[4, 10, 6, 14, 8, 16, 6, 12, 4, 10].map((h, i) => (
+                    <span
+                      key={i}
+                      className={styles.overlayWaveBar}
+                      style={{ height: h, animationDelay: `${i * 0.08}s` }}
+                    />
+                  ))}
+                </div>
+                <div className={styles.overlayTextWrap}>
+                  <Mic size={14} color="#1db954" className={styles.overlayMicIcon} />
+                  <span className={styles.overlayLabel}>BorsaZeka Podcast</span>
+                </div>
+                <span className={styles.overlaySublabel}>Günlük Analizler</span>
+              </div>
             </div>
           </div>
 
