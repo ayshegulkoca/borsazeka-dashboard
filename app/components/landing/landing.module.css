@@ -160,6 +160,24 @@
   opacity: 0.8;
 }
 
+/* ── Eğitim nav link — icon + text inline ── */
+.navLinkEducation {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 0.3rem;
+  color: #93c5fd !important;
+  font-weight: 600;
+}
+
+.navLinkEducation:hover {
+  color: #bfdbfe !important;
+  opacity: 1 !important;
+}
+
+.navLinkEducation.active {
+  color: #ffffff !important;
+}
+
 .navActions {
   display: flex;
   align-items: center;

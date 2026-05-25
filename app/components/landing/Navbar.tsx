@@ -4,7 +4,7 @@ import { useState, useEffect, useRef, Suspense } from "react";
 import Link from "next/link";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import Image from "next/image";
-import { ChevronDown, LayoutDashboard, LogOut, Smartphone, User } from "lucide-react";
+import { BookOpen, ChevronDown, LayoutDashboard, LogOut, Smartphone, User } from "lucide-react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useTranslation } from "react-i18next";
 import styles from "./landing.module.css";
@@ -277,6 +277,16 @@ export default function Navbar() {
             </Link>
           </li>
           <li>
+            <Link
+              href="/education"
+              className={`${pathname === "/education" ? styles.active : ""} ${styles.navLinkEducation}`}
+              style={{ display: "inline-flex", alignItems: "center", gap: "0.3rem" }}
+            >
+              <BookOpen size={14} />
+              Eğitim
+            </Link>
+          </li>
+          <li>
             <Link href="/iletisim" className={pathname === "/iletisim" ? styles.active : ""}>
               {t("navbar.contact")}
             </Link>
@@ -374,6 +384,14 @@ export default function Navbar() {
         </Link>
         <Link href="/forex" onClick={() => setMobileOpen(false)}>
           {t("navbar.openForex")}
+        </Link>
+        <Link
+          href="/education"
+          onClick={() => setMobileOpen(false)}
+          style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}
+        >
+          <BookOpen size={16} />
+          Eğitim
         </Link>
         <Link href="/iletisim" onClick={() => setMobileOpen(false)}>
           {t("navbar.contact")}
