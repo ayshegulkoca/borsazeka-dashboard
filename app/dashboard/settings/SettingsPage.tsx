@@ -1,8 +1,9 @@
 'use client'
 
-import { useState, useActionState } from 'react'
+import { useState, useActionState, useEffect } from 'react'
 import { useFormStatus } from 'react-dom'
 import { useTranslation } from 'react-i18next'
+import { useSession } from 'next-auth/react'
 import {
   User,
   CreditCard,
@@ -101,9 +102,116 @@ function ProfileTab({
   state: ProfileFormState
   formAction: (payload: FormData) => void
 }) {
-  const { t } = useTranslation('common')
+  const { t, i18n } = useTranslation('common')
+  const { data: session } = useSession()
   const [invalidFields, setInvalidFields] = useState<Record<string, boolean>>({})
   const [validationMsg, setValidationMsg] = useState<{id: string, msg: string} | null>(null)
+
+  const [loading, setLoading] = useState(true)
+  const [errorMsg, setErrorMsg] = useState<string | null>(null)
+  
+  const [profileData, setProfileData] = useState({
+    customerId: 'Yükleniyor...',
+    email: 'Yükleniyor...',
+    firstName: 'Yükleniyor...',
+    lastName: 'Yükleniyor...',
+    phone: 'Yükleniyor...',
+    country: 'Yükleniyor...',
+    address: 'Yükleniyor...',
+    postalCode: 'Yükleniyor...',
+    city: 'Yükleniyor...',
+    gender: '',
+    companyName: 'Yükleniyor...',
+    twitter: 'Yükleniyor...',
+  })
+
+  useEffect(() => {
+    if (!session?.user?.email) return
+
+    const fetchProfile = async () => {
+      try {
+        setLoading(true)
+        setErrorMsg(null)
+        const token = (session?.user as any)?.accessToken || ''
+
+        const response = await fetch('https://api.borsazeka.com/api/dispatch', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({
+            method: 'MyProfile',
+            mail: session.user.email
+          })
+        })
+
+        if (response.status === 401 || response.status === 403) {
+          setErrorMsg('Profil bilgileri yüklenemedi')
+          setProfileData({
+            customerId: '',
+            email: session.user.email || '',
+            firstName: '',
+            lastName: '',
+            phone: '',
+            country: '',
+            address: '',
+            postalCode: '',
+            city: '',
+            gender: '',
+            companyName: '',
+            twitter: '',
+          })
+          setLoading(false)
+          return
+        }
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch profile')
+        }
+
+        const resData = await response.json()
+        if (resData.success && resData.data) {
+          const d = resData.data
+          setProfileData({
+            customerId: d.identity_no || d.userId || '',
+            email: d.mail || d.email || session.user.email || '',
+            firstName: d.name || d.firstName || '',
+            lastName: d.surname || d.lastName || '',
+            phone: d.phone || '',
+            country: d.country || '',
+            address: d.address || '',
+            postalCode: d.postalCode || '',
+            city: d.city || '',
+            gender: d.gender || '',
+            companyName: d.companyName || '',
+            twitter: d.twitter || '',
+          })
+        }
+      } catch (err) {
+        console.error('Error fetching profile:', err)
+        setErrorMsg('Profil bilgileri yüklenemedi')
+        setProfileData({
+          customerId: '',
+          email: session?.user?.email || '',
+          firstName: '',
+          lastName: '',
+          phone: '',
+          country: '',
+          address: '',
+          postalCode: '',
+          city: '',
+          gender: '',
+          companyName: '',
+          twitter: '',
+        })
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchProfile()
+  }, [session])
 
   const triggerInvalid = (id: string, msg: string = 'Sadece rakam giriniz') => {
     setInvalidFields(prev => ({ ...prev, [id]: true }))
@@ -153,32 +261,42 @@ function ProfileTab({
           {t('dashboard.settings.profileDesc')}
         </p>
 
-        <form action={formAction} key={profile?.updatedAt?.toString() ?? 'initial'}>
+        {errorMsg && (
+          <div className={styles.statusError} style={{ marginBottom: '1.5rem', width: '100%', display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+            <AlertCircle size={16} />
+            <span>{errorMsg}</span>
+          </div>
+        )}
+
+        <form action={formAction} key={loading ? 'loading' : profileData.customerId + '_' + profileData.email}>
           <div className={styles.formGrid}>
             
-            {/* Customer ID (Editable) */}
+            {/* Customer ID (Locked) */}
             <div className={styles.formGroup}>
               <label htmlFor="customerId" className={styles.label} style={{ fontWeight: 200 }}>
                 <Hash size={14} />
                 {t('dashboard.settings.customerId')}
-              </label>
-              <input
-                id="customerId"
-                name="customerId"
-                type="text"
-                className={`${styles.input} ${invalidFields.customerId ? styles.inputInvalid : ''}`}
-                defaultValue={profile?.customerId ?? ''} 
-                placeholder={t('dashboard.settings.customerIdPlaceholder')}
-                onInput={(e) => handleNumericInput(e)}
-              />
-              {validationMsg?.id === 'customerId' && (
-                <span className={styles.fieldError} style={{ marginTop: '2px', fontSize: '0.7rem' }}>
-                  {validationMsg.msg}
+                <span className={styles.lockedBadge}>
+                  <Lock size={11} />
+                  {t('dashboard.settings.emailLocked')}
                 </span>
-              )}
+              </label>
+              <div className={styles.inputLockWrapper}>
+                <Lock size={14} className={styles.lockIcon} />
+                <input
+                  id="customerId"
+                  name="customerId"
+                  type="text"
+                  className={`${styles.input} ${styles.inputLocked}`}
+                  defaultValue={profileData.customerId} 
+                  placeholder={t('dashboard.settings.customerIdPlaceholder')}
+                  readOnly
+                  aria-readonly="true"
+                />
+              </div>
             </div>
 
-            {/* Email (Read-only) — session'dan gelir, kilitıdır */}
+            {/* Email (Read-only) */}
             <div className={`${styles.formGroup} ${styles.fieldFullWidth}`}>
               <label htmlFor="email" className={styles.label}>
                 <Mail size={14} />
@@ -195,7 +313,7 @@ function ProfileTab({
                   name="email"
                   type="email"
                   className={`${styles.input} ${styles.inputLocked}`}
-                  defaultValue={profile?.email ?? ''}
+                  defaultValue={profileData.email}
                   readOnly
                   aria-readonly="true"
                 />
@@ -216,7 +334,7 @@ function ProfileTab({
                 name="firstName"
                 type="text"
                 className={styles.input}
-                defaultValue={profile?.firstName ?? ''}
+                defaultValue={profileData.firstName}
                 placeholder={t('dashboard.settings.firstNamePlaceholder')}
                 required
               />
@@ -239,7 +357,7 @@ function ProfileTab({
                 name="lastName"
                 type="text"
                 className={styles.input}
-                defaultValue={profile?.lastName ?? ''}
+                defaultValue={profileData.lastName}
                 placeholder={t('dashboard.settings.lastNamePlaceholder')}
                 required
               />
@@ -261,7 +379,7 @@ function ProfileTab({
                 id="gender"
                 name="gender"
                 className={styles.input}
-                defaultValue={profile?.gender ?? ''}
+                defaultValue={profileData.gender}
               >
                 <option value="">{t('dashboard.settings.genderSelect')}</option>
                 <option value="Erkek">{t('dashboard.settings.genderMale')}</option>
@@ -288,7 +406,7 @@ function ProfileTab({
                 name="phone"
                 type="tel"
                 className={`${styles.input} ${invalidFields.phone ? styles.inputInvalid : ''}`}
-                defaultValue={profile?.phone ?? ''}
+                defaultValue={profileData.phone}
                 placeholder={t('dashboard.settings.phonePlaceholder')}
                 onInput={handlePhoneInput}
               />
@@ -316,7 +434,7 @@ function ProfileTab({
                 name="address"
                 type="text"
                 className={styles.input}
-                defaultValue={profile?.address ?? ''}
+                defaultValue={profileData.address}
                 placeholder={t('dashboard.settings.addressPlaceholder')}
               />
               {state.errors?.address && (
@@ -338,7 +456,7 @@ function ProfileTab({
                 name="postalCode"
                 type="text"
                 className={`${styles.input} ${invalidFields.postalCode ? styles.inputInvalid : ''}`}
-                defaultValue={profile?.postalCode ?? ''}
+                defaultValue={profileData.postalCode}
                 placeholder="34000"
                 onInput={(e) => handleNumericInput(e, 10)}
               />
@@ -366,7 +484,7 @@ function ProfileTab({
                 name="city"
                 type="text"
                 className={styles.input}
-                defaultValue={profile?.city ?? ''}
+                defaultValue={profileData.city}
                 placeholder={t('dashboard.settings.cityPlaceholder')}
               />
               {state.errors?.city && (
@@ -388,7 +506,7 @@ function ProfileTab({
                 name="country"
                 type="text"
                 className={styles.input}
-                defaultValue={profile?.country ?? ''}
+                defaultValue={profileData.country}
                 placeholder={t('dashboard.settings.countryPlaceholder')}
               />
               {state.errors?.country && (
@@ -399,7 +517,7 @@ function ProfileTab({
               )}
             </div>
 
-            {/* Company Name — full width */}
+            {/* Company Name */}
             <div className={`${styles.formGroup} ${styles.fieldFullWidth}`}>
               <label htmlFor="companyName" className={styles.label}>
                 <Building size={14} />
@@ -410,7 +528,7 @@ function ProfileTab({
                 name="companyName"
                 type="text"
                 className={styles.input}
-                defaultValue={profile?.companyName ?? ''}
+                defaultValue={profileData.companyName}
                 placeholder={t('dashboard.settings.companyNamePlaceholder')}
               />
               {state.errors?.companyName && (
@@ -421,7 +539,7 @@ function ProfileTab({
               )}
             </div>
 
-            {/* Twitter — full width */}
+            {/* Twitter */}
             <div className={`${styles.formGroup} ${styles.fieldFullWidth}`}>
               <label htmlFor="twitter" className={styles.label}>
                 <XIcon size={14} />
@@ -432,7 +550,7 @@ function ProfileTab({
                 name="twitter"
                 type="text"
                 className={styles.input}
-                defaultValue={profile?.twitter ?? ''}
+                defaultValue={profileData.twitter}
                 placeholder={t('dashboard.settings.twitterPlaceholder')}
               />
               {state.errors?.twitter && (
