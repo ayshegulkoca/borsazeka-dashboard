@@ -281,7 +281,7 @@ export default function Navbar() {
               href="/education"
               className={pathname === "/education" ? styles.active : ""}
             >
-              Eğitim
+              {t("navbar.education")}
             </Link>
           </li>
           <li>
@@ -384,7 +384,7 @@ export default function Navbar() {
           {t("navbar.openForex")}
         </Link>
         <Link href="/education" onClick={() => setMobileOpen(false)}>
-          Eğitim
+          {t("navbar.education")}
         </Link>
         <Link href="/iletisim" onClick={() => setMobileOpen(false)}>
           {t("navbar.contact")}
