@@ -1003,8 +1003,8 @@
       "addRobot": "Add / Explore Robots",
       "addNewRobot": "Add New Robot",
       "marketClosed": "CLOSED",
-      "noRobotsTitle": "You need to set up a robot to view analytics.",
-      "noRobotsDesc": "Follow the setup wizard above or browse the robot catalog directly."
+      "noRobotsTitle": "You must subscribe to a robot to start algorithmic trading.",
+      "noRobotsDesc": "Follow the wizard above to choose the best robot for you, or browse the entire list in our robots catalog."
     },
     "onboarding": {
       "widgetTitle": "Complete Setup",

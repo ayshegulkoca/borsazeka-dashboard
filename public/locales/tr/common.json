@@ -1018,8 +1018,8 @@
       "addRobot": "Robot Ekle / Keşfet",
       "addNewRobot": "Yeni Robot Ekle",
       "marketClosed": "KAPALI",
-      "noRobotsTitle": "Analizleri görmek için bir robot kurulumu yapmalısınız.",
-      "noRobotsDesc": "Kurulumu tamamlamak için yukarıdaki sihirbazı takip edebilir veya doğrudan robotlarım sayfasına göz atabilirsiniz."
+      "noRobotsTitle": "Algoritmik trade’e başlamak için bir robota abone olmalısınız.",
+      "noRobotsDesc": "Hemen yukarıdaki sihirbazı takip ederek size en uygun robotu seçebilir veya robotlar sayfamızdan tüm listeyi inceleyebilirsiniz."
     },
     "onboarding": {
       "widgetTitle": "Kurulumu Tamamla",
