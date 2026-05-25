@@ -279,10 +279,8 @@ export default function Navbar() {
           <li>
             <Link
               href="/education"
-              className={`${pathname === "/education" ? styles.active : ""} ${styles.navLinkEducation}`}
-              style={{ display: "inline-flex", alignItems: "center", gap: "0.3rem" }}
+              className={pathname === "/education" ? styles.active : ""}
             >
-              <BookOpen size={14} />
               Eğitim
             </Link>
           </li>
@@ -385,12 +383,7 @@ export default function Navbar() {
         <Link href="/forex" onClick={() => setMobileOpen(false)}>
           {t("navbar.openForex")}
         </Link>
-        <Link
-          href="/education"
-          onClick={() => setMobileOpen(false)}
-          style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}
-        >
-          <BookOpen size={16} />
+        <Link href="/education" onClick={() => setMobileOpen(false)}>
           Eğitim
         </Link>
         <Link href="/iletisim" onClick={() => setMobileOpen(false)}>
