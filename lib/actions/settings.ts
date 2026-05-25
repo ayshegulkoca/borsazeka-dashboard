@@ -166,11 +166,13 @@ export async function getProfileFromApi() {
   const userEmail = session.user.email
 
   try {
-    const response = await apiFetch('https://api.borsazeka.com/api/dispatch', {
+    const response = await apiFetch('/dispatch', {
       method: 'POST',
       body: JSON.stringify({
         method: 'MyProfile',
         mail: userEmail,
+        isNotification: false,
+        data: {}
       }),
     })
 
