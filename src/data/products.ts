@@ -234,7 +234,7 @@ export const STRIPE_FOREX_LINKS: Record<number, string> = {
   3500: "https://buy.stripe.com/28EaEX7eLakr69Udc18IU0j",  // 3500$ → 100€
   4000: "https://buy.stripe.com/3cIbJ18iP2RZ41Mb3T8IU0k",  // 4000$ → 110€
   4500: "https://buy.stripe.com/3cI7sLdD978f55Qc7X8IU0l",  // 4500$ → 120€
-  // 5000$+ → kâr paylaşımı (stripeLink yok, iletisim formu gösterilir)
+  5000: "https://buy.stripe.com/8x228reHd78f41M6ND8IU0m",  // 5000$ ve üzeri → 40€ + %50 kâr paylaşımı
 };
 
 // ─── Hesaplama Fonksiyonları ─────────────────────────────────────────────────
@@ -338,7 +338,7 @@ export function calcForexZekaPrice(budgetUSD: number): PricingResult | null {
     serverTier: tier.isVariable ? "VARIABLE" : `${tier.serverCostEUR}EUR` as ServerTier,
     totalMonthlyCostEUR: tier.serverCostEUR,
     isComingSoon: tier.comingSoon,
-    stripeLink: tier.isVariable ? undefined : STRIPE_FOREX_LINKS[budgetUSD],
+    stripeLink: STRIPE_FOREX_LINKS[budgetUSD],
     note: tier.isVariable
       ? "5000$+ bütçede kâr paylaşımı modeline geçilir (%40–%50)"
       : "İlk 500$ bütçe için sabit ücret uygulanır; sunucu + robot paketi dahil.",
@@ -523,8 +523,8 @@ export const ROBOTS: RobotDefinition[] = [
     descKey: "wizard.robots.forexZeka.desc",
     market: "FOREX",
     managementType: "PREMIUM",
-    comingSoon: true,       // ✅ Aktif etmek için: false yap
-    paymentBlocked: true,   // ✅ Aktif etmek için: false yap
+    comingSoon: false,       // ✅ Aktif etmek için: false yap
+    paymentBlocked: false,   // ✅ Aktif etmek için: false yap
     maxCapacity: 25,
     minBudgetUSD: 500,
     features: ["wizard.robots.forexZeka.f1","wizard.robots.forexZeka.f2","wizard.robots.forexZeka.f3","wizard.robots.forexZeka.f4"],

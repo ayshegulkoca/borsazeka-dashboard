@@ -735,14 +735,36 @@ export default function WizardPage() {
 
                     <p className={s.summaryTerms}>{t("wizard.step6.terms")}</p>
 
-                    <button className={s.btnWizardSubmit}
-                      style={{ width: "100%", marginTop: "1rem", justifyContent: "center" }}
-                      onClick={() => handleSubmit()} disabled={submitting || redirecting}>
-                      {redirecting ? "Stripe'a Yönlendiriliyor..." : submitting ? t("wizard.submitting") : (
-                        pricing.stripeLink ? t("wizard.step6.subscribeBtn") : t("wizard.step6.contactBtn")
-                      )}
-                      {(!submitting && !redirecting) && <ArrowRight size={16} />}
-                    </button>
+                    {state.robotId === "FOREXZEKA" ? (
+                      <div 
+                        className={s.btnWizardSubmit} 
+                        style={{ 
+                          width: "100%", 
+                          marginTop: "1rem", 
+                          justifyContent: "center",
+                          background: "linear-gradient(135deg, #0d9488 0%, #0f766e 100%)",
+                          border: "1px solid rgba(13, 148, 136, 0.4)",
+                          color: "#ffffff",
+                          cursor: "not-allowed",
+                          pointerEvents: "none",
+                          textAlign: "center",
+                          fontWeight: "bold",
+                          display: "flex",
+                          alignItems: "center"
+                        }}
+                      >
+                        {i18n.language === "tr" ? "ForexZeka Çok Yakında Satışta!" : "ForexZeka Coming Soon!"}
+                      </div>
+                    ) : (
+                      <button className={s.btnWizardSubmit}
+                        style={{ width: "100%", marginTop: "1rem", justifyContent: "center" }}
+                        onClick={() => handleSubmit()} disabled={submitting || redirecting}>
+                        {redirecting ? "Stripe'a Yönlendiriliyor..." : submitting ? t("wizard.submitting") : (
+                          pricing.stripeLink ? t("wizard.step6.subscribeBtn") : t("wizard.step6.contactBtn")
+                        )}
+                        {(!submitting && !redirecting) && <ArrowRight size={16} />}
+                      </button>
+                    )}
 
                     <div style={{ fontSize: "0.75rem", color: "var(--text-muted)", textAlign: "center", marginTop: "1rem" }}>
                       <Trans

@@ -145,6 +145,13 @@ const ROBOT_SPECS: Record<string, SpecItem[]> = {
     { icon: Coins, label: { tr: "Bütçe", en: "Budget" }, value: { tr: "$0'dan Başlayan Esnek Portföy Bütçesi", en: "Flexible Portfolio Budget starting from $0" } },
     { icon: Percent, label: { tr: "Maliyet", en: "Cost" }, value: { tr: "€7/ay'dan Başlayan Sabit Mini Sunucu Ücreti (Kâr Paylaşımı Yok)", en: "Fixed Mini Server Fee starting from €7/mo (No Profit Share)" } },
     { icon: Users, label: { tr: "Kapasite", en: "Capacity" }, value: { tr: "Sınırsız / Uygulama Bazlı", en: "Unlimited / App-based" } }
+  ],
+  FOREXZEKA: [
+    { icon: TrendingUp, label: { tr: "Strateji", en: "Strategy" }, value: { tr: "Global Pariteler & Emtia Arbitraj.", en: "Global FX & Commodity Arbitrage." } },
+    { icon: Cpu, label: { tr: "Yönetim", en: "Management" }, value: { tr: "BorsaZeka Kontrollü Otomatik Entegrasyon ve Optimizasyon.", en: "BorsaZeka-Controlled Automated Integration & Optimization." } },
+    { icon: Coins, label: { tr: "Bütçe", en: "Budget" }, value: { tr: "$500 - $5.000+", en: "$500 - $5,000+" } },
+    { icon: Percent, label: { tr: "Maliyet", en: "Cost" }, value: { tr: "€40 - €120/ay (5.000$+ bütçede %50 Kâr Paylaşımı)", en: "€40 - €120/mo (50% Profit Share above $5,000+)" } },
+    { icon: Users, label: { tr: "Kapasite", en: "Capacity" }, value: { tr: "25 Kişilik", en: "25 Users" } }
   ]
 };
 
