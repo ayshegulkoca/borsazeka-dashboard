@@ -157,6 +157,40 @@ export async function getProfileData() {
   }
 }
 
+export async function getProfileFromApi() {
+  const session = await auth()
+  if (!session?.user?.email) {
+    return { success: false, error: 'Oturum açılmadı.' }
+  }
+
+  const userEmail = session.user.email
+
+  try {
+    const response = await apiFetch('https://api.borsazeka.com/api/dispatch', {
+      method: 'POST',
+      body: JSON.stringify({
+        method: 'MyProfile',
+        mail: userEmail,
+      }),
+    })
+
+    if (response.status === 401 || response.status === 403) {
+      return { success: false, error: 'Unauthorized', status: response.status }
+    }
+
+    if (!response.ok) {
+      return { success: false, error: 'Failed', status: response.status }
+    }
+
+    const data = await response.json()
+    return { success: true, data }
+  } catch (error) {
+    console.error('Failed to fetch profile from API:', error)
+    return { success: false, error: 'NetworkError' }
+  }
+}
+
+
 // ─── Get Billing Data ────────────────────────────────────────
 
 export type BillingData = {

@@ -32,7 +32,7 @@ function XIcon({ size = 14, color = "currentColor" }: { size?: number; color?: s
     </svg>
   );
 }
-import { updateProfile } from '@/lib/actions/settings'
+import { updateProfile, getProfileFromApi } from '@/lib/actions/settings'
 import type { ProfileFormState } from '@/lib/validations/settings'
 import type { BillingData } from '@/lib/actions/settings'
 import styles from './settings.module.css'
@@ -132,25 +132,14 @@ function ProfileTab({
       try {
         setLoading(true)
         setErrorMsg(null)
-        const token = (session?.user as any)?.accessToken || ''
 
-        const response = await fetch('https://api.borsazeka.com/api/dispatch', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-          },
-          body: JSON.stringify({
-            method: 'MyProfile',
-            mail: session.user.email
-          })
-        })
+        const result = await getProfileFromApi()
 
-        if (response.status === 401 || response.status === 403) {
+        if (!result.success) {
           setErrorMsg('Profil bilgileri yüklenemedi')
           setProfileData({
             customerId: '',
-            email: session.user.email || '',
+            email: session?.user?.email || '',
             firstName: '',
             lastName: '',
             phone: '',
@@ -166,16 +155,11 @@ function ProfileTab({
           return
         }
 
-        if (!response.ok) {
-          throw new Error('Failed to fetch profile')
-        }
-
-        const resData = await response.json()
-        if (resData.success && resData.data) {
-          const d = resData.data
+        const d = result.data?.data
+        if (d) {
           setProfileData({
             customerId: d.identity_no || d.userId || '',
-            email: d.mail || d.email || session.user.email || '',
+            email: d.mail || d.email || session?.user?.email || '',
             firstName: d.name || d.firstName || '',
             lastName: d.surname || d.lastName || '',
             phone: d.phone || '',
