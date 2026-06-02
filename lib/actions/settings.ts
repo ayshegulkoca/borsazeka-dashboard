@@ -133,20 +133,20 @@ export async function updateProfile(
     }
   }
 
-  // ── DispatchRequestDto ─────────────────────────────────────────
+  // ── DispatchRequestDto (BorsaZeka UpdateProfile API Format) ───
   const dispatchPayload = {
-    firstName:   validated.data.firstName,
-    lastName:    validated.data.lastName,
-    email:       userEmail,
-    gender:      validated.data.gender      || null,
-    phone:       validated.data.phone       || null,
-    address:     validated.data.address     || null,
-    postalCode:  validated.data.postalCode  || null,
-    city:        validated.data.city        || null,
-    country:     validated.data.country     || null,
-    companyName: validated.data.companyName || null,
-    twitter:     validated.data.twitter     || null,
-    bio:         validated.data.customerId  || null,
+    mail:           userEmail,
+    isNotification: false,
+    method:         'UpdateProfile',
+    data: {
+      firstName:   validated.data.firstName,
+      lastName:    validated.data.lastName,
+      phone:       validated.data.phone       || null,
+      address:     validated.data.address     || null,
+      city:        validated.data.city        || null,
+      country:     validated.data.country     || null,
+      postalCode:  validated.data.postalCode  || null,
+    }
   }
 
   // ── 1. POST to backend /dispatch (merkezi apiFetch ile 401 retry dahil) ──
@@ -167,9 +167,29 @@ export async function updateProfile(
           message: 'Oturum süreniz dolmuş. Lütfen tekrar giriş yapın.',
         }
       }
+
+      return {
+        success: false,
+        message: 'BorsaZeka sunucusu güncellemeyi kabul etmedi.',
+      }
     }
+
+    const resJson = await dispatchRes.json().catch(() => null)
+    if (!resJson?.success) {
+      console.error(`[dispatch] API response success false:`, resJson)
+      return {
+        success: false,
+        message: resJson?.message || 'Bilgiler güncellenirken sunucu bir hata döndürdü.',
+      }
+    }
+
+    console.log('[dispatch] UpdateProfile BAŞARILI:', resJson.data)
   } catch (err) {
     console.error('[dispatch] Network error:', err)
+    return {
+      success: false,
+      message: 'BorsaZeka sunucusuna bağlanılamadı.',
+    }
   }
 
   // ── 2. Prisma — yerel önbellek olarak güncelle ─────────────────
