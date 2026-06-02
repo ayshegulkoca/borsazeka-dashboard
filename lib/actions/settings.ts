@@ -1,7 +1,5 @@
 'use server'
 
-import fs from 'fs'
-import path from 'path'
 import { revalidatePath } from 'next/cache'
 import { auth } from '@/auth'
 import { prisma } from '@/lib/prisma'
@@ -158,57 +156,6 @@ export async function getProfileData() {
     return null
   }
 }
-
-export async function getProfileFromApi() {
-  const session = await auth()
-  if (!session?.user?.email) {
-    return { success: false, error: 'Oturum açılmadı.' }
-  }
-
-  const logDir = 'c:\\Users\\Aysegul Koca\\borsazeka-dashboard\\scratch'
-  if (!fs.existsSync(logDir)) {
-    fs.mkdirSync(logDir, { recursive: true })
-  }
-  const logPath = path.join(logDir, 'api_call.log')
-
-  // Use the exact email requested by the user or defined by Semih Bey for testing
-  const requestEmail = 'ayshegulkoca@gmail.com'
-  fs.appendFileSync(logPath, `\n[${new Date().toISOString()}] REQUEST: MyProfile, mail=${requestEmail}, loggedIn=${session.user.email}\n`)
-
-  try {
-    const response = await apiFetch('/dispatch', {
-      method: 'POST',
-      body: JSON.stringify({
-        method: 'MyProfile',
-        mail: requestEmail,
-        isNotification: false,
-        data: {}
-      }),
-    })
-
-    fs.appendFileSync(logPath, `[${new Date().toISOString()}] RESPONSE STATUS: ${response.status}\n`)
-
-    if (response.status === 401 || response.status === 403) {
-      const errText = await response.text().catch(() => '')
-      fs.appendFileSync(logPath, `[${new Date().toISOString()}] AUTH ERROR: ${errText}\n`)
-      return { success: false, error: 'Unauthorized', status: response.status }
-    }
-
-    if (!response.ok) {
-      const errText = await response.text().catch(() => '')
-      fs.appendFileSync(logPath, `[${new Date().toISOString()}] REQUEST FAILED: ${errText}\n`)
-      return { success: false, error: 'Failed', status: response.status }
-    }
-
-    const data = await response.json()
-    fs.appendFileSync(logPath, `[${new Date().toISOString()}] SUCCESS DATA: ${JSON.stringify(data, null, 2)}\n`)
-    return { success: true, data }
-  } catch (error: any) {
-    fs.appendFileSync(logPath, `[${new Date().toISOString()}] NETWORK ERROR: ${error?.message || error}\n`)
-    return { success: false, error: error?.message || 'NetworkError' }
-  }
-}
-
 
 // ─── Get Billing Data ────────────────────────────────────────
 
