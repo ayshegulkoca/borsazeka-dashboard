@@ -226,19 +226,25 @@ function ApiErrorPanel({
 }) {
   const router = useRouter()
 
+  const isNoToken   = error === 'NO_BORSAZEKA_TOKEN'
   const isAuthError = error === 'UNAUTHORIZED' || status === 401 || status === 403
+  const isNetwork   = error === 'NETWORK_ERROR'
 
-  const title = isAuthError
-    ? `API ${status ?? 401} — Yetkilendirme Hatası`
-    : error === 'NETWORK_ERROR'
-      ? 'Bağlantı Hatası'
-      : `API ${status ?? ''} — Sunucu Hatası`
+  const title = isNoToken
+    ? 'BorsaZeka Oturum Tokeni Bulunamadı'
+    : isAuthError
+      ? `API ${status ?? 401} — Yetkilendirme Hatası`
+      : isNetwork
+        ? 'Bağlantı Hatası'
+        : `API ${status ?? ''} — Sunucu Hatası`
 
-  const description = isAuthError
-    ? 'Oturumunuz sona ermiş ya da bu sayfaya erişim yetkiniz yok. Lütfen tekrar giriş yapın.'
-    : error === 'NETWORK_ERROR'
-      ? 'BorsaZeka sunucusuna ulaşılamıyor. İnternet bağlantınızı kontrol edin ve tekrar deneyin.'
-      : 'Profil bilgileri yüklenirken bir sunucu hatası oluştu. Lütfen tekrar deneyin.'
+  const description = isNoToken
+    ? 'Google girişiniz başarılı ancak BorsaZeka sunucusundan yetki tokeni alınamadı. Çıkış yapıp tekrar giriş yapmayı deneyin. Sorun devam ederse backend sunucusu erişilemez durumda olabilir.'
+    : isAuthError
+      ? 'Oturumunuz sona ermiş ya da bu sayfaya erişim yetkiniz yok. Lütfen tekrar giriş yapın.'
+      : isNetwork
+        ? 'BorsaZeka sunucusuna ulaşılamıyor. İnternet bağlantınızı kontrol edin ve tekrar deneyin.'
+        : 'Profil bilgileri yüklenirken bir sunucu hatası oluştu. Lütfen tekrar deneyin.'
 
   return (
     <div className={styles.tabContent}>
@@ -258,7 +264,7 @@ function ApiErrorPanel({
             <RefreshCw size={14} />
             Tekrar Dene
           </button>
-          {isAuthError && (
+          {(isAuthError || isNoToken) && (
             <button
               type="button"
               className={styles.apiLoginBtn}

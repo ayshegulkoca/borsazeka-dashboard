@@ -125,17 +125,43 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       // ─── 1. Google ile ilk girişte backend handshake ─────────────
       if (account?.provider === "google" && account.id_token) {
         try {
-          // Web Payload Uyumu: deviceId, platform, pushToken gönderilmez
-          const signinPayload = { idToken: account.id_token }
+          // Hem id_token hem access_token + email gönder — backend hangisini bekliyorsa çalışsın
+          const signinPayload = {
+            idToken:     account.id_token,
+            accessToken: account.access_token,   // bazı backend'ler access_token ister
+            mail:        user?.email ?? "",       // bazı backend'ler email doğrulaması yapar
+          }
+          const handshakeUrl = `${API_BASE_URL}/auth/google-signin`
 
-          const response = await fetch(`${API_BASE_URL}/auth/google-signin`, {
+          console.log("[auth] ── google-signin handshake başlıyor ──")
+          console.log("[auth] URL:", handshakeUrl)
+          console.log("[auth] payload keys:", Object.keys(signinPayload))
+          console.log("[auth] mail:", signinPayload.mail)
+          console.log("[auth] idToken (ilk 30):", account.id_token?.slice(0, 30))
+          console.log("[auth] accessToken (ilk 20):", account.access_token?.slice(0, 20))
+
+          const response = await fetch(handshakeUrl, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(signinPayload),
           })
 
+          console.log("[auth] google-signin yanıt status:", response.status, response.statusText)
+
+          // Tüm response header'larını logla
+          console.log("[auth] ── Response Headers ──")
+          response.headers.forEach((value, key) => {
+            console.log(`[auth] header: ${key} = ${value}`)
+          })
+          console.log("[auth] ─────────────────────")
+
           if (response.ok) {
             const data = await response.json()
+            console.log("[auth] google-signin BAŞARILI — token alındı:", {
+              userId: data.userId,
+              hasToken: !!data.token,
+              hasRefreshToken: !!data.refreshToken,
+            })
 
             // BzClientJwtValidator: audience check
             if (data.token && !validateJwtAudience(data.token)) {
@@ -155,10 +181,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             }
           } else {
             const body = await response.text().catch(() => "")
-            console.error(`[auth] Backend google-signin error (${response.status}):`, body)
+            console.error(`[auth] ❌ google-signin BAŞARISIZ (${response.status}):`, body || "(boş body)")
+            console.error("[auth] Kullanıcı BorsaZeka token olmadan devam edecek!")
           }
         } catch (error) {
-          console.error("[auth] Backend API Auth Error:", error)
+          console.error("[auth] ❌ google-signin NETWORK HATASI:", error)
+          console.error("[auth] API_BASE_URL:", API_BASE_URL ?? "TANIMLANMAMIŞ!")
         }
       }
 

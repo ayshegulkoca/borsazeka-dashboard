@@ -22,7 +22,7 @@ export type MyProfileApiData = {
 
 export type FetchMyProfileResult =
   | { success: true;  data: MyProfileApiData }
-  | { success: false; error: 'UNAUTHORIZED' | 'API_ERROR' | 'NETWORK_ERROR' | 'INVALID_RESPONSE'; status?: number }
+  | { success: false; error: 'UNAUTHORIZED' | 'NO_BORSAZEKA_TOKEN' | 'API_ERROR' | 'NETWORK_ERROR' | 'INVALID_RESPONSE'; status?: number }
 
 // ─── Fetch My Profile from Backend ──────────────────────────
 
@@ -34,8 +34,20 @@ export type FetchMyProfileResult =
 export async function fetchMyProfile(): Promise<FetchMyProfileResult> {
   const session = await auth()
 
+  // ── Debug: oturum durumunu logla ──────────────────────────
+  console.log('[fetchMyProfile] email:', session?.user?.email ?? 'YOK')
+  console.log('[fetchMyProfile] accessToken:', session?.user?.accessToken ? `VAR (${session.user.accessToken.slice(0, 20)}...)` : 'HAYIR — BorsaZeka token eksik!')
+  console.log('[fetchMyProfile] refreshToken:', session?.user?.refreshToken ? 'VAR' : 'YOK')
+
   if (!session?.user?.email) {
+    console.warn('[fetchMyProfile] Oturum yok')
     return { success: false, error: 'UNAUTHORIZED', status: 401 }
+  }
+
+  // BorsaZeka token yoksa backend'e gitmeden erken dön
+  if (!session?.user?.accessToken) {
+    console.warn('[fetchMyProfile] BorsaZeka accessToken yok — google-signin handshake başarısız olmuş olabilir')
+    return { success: false, error: 'NO_BORSAZEKA_TOKEN', status: 401 }
   }
 
   const userEmail = session.user.email
@@ -50,6 +62,8 @@ export async function fetchMyProfile(): Promise<FetchMyProfileResult> {
         data:           {},
       }),
     })
+
+    console.log('[fetchMyProfile] Backend yanıtı:', response.status, response.statusText)
 
     if (response.status === 401 || response.status === 403) {
       console.warn(`[fetchMyProfile] Auth error ${response.status}`)
