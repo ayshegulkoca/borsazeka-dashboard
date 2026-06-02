@@ -1,4 +1,4 @@
-import { getProfileData, getBillingData } from '@/lib/actions/settings'
+import { getBillingData } from '@/lib/actions/settings'
 import SettingsPage from '../SettingsPage'
 
 export const metadata = {
@@ -7,10 +7,7 @@ export const metadata = {
 }
 
 export default async function BillingPageRoute() {
-  const [profile, billing] = await Promise.all([
-    getProfileData(),
-    getBillingData(),
-  ])
+  const billing = await getBillingData()
 
-  return <SettingsPage profile={profile} billing={billing} view="billing" />
+  return <SettingsPage profile={null} billing={billing} view="billing" />
 }

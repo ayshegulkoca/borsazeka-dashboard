@@ -1,14 +1,16 @@
 'use client'
 
-import { useState, useActionState } from 'react'
+import { useState, useEffect, useActionState } from 'react'
 import { useFormStatus } from 'react-dom'
 import { useTranslation } from 'react-i18next'
+import { useRouter } from 'next/navigation'
 import {
   User,
   CreditCard,
   Save,
   CheckCircle,
   AlertCircle,
+  AlertTriangle,
   Mail,
   Phone,
   MapPin,
@@ -21,43 +23,70 @@ import {
   Map,
   Lock,
   Hash,
+  RefreshCw,
+  LogIn,
 } from 'lucide-react'
 
 // X (Twitter) logo helper
-function XIcon({ size = 14, color = "currentColor" }: { size?: number; color?: string }) {
+function XIcon({ size = 14, color = 'currentColor' }: { size?: number; color?: string }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M4 4l11.733 16H20L8.267 4z"/><path d="M4 20l6.768-6.768m2.46-2.46L20 4"/>
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke={color}
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M4 4l11.733 16H20L8.267 4z" />
+      <path d="M4 20l6.768-6.768m2.46-2.46L20 4" />
     </svg>
-  );
+  )
 }
-import { updateProfile } from '@/lib/actions/settings'
+
+import { updateProfile, fetchMyProfile } from '@/lib/actions/settings'
 import type { ProfileFormState } from '@/lib/validations/settings'
 import type { BillingData } from '@/lib/actions/settings'
 import styles from './settings.module.css'
 
 // ─── Types ───────────────────────────────────────────────────
 
-type ProfileData = {
-  firstName:   string | null
-  lastName:    string | null
-  email:       string | null
-  gender:      string | null
-  phone:       string | null
-  address:     string | null
-  postalCode:  string | null
-  city:        string | null
-  country:     string | null
-  companyName: string | null
-  twitter:     string | null
-  name:        string | null
-  image:       string | null
-  customerId?: string | null
-  updatedAt?:  Date | string | null
-} | null
+/** Form state — controlled component için tüm alanlar */
+type ProfileFormValues = {
+  userId:      string   // API: data.userId  → Müşteri Numarası (readOnly)
+  email:       string   // API: data.email   → Email (readOnly)
+  firstName:   string   // API: data.firstName
+  lastName:    string   // API: data.lastName
+  phone:       string   // API: data.phone
+  address:     string   // API: data.address
+  postalCode:  string   // API: data.postalCode
+  city:        string   // API: data.city
+  country:     string   // API: data.country
+  gender:      string   // API'de yok → ''
+  companyName: string   // API'de yok → ''
+  twitter:     string   // API'de yok → ''
+}
+
+const EMPTY_FORM: ProfileFormValues = {
+  userId:      '',
+  email:       '',
+  firstName:   '',
+  lastName:    '',
+  phone:       '',
+  address:     '',
+  postalCode:  '',
+  city:        '',
+  country:     '',
+  gender:      '',
+  companyName: '',
+  twitter:     '',
+}
 
 type SettingsPageProps = {
-  profile: ProfileData
+  profile: null  // Artık kullanılmıyor — veri client-side API'den çekiliyor
   billing: BillingData | null
   view?: 'profile' | 'billing'
 }
@@ -90,95 +119,251 @@ function SubmitButton() {
   )
 }
 
-// ─── Profile Tab Content ─────────────────────────────────────
+// ─── Shimmer Skeleton ─────────────────────────────────────────
+
+function ProfileSkeleton() {
+  return (
+    <div className={styles.tabContent}>
+      <div className={styles.card}>
+        {/* Card başlık iskelet */}
+        <div className={`${styles.skeleton} ${styles.skeletonTitle}`} />
+        <div className={`${styles.skeleton} ${styles.skeletonDesc}`} style={{ marginBottom: '1.5rem' }} />
+
+        <div className={styles.formGrid}>
+          {/* Müşteri No */}
+          <div className={styles.formGroup}>
+            <div className={`${styles.skeleton} ${styles.skeletonLabel}`} />
+            <div className={`${styles.skeleton} ${styles.skeletonInput}`} />
+          </div>
+
+          {/* Email — full width */}
+          <div className={`${styles.formGroup} ${styles.fieldFullWidth}`}>
+            <div className={`${styles.skeleton} ${styles.skeletonLabel}`} />
+            <div className={`${styles.skeleton} ${styles.skeletonInput}`} />
+          </div>
+
+          {/* Ad */}
+          <div className={styles.formGroup}>
+            <div className={`${styles.skeleton} ${styles.skeletonLabel}`} />
+            <div className={`${styles.skeleton} ${styles.skeletonInput}`} />
+          </div>
+
+          {/* Soyad */}
+          <div className={styles.formGroup}>
+            <div className={`${styles.skeleton} ${styles.skeletonLabel}`} />
+            <div className={`${styles.skeleton} ${styles.skeletonInput}`} />
+          </div>
+
+          {/* Cinsiyet */}
+          <div className={styles.formGroup}>
+            <div className={`${styles.skeleton} ${styles.skeletonLabel}`} />
+            <div className={`${styles.skeleton} ${styles.skeletonInput}`} />
+          </div>
+
+          {/* Telefon */}
+          <div className={styles.formGroup}>
+            <div className={`${styles.skeleton} ${styles.skeletonLabel}`} />
+            <div className={`${styles.skeleton} ${styles.skeletonInput}`} />
+          </div>
+
+          {/* Adres */}
+          <div className={styles.formGroup}>
+            <div className={`${styles.skeleton} ${styles.skeletonLabel}`} />
+            <div className={`${styles.skeleton} ${styles.skeletonInput}`} />
+          </div>
+
+          {/* Posta Kodu */}
+          <div className={styles.formGroup}>
+            <div className={`${styles.skeleton} ${styles.skeletonLabel}`} />
+            <div className={`${styles.skeleton} ${styles.skeletonInput}`} />
+          </div>
+
+          {/* Şehir */}
+          <div className={styles.formGroup}>
+            <div className={`${styles.skeleton} ${styles.skeletonLabel}`} />
+            <div className={`${styles.skeleton} ${styles.skeletonInput}`} />
+          </div>
+
+          {/* Ülke */}
+          <div className={styles.formGroup}>
+            <div className={`${styles.skeleton} ${styles.skeletonLabel}`} />
+            <div className={`${styles.skeleton} ${styles.skeletonInput}`} />
+          </div>
+
+          {/* Şirket Adı — full width */}
+          <div className={`${styles.formGroup} ${styles.fieldFullWidth}`}>
+            <div className={`${styles.skeleton} ${styles.skeletonLabel}`} />
+            <div className={`${styles.skeleton} ${styles.skeletonInput}`} />
+          </div>
+
+          {/* Twitter — full width */}
+          <div className={`${styles.formGroup} ${styles.fieldFullWidth}`}>
+            <div className={`${styles.skeleton} ${styles.skeletonLabel}`} />
+            <div className={`${styles.skeleton} ${styles.skeletonInput}`} />
+          </div>
+        </div>
+
+        {/* Form actions iskelet */}
+        <div className={styles.formActions} style={{ marginTop: '1.5rem', paddingTop: '1.5rem', borderTop: '1px solid var(--border-subtle)' }}>
+          <div className={`${styles.skeleton}`} style={{ width: '160px', height: '18px', borderRadius: '4px' }} />
+          <div className={`${styles.skeleton}`} style={{ width: '120px', height: '40px', borderRadius: '8px' }} />
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// ─── API Error Panel ──────────────────────────────────────────
+
+function ApiErrorPanel({
+  error,
+  status,
+  onRetry,
+}: {
+  error: string
+  status?: number
+  onRetry: () => void
+}) {
+  const router = useRouter()
+
+  const isAuthError = error === 'UNAUTHORIZED' || status === 401 || status === 403
+
+  const title = isAuthError
+    ? `API ${status ?? 401} — Yetkilendirme Hatası`
+    : error === 'NETWORK_ERROR'
+      ? 'Bağlantı Hatası'
+      : `API ${status ?? ''} — Sunucu Hatası`
+
+  const description = isAuthError
+    ? 'Oturumunuz sona ermiş ya da bu sayfaya erişim yetkiniz yok. Lütfen tekrar giriş yapın.'
+    : error === 'NETWORK_ERROR'
+      ? 'BorsaZeka sunucusuna ulaşılamıyor. İnternet bağlantınızı kontrol edin ve tekrar deneyin.'
+      : 'Profil bilgileri yüklenirken bir sunucu hatası oluştu. Lütfen tekrar deneyin.'
+
+  return (
+    <div className={styles.tabContent}>
+      <div className={styles.apiErrorPanel} role="alert">
+        <div className={styles.apiErrorIconRow}>
+          <AlertTriangle size={22} className={styles.apiErrorIcon} />
+          <span className={styles.apiErrorTitle}>{title}</span>
+        </div>
+        <p className={styles.apiErrorDesc}>{description}</p>
+        <div className={styles.apiErrorActions}>
+          <button
+            type="button"
+            className={styles.apiRetryBtn}
+            onClick={onRetry}
+            id="profile-retry-btn"
+          >
+            <RefreshCw size={14} />
+            Tekrar Dene
+          </button>
+          {isAuthError && (
+            <button
+              type="button"
+              className={styles.apiLoginBtn}
+              onClick={() => router.push('/login')}
+              id="profile-login-btn"
+            >
+              <LogIn size={14} />
+              Giriş Yap
+            </button>
+          )}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// ─── Profile Tab Content ──────────────────────────────────────
 
 function ProfileTab({
-  profile,
+  formValues,
+  onChange,
   state,
   formAction,
 }: {
-  profile: ProfileData
-  state: ProfileFormState
-  formAction: (payload: FormData) => void
+  formValues:  ProfileFormValues
+  onChange:    (field: keyof ProfileFormValues, value: string) => void
+  state:       ProfileFormState
+  formAction:  (payload: FormData) => void
 }) {
   const { t } = useTranslation('common')
   const [invalidFields, setInvalidFields] = useState<Record<string, boolean>>({})
-  const [validationMsg, setValidationMsg] = useState<{id: string, msg: string} | null>(null)
+  const [validationMsg, setValidationMsg] = useState<{ id: string; msg: string } | null>(null)
 
-  const triggerInvalid = (id: string, msg: string = 'Sadece rakam giriniz') => {
+  const triggerInvalid = (id: string, msg = 'Sadece rakam giriniz') => {
     setInvalidFields(prev => ({ ...prev, [id]: true }))
     setValidationMsg({ id, msg })
-    setTimeout(() => {
-      setInvalidFields(prev => ({ ...prev, [id]: false }))
-    }, 400)
-    setTimeout(() => {
-      setValidationMsg(null)
-    }, 2500)
+    setTimeout(() => setInvalidFields(prev => ({ ...prev, [id]: false })), 400)
+    setTimeout(() => setValidationMsg(null), 2500)
   }
 
-  const handleNumericInput = (e: React.FormEvent<HTMLInputElement>, limit?: number) => {
+  const handleNumericInput = (
+    e: React.FormEvent<HTMLInputElement>,
+    field: keyof ProfileFormValues,
+    limit?: number
+  ) => {
     const input = e.currentTarget
-    const id = input.id
+    const id    = input.id
     const value = input.value
-    const cleanValue = value.replace(/[^0-9]/g, '')
-    
-    if (value !== cleanValue) {
-      input.value = cleanValue
+    const clean = value.replace(/[^0-9]/g, '')
+
+    if (value !== clean) {
       triggerInvalid(id)
     }
 
-    if (limit && cleanValue.length > limit) {
-      input.value = cleanValue.slice(0, limit)
+    const final = limit && clean.length > limit ? clean.slice(0, limit) : clean
+    if (final !== clean && limit) {
       triggerInvalid(id, `Maksimum ${limit} karakter girebilirsiniz`)
     }
+
+    onChange(field, limit ? final : clean)
   }
 
   const handlePhoneInput = (e: React.FormEvent<HTMLInputElement>) => {
     const input = e.currentTarget
-    const id = input.id
     const value = input.value
-    const cleanValue = value.replace(/[^0-9+]/g, '')
-    
-    if (value !== cleanValue) {
-      input.value = cleanValue
-      triggerInvalid(id, 'Sadece rakam ve + işareti girebilirsiniz')
-    }
+    const clean = value.replace(/[^0-9+]/g, '')
+    if (value !== clean) triggerInvalid(input.id, 'Sadece rakam ve + işareti girebilirsiniz')
+    onChange('phone', clean)
   }
 
   return (
     <div className={styles.tabContent}>
       <div className={styles.card}>
         <h3 className={styles.cardTitle}>{t('dashboard.settings.profileTitle')}</h3>
-        <p className={styles.cardDescription}>
-          {t('dashboard.settings.profileDesc')}
-        </p>
+        <p className={styles.cardDescription}>{t('dashboard.settings.profileDesc')}</p>
 
-        <form action={formAction} key={profile?.updatedAt?.toString() ?? 'initial'}>
+        <form action={formAction}>
           <div className={styles.formGrid}>
-            
-            {/* Customer ID (Editable) */}
+
+            {/* ── Müşteri Numarası (userId — readOnly, kilit rozeti) ── */}
             <div className={styles.formGroup}>
-              <label htmlFor="customerId" className={styles.label} style={{ fontWeight: 200 }}>
+              <label htmlFor="customerId" className={styles.label}>
                 <Hash size={14} />
                 {t('dashboard.settings.customerId')}
-              </label>
-              <input
-                id="customerId"
-                name="customerId"
-                type="text"
-                className={`${styles.input} ${invalidFields.customerId ? styles.inputInvalid : ''}`}
-                defaultValue={profile?.customerId ?? ''} 
-                placeholder={t('dashboard.settings.customerIdPlaceholder')}
-                onInput={(e) => handleNumericInput(e)}
-              />
-              {validationMsg?.id === 'customerId' && (
-                <span className={styles.fieldError} style={{ marginTop: '2px', fontSize: '0.7rem' }}>
-                  {validationMsg.msg}
+                <span className={styles.lockedBadge}>
+                  <Lock size={11} />
+                  {t('dashboard.settings.emailLocked')}
                 </span>
-              )}
+              </label>
+              <div className={styles.inputLockWrapper}>
+                <Lock size={14} className={styles.lockIcon} />
+                <input
+                  id="customerId"
+                  name="customerId"
+                  type="text"
+                  className={`${styles.input} ${styles.inputLocked}`}
+                  value={formValues.userId}
+                  onChange={() => {/* readOnly — değiştirilemez */}}
+                  readOnly
+                  aria-readonly="true"
+                />
+              </div>
             </div>
 
-            {/* Email (Read-only) — session'dan gelir, kilitıdır */}
+            {/* ── Email (readOnly, kilit rozeti) ── */}
             <div className={`${styles.formGroup} ${styles.fieldFullWidth}`}>
               <label htmlFor="email" className={styles.label}>
                 <Mail size={14} />
@@ -195,7 +380,8 @@ function ProfileTab({
                   name="email"
                   type="email"
                   className={`${styles.input} ${styles.inputLocked}`}
-                  defaultValue={profile?.email ?? ''}
+                  value={formValues.email}
+                  onChange={() => {/* readOnly */}}
                   readOnly
                   aria-readonly="true"
                 />
@@ -205,7 +391,7 @@ function ProfileTab({
               </span>
             </div>
 
-            {/* First Name */}
+            {/* ── Ad ── */}
             <div className={styles.formGroup}>
               <label htmlFor="firstName" className={styles.label}>
                 <User size={14} />
@@ -216,7 +402,8 @@ function ProfileTab({
                 name="firstName"
                 type="text"
                 className={styles.input}
-                defaultValue={profile?.firstName ?? ''}
+                value={formValues.firstName}
+                onChange={e => onChange('firstName', e.target.value)}
                 placeholder={t('dashboard.settings.firstNamePlaceholder')}
                 required
               />
@@ -228,7 +415,7 @@ function ProfileTab({
               )}
             </div>
 
-            {/* Last Name */}
+            {/* ── Soyad ── */}
             <div className={styles.formGroup}>
               <label htmlFor="lastName" className={styles.label}>
                 <User size={14} />
@@ -239,7 +426,8 @@ function ProfileTab({
                 name="lastName"
                 type="text"
                 className={styles.input}
-                defaultValue={profile?.lastName ?? ''}
+                value={formValues.lastName}
+                onChange={e => onChange('lastName', e.target.value)}
                 placeholder={t('dashboard.settings.lastNamePlaceholder')}
                 required
               />
@@ -251,7 +439,7 @@ function ProfileTab({
               )}
             </div>
 
-            {/* Gender */}
+            {/* ── Cinsiyet ── */}
             <div className={styles.formGroup}>
               <label htmlFor="gender" className={styles.label}>
                 <User size={14} />
@@ -261,7 +449,8 @@ function ProfileTab({
                 id="gender"
                 name="gender"
                 className={styles.input}
-                defaultValue={profile?.gender ?? ''}
+                value={formValues.gender}
+                onChange={e => onChange('gender', e.target.value)}
               >
                 <option value="">{t('dashboard.settings.genderSelect')}</option>
                 <option value="Erkek">{t('dashboard.settings.genderMale')}</option>
@@ -277,7 +466,7 @@ function ProfileTab({
               )}
             </div>
 
-            {/* Phone */}
+            {/* ── Telefon ── */}
             <div className={styles.formGroup}>
               <label htmlFor="phone" className={styles.label}>
                 <Phone size={14} />
@@ -288,9 +477,10 @@ function ProfileTab({
                 name="phone"
                 type="tel"
                 className={`${styles.input} ${invalidFields.phone ? styles.inputInvalid : ''}`}
-                defaultValue={profile?.phone ?? ''}
-                placeholder={t('dashboard.settings.phonePlaceholder')}
+                value={formValues.phone}
+                onChange={e => onChange('phone', e.target.value)}
                 onInput={handlePhoneInput}
+                placeholder={t('dashboard.settings.phonePlaceholder')}
               />
               {validationMsg?.id === 'phone' && (
                 <span className={styles.fieldError} style={{ marginTop: '2px', fontSize: '0.7rem' }}>
@@ -305,7 +495,7 @@ function ProfileTab({
               )}
             </div>
 
-            {/* Address */}
+            {/* ── Adres ── */}
             <div className={styles.formGroup}>
               <label htmlFor="address" className={styles.label}>
                 <MapPin size={14} />
@@ -316,7 +506,8 @@ function ProfileTab({
                 name="address"
                 type="text"
                 className={styles.input}
-                defaultValue={profile?.address ?? ''}
+                value={formValues.address}
+                onChange={e => onChange('address', e.target.value)}
                 placeholder={t('dashboard.settings.addressPlaceholder')}
               />
               {state.errors?.address && (
@@ -327,7 +518,7 @@ function ProfileTab({
               )}
             </div>
 
-            {/* Postal Code */}
+            {/* ── Posta Kodu ── */}
             <div className={styles.formGroup}>
               <label htmlFor="postalCode" className={styles.label}>
                 <Map size={14} />
@@ -338,9 +529,10 @@ function ProfileTab({
                 name="postalCode"
                 type="text"
                 className={`${styles.input} ${invalidFields.postalCode ? styles.inputInvalid : ''}`}
-                defaultValue={profile?.postalCode ?? ''}
+                value={formValues.postalCode}
+                onChange={e => onChange('postalCode', e.target.value)}
+                onInput={e => handleNumericInput(e, 'postalCode', 10)}
                 placeholder="34000"
-                onInput={(e) => handleNumericInput(e, 10)}
               />
               {validationMsg?.id === 'postalCode' && (
                 <span className={styles.fieldError} style={{ marginTop: '2px', fontSize: '0.7rem' }}>
@@ -355,7 +547,7 @@ function ProfileTab({
               )}
             </div>
 
-            {/* City */}
+            {/* ── Şehir ── */}
             <div className={styles.formGroup}>
               <label htmlFor="city" className={styles.label}>
                 <MapPin size={14} />
@@ -366,7 +558,8 @@ function ProfileTab({
                 name="city"
                 type="text"
                 className={styles.input}
-                defaultValue={profile?.city ?? ''}
+                value={formValues.city}
+                onChange={e => onChange('city', e.target.value)}
                 placeholder={t('dashboard.settings.cityPlaceholder')}
               />
               {state.errors?.city && (
@@ -377,7 +570,7 @@ function ProfileTab({
               )}
             </div>
 
-            {/* Country */}
+            {/* ── Ülke ── */}
             <div className={styles.formGroup}>
               <label htmlFor="country" className={styles.label}>
                 <Globe size={14} />
@@ -388,7 +581,8 @@ function ProfileTab({
                 name="country"
                 type="text"
                 className={styles.input}
-                defaultValue={profile?.country ?? ''}
+                value={formValues.country}
+                onChange={e => onChange('country', e.target.value)}
                 placeholder={t('dashboard.settings.countryPlaceholder')}
               />
               {state.errors?.country && (
@@ -399,7 +593,7 @@ function ProfileTab({
               )}
             </div>
 
-            {/* Company Name — full width */}
+            {/* ── Şirket Adı (full width) ── */}
             <div className={`${styles.formGroup} ${styles.fieldFullWidth}`}>
               <label htmlFor="companyName" className={styles.label}>
                 <Building size={14} />
@@ -410,7 +604,8 @@ function ProfileTab({
                 name="companyName"
                 type="text"
                 className={styles.input}
-                defaultValue={profile?.companyName ?? ''}
+                value={formValues.companyName}
+                onChange={e => onChange('companyName', e.target.value)}
                 placeholder={t('dashboard.settings.companyNamePlaceholder')}
               />
               {state.errors?.companyName && (
@@ -421,7 +616,7 @@ function ProfileTab({
               )}
             </div>
 
-            {/* Twitter — full width */}
+            {/* ── Twitter (full width) ── */}
             <div className={`${styles.formGroup} ${styles.fieldFullWidth}`}>
               <label htmlFor="twitter" className={styles.label}>
                 <XIcon size={14} />
@@ -432,7 +627,8 @@ function ProfileTab({
                 name="twitter"
                 type="text"
                 className={styles.input}
-                defaultValue={profile?.twitter ?? ''}
+                value={formValues.twitter}
+                onChange={e => onChange('twitter', e.target.value)}
                 placeholder={t('dashboard.settings.twitterPlaceholder')}
               />
               {state.errors?.twitter && (
@@ -445,20 +641,12 @@ function ProfileTab({
 
           </div>
 
-          {/* Form Actions */}
+          {/* ── Form Actions ── */}
           <div className={styles.formActions}>
             <div>
               {state.message && (
-                <div
-                  className={
-                    state.success ? styles.statusSuccess : styles.statusError
-                  }
-                >
-                  {state.success ? (
-                    <CheckCircle size={14} />
-                  ) : (
-                    <AlertCircle size={14} />
-                  )}
+                <div className={state.success ? styles.statusSuccess : styles.statusError}>
+                  {state.success ? <CheckCircle size={14} /> : <AlertCircle size={14} />}
                   {state.message}
                 </div>
               )}
@@ -471,58 +659,53 @@ function ProfileTab({
   )
 }
 
-// ─── Billing Tab Content ─────────────────────────────────────
+// ─── Billing Tab Content ──────────────────────────────────────
 
 function BillingTab({ billing }: { billing: BillingData | null }) {
   const { t, i18n } = useTranslation('common')
   const locale = i18n.language?.startsWith('en') ? 'en-US' : 'tr-TR'
 
-  const plan = billing?.subscription.planType ?? 'FREE'
-  const status = billing?.subscription.status ?? 'ACTIVE'
+  const plan      = billing?.subscription.planType    ?? 'FREE'
+  const status    = billing?.subscription.status      ?? 'ACTIVE'
   const periodEnd = billing?.subscription.nextBillingDate ?? null
-  const invoices = billing?.invoices ?? []
+  const invoices  = billing?.invoices ?? []
 
   const planLabels: Record<string, string> = {
-    FREE: t('dashboard.settings.planFree'),
-    PRO: t('dashboard.settings.planPro'),
+    FREE:    t('dashboard.settings.planFree'),
+    PRO:     t('dashboard.settings.planPro'),
     PREMIUM: t('dashboard.settings.planPremium'),
   }
 
   const planBadgeClass: Record<string, string> = {
-    FREE: styles.badgeFree,
-    PRO: styles.badgePro,
+    FREE:    styles.badgeFree,
+    PRO:     styles.badgePro,
     PREMIUM: styles.badgePremium,
   }
 
   const statusLabels: Record<string, string> = {
-    ACTIVE: t('dashboard.settings.statusActive'),
+    ACTIVE:    t('dashboard.settings.statusActive'),
     CANCELLED: t('dashboard.settings.statusCancelled'),
-    PAST_DUE: t('dashboard.settings.statusPastDue'),
-    TRIALING: t('dashboard.settings.statusTrialing'),
+    PAST_DUE:  t('dashboard.settings.statusPastDue'),
+    TRIALING:  t('dashboard.settings.statusTrialing'),
   }
 
   const statusClass: Record<string, string> = {
-    ACTIVE: styles.statusActive,
+    ACTIVE:    styles.statusActive,
     CANCELLED: styles.statusCancelled,
-    PAST_DUE: styles.statusPastDue,
-    TRIALING: styles.statusTrialing,
+    PAST_DUE:  styles.statusPastDue,
+    TRIALING:  styles.statusTrialing,
   }
 
   function formatRenewalDate(isoDate: string | null): string {
     if (!isoDate) return t('dashboard.settings.renewalNoDate')
-    const date = new Date(isoDate)
-    return date.toLocaleDateString(locale, {
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric',
+    return new Date(isoDate).toLocaleDateString(locale, {
+      day: 'numeric', month: 'long', year: 'numeric',
     })
   }
 
   function getDaysUntilRenewal(isoDate: string | null): string {
     if (!isoDate) return ''
-    const now = new Date()
-    const end = new Date(isoDate)
-    const diff = Math.ceil((end.getTime() - now.getTime()) / (1000 * 60 * 60 * 24))
+    const diff = Math.ceil((new Date(isoDate).getTime() - Date.now()) / (1000 * 60 * 60 * 24))
     if (diff < 0) return t('dashboard.settings.renewalExpired')
     if (diff === 0) return t('dashboard.settings.renewalToday')
     if (diff === 1) return t('dashboard.settings.renewalDay')
@@ -530,44 +713,36 @@ function BillingTab({ billing }: { billing: BillingData | null }) {
   }
 
   function formatAmount(amount: number, currency: string): string {
-    const value = amount / 100
     return new Intl.NumberFormat(locale, {
-      style: 'currency',
-      currency: currency,
-    }).format(value)
+      style: 'currency', currency,
+    }).format(amount / 100)
   }
 
   function formatDate(isoDate: string): string {
     return new Date(isoDate).toLocaleDateString(locale, {
-      day: 'numeric',
-      month: 'short',
-      year: 'numeric',
+      day: 'numeric', month: 'short', year: 'numeric',
     })
   }
 
   const invoiceStatusClass: Record<string, string> = {
-    PAID: styles.invoicePaid,
+    PAID:    styles.invoicePaid,
     PENDING: styles.invoicePending,
-    FAILED: styles.invoiceFailed,
+    FAILED:  styles.invoiceFailed,
   }
 
   const invoiceStatusLabel: Record<string, string> = {
-    PAID: t('dashboard.settings.invoicePaid'),
+    PAID:    t('dashboard.settings.invoicePaid'),
     PENDING: t('dashboard.settings.invoicePending'),
-    FAILED: t('dashboard.settings.invoiceFailed'),
+    FAILED:  t('dashboard.settings.invoiceFailed'),
   }
 
   return (
     <div className={styles.tabContent}>
-      {/* Payment History */}
       <div className={styles.card}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '1rem', marginBottom: '1.5rem' }}>
           <div>
             <h3 className={styles.cardTitle}>
-              <Receipt
-                size={18}
-                style={{ display: 'inline', marginRight: '0.5rem', verticalAlign: 'text-bottom' }}
-              />
+              <Receipt size={18} style={{ display: 'inline', marginRight: '0.5rem', verticalAlign: 'text-bottom' }} />
               {t('dashboard.settings.billingHistory')}
             </h3>
             <p className={styles.cardDescription} style={{ marginBottom: 0 }}>
@@ -585,16 +760,8 @@ function BillingTab({ billing }: { billing: BillingData | null }) {
             {t('dashboard.settings.billingManage')}
           </a>
         </div>
-        <p
-          style={{
-            fontSize: '0.75rem',
-            color: 'var(--text-muted)',
-            marginBottom: '1rem',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '0.4rem',
-          }}
-        >
+
+        <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
           <ExternalLink size={12} style={{ flexShrink: 0 }} />
           {t('dashboard.settings.billingStripeNote')}{' '}
           <a
@@ -623,15 +790,9 @@ function BillingTab({ billing }: { billing: BillingData | null }) {
                 <tr key={inv.id}>
                   <td>{formatDate(inv.createdAt)}</td>
                   <td>{inv.description ?? t('dashboard.settings.invoiceDefaultDesc')}</td>
-                  <td className={styles.invoiceAmount}>
-                    {formatAmount(inv.amount, inv.currency)}
-                  </td>
+                  <td className={styles.invoiceAmount}>{formatAmount(inv.amount, inv.currency)}</td>
                   <td>
-                    <span
-                      className={
-                        invoiceStatusClass[inv.status] ?? styles.invoicePending
-                      }
-                    >
+                    <span className={invoiceStatusClass[inv.status] ?? styles.invoicePending}>
                       {invoiceStatusLabel[inv.status] ?? inv.status}
                     </span>
                   </td>
@@ -652,27 +813,91 @@ function BillingTab({ billing }: { billing: BillingData | null }) {
   )
 }
 
-// ─── Main Settings Component ─────────────────────────────────
+// ─── Main Settings Component ──────────────────────────────────
 
 const initialState: ProfileFormState = {
   success: false,
   message: '',
 }
 
-export default function SettingsPage({ profile, billing, view = 'profile' }: SettingsPageProps) {
+export default function SettingsPage({ billing, view = 'profile' }: SettingsPageProps) {
   const { t } = useTranslation('common')
   const [state, formAction] = useActionState(updateProfile, initialState)
 
+  // ── Profil form state ────────────────────────────────────────
+  const [formValues, setFormValues] = useState<ProfileFormValues>(EMPTY_FORM)
+  const [isLoading,  setIsLoading]  = useState<boolean>(true)
+  const [apiError,   setApiError]   = useState<{ error: string; status?: number } | null>(null)
+
+  // ── Form field güncelleme yardımcısı ────────────────────────
+  const handleChange = (field: keyof ProfileFormValues, value: string) => {
+    setFormValues(prev => ({ ...prev, [field]: value }))
+  }
+
+  // ── API'den profil çekme ─────────────────────────────────────
+  const loadProfile = async () => {
+    setIsLoading(true)
+    setApiError(null)
+
+    try {
+      const result = await fetchMyProfile()
+
+      if (!result.success) {
+        setApiError({ error: result.error, status: result.status })
+        return
+      }
+
+      const d = result.data
+      setFormValues({
+        userId:      d.userId     || '',
+        email:       d.email      || '',
+        firstName:   d.firstName  || '',
+        lastName:    d.lastName   || '',
+        phone:       d.phone      || '',
+        address:     d.address    || '',
+        postalCode:  d.postalCode || '',
+        city:        d.city       || '',
+        country:     d.country    || '',
+        gender:      '',   // API şemasında yok
+        companyName: '',   // API şemasında yok
+        twitter:     '',   // API şemasında yok
+      })
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  // Sayfa açılışında ve hard-refresh'te profil yükle
+  useEffect(() => {
+    if (view === 'profile') {
+      loadProfile()
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [view])
+
   return (
     <div className={styles.container}>
-
-      {/* Content Rendering based on view prop */}
       {view === 'profile' ? (
-        <ProfileTab
-          profile={profile}
-          state={state}
-          formAction={formAction}
-        />
+        <>
+          {isLoading && <ProfileSkeleton />}
+
+          {!isLoading && apiError && (
+            <ApiErrorPanel
+              error={apiError.error}
+              status={apiError.status}
+              onRetry={loadProfile}
+            />
+          )}
+
+          {!isLoading && !apiError && (
+            <ProfileTab
+              formValues={formValues}
+              onChange={handleChange}
+              state={state}
+              formAction={formAction}
+            />
+          )}
+        </>
       ) : (
         <BillingTab billing={billing} />
       )}

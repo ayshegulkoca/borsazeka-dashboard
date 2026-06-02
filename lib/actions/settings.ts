@@ -6,6 +6,76 @@ import { prisma } from '@/lib/prisma'
 import { apiFetch } from '@/lib/api'
 import { profileSchema, type ProfileFormState } from '@/lib/validations/settings'
 
+// ─── MyProfile API Response Types ───────────────────────────
+
+export type MyProfileApiData = {
+  userId:    string
+  email:     string
+  firstName: string
+  lastName:  string
+  phone:     string
+  address:   string
+  city:      string
+  country:   string
+  postalCode:string
+}
+
+export type FetchMyProfileResult =
+  | { success: true;  data: MyProfileApiData }
+  | { success: false; error: 'UNAUTHORIZED' | 'API_ERROR' | 'NETWORK_ERROR' | 'INVALID_RESPONSE'; status?: number }
+
+// ─── Fetch My Profile from Backend ──────────────────────────
+
+/**
+ * BorsaZeka backend'inden aktif kullanıcının profil bilgilerini çeker.
+ * POST /api/dispatch  { method: "MyProfile", mail, isNotification: false, data: {} }
+ * İstemci bileşenlerinden doğrudan çağrılabilir (Server Action köprü pattern).
+ */
+export async function fetchMyProfile(): Promise<FetchMyProfileResult> {
+  const session = await auth()
+
+  if (!session?.user?.email) {
+    return { success: false, error: 'UNAUTHORIZED', status: 401 }
+  }
+
+  const userEmail = session.user.email
+
+  try {
+    const response = await apiFetch('/dispatch', {
+      method: 'POST',
+      body: JSON.stringify({
+        mail:           userEmail,
+        isNotification: false,
+        method:         'MyProfile',
+        data:           {},
+      }),
+    })
+
+    if (response.status === 401 || response.status === 403) {
+      console.warn(`[fetchMyProfile] Auth error ${response.status}`)
+      return { success: false, error: 'UNAUTHORIZED', status: response.status }
+    }
+
+    if (!response.ok) {
+      const body = await response.text().catch(() => '')
+      console.error(`[fetchMyProfile] API error ${response.status}:`, body)
+      return { success: false, error: 'API_ERROR', status: response.status }
+    }
+
+    const json = await response.json()
+
+    if (!json?.success || !json?.data) {
+      console.error('[fetchMyProfile] Unexpected response shape:', json)
+      return { success: false, error: 'INVALID_RESPONSE' }
+    }
+
+    return { success: true, data: json.data as MyProfileApiData }
+  } catch (err) {
+    console.error('[fetchMyProfile] Network error:', err)
+    return { success: false, error: 'NETWORK_ERROR' }
+  }
+}
+
 // ─── Update Profile ──────────────────────────────────────────
 
 export async function updateProfile(
