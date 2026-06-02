@@ -77,6 +77,7 @@ export async function fetchMyProfile(): Promise<FetchMyProfileResult> {
     }
 
     const json = await response.json()
+    console.log('[fetchMyProfile] json data:', JSON.stringify(json.data, null, 2))
 
     if (!json?.success || !json?.data) {
       console.error('[fetchMyProfile] Unexpected response shape:', json)
