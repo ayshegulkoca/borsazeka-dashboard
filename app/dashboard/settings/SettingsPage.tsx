@@ -865,8 +865,8 @@ export default function SettingsPage({ billing, view = 'profile' }: SettingsPage
         city:        d.city       || '',
         country:     d.country    || '',
         gender:      '',   // API şemasında yok
-        companyName: '',   // API şemasında yok
-        twitter:     '',   // API şemasında yok
+        companyName: d.companyName || '',
+        twitter:     d.twitter     || '',
       })
     } finally {
       setIsLoading(false)

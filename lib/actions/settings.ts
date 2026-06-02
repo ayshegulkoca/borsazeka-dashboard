@@ -9,15 +9,17 @@ import { profileSchema, type ProfileFormState } from '@/lib/validations/settings
 // ─── MyProfile API Response Types ───────────────────────────
 
 export type MyProfileApiData = {
-  userId:    string
-  email:     string
-  firstName: string
-  lastName:  string
-  phone:     string
-  address:   string
-  city:      string
-  country:   string
-  postalCode:string
+  userId:      string
+  email:       string
+  firstName:   string
+  lastName:    string
+  phone:       string
+  address:     string
+  city:        string
+  country:     string
+  postalCode:  string
+  companyName?: string | null
+  twitter?:     string | null
 }
 
 export type FetchMyProfileResult =
@@ -146,6 +148,8 @@ export async function updateProfile(
       city:        validated.data.city        || null,
       country:     validated.data.country     || null,
       postalCode:  validated.data.postalCode  || null,
+      companyName: validated.data.companyName || null,
+      twitter:     validated.data.twitter     || null,
     }
   }
 
