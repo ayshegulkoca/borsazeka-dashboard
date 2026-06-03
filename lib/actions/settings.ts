@@ -155,6 +155,8 @@ export async function updateProfile(
     }
   }
 
+  console.log('[updateProfile] sending dispatchPayload:', JSON.stringify(dispatchPayload, null, 2))
+
   // ── 1. POST to backend /dispatch (merkezi apiFetch ile 401 retry dahil) ──
   try {
     const dispatchRes = await apiFetch('/dispatch', {
