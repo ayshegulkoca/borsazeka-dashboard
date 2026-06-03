@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslation } from "react-i18next";
-import { Server, ArrowRight, Zap, ShieldCheck, Star, Cpu, Activity } from "lucide-react";
+import { Server, ArrowRight, Zap, ShieldCheck, Star, Cpu, Activity, Settings, AlertCircle } from "lucide-react";
 import styles from "./page.module.css";
 
 const PACKAGE_ICONS = {
@@ -66,71 +66,73 @@ export default function ServersClient({ myServers, packages }: Props) {
             {myServers.map((srv) => {
               const isOnline = srv.status === "online";
               return (
-                <div key={srv.id} className={styles.activeServerCard}>
+                <div 
+                  key={srv.id} 
+                  className="relative overflow-hidden rounded-2xl border border-white/5 bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950/70 p-6 backdrop-blur-md shadow-2xl transition-all duration-300 hover:border-emerald-500/20 hover:shadow-emerald-500/5 hover:-translate-y-0.5 grid grid-cols-1 lg:grid-cols-12 items-center gap-6"
+                >
                   {/* Column 1: Server Icon & Name Tag */}
-                  <div style={{ display: "flex", flexDirection: "column", gap: "0.35rem" }}>
-                    <div style={{ fontSize: "0.7rem", color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500 }}>
-                      {t("dashboard.servers.serverLabel")}
+                  <div className="lg:col-span-4 flex items-center gap-4">
+                    <div className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border transition-all duration-300 ${isOnline ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.15)]' : 'bg-rose-500/10 border-rose-500/20 text-rose-400 shadow-[0_0_15px_rgba(239,68,68,0.15)]'}`}>
+                      <Server size={22} />
                     </div>
-                    <div style={{ display: "flex", alignItems: "center", gap: "0.85rem", minHeight: "34px" }}>
-                      <div className={`${styles.serverIconContainer} ${isOnline ? styles.serverIconOnline : styles.serverIconOffline}`}>
-                        <Server size={18} color={isOnline ? "#10b981" : "#ef4444"} />
-                      </div>
-                      <div className={styles.serverNameTag}>
+                    <div className="flex flex-col gap-1">
+                      <span className="text-[10px] font-bold tracking-widest text-slate-500 uppercase">
+                        {t("dashboard.servers.serverLabel")}
+                      </span>
+                      <span className="text-base font-bold text-white tracking-wide font-mono">
                         {srv.name}
-                      </div>
+                      </span>
                     </div>
                   </div>
 
                   {/* Column 2: Connected Robot & Broker Account Details */}
-                  <div style={{ display: "flex", flexDirection: "column", gap: "0.35rem" }}>
-                    <div style={{ fontSize: "0.7rem", color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500 }}>
+                  <div className="lg:col-span-5 flex flex-col gap-1.5">
+                    <span className="text-[10px] font-bold tracking-widest text-slate-500 uppercase">
                       {t("dashboard.servers.connectedRobotAndAccount")}
-                    </div>
-                    <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", flexWrap: "wrap", minHeight: "34px" }}>
+                    </span>
+                    <div className="flex items-center gap-2 flex-wrap">
                       {/* Robot Name Badge */}
-                      <span style={{
-                        fontSize: "0.85rem",
-                        fontWeight: 600,
-                        color: "#ffffff",
-                        background: "rgba(255,255,255,0.06)",
-                        padding: "0.2rem 0.6rem",
-                        borderRadius: "6px",
-                        border: "1px solid rgba(255,255,255,0.08)",
-                        lineHeight: "1.4"
-                      }}>
+                      <span className="inline-flex items-center rounded-lg border border-indigo-500/30 bg-indigo-500/10 px-3 py-1 text-xs font-bold text-indigo-200 shadow-[0_0_10px_rgba(99,102,241,0.15)]">
                         {srv.robotDisplayName || srv.latency}
                       </span>
                       
-                      <span style={{ color: "rgba(255,255,255,0.15)", fontSize: "0.85rem" }}>•</span>
+                      <span className="text-slate-700 text-xs font-bold">•</span>
 
                       {/* Account Info Badge */}
-                      <span style={{
-                        fontSize: "0.85rem",
-                        fontWeight: srv.brokerName ? 600 : 400,
-                        color: srv.brokerName ? "rgba(255, 255, 255, 0.85)" : "rgba(255, 255, 255, 0.35)",
-                        background: srv.brokerName ? "rgba(16, 185, 129, 0.05)" : "transparent",
-                        border: srv.brokerName ? "1px solid rgba(16, 185, 129, 0.15)" : "none",
-                        padding: srv.brokerName ? "0.2rem 0.6rem" : "0",
-                        borderRadius: srv.brokerName ? "6px" : "0",
-                        lineHeight: "1.4"
-                      }}>
-                        {srv.brokerName ? `${srv.brokerName} · ${srv.accountNo}` : t("dashboard.servers.noConnectedAccount")}
-                      </span>
+                      {srv.brokerName ? (
+                        <span className="inline-flex items-center rounded-lg border border-emerald-500/20 bg-emerald-500/5 px-3 py-1 text-xs font-semibold text-emerald-300/90">
+                          {srv.brokerName} · {srv.accountNo}
+                        </span>
+                      ) : (
+                        <span className="inline-flex items-center gap-1.5 rounded-lg border border-amber-500/20 bg-amber-500/5 px-3 py-1 text-xs font-medium text-amber-400/80">
+                          <AlertCircle size={13} className="text-amber-400/80 shrink-0" />
+                          {t("dashboard.servers.noConnectedAccount")}
+                        </span>
+                      )}
                     </div>
                   </div>
 
-                  {/* Column 3: Server Status */}
-                  <div className={styles.columnStatus}>
-                    <div style={{ fontSize: "0.7rem", color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500 }}>
-                      {t("dashboard.servers.status")}
+                  {/* Column 3: Server Status & Settings */}
+                  <div className="lg:col-span-3 flex items-center gap-4 lg:justify-self-end justify-between w-full lg:w-auto">
+                    {/* Status Column */}
+                    <div className="flex flex-col items-start lg:items-end gap-1.5">
+                      <span className="text-[10px] font-bold tracking-widest text-slate-500 uppercase">
+                        {t("dashboard.servers.status")}
+                      </span>
+                      <span className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-xs font-bold ${isOnline ? 'border-emerald-500/20 bg-emerald-500/10 text-emerald-400' : 'border-rose-500/20 bg-rose-500/10 text-rose-400'}`}>
+                        <span className={`h-2 w-2 rounded-full ${isOnline ? 'bg-emerald-400 animate-pulse shadow-[0_0_8px_#10b981]' : 'bg-rose-400'}`} />
+                        {isOnline ? t("dashboard.servers.online") : t("dashboard.servers.offline")}
+                      </span>
                     </div>
-                    <div className={`${styles.statusBadgeContainer} ${isOnline ? styles.statusBadgeOnline : styles.statusBadgeOffline}`} style={{ minHeight: "34px" }}>
-                      <div className={`${styles.pulsingDot} ${isOnline ? styles.pulsingDotOnline : styles.pulsingDotOffline}`} />
-                      {isOnline
-                        ? t("dashboard.servers.online")
-                        : t("dashboard.servers.offline")}
-                    </div>
+
+                    {/* Settings Button */}
+                    <button 
+                      type="button"
+                      className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/5 bg-white/5 text-slate-400 transition-all duration-300 hover:border-white/15 hover:bg-white/10 hover:text-white hover:shadow-[0_0_15px_rgba(255,255,255,0.05)] cursor-pointer"
+                      title={t("navbar.setup") || "Sunucu Ayarları"}
+                    >
+                      <Settings size={18} />
+                    </button>
                   </div>
                 </div>
               );
