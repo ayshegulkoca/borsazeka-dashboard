@@ -256,7 +256,7 @@ export default function EducationPage() {
               />
               {/* Koyu Maske: Sol taraftaki fotoğrafı tamamen kapatıp yerine şık Spotify logosu koyar */}
               <div 
-                className="absolute top-0 left-[1.25rem] w-[80px] h-[152px] bg-[#090e1a] rounded-l-xl flex items-center justify-center border-r border-white/5 pointer-events-none"
+                className="absolute top-0 left-[1.25rem] w-[112px] h-[152px] bg-[#090e1a] rounded-l-xl flex items-center justify-center border-r border-white/5 pointer-events-none"
                 aria-hidden="true"
               >
                 <svg width="26" height="26" viewBox="0 0 24 24" fill="#1db954" className="opacity-95 drop-shadow-[0_0_10px_rgba(29,185,84,0.15)]">
