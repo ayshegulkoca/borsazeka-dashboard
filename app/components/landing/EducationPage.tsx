@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import {
-  BookOpen, Play, Pause, Clock, ChevronRight, Bell,
+  BookOpen, Play, Clock, ChevronRight, Bell,
   TrendingUp, Bot, BarChart2, Headphones,
   PlayCircle, Layers, Cpu, Mic,
   Video,
@@ -16,36 +16,6 @@ import styles from "./education.module.css";
 export default function EducationPage() {
   const { t } = useTranslation("common");
   const [featuredPlaying, setFeaturedPlaying] = useState(false);
-  const [podcastPlaying, setPodcastPlaying] = useState(false);
-  const [audioElement, setAudioElement] = useState<HTMLAudioElement | null>(null);
-
-  // Toggle native podcast playback
-  const togglePodcast = () => {
-    if (!audioElement) {
-      const audio = new Audio("https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3");
-      audio.addEventListener("ended", () => setPodcastPlaying(false));
-      setAudioElement(audio);
-      audio.play();
-      setPodcastPlaying(true);
-    } else {
-      if (podcastPlaying) {
-        audioElement.pause();
-        setPodcastPlaying(false);
-      } else {
-        audioElement.play();
-        setPodcastPlaying(true);
-      }
-    }
-  };
-
-  // Cleanup audio on unmount
-  useEffect(() => {
-    return () => {
-      if (audioElement) {
-        audioElement.pause();
-      }
-    };
-  }, [audioElement]);
 
   // Gallery videos — titles/categories/descs driven by i18n keys
   const GALLERY_VIDEOS = [
@@ -255,66 +225,35 @@ export default function EducationPage() {
         <aside className={styles.rightSidebar}>
 
           {/* SPOTIFY PODCAST */}
-          {/* SPOTIFY PODCAST */}
           <div className={styles.podcastWidget}>
             {/* Custom corporate header */}
             <div className={styles.podcastHeader}>
-              <div 
-                className={styles.podcastIcon} 
-                style={{ 
-                  background: "linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%)",
-                  border: "1px solid rgba(255,255,255,0.08)" 
-                }}
-              >
-                <Headphones size={18} color="#94a3b8" />
+              <div className={styles.podcastIcon}>
+                <Headphones size={18} color="#ffffff" />
               </div>
               <div className={styles.podcastHeaderText}>
                 <p className={styles.podcastTitle}>{t("education.podcastTitle")}</p>
                 <p className={styles.podcastSubtitle}>{t("education.podcastSubtitle")}</p>
               </div>
+              <span className={styles.spotifyBadge}>
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z" />
+                </svg>
+                Spotify
+              </span>
             </div>
 
-            {/* Custom minimalist audio player card */}
-            <div className="p-4 pt-1">
-              <div className="flex items-center gap-4 rounded-xl border border-white/5 bg-[#0b1329]/60 p-4 shadow-xl">
-                
-                {/* Play/Pause Button */}
-                <button
-                  type="button"
-                  onClick={togglePodcast}
-                  className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/5 bg-white/5 text-white hover:border-white/20 hover:bg-white/10 transition-all duration-300 shadow-md cursor-pointer"
-                  aria-label={podcastPlaying ? "Duraklat" : "Oynat"}
-                >
-                  {podcastPlaying ? (
-                    <Pause size={18} fill="currentColor" />
-                  ) : (
-                    <Play size={18} fill="currentColor" style={{ marginLeft: "2px" }} />
-                  )}
-                </button>
-
-                {/* Podcast Title & Description */}
-                <div className="flex flex-col gap-0.5">
-                  <span className="text-xs font-semibold text-slate-400">BorsaZeka Podcast</span>
-                  <span className="text-sm font-bold text-white leading-tight">Günlük Analizler</span>
-                </div>
-
-                {/* Waveform playing animation */}
-                {podcastPlaying && (
-                  <div className="ml-auto flex items-end gap-1 h-6 shrink-0 px-1">
-                    {[10, 18, 12, 22, 14, 18, 10, 14, 8].map((h, i) => (
-                      <span 
-                        key={i} 
-                        className={styles.waveBar}
-                        style={{ 
-                          height: `${h}px`,
-                          animationDelay: `${i * 0.12}s`
-                        }} 
-                      />
-                    ))}
-                  </div>
-                )}
-
-              </div>
+            {/* Spotify embed — compact 152px mode (no artwork) */}
+            <div className={styles.podcastEmbedWrap}>
+              <iframe
+                src="https://open.spotify.com/embed/show/7C2IDqAmrfl5UJ76IFyZIx?utm_source=generator&theme=0&view=list"
+                width="100%"
+                height="152"
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                loading="lazy"
+                title={t("education.podcastTitle")}
+                style={{ display: "block", border: "none" }}
+              />
             </div>
           </div>
 
