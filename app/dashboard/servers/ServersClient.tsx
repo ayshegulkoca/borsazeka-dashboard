@@ -81,7 +81,7 @@ export default function ServersClient({ myServers, packages }: Props) {
                   <div>
                     <div style={{ fontWeight: 600, fontSize: "1rem" }}>{srv.name}</div>
                     <div style={{ fontSize: "0.85rem", color: "var(--text-muted)" }}>
-                      IP: {srv.ip} • {t("dashboard.servers.load")}: {srv.latency}
+                      {t("dashboard.servers.load")}: {srv.latency}
                     </div>
                   </div>
                 </div>
