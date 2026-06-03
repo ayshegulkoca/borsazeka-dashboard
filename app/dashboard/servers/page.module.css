@@ -367,10 +367,9 @@
   border: 1px solid rgba(255, 255, 255, 0.06);
   padding: 1.25rem 1.5rem;
   border-radius: 16px;
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: minmax(260px, 1.2fr) minmax(320px, 2fr) minmax(120px, 0.8fr);
   align-items: center;
-  flex-wrap: wrap;
   gap: 1.5rem;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
@@ -381,6 +380,28 @@
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
   border-color: rgba(255, 255, 255, 0.12);
   box-shadow: 0 10px 45px rgba(0, 0, 0, 0.3);
+}
+
+.columnStatus {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  align-items: flex-end;
+  text-align: right;
+  justify-self: end;
+}
+
+@media (max-width: 900px) {
+  .activeServerCard {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    align-items: flex-start;
+  }
+  .columnStatus {
+    align-items: flex-start;
+    text-align: left;
+    justify-self: start;
+  }
 }
 
 .serverIconContainer {

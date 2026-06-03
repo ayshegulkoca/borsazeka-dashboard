@@ -68,21 +68,26 @@ export default function ServersClient({ myServers, packages }: Props) {
               return (
                 <div key={srv.id} className={styles.activeServerCard}>
                   {/* Column 1: Server Icon & Name Tag */}
-                  <div style={{ display: "flex", alignItems: "center", gap: "1.25rem", flex: "1 1 0%", minWidth: "300px" }}>
-                    <div className={`${styles.serverIconContainer} ${isOnline ? styles.serverIconOnline : styles.serverIconOffline}`}>
-                      <Server size={20} color={isOnline ? "#10b981" : "#ef4444"} />
+                  <div style={{ display: "flex", flexDirection: "column", gap: "0.35rem" }}>
+                    <div style={{ fontSize: "0.7rem", color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500 }}>
+                      {t("dashboard.servers.serverLabel")}
                     </div>
-                    <div className={styles.serverNameTag}>
-                      {srv.name}
+                    <div style={{ display: "flex", alignItems: "center", gap: "0.85rem", minHeight: "34px" }}>
+                      <div className={`${styles.serverIconContainer} ${isOnline ? styles.serverIconOnline : styles.serverIconOffline}`}>
+                        <Server size={18} color={isOnline ? "#10b981" : "#ef4444"} />
+                      </div>
+                      <div className={styles.serverNameTag}>
+                        {srv.name}
+                      </div>
                     </div>
                   </div>
 
                   {/* Column 2: Connected Robot & Broker Account Details */}
-                  <div style={{ display: "flex", flexDirection: "column", gap: "0.35rem", flex: "2 1 0%", minWidth: "280px" }}>
+                  <div style={{ display: "flex", flexDirection: "column", gap: "0.35rem" }}>
                     <div style={{ fontSize: "0.7rem", color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500 }}>
                       {t("dashboard.servers.connectedRobotAndAccount")}
                     </div>
-                    <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", flexWrap: "wrap" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", flexWrap: "wrap", minHeight: "34px" }}>
                       {/* Robot Name Badge */}
                       <span style={{
                         fontSize: "0.85rem",
@@ -91,7 +96,8 @@ export default function ServersClient({ myServers, packages }: Props) {
                         background: "rgba(255,255,255,0.06)",
                         padding: "0.2rem 0.6rem",
                         borderRadius: "6px",
-                        border: "1px solid rgba(255,255,255,0.08)"
+                        border: "1px solid rgba(255,255,255,0.08)",
+                        lineHeight: "1.4"
                       }}>
                         {srv.robotDisplayName || srv.latency}
                       </span>
@@ -106,7 +112,8 @@ export default function ServersClient({ myServers, packages }: Props) {
                         background: srv.brokerName ? "rgba(16, 185, 129, 0.05)" : "transparent",
                         border: srv.brokerName ? "1px solid rgba(16, 185, 129, 0.15)" : "none",
                         padding: srv.brokerName ? "0.2rem 0.6rem" : "0",
-                        borderRadius: srv.brokerName ? "6px" : "0"
+                        borderRadius: srv.brokerName ? "6px" : "0",
+                        lineHeight: "1.4"
                       }}>
                         {srv.brokerName ? `${srv.brokerName} · ${srv.accountNo}` : t("dashboard.servers.noConnectedAccount")}
                       </span>
@@ -114,11 +121,11 @@ export default function ServersClient({ myServers, packages }: Props) {
                   </div>
 
                   {/* Column 3: Server Status */}
-                  <div style={{ textAlign: "right", flex: "0 0 auto", minWidth: "120px" }}>
-                    <div style={{ fontSize: "0.7rem", color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, marginBottom: "0.35rem" }}>
+                  <div className={styles.columnStatus}>
+                    <div style={{ fontSize: "0.7rem", color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500 }}>
                       {t("dashboard.servers.status")}
                     </div>
-                    <div className={`${styles.statusBadgeContainer} ${isOnline ? styles.statusBadgeOnline : styles.statusBadgeOffline}`}>
+                    <div className={`${styles.statusBadgeContainer} ${isOnline ? styles.statusBadgeOnline : styles.statusBadgeOffline}`} style={{ minHeight: "34px" }}>
                       <div className={`${styles.pulsingDot} ${isOnline ? styles.pulsingDotOnline : styles.pulsingDotOffline}`} />
                       {isOnline
                         ? t("dashboard.servers.online")

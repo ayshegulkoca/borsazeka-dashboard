@@ -1100,6 +1100,7 @@
       "serverCode": "Sunucu Kodu",
       "connectedRobotAndAccount": "Bağlı Robot ve Hesap",
       "noConnectedAccount": "Bağlı Hesap Yok",
+      "serverLabel": "Sunucu",
       "online": "Çevrimiçi",
       "offline": "Çevrimdışı",
       "perMonth": "/ay",

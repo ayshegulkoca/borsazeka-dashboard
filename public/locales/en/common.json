@@ -1085,6 +1085,7 @@
       "serverCode": "Server Code",
       "connectedRobotAndAccount": "Connected Robot & Account",
       "noConnectedAccount": "No Connected Account",
+      "serverLabel": "Server",
       "online": "Online",
       "offline": "Offline",
       "perMonth": "/mo",
