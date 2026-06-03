@@ -879,6 +879,14 @@ export default function SettingsPage({ billing, view = 'profile' }: SettingsPage
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [view])
 
+  // Profil başarıyla kaydedildiğinde backend'den güncel verileri tekrar çek
+  useEffect(() => {
+    if (state.success) {
+      loadProfile()
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state.success])
+
   return (
     <div className={styles.container}>
       {view === 'profile' ? (
