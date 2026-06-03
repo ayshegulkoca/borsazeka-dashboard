@@ -228,48 +228,64 @@ export default function EducationPage() {
           <div className={styles.podcastWidget}>
             {/* Custom corporate header */}
             <div className={styles.podcastHeader}>
-              <div className={styles.podcastIcon}>
+              <div className={styles.podcastIcon} style={{ background: "linear-gradient(135deg, #1db954 0%, #10b981 100%)" }}>
                 <Headphones size={18} color="#ffffff" />
               </div>
               <div className={styles.podcastHeaderText}>
                 <p className={styles.podcastTitle}>{t("education.podcastTitle")}</p>
                 <p className={styles.podcastSubtitle}>{t("education.podcastSubtitle")}</p>
               </div>
-              <span className={styles.spotifyBadge}>
+              <a 
+                href="https://open.spotify.com/show/7C2IDqAmrfl5UJ76IFyZIx"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.spotifyBadge}
+                style={{ cursor: "pointer", transition: "all 0.2s ease" }}
+              >
                 <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z" />
                 </svg>
                 Spotify
-              </span>
+              </a>
             </div>
 
-            {/* Spotify embed — compact 152px mode (no artwork) */}
-            <div className={styles.podcastEmbedWrap}>
-              <iframe
-                src="https://open.spotify.com/embed/show/7C2IDqAmrfl5UJ76IFyZIx?utm_source=generator&theme=0&view=list"
-                width="100%"
-                height="152"
-                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                loading="lazy"
-                title={t("education.podcastTitle")}
-                style={{ display: "block", border: "none" }}
-              />
-              {/* Overlay: covers the left 152px artwork area, showing custom mic icon and wave */}
-              <div className={styles.podcastImageOverlay} aria-hidden="true">
-                <div className={styles.overlayWaveform}>
-                  {[4, 10, 6, 14, 8, 16, 6, 12, 4, 10].map((h, i) => (
-                    <span
-                      key={i}
-                      className={styles.overlayWaveBar}
-                      style={{ height: h, animationDelay: `${i * 0.08}s` }}
-                    />
-                  ))}
+            {/* Custom minimalist audio player card */}
+            <div className="p-4 pt-1">
+              <div className="flex flex-col gap-4 rounded-xl border border-white/5 bg-[#0b1329]/60 p-4">
+                
+                {/* Audio Wave & Title info */}
+                <div className="flex items-center gap-4">
+                  {/* Waveform Graphic */}
+                  <div className="flex items-end gap-1 h-8 shrink-0 px-1.5">
+                    {[14, 26, 18, 30, 22, 26, 16, 22, 12].map((h, i) => (
+                      <span 
+                        key={i} 
+                        className={styles.waveBar}
+                        style={{ 
+                          height: `${h}px`,
+                          animationDelay: `${i * 0.12}s`
+                        }} 
+                      />
+                    ))}
+                  </div>
+
+                  <div className="flex flex-col gap-0.5">
+                    <span className="text-xs font-semibold text-slate-400">BorsaZeka Podcast</span>
+                    <span className="text-sm font-bold text-white leading-tight">Günlük Analizler</span>
+                  </div>
                 </div>
-                <div className={styles.overlayTextWrap}>
-                  <Mic size={14} color="#1db954" className={styles.overlayMicIcon} />
-                  <span className={styles.overlayLabel}>BorsaZeka Podcast</span>
-                </div>
-                <span className={styles.overlaySublabel}>Günlük Analizler</span>
+
+                {/* Listen on Spotify Button */}
+                <a 
+                  href="https://open.spotify.com/show/7C2IDqAmrfl5UJ76IFyZIx"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2 rounded-lg border border-white/5 bg-white/5 py-2.5 text-xs font-bold text-slate-300 transition-all duration-300 hover:border-white/10 hover:bg-white/10 hover:text-white cursor-pointer"
+                >
+                  <Play size={12} fill="currentColor" />
+                  Spotify'da Dinle
+                </a>
+
               </div>
             </div>
           </div>

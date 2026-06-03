@@ -801,3 +801,21 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* Custom Wave Bar for Spotify Podcast Card */
+.waveBar {
+  width: 3.5px;
+  background-color: #10b981;
+  border-radius: 9999px;
+  transform-origin: bottom;
+  animation: wavePulse 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes wavePulse {
+  0% {
+    transform: scaleY(0.35);
+  }
+  100% {
+    transform: scaleY(1.1);
+  }
+}
