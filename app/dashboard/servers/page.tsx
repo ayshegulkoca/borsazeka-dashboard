@@ -2,7 +2,7 @@ import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import { SERVER_PACKAGES } from "@/src/data/products";
 import { getPrefilledStripeLink } from "@/lib/stripe";
-import { apiGet } from "@/lib/api";
+import { apiGet, apiFetch } from "@/lib/api";
 import ServersClient from "./ServersClient";
 
 export default async function ServersPage() {
@@ -11,16 +11,35 @@ export default async function ServersPage() {
 
   const userEmail = session.user.email ?? "";
 
-  // Aktif sunucuları API'den çek
-  const apiServers = await apiGet<any[]>("/user/servers");
-  const myServers = (apiServers ?? []).map((srv: any) => ({
-    id: srv.id,
-    name: srv.name,
-    ip: srv.ip,
-    latency: srv.latency,
-    status: srv.status,
-    load: srv.load,
-  }));
+  // Aktif sunucuları BorsaZeka dispatch (MyServers) API'sinden çek
+  let myServers: any[] = [];
+  try {
+    const response = await apiFetch("/dispatch", {
+      method: "POST",
+      body: JSON.stringify({
+        mail: userEmail,
+        isNotification: false,
+        method: "MyServers",
+        data: {},
+      }),
+    });
+
+    if (response.ok) {
+      const json = await response.json().catch(() => null);
+      if (json?.success && json?.data?.servers) {
+        myServers = json.data.servers.map((srv: any) => ({
+          id:      srv.accountManagerId || srv.code,
+          name:    srv.displayName || srv.robotName || "Sunucu",
+          ip:      srv.ipAddress || "-",
+          latency: srv.robotName || "-",
+          status:  srv.isActive ? "online" : "offline",
+          load:    srv.robotServerCode || "Aktif",
+        }));
+      }
+    }
+  } catch (error) {
+    console.error("Error fetching MyServers:", error);
+  }
 
   // Stripe URL'lerini server-side oluştur, sonra client'a geç
   const packages = SERVER_PACKAGES.map((pkg) => ({
