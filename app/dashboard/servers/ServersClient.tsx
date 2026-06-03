@@ -81,7 +81,7 @@ export default function ServersClient({ myServers, packages }: Props) {
                   <div>
                     <div style={{ fontWeight: 600, fontSize: "1rem" }}>{srv.name}</div>
                     <div style={{ fontSize: "0.85rem", color: "var(--text-muted)" }}>
-                      {t("dashboard.servers.load")}: {srv.latency}
+                      {t("dashboard.servers.robot")}: {srv.latency}
                     </div>
                   </div>
                 </div>
@@ -108,7 +108,7 @@ export default function ServersClient({ myServers, packages }: Props) {
                   </div>
                   <div style={{ textAlign: "right", minWidth: "80px" }}>
                     <div style={{ fontSize: "0.75rem", color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.05em" }}>
-                      {t("dashboard.servers.load")}
+                      {t("dashboard.servers.serverCode")}
                     </div>
                     <div style={{ fontSize: "0.9rem", fontWeight: 600 }}>{srv.load}</div>
                   </div>

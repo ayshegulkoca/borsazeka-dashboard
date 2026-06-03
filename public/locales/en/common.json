@@ -1081,6 +1081,8 @@
       "packagesTitle": "Server Packages",
       "status": "Status",
       "load": "Load",
+      "robot": "Robot",
+      "serverCode": "Server Code",
       "online": "Online",
       "offline": "Offline",
       "perMonth": "/mo",

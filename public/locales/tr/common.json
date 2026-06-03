@@ -1096,6 +1096,8 @@
       "packagesTitle": "Sunucu Paketleri",
       "status": "Durum",
       "load": "Yük",
+      "robot": "Robot",
+      "serverCode": "Sunucu Kodu",
       "online": "Çevrimiçi",
       "offline": "Çevrimdışı",
       "perMonth": "/ay",
