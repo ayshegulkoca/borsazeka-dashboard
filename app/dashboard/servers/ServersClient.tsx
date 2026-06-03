@@ -63,70 +63,71 @@ export default function ServersClient({ myServers, packages }: Props) {
             {t("dashboard.servers.myServersTitle")}
           </h2>
           <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-            {myServers.map((srv) => (
-              <div
-                key={srv.id}
-                className={styles.activeServerCard}
-                style={{
-                  background: "rgba(255,255,255,0.03)",
-                  border: "1px solid rgba(255,255,255,0.08)",
-                  padding: "1.25rem",
-                  borderRadius: "16px",
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  flexWrap: "wrap",
-                  gap: "1.5rem",
-                }}
-              >
-                {/* Column 1: Server Icon & Name */}
-                <div style={{ display: "flex", alignItems: "center", gap: "1rem", flex: "1 1 0%", minWidth: "220px" }}>
-                  <div style={{ padding: "0.75rem", background: "rgba(16,185,129,0.1)", borderRadius: "12px", display: "inline-flex" }}>
-                    <Server size={22} color="#64748b" />
+            {myServers.map((srv) => {
+              const isOnline = srv.status === "online";
+              return (
+                <div key={srv.id} className={styles.activeServerCard}>
+                  {/* Column 1: Server Icon & Name Tag */}
+                  <div style={{ display: "flex", alignItems: "center", gap: "1.25rem", flex: "1 1 0%", minWidth: "300px" }}>
+                    <div className={`${styles.serverIconContainer} ${isOnline ? styles.serverIconOnline : styles.serverIconOffline}`}>
+                      <Server size={20} color={isOnline ? "#10b981" : "#ef4444"} />
+                    </div>
+                    <div className={styles.serverNameTag}>
+                      {srv.name}
+                    </div>
                   </div>
-                  <div>
-                    <div style={{ fontWeight: 600, fontSize: "1rem" }}>{srv.name}</div>
-                  </div>
-                </div>
 
-                {/* Column 2: Connected Robot & Broker Account Details */}
-                <div style={{ display: "flex", flexDirection: "column", gap: "0.25rem", flex: "2 1 0%", minWidth: "260px" }}>
-                  <div style={{ fontSize: "0.75rem", color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.05em" }}>
-                    {t("dashboard.servers.connectedRobotAndAccount")}
-                  </div>
-                  <div style={{ fontSize: "0.9rem", fontWeight: 600, display: "flex", alignItems: "center", gap: "0.5rem", flexWrap: "wrap" }}>
-                    <span>{srv.robotDisplayName || srv.latency}</span>
-                    <span style={{ opacity: 0.3 }}>|</span>
-                    <span style={{ color: srv.brokerName ? "inherit" : "var(--text-muted)", fontWeight: srv.brokerName ? 500 : 400 }}>
-                      {srv.brokerName ? `${srv.brokerName}, ${srv.accountNo}` : t("dashboard.servers.noConnectedAccount")}
-                    </span>
-                  </div>
-                </div>
+                  {/* Column 2: Connected Robot & Broker Account Details */}
+                  <div style={{ display: "flex", flexDirection: "column", gap: "0.35rem", flex: "2 1 0%", minWidth: "280px" }}>
+                    <div style={{ fontSize: "0.7rem", color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500 }}>
+                      {t("dashboard.servers.connectedRobotAndAccount")}
+                    </div>
+                    <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", flexWrap: "wrap" }}>
+                      {/* Robot Name Badge */}
+                      <span style={{
+                        fontSize: "0.85rem",
+                        fontWeight: 600,
+                        color: "#ffffff",
+                        background: "rgba(255,255,255,0.06)",
+                        padding: "0.2rem 0.6rem",
+                        borderRadius: "6px",
+                        border: "1px solid rgba(255,255,255,0.08)"
+                      }}>
+                        {srv.robotDisplayName || srv.latency}
+                      </span>
+                      
+                      <span style={{ color: "rgba(255,255,255,0.15)", fontSize: "0.85rem" }}>•</span>
 
-                {/* Column 3: Server Status */}
-                <div style={{ textAlign: "right", flex: "0 0 auto", minWidth: "100px" }}>
-                  <div style={{ fontSize: "0.75rem", color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.05em" }}>
-                    {t("dashboard.servers.status")}
+                      {/* Account Info Badge */}
+                      <span style={{
+                        fontSize: "0.85rem",
+                        fontWeight: srv.brokerName ? 600 : 400,
+                        color: srv.brokerName ? "rgba(255, 255, 255, 0.85)" : "rgba(255, 255, 255, 0.35)",
+                        background: srv.brokerName ? "rgba(16, 185, 129, 0.05)" : "transparent",
+                        border: srv.brokerName ? "1px solid rgba(16, 185, 129, 0.15)" : "none",
+                        padding: srv.brokerName ? "0.2rem 0.6rem" : "0",
+                        borderRadius: srv.brokerName ? "6px" : "0"
+                      }}>
+                        {srv.brokerName ? `${srv.brokerName} · ${srv.accountNo}` : t("dashboard.servers.noConnectedAccount")}
+                      </span>
+                    </div>
                   </div>
-                  <div
-                    style={{
-                      display: "inline-flex",
-                      alignItems: "center",
-                      gap: "0.4rem",
-                      color: srv.status === "online" ? "#10b981" : "#ef4444",
-                      fontSize: "0.9rem",
-                      fontWeight: 600,
-                      marginTop: "0.25rem",
-                    }}
-                  >
-                    <div style={{ width: 8, height: 8, borderRadius: "50%", background: srv.status === "online" ? "#10b981" : "#ef4444" }} />
-                    {srv.status === "online"
-                      ? t("dashboard.servers.online")
-                      : t("dashboard.servers.offline")}
+
+                  {/* Column 3: Server Status */}
+                  <div style={{ textAlign: "right", flex: "0 0 auto", minWidth: "120px" }}>
+                    <div style={{ fontSize: "0.7rem", color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500, marginBottom: "0.35rem" }}>
+                      {t("dashboard.servers.status")}
+                    </div>
+                    <div className={`${styles.statusBadgeContainer} ${isOnline ? styles.statusBadgeOnline : styles.statusBadgeOffline}`}>
+                      <div className={`${styles.pulsingDot} ${isOnline ? styles.pulsingDotOnline : styles.pulsingDotOffline}`} />
+                      {isOnline
+                        ? t("dashboard.servers.online")
+                        : t("dashboard.servers.offline")}
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       )}
