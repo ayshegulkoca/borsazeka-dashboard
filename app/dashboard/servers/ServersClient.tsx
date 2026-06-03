@@ -36,6 +36,9 @@ interface ActiveServer {
   latency: string;
   status: string;
   load: string;
+  robotDisplayName?: string;
+  brokerName?: string;
+  accountNo?: string;
 }
 
 interface Props {
@@ -72,45 +75,54 @@ export default function ServersClient({ myServers, packages }: Props) {
                   display: "flex",
                   justifyContent: "space-between",
                   alignItems: "center",
+                  flexWrap: "wrap",
+                  gap: "1.5rem",
                 }}
               >
-                <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-                  <div style={{ padding: "0.75rem", background: "rgba(16,185,129,0.1)", borderRadius: "12px" }}>
+                {/* Column 1: Server Icon & Name */}
+                <div style={{ display: "flex", alignItems: "center", gap: "1rem", flex: "1 1 0%", minWidth: "220px" }}>
+                  <div style={{ padding: "0.75rem", background: "rgba(16,185,129,0.1)", borderRadius: "12px", display: "inline-flex" }}>
                     <Server size={22} color="#64748b" />
                   </div>
                   <div>
                     <div style={{ fontWeight: 600, fontSize: "1rem" }}>{srv.name}</div>
-                    <div style={{ fontSize: "0.85rem", color: "var(--text-muted)" }}>
-                      {t("dashboard.servers.robot")}: {srv.latency}
-                    </div>
                   </div>
                 </div>
-                <div style={{ display: "flex", alignItems: "center", gap: "1.5rem" }}>
-                  <div style={{ textAlign: "right" }}>
-                    <div style={{ fontSize: "0.75rem", color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.05em" }}>
-                      {t("dashboard.servers.status")}
-                    </div>
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "0.4rem",
-                        color: srv.status === "online" ? "#10b981" : "#ef4444",
-                        fontSize: "0.9rem",
-                        fontWeight: 600,
-                      }}
-                    >
-                      <div style={{ width: 8, height: 8, borderRadius: "50%", background: srv.status === "online" ? "#10b981" : "#ef4444" }} />
-                      {srv.status === "online"
-                        ? t("dashboard.servers.online")
-                        : t("dashboard.servers.offline")}
-                    </div>
+
+                {/* Column 2: Connected Robot & Broker Account Details */}
+                <div style={{ display: "flex", flexDirection: "column", gap: "0.25rem", flex: "2 1 0%", minWidth: "260px" }}>
+                  <div style={{ fontSize: "0.75rem", color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+                    {t("dashboard.servers.connectedRobotAndAccount")}
                   </div>
-                  <div style={{ textAlign: "right", minWidth: "80px" }}>
-                    <div style={{ fontSize: "0.75rem", color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.05em" }}>
-                      {t("dashboard.servers.serverCode")}
-                    </div>
-                    <div style={{ fontSize: "0.9rem", fontWeight: 600 }}>{srv.load}</div>
+                  <div style={{ fontSize: "0.9rem", fontWeight: 600, display: "flex", alignItems: "center", gap: "0.5rem", flexWrap: "wrap" }}>
+                    <span>{srv.robotDisplayName || srv.latency}</span>
+                    <span style={{ opacity: 0.3 }}>|</span>
+                    <span style={{ color: srv.brokerName ? "inherit" : "var(--text-muted)", fontWeight: srv.brokerName ? 500 : 400 }}>
+                      {srv.brokerName ? `${srv.brokerName}, ${srv.accountNo}` : t("dashboard.servers.noConnectedAccount")}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Column 3: Server Status */}
+                <div style={{ textAlign: "right", flex: "0 0 auto", minWidth: "100px" }}>
+                  <div style={{ fontSize: "0.75rem", color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+                    {t("dashboard.servers.status")}
+                  </div>
+                  <div
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: "0.4rem",
+                      color: srv.status === "online" ? "#10b981" : "#ef4444",
+                      fontSize: "0.9rem",
+                      fontWeight: 600,
+                      marginTop: "0.25rem",
+                    }}
+                  >
+                    <div style={{ width: 8, height: 8, borderRadius: "50%", background: srv.status === "online" ? "#10b981" : "#ef4444" }} />
+                    {srv.status === "online"
+                      ? t("dashboard.servers.online")
+                      : t("dashboard.servers.offline")}
                   </div>
                 </div>
               </div>

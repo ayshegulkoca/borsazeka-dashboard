@@ -1083,6 +1083,8 @@
       "load": "Load",
       "robot": "Robot",
       "serverCode": "Server Code",
+      "connectedRobotAndAccount": "Connected Robot & Account",
+      "noConnectedAccount": "No Connected Account",
       "online": "Online",
       "offline": "Offline",
       "perMonth": "/mo",

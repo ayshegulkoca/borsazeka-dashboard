@@ -1098,6 +1098,8 @@
       "load": "Yük",
       "robot": "Robot",
       "serverCode": "Sunucu Kodu",
+      "connectedRobotAndAccount": "Bağlı Robot ve Hesap",
+      "noConnectedAccount": "Bağlı Hesap Yok",
       "online": "Çevrimiçi",
       "offline": "Çevrimdışı",
       "perMonth": "/ay",
