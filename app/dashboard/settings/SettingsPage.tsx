@@ -461,8 +461,6 @@ function ProfileTab({
                 <option value="">{t('dashboard.settings.genderSelect')}</option>
                 <option value="Erkek">{t('dashboard.settings.genderMale')}</option>
                 <option value="Kadın">{t('dashboard.settings.genderFemale')}</option>
-                <option value="Diğer">{t('dashboard.settings.genderOther')}</option>
-                <option value="Belirtmek istemiyorum">{t('dashboard.settings.genderPreferNot')}</option>
               </select>
               {state.errors?.gender && (
                 <span className={styles.fieldError}>
