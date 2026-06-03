@@ -20,6 +20,7 @@ export type MyProfileApiData = {
   postalCode:  string
   companyName?: string | null
   twitter?:     string | null
+  gender?:      string | null
 }
 
 export type FetchMyProfileResult =
@@ -150,6 +151,7 @@ export async function updateProfile(
       postalCode:  validated.data.postalCode  || null,
       companyName: validated.data.companyName || null,
       twitter:     validated.data.twitter     || null,
+      gender:      validated.data.gender      || null,
     }
   }
 

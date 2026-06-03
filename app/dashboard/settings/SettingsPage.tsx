@@ -864,7 +864,7 @@ export default function SettingsPage({ billing, view = 'profile' }: SettingsPage
         postalCode:  d.postalCode || '',
         city:        d.city       || '',
         country:     d.country    || '',
-        gender:      '',   // API şemasında yok
+        gender:      d.gender     || '',
         companyName: d.companyName || '',
         twitter:     d.twitter     || '',
       })
