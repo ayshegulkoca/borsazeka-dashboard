@@ -109,7 +109,7 @@ export default function BlogPostPage({ id }: BlogPostPageProps) {
       <div className="absolute top-[30%] right-[-10%] w-[500px] h-[500px] rounded-full bg-blue-100/10 blur-[120px] pointer-events-none -z-10" />
 
       {/* Main Content Area */}
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-24">
+      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-40 pb-24">
         {/* Navigation & Category */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
           <Link
