@@ -2,8 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { 
-  BookOpen, Plus, Calendar, Clock, ArrowLeft, 
-  Send, User, FileText, Sparkles, ChevronRight
+  BookOpen, Calendar, Clock, ArrowLeft
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import Navbar from "./Navbar";
@@ -144,15 +143,6 @@ export default function BlogPage() {
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [activeCategory, setActiveCategory] = useState<string>("Hepsi");
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
-  const [showAdminModal, setShowAdminModal] = useState(false);
-  
-  // Form State
-  const [newTitle, setNewTitle] = useState("");
-  const [newCategory, setNewCategory] = useState("Piyasa Analizi");
-  const [newDesc, setNewDesc] = useState("");
-  const [newContent, setNewContent] = useState("");
-  const [newReadTime, setNewReadTime] = useState("5 dk");
-  const [newTheme, setNewTheme] = useState("indigo");
 
   // Load posts from localStorage or defaults
   useEffect(() => {
@@ -180,57 +170,6 @@ export default function BlogPage() {
   const featuredPost = posts.find(p => p.id === "post-1") || posts[0];
   const regularPosts = filteredPosts.filter(p => p.id !== featuredPost?.id);
 
-  // Handle Create Post
-  const handleCreatePost = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!newTitle || !newDesc || !newContent) return;
-
-    let themeColor = "rgba(99, 102, 241, 0.4)";
-    let glowColor = "rgba(99, 102, 241, 0.05)";
-    let imageUrl = "/images/blog_strategy.png";
-
-    if (newTheme === "purple") {
-      themeColor = "rgba(168, 85, 247, 0.4)";
-      glowColor = "rgba(168, 85, 247, 0.05)";
-      imageUrl = "/images/blog_featured.png";
-    } else if (newTheme === "emerald") {
-      themeColor = "rgba(16, 185, 129, 0.4)";
-      glowColor = "rgba(16, 185, 129, 0.05)";
-      imageUrl = "/images/blog_crypto.png";
-    } else if (newTheme === "sky") {
-      themeColor = "rgba(14, 165, 233, 0.4)";
-      glowColor = "rgba(14, 165, 233, 0.05)";
-      imageUrl = "/images/blog_risk.png";
-    }
-
-    const newPost: BlogPost = {
-      id: "post-" + Date.now(),
-      title: newTitle,
-      category: newCategory,
-      desc: newDesc,
-      content: newContent.replace(/\n/g, "<br />"), // simple newline formatting
-      readTime: newReadTime,
-      date: new Date().toLocaleDateString("tr-TR", { day: "numeric", month: "long", year: "numeric" }),
-      author: "Semih Arslan",
-      imageUrl,
-      themeColor,
-      glowColor
-    };
-
-    const updated = [newPost, ...posts];
-    setPosts(updated);
-    if (typeof window !== "undefined") {
-      window.localStorage.setItem("borsazeka_blog_posts", JSON.stringify(updated));
-    }
-
-    // Reset Form
-    setNewTitle("");
-    setNewDesc("");
-    setNewContent("");
-    setNewReadTime("5 dk");
-    setShowAdminModal(false);
-  };
-
   return (
     <div className={styles.page}>
       <Navbar />
@@ -252,7 +191,7 @@ export default function BlogPage() {
         </div>
       </header>
 
-      {/* Action Bar (Filters + Admin Panel Trigger) */}
+      {/* Action Bar (Filters) */}
       <section className={styles.actionBar}>
         <div className={styles.filters}>
           {categories.map(cat => (
@@ -265,14 +204,6 @@ export default function BlogPage() {
             </button>
           ))}
         </div>
-        
-        <button 
-          className={styles.adminBtn}
-          onClick={() => setShowAdminModal(true)}
-        >
-          <Plus size={16} />
-          Yazı Ekle (Semih Bey)
-        </button>
       </section>
 
       {/* Layout Grid */}
@@ -353,100 +284,6 @@ export default function BlogPage() {
           ))}
         </section>
       </main>
-
-      {/* Admin Create Modal */}
-      {showAdminModal && (
-        <div className={styles.formOverlay} onClick={() => setShowAdminModal(false)}>
-          <div className={styles.formContent} onClick={e => e.stopPropagation()}>
-            <button className={styles.closeBtn} onClick={() => setShowAdminModal(false)}>×</button>
-            <h2 className={styles.formTitle}>
-              <Sparkles size={20} style={{ color: "var(--accent-primary)", display: "inline-block", marginRight: "0.5rem", verticalAlign: "middle" }} />
-              Yeni Blog Yazısı Ekle
-            </h2>
-            <form onSubmit={handleCreatePost}>
-              <div className={styles.formGroup}>
-                <label className={styles.formLabel}>Yazı Başlığı</label>
-                <input 
-                  type="text" 
-                  className={styles.formInput}
-                  placeholder="Örn: BIST'te Algoritmaların Gücü" 
-                  value={newTitle}
-                  onChange={e => setNewTitle(e.target.value)}
-                  required
-                />
-              </div>
-
-              <div className={styles.formRow}>
-                <div className={styles.formGroup}>
-                  <label className={styles.formLabel}>Kategori</label>
-                  <select 
-                    className={styles.formSelect}
-                    value={newCategory}
-                    onChange={e => setNewCategory(e.target.value)}
-                  >
-                    <option value="Piyasa Analizi">Piyasa Analizi</option>
-                    <option value="Strateji">Strateji</option>
-                    <option value="Risk Yönetimi">Risk Yönetimi</option>
-                  </select>
-                </div>
-                <div className={styles.formGroup}>
-                  <label className={styles.formLabel}>Okuma Süresi</label>
-                  <input 
-                    type="text" 
-                    className={styles.formInput} 
-                    placeholder="Örn: 5 dk"
-                    value={newReadTime}
-                    onChange={e => setNewReadTime(e.target.value)}
-                  />
-                </div>
-              </div>
-
-              <div className={styles.formGroup}>
-                <label className={styles.formLabel}>Tema & Kapak Rengi</label>
-                <select 
-                  className={styles.formSelect}
-                  value={newTheme}
-                  onChange={e => setNewTheme(e.target.value)}
-                >
-                  <option value="indigo">Indigo/Mavi (Featured Teması)</option>
-                  <option value="purple">Mor (DarkRoom Teması)</option>
-                  <option value="emerald">Yeşil (Kripto Teması)</option>
-                  <option value="sky">Açık Mavi (Highway Teması)</option>
-                </select>
-              </div>
-
-              <div className={styles.formGroup}>
-                <label className={styles.formLabel}>Kısa Özet / Açıklama</label>
-                <input 
-                  type="text" 
-                  className={styles.formInput} 
-                  placeholder="Kartta gözükecek kısa açıklama..."
-                  value={newDesc}
-                  onChange={e => setNewDesc(e.target.value)}
-                  required
-                />
-              </div>
-
-              <div className={styles.formGroup}>
-                <label className={styles.formLabel}>İçerik (HTML veya Düz Yazı yazabilirsiniz)</label>
-                <textarea 
-                  className={styles.formTextarea} 
-                  placeholder="Yazı detayını buraya girin. Paragraflar için Enter tuşuna basabilirsiniz..."
-                  value={newContent}
-                  onChange={e => setNewContent(e.target.value)}
-                  required
-                />
-              </div>
-
-              <button type="submit" className={styles.submitBtn}>
-                <Send size={15} style={{ display: "inline-block", marginRight: "0.4rem", verticalAlign: "middle" }} />
-                Yayınla ve Kaydet
-              </button>
-            </form>
-          </div>
-        </div>
-      )}
-
       {/* Reader View Modal */}
       {selectedPost && (
         <div className={styles.readerOverlay}>
