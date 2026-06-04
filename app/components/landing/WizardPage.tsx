@@ -2253,6 +2253,101 @@ function TrademateSelfPanel({ t }: { t: (k: string) => string }) {
   );
 }
 
+// --- Fabrika Premium Info Panel (Step 6 Left) --------------------------------
+function FabrikaPremiumPanel({ t }: { t: (k: string) => string }) {
+  const Section = ({ title, icon, children }: { title?: string; icon?: React.ReactNode; children: React.ReactNode }) => (
+    <div className={s.contentSectionUnified}>
+      {title && (
+        <h3 className={s.contentSectionTitleUnified}>
+          {icon && <span style={{ opacity: 0.8 }}>{icon}</span>}
+          {title}
+        </h3>
+      )}
+      {children}
+    </div>
+  );
+
+  return (
+    <div className={s.robotDetailsPanelUnified} style={{ '--panel-accent': '#60a5fa' } as React.CSSProperties}>
+      {/* Header */}
+      <div className={s.tmHeader}>
+        <div className={s.tmIconGlowBlue}><Activity size={32} /></div>
+        <div>
+          <h2 className={`${s.robotNeonTitleUnified} ${s.neonBlue}`}>Fabrika Premium</h2>
+          <p className={s.robotSloganUnified}>Borsa İstanbul İçin Akıllı Trend Takip Robotu</p>
+        </div>
+      </div>
+
+      {/* Highlights */}
+      <div className={s.tmHighlights}>
+        <div className={`${s.featureTagUnified} ${s.tagBlue}`}><Users size={14} /><span>Ekip Yönetimi</span></div>
+        <div className={`${s.featureTagUnified} ${s.tagBlue}`}><Activity size={14} /><span>Premium Sunucu</span></div>
+        <div className={`${s.featureTagUnified} ${s.tagBlue}`}><span>Akıllı Trend Takip</span></div>
+      </div>
+
+      <div className={s.flatContentUnified}>
+        
+        {/* Giriş */}
+        <Section>
+          <p className={s.accordionTextUnified}>
+            Fabrika Premium, Borsa İstanbul hisselerinde trend takibi yaparak otomatik alım-satım gerçekleştiren akıllı bir işlem robotudur. Yükseliş eğilimine giren hisseleri kendi analiz motoruyla yakalar, bütçesini disiplinli biçimde yönetir ve piyasa koşulları değiştikçe kendini sürekli yeniden ayarlar. Amacı, duygusal kararları ve sürekli ekran başında durma zorunluluğunu ortadan kaldırarak, tanımlı bir strateji çerçevesinde tutarlı şekilde işlem yapmaktır.
+          </p>
+        </Section>
+
+        {/* Akıllı Bütçe Yönetimi */}
+        <Section title="Akıllı bütçe yönetimi" icon={<Settings size={18} />}>
+          <p className={s.accordionTextUnified}>
+            Robot, kendisine tanımlanan toplam bütçeyi kontrollü biçimde dağıtır. Aynı anda işlem yapılacak hisse sayısını, hisse başına ayrılacak tutarı ve her bir emrin büyüklüğünü otomatik dengeler. Böylece sermaye tek bir hisseye yığılmaz, risk dengeli biçimde yayılır.
+          </p>
+        </Section>
+
+        {/* Piyasanın Yönüne Göre Davranış */}
+        <Section title="Piyasanın yönüne göre davranış" icon={<TrendingUp size={18} />}>
+          <p className={s.accordionTextUnified}>
+            Fabrika Trader yalnızca tek tek hisselere değil, piyasanın geneline de bakar. Endeksin anlık gücünü ve yönünü sürekli izler; piyasa elverişli değilse alışlarını yavaşlatır ya da tamamen durdurur, güçlüyken ise iştahını ve hedeflerini buna göre artırır. Kısacası rüzgâr tersse yelken açmaz.
+          </p>
+        </Section>
+
+        {/* Tatil ve Seans Takvimini Bilir */}
+        <Section title="Tatil ve seans takvimini bilir" icon={<Info size={18} />}>
+          <p className={s.accordionTextUnified}>
+            Hafta sonlarını, tam gün resmi tatilleri ve yarım gün işlem günlerini otomatik olarak tanır; çalışma saatlerini buna göre ayarlar. Piyasa kapalıyken boşuna yoklama yapmaz, bekleme moduna geçer; açıldığında işlemlerini kendiliğinden yeniden başlatır.
+          </p>
+        </Section>
+
+        {/* Kademeli ve İzleyen Alım */}
+        <Section title="Kademeli ve izleyen alım" icon={<Target size={18} />}>
+          <p className={s.accordionTextUnified}>
+            Pozisyona tek hamlede girmez; fiyatı kademe kademe takip ederek, planladığı seviyelerde alış yapar. Fiyat hareket ettikçe alım seviyelerini akıllıca güncelleyebilir, böylece ortalama maliyeti iyileştirmeyi hedefler.
+          </p>
+        </Section>
+
+        {/* Koşullara Uyum Sağlayan İşlem Mantığı */}
+        <Section title="Koşullara uyum sağlayan işlem mantığı" icon={<Zap size={18} />}>
+          <p className={s.accordionTextUnified}>
+            Robot tek bir sabit formülle çalışmaz. Günün farklı saatlerinde ve farklı piyasa koşullarında, duruma en uygun değerlendirme profilini kendisi devreye alır. Bu sayede açılışın oynak saatleriyle günün sakin dönemleri aynı kalıpla ele alınmaz; her ortama uygun bir yaklaşım benimser.
+          </p>
+        </Section>
+
+        {/* Dinamik Kâr Koruma */}
+        <Section title="Dinamik kar koruma" icon={<Shield size={18} />}>
+          <p className={s.accordionTextUnified}>
+            Pozisyon kara geçtikçe robot çıkış seviyesini yukarı çekerek kazancı korumaya çalışır (izleyen koruma). Hedeflerine ulaşan pozisyonları zamanında kapatır, beklenmedik dönüşlerde ise pozisyondan disiplinli biçimde çıkar. Amaç, kârı büyütürken olası kaybı sınırlı tutmaktır.
+          </p>
+        </Section>
+
+        {/* Portföy Entegrasyonu ve Şeffaf Raporlama */}
+        <Section title="Portföy entegrasyonu ve şeffaf raporlama" icon={<BarChart3 size={18} />}>
+          <p className={s.accordionTextUnified}>
+            Başlatıldığında mevcut portföydeki hisseleri otomatik tanıyıp yönetimine alır. Tüm işlem ve kararlarını detaylı kayıtlarla saklar, gün içinde ve gün sonunda özet raporlar üretir; böylece robotun ne yaptığı her an şeffaf biçimde takip edilebilir.
+          </p>
+        </Section>
+
+      </div>
+    </div>
+  );
+}
+
 // --- Fabrika Self-Service Info Panel (Step 6 Left) ---------------------------
 function FabrikaSelfPanel({ t }: { t: (k: string) => string }) {
   const Section = ({ title, icon, children }: { title?: string; icon?: React.ReactNode; children: React.ReactNode }) => (
@@ -2440,6 +2535,9 @@ function RobotInfoBox({ robot, t, variant = "default" }: { robot?: RobotDefiniti
   }
   if (robot.id === "FABRIKA_SELF") {
     return <FabrikaSelfPanel t={t} />;
+  }
+  if (robot.id === "FABRIKA") {
+    return <FabrikaPremiumPanel t={t} />;
   }
 
   const getIcon = () => {
