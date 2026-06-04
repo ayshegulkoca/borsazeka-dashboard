@@ -37,9 +37,9 @@ export default function BlogPostPage({ id }: BlogPostPageProps) {
 
   if (!post) {
     return (
-      <div className="bg-slate-50 text-slate-900 min-h-screen relative z-10">
+      <div className="bg-white text-slate-900 min-h-screen relative z-10">
         <Navbar />
-        <main className="max-w-md mx-auto px-4 pt-48 pb-24 text-center">
+        <main className="max-w-md mx-auto px-6 pt-48 pb-24 text-center">
           <h1 className="text-3xl font-extrabold text-slate-900 mb-4">{notFoundTitle}</h1>
           <p className="text-slate-500 mb-8 font-medium">{notFoundDesc}</p>
           <Link 
@@ -61,7 +61,7 @@ export default function BlogPostPage({ id }: BlogPostPageProps) {
       // Heading 3
       if (block.startsWith("### ")) {
         return (
-          <h3 key={idx} className="text-xl sm:text-2xl font-extrabold text-slate-950 mt-10 mb-4 leading-tight">
+          <h3 key={idx} className="text-xl sm:text-2xl font-extrabold text-slate-900 mt-10 mb-4 leading-tight">
             {block.replace("### ", "")}
           </h3>
         );
@@ -70,13 +70,13 @@ export default function BlogPostPage({ id }: BlogPostPageProps) {
       if (block.startsWith("- ")) {
         const listItems = block.split("\n");
         return (
-          <ul key={idx} className="list-disc pl-5 my-6 space-y-2.5 text-slate-600 font-medium text-sm sm:text-base">
+          <ul key={idx} className="list-disc pl-5 my-6 space-y-2.5 text-slate-600 font-medium text-sm sm:text-base leading-relaxed">
             {listItems.map((item, itemIdx) => (
               <li key={itemIdx}>
                 {/* Parse inline strong tags like **text** */}
                 {item.replace("- ", "").split("**").map((textChunk, chunkIdx) => {
                   if (chunkIdx % 2 === 1) {
-                    return <strong key={chunkIdx} className="text-slate-950 font-bold">{textChunk}</strong>;
+                    return <strong key={chunkIdx} className="text-slate-900 font-bold">{textChunk}</strong>;
                   }
                   return textChunk;
                 })}
@@ -91,7 +91,7 @@ export default function BlogPostPage({ id }: BlogPostPageProps) {
           {/* Simple parser for inline strong **text** inside paragraph */}
           {block.split("**").map((textChunk, chunkIdx) => {
             if (chunkIdx % 2 === 1) {
-              return <strong key={chunkIdx} className="text-slate-950 font-bold">{textChunk}</strong>;
+              return <strong key={chunkIdx} className="text-slate-900 font-bold">{textChunk}</strong>;
             }
             return textChunk;
           })}
@@ -101,15 +101,11 @@ export default function BlogPostPage({ id }: BlogPostPageProps) {
   };
 
   return (
-    <div className="bg-slate-50 text-slate-900 min-h-screen relative z-10">
+    <div className="bg-white text-slate-900 min-h-screen relative z-10">
       <Navbar />
 
-      {/* Decorative Glows */}
-      <div className="absolute top-0 inset-x-0 h-[600px] bg-gradient-to-b from-blue-50/30 via-transparent to-transparent pointer-events-none -z-10" />
-      <div className="absolute top-[30%] right-[-10%] w-[500px] h-[500px] rounded-full bg-blue-100/10 blur-[120px] pointer-events-none -z-10" />
-
       {/* Main Content Area */}
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-40 pb-24">
+      <main className="max-w-3xl mx-auto px-6 pt-40 pb-24">
         {/* Navigation & Category */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
           <Link
