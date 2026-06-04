@@ -1,20 +1,20 @@
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import { PLAN_LABELS } from "@/lib/plans";
-import { ROBOT_BY_ID } from "@/lib/robots";
-import { apiGet } from "@/lib/api";
+import { ROBOT_BY_ID, getRobotNormalizedId } from "@/lib/robots";
+import { apiGet, getMyRobots } from "@/lib/api";
 import DashboardHomeClient from "./DashboardHomeClient";
 
 export default async function DashboardHome() {
   const session = await auth();
   if (!session?.user?.id) redirect("/");
 
-  const userId = session.user.id;
+  const userEmail = session.user.email ?? "";
 
   // Gerçek veriler — API'den çek (Prisma yerine)
   const [subscription, apiRobots, dashboardSummary] = await Promise.all([
     apiGet<any>("/user/subscription"),
-    apiGet<any[]>("/user/robots"),
+    getMyRobots(userEmail),
     apiGet<any>("/user/dashboard-summary"),
   ]);
 
@@ -28,10 +28,16 @@ export default async function DashboardHome() {
 
   const activeRobotCount = userRobots.length;
 
-  const robotsWithMeta = userRobots.map((ur) => ({
-    ...ur,
-    meta: ROBOT_BY_ID[ur.robotId as keyof typeof ROBOT_BY_ID] ?? null,
-  }));
+  const robotsWithMeta = userRobots.map((ur) => {
+    const robotId = getRobotNormalizedId(ur.robotName);
+    return {
+      id: ur.subscriptionId || ur.subscriptionCode || robotId,
+      robotId: robotId,
+      isActive: ur.isActive ?? true,
+      addedAt: ur.createdAtUtc ? new Date(ur.createdAtUtc) : new Date(),
+      meta: ROBOT_BY_ID[robotId as keyof typeof ROBOT_BY_ID] ?? null,
+    };
+  });
 
   const displayName = session.user.name?.split(" ")[0] ?? "Yatırımcı";
 

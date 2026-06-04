@@ -409,17 +409,163 @@ input:checked + .slider:before {
 
 /* Robot Card */
 .robotCard {
-  background: var(--bg-card);
+  background: linear-gradient(135deg, var(--bg-card) 0%, rgba(255, 255, 255, 0.01) 100%);
   border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-lg);
-  padding: 1.5rem;
-  transition: all 0.2s ease;
+  border-radius: var(--radius-xl);
+  padding: 1.25rem 1.5rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  max-width: 440px;
 }
 
 .robotCard:hover {
-  transform: translateY(-4px);
-  border-color: rgba(16, 185, 129, 0.3);
-  box-shadow: var(--shadow-card);
+  transform: translateY(-6px);
+  border-color: var(--robot-color-alpha) !important;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25), 0 0 15px var(--robot-color-glow);
+}
+
+.robotCardIconWrapper {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.robotCard:hover .robotCardIconWrapper {
+  transform: scale(1.05) rotate(5deg);
+}
+
+.robotCardStatusBadge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 0.25rem 0.65rem;
+  border-radius: 100px;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.robotCardStatusBadgeDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  position: relative;
+}
+
+.robotCardStatusBadgeDot::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  border-radius: 50%;
+  background: currentColor;
+  animation: pulse-dot 1.8s infinite ease-in-out;
+}
+
+@keyframes pulse-dot {
+  0% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(3.5); opacity: 0; }
+}
+
+.robotCardTitle {
+  font-size: 1.15rem;
+  font-weight: 750;
+  color: var(--text-primary);
+  margin-bottom: 0.25rem;
+  letter-spacing: -0.01em;
+}
+
+.robotCardTagline {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+
+.robotCardStatsContainer {
+  display: flex;
+  gap: 2rem;
+  padding: 0.75rem 0;
+  margin-bottom: 1.25rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.robotCardStat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.robotCardStatLabel {
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.robotCardStatValue {
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.robotCardButtons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.robotCardDisableButton {
+  flex: 1;
+  padding: 0.6rem;
+  border-radius: 10px;
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  background: rgba(239, 68, 68, 0.04);
+  color: #ef4444;
+  font-weight: 700;
+  font-size: 0.8rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.robotCardDisableButton:hover:not(:disabled) {
+  background: rgba(239, 68, 68, 0.12);
+  border-color: rgba(239, 68, 68, 0.5);
+  transform: translateY(-1px);
+}
+
+.robotCardDisableButton:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.robotCardDetailsButton {
+  padding: 0.6rem 0.875rem;
+  border-radius: 10px;
+  border: 1px solid var(--border-subtle);
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--text-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.robotCardDetailsButton:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--text-secondary);
+  color: var(--text-primary);
+  transform: translateY(-1px);
 }

@@ -134,3 +134,30 @@ export async function apiPost<T>(endpoint: string, body: any): Promise<T | null>
     return null;
   }
 }
+
+/**
+ * BorsaZeka dispatch (MyRobots) API'sinden kullanıcının sahip olduğu robotları (abonelikleri) çeker.
+ */
+export async function getMyRobots(email: string): Promise<any[]> {
+  try {
+    const response = await apiFetch("/dispatch", {
+      method: "POST",
+      body: JSON.stringify({
+        mail: email,
+        isNotification: false,
+        method: "MyRobots",
+        data: {},
+      }),
+    });
+    if (response.ok) {
+      const json = await response.json().catch(() => null);
+      if (json?.success && json?.data?.robots) {
+        return json.data.robots;
+      }
+    }
+  } catch (error) {
+    console.error("Error fetching MyRobots:", error);
+  }
+  return [];
+}
+

@@ -4,20 +4,9 @@ import { SERVER_PACKAGES } from "@/src/data/products";
 import { getPrefilledStripeLink } from "@/lib/stripe";
 import { apiGet, apiFetch } from "@/lib/api";
 import { prisma } from "@/lib/prisma";
+import { getRobotNormalizedId } from "@/lib/robots";
 import ServersClient from "./ServersClient";
 
-function getRobotNormalizedId(name: string): string {
-  if (!name) return "";
-  const n = name.toLowerCase().trim();
-  if (n.includes("trademate")) return "trademate";
-  if (n.includes("darkroom")) return "darkroom";
-  if (n.includes("highway")) return "highway";
-  if (n.includes("fabrika")) return "fabrika";
-  if (n.includes("classic")) return "classic";
-  if (n.includes("kripto")) return "kripttozeka";
-  if (n.includes("forex")) return "forexzeka";
-  return n;
-}
 
 const ROBOT_DISPLAY_NAMES: Record<string, string> = {
   trademate: "TradeMate Premium",

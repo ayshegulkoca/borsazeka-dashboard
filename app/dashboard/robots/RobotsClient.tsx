@@ -9,7 +9,6 @@ import {
   TrendingUp,
   Activity,
   ChevronRight,
-  CheckCircle2,
   ArrowRight,
   Bot
 } from "lucide-react";
@@ -96,97 +95,67 @@ export default function RobotsClient({ ownedRobots, hasOwnedRobots }: Props) {
               key={robot.id}
               className={styles.robotCard}
               style={{
-                borderColor: robot.color + "44",
-                background: `linear-gradient(135deg, var(--bg-card) 0%, ${robot.color}08 100%)`,
+                borderColor: robot.color + "25",
+                background: `linear-gradient(135deg, var(--bg-card) 0%, ${robot.color}05 100%)`,
                 cursor: "pointer",
-              }}
+                ["--robot-color" as any]: robot.color,
+                ["--robot-color-alpha" as any]: robot.color + "45",
+                ["--robot-color-glow" as any]: robot.color + "15",
+              } as React.CSSProperties}
               onClick={() => setSelectedRobot(robot)}
             >
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "1rem" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.25rem" }}>
                 <div
+                  className={styles.robotCardIconWrapper}
                   style={{
-                    width: 48,
-                    height: 48,
-                    borderRadius: 12,
-                    background: robot.color + "18",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
+                    background: robot.color + "12",
                   }}
                 >
-                  <Icon size={24} color={robot.color} />
+                  <Icon size={26} color={robot.color} />
                 </div>
                 <span
+                  className={styles.robotCardStatusBadge}
                   style={{
-                    fontSize: "0.7rem",
-                    fontWeight: 700,
                     color: robot.color,
-                    background: robot.color + "18",
-                    padding: "0.2rem 0.6rem",
-                    borderRadius: 100,
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "0.3rem",
+                    background: robot.color + "12",
+                    border: `1px solid ${robot.color}25`,
                   }}
                 >
-                  <CheckCircle2 size={12} /> {t("dashboard.robots.active")}
+                  <span className={styles.robotCardStatusBadgeDot} style={{ color: robot.color, background: robot.color }} />
+                  {t("dashboard.robots.active")}
                 </span>
               </div>
 
-              <div style={{ fontWeight: 700, fontSize: "1rem", marginBottom: "0.25rem" }}>{robot.name}</div>
-              <div style={{ fontSize: "0.8rem", color: "var(--text-muted)", marginBottom: "1rem", lineHeight: 1.5 }}>
-                {robot.tagline}
-              </div>
+              <h3 className={styles.robotCardTitle}>{robot.name}</h3>
+              <p className={styles.robotCardTagline}>{robot.tagline}</p>
 
-              <div style={{ display: "flex", gap: "1rem", marginBottom: "1.25rem" }}>
-                <div>
-                  <div style={{ fontSize: "0.7rem", color: "var(--text-muted)" }}>{t("dashboard.robots.monthlyReturn")}</div>
-                  <div style={{ fontWeight: 700, color: robot.color, fontSize: "0.95rem" }}>{robot.monthlyReturn}</div>
+              <div className={styles.robotCardStatsContainer}>
+                <div className={styles.robotCardStat}>
+                  <span className={styles.robotCardStatLabel}>{t("dashboard.robots.monthlyReturn")}</span>
+                  <span className={styles.robotCardStatValue} style={{ color: robot.color }}>{robot.monthlyReturn}</span>
                 </div>
-                <div>
-                  <div style={{ fontSize: "0.7rem", color: "var(--text-muted)" }}>{t("dashboard.robots.riskLevel")}</div>
-                  <div style={{ fontWeight: 700, fontSize: "0.95rem" }}>{robot.riskLevel}</div>
+                <div className={styles.robotCardStat}>
+                  <span className={styles.robotCardStatLabel}>{t("dashboard.robots.riskLevel")}</span>
+                  <span className={styles.robotCardStatValue} style={{ color: "var(--text-primary)" }}>{robot.riskLevel}</span>
                 </div>
               </div>
 
-              <div style={{ display: "flex", gap: "0.5rem" }} onClick={(e) => e.stopPropagation()}>
+              <div className={styles.robotCardButtons} onClick={(e) => e.stopPropagation()}>
                 <button
+                  className={styles.robotCardDisableButton}
                   onClick={() => handleRemove(robot.id as RobotId)}
                   disabled={isLoading}
-                  style={{
-                    flex: 1,
-                    padding: "0.65rem",
-                    borderRadius: 10,
-                    border: "1px solid rgba(239,68,68,0.3)",
-                    background: "rgba(239,68,68,0.08)",
-                    color: "#f87171",
-                    fontWeight: 600,
-                    fontSize: "0.85rem",
-                    cursor: "pointer",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    gap: "0.4rem",
-                    opacity: isLoading ? 0.6 : 1,
-                  }}
                 >
-                  <Trash2 size={15} />
+                  <Trash2 size={16} />
                   {isLoading
                     ? t("dashboard.robots.disabling")
                     : t("dashboard.robots.disable")}
                 </button>
                 <button
+                  className={styles.robotCardDetailsButton}
                   onClick={() => setSelectedRobot(robot)}
-                  style={{
-                    padding: "0.65rem 0.75rem",
-                    borderRadius: 10,
-                    border: "1px solid var(--border-subtle)",
-                    background: "var(--bg-card-hover)",
-                    color: "var(--text-secondary)",
-                    cursor: "pointer",
-                  }}
                 >
-                  <ChevronRight size={16} />
+                  <ChevronRight size={18} />
                 </button>
               </div>
             </div>

@@ -1,18 +1,20 @@
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
-import { ROBOT_CATALOG } from "@/lib/robots";
-import { apiGet } from "@/lib/api";
+import { ROBOT_CATALOG, getRobotNormalizedId } from "@/lib/robots";
+import { getMyRobots } from "@/lib/api";
 import RobotsClient from "./RobotsClient";
 
 export default async function RobotsPage() {
   const session = await auth();
   if (!session?.user?.id) redirect("/");
 
-  // Kullanıcının sahip olduğu robotları API'den çek (Prisma yerine)
-  const apiRobots = await apiGet<any[]>("/user/robots");
+  const userEmail = session.user.email ?? "";
+
+  // Kullanıcının sahip olduğu robotları BorsaZeka dispatch (MyRobots) API'sinden çek
+  const apiRobots = await getMyRobots(userEmail);
   const userRobots = apiRobots ?? [];
 
-  const activeRobotIds = userRobots.map((r) => r.robotId);
+  const activeRobotIds = userRobots.map((r) => getRobotNormalizedId(r.robotName));
 
   // SADECE kullanıcının sahip olduğu robotları katalogdan filtrele
   const ownedRobots = ROBOT_CATALOG.filter(robot => 

@@ -27,7 +27,7 @@ export const ROBOT_CATALOG: RobotDef[] = [
     totalTrades: 482,
     riskLevel: "Orta",
     tags: ["AI Tabanlı", "Orta Risk", "Momentum"],
-    color: "#a1a1aa", // Muted Zinc
+    color: "#8b5cf6", // Vibrant Purple
   },
   {
     id: "highway",
@@ -40,7 +40,7 @@ export const ROBOT_CATALOG: RobotDef[] = [
     totalTrades: 894,
     riskLevel: "Yüksek",
     tags: ["Hızlı İşlem", "Yüksek Risk", "Trend"],
-    color: "#94a3b8", // Muted Slate
+    color: "#0ea5e9", // Vibrant Blue/Cyan
   },
   {
     id: "trademate",
@@ -53,7 +53,7 @@ export const ROBOT_CATALOG: RobotDef[] = [
     totalTrades: 317,
     riskLevel: "Düşük",
     tags: ["Kişiselleştirilebilir", "Düşük Risk", "Hibrit"],
-    color: "#a1a1aa",
+    color: "#10b981", // Vibrant Emerald
   },
 ];
 
@@ -73,3 +73,17 @@ export const PLAN_DEFAULT_ROBOTS: Record<string, RobotId[]> = {
   PRO: ["darkroom", "highway"],
   ENTERPRISE: ["darkroom", "highway", "trademate"],
 };
+
+export function getRobotNormalizedId(name: string): string {
+  if (!name) return "";
+  const n = name.toLowerCase().trim();
+  if (n.includes("trademate")) return "trademate";
+  if (n.includes("darkroom")) return "darkroom";
+  if (n.includes("highway")) return "highway";
+  if (n.includes("fabrika")) return "fabrika";
+  if (n.includes("classic")) return "classic";
+  if (n.includes("kripto")) return "kripttozeka";
+  if (n.includes("forex")) return "forexzeka";
+  return n;
+}
+
