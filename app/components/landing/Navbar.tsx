@@ -287,9 +287,9 @@ export default function Navbar() {
           <li>
             <Link
               href="/blog"
-              className={pathname === "/blog" || pathname?.startsWith("/blog/") ? styles.active : ""}
+              className={pathname === "/blog" ? styles.active : ""}
             >
-              {t("blog")}
+              {t("navbar.blog")}
             </Link>
           </li>
           <li>
@@ -395,7 +395,7 @@ export default function Navbar() {
           {t("navbar.education")}
         </Link>
         <Link href="/blog" onClick={() => setMobileOpen(false)}>
-          {t("blog")}
+          {t("navbar.blog")}
         </Link>
         <Link href="/iletisim" onClick={() => setMobileOpen(false)}>
           {t("navbar.contact")}

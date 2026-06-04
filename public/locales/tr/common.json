@@ -1,5 +1,4 @@
 {
-  "blog": "Blog",
   "setupWizard": {
     "title": "Kurulumu Tamamla",
     "stepsCompleted": "{{completed}} / {{total}} adım tamamlandı",
@@ -77,7 +76,8 @@
     "downloadApp": "Uygulamayı İndir",
     "openForex": "Forex Hesabı Aç",
     "dashboard": "Dashboard",
-    "education": "Eğitim"
+    "education": "Eğitim",
+    "blog": "Blog"
   },
   "hero": {
     "badge": "2015'ten beri yapay zeka ile borsa robotları",

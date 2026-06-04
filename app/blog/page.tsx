@@ -4,7 +4,7 @@ import BlogPage from "../components/landing/BlogPage";
 export const metadata: Metadata = {
   title: "Blog — BorsaZeka",
   description:
-    "BorsaZeka yapay zeka borsa robotları ve algoritmik ticaret blogu. Finansal teknolojiler, piyasa stratejileri ve risk yönetimi hakkında en güncel yazılar.",
+    "Semih Arslan'ın kaleminden algoritmik ticaret rehberleri, yapay zeka & finansal teknoloji günlüğü, piyasa analizleri ve strateji notları.",
 };
 
 export default function BlogRoute() {

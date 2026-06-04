@@ -1,5 +1,4 @@
 {
-  "blog": "Blog",
   "setupWizard": {
     "title": "Complete Setup",
     "stepsCompleted": "{{completed}} of {{total}} steps completed",
@@ -77,7 +76,8 @@
     "downloadApp": "Download App",
     "openForex": "Open Forex Account",
     "dashboard": "Dashboard",
-    "education": "Education"
+    "education": "Education",
+    "blog": "Blog"
   },
   "hero": {
     "badge": "AI-powered stock trading robots since 2015",
