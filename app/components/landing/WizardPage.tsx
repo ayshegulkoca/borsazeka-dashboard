@@ -2253,6 +2253,158 @@ function TrademateSelfPanel({ t }: { t: (k: string) => string }) {
   );
 }
 
+// --- Fabrika Self-Service Info Panel (Step 6 Left) ---------------------------
+function FabrikaSelfPanel({ t }: { t: (k: string) => string }) {
+  const Section = ({ title, icon, children }: { title?: string; icon?: React.ReactNode; children: React.ReactNode }) => (
+    <div className={s.contentSectionUnified}>
+      {title && (
+        <h3 className={s.contentSectionTitleUnified}>
+          {icon && <span style={{ opacity: 0.8 }}>{icon}</span>}
+          {title}
+        </h3>
+      )}
+      {children}
+    </div>
+  );
+
+  return (
+    <div className={s.robotDetailsPanelUnified} style={{ '--panel-accent': '#60a5fa' } as React.CSSProperties}>
+      {/* Header */}
+      <div className={s.tmHeader}>
+        <div className={s.tmIconGlowBlue}><Activity size={32} /></div>
+        <div>
+          <h2 className={`${s.robotNeonTitleUnified} ${s.neonBlue}`}>Fabrika Self-Service</h2>
+          <p className={s.robotSloganUnified}>Borsa İstanbul İçin Kullanıcı Kontrollü Akıllı Trend Takip Robotu</p>
+        </div>
+      </div>
+
+      {/* Highlights */}
+      <div className={s.tmHighlights}>
+        <div className={`${s.featureTagUnified} ${s.tagBlue}`}><Smartphone size={14} /><span>Mobil Uygulama Kontrolü</span></div>
+        <div className={`${s.featureTagUnified} ${s.tagBlue}`}><Activity size={14} /><span>Ücretsiz Sunucu</span></div>
+        <div className={`${s.featureTagUnified} ${s.tagBlue}`}><span>Akıllı Trend Takip</span></div>
+      </div>
+
+      <div className={s.flatContentUnified}>
+        
+        {/* Giriş */}
+        <Section>
+          <p className={s.accordionTextUnified}>
+            Fabrika Self-Service, Borsa İstanbul hisselerinde trend takibi yaparak otomatik alım-satım gerçekleştiren akıllı bir işlem robotudur. Yükseliş eğilimine giren hisseleri kendi analiz motoruyla tespit eder, tanımlanan bütçeyi disiplinli biçimde yönetir ve piyasa koşulları değiştikçe işlem davranışını otomatik olarak yeniden ayarlar.
+          </p>
+          <p className={s.accordionTextUnified}>
+            Self-Service modelinde robotun temel kontrolü kullanıcıdadır. Kullanıcı robotu dilediği zaman açıp kapatabilir, kullanılacak bütçeyi belirleyebilir ve işlem tercihlerini yönetebilir. Fabrika Self-Service’in amacı, duygusal kararları ve sürekli ekran başında durma zorunluluğunu azaltarak, tanımlı bir strateji çerçevesinde otomatik işlem yapmaktır.
+          </p>
+        </Section>
+
+        {/* Akıllı Bütçe Yönetimi */}
+        <Section title="Akıllı Bütçe Yönetimi" icon={<Settings size={18} />}>
+          <p className={s.accordionTextUnified}>
+            Robot, kullanıcı tarafından tanımlanan toplam bütçeyi kontrollü biçimde dağıtır. Aynı anda işlem yapılacak hisse sayısını, hisse başına ayrılacak tutarı ve her bir emrin büyüklüğünü otomatik olarak dengeler.
+          </p>
+          <p className={s.accordionTextUnified}>
+            Böylece sermaye tek bir hisseye yığılmaz, risk daha dengeli biçimde dağıtılır. Kullanıcı, robotun kullanacağı bütçeyi belirleyerek portföy üzerindeki kontrolünü korur.
+          </p>
+        </Section>
+
+        {/* Piyasanın Yönüne Göre Davranış */}
+        <Section title="Piyasanın Yönüne Göre Davranış" icon={<TrendingUp size={18} />}>
+          <p className={s.accordionTextUnified}>
+            Fabrika Self-Service yalnızca tek tek hisselere değil, piyasanın geneline de bakar. Endeksin anlık gücünü ve yönünü takip eder; piyasa elverişli değilse alışlarını yavaşlatır ya da tamamen durdurur, güçlü piyasa koşullarında ise işlem iştahını ve hedeflerini buna göre ayarlar.
+          </p>
+          <p className={s.accordionTextUnified}>
+            Kısacası rüzgâr tersse yelken açmaz. Robot, piyasanın genel yönünü dikkate alarak daha kontrollü işlem yapmayı hedefler.
+          </p>
+        </Section>
+
+        {/* Tatil ve Seans Takvimini Bilir */}
+        <Section title="Tatil ve Seans Takvimini Bilir" icon={<Info size={18} />}>
+          <p className={s.accordionTextUnified}>
+            Fabrika Self-Service, hafta sonlarını, tam gün resmi tatilleri ve yarım gün işlem günlerini otomatik olarak tanır. Çalışma saatlerini Borsa İstanbul takvimine göre ayarlar.
+          </p>
+          <p className={s.accordionTextUnified}>
+            Piyasa kapalıyken gereksiz işlem denemesi yapmaz, bekleme moduna geçer. Seans açıldığında işlemlerini kendiliğinden yeniden başlatır.
+          </p>
+        </Section>
+
+        {/* Kademeli ve İzleyen Alım */}
+        <Section title="Kademeli ve İzleyen Alım" icon={<Target size={18} />}>
+          <p className={s.accordionTextUnified}>
+            Robot pozisyona tek hamlede girmek yerine, fiyatı kademe kademe takip ederek planlanan seviyelerde alış yapar. Fiyat hareket ettikçe alım seviyelerini akıllı şekilde güncelleyebilir.
+          </p>
+          <p className={s.accordionTextUnified}>
+            Bu yapı, ortalama maliyti iyileştirmeyi ve giriş riskini daha kontrollü yönetmeyi hedefler.
+          </p>
+        </Section>
+
+        {/* Koşullara Uyum Sağlayan İşlem Mantığı */}
+        <Section title="Koşullara Uyum Sağlayan İşlem Mantığı" icon={<Zap size={18} />}>
+          <p className={s.accordionTextUnified}>
+            Fabrika Self-Service tek bir sabit formülle çalışmaz. Günün farklı saatlerinde ve farklı piyasa koşullarında, duruma en uygun değerlendirme profilini devreye alır.
+          </p>
+          <p className={s.accordionTextUnified}>
+            Açılışın daha oynak saatleriyle günün daha sakin dönemleri aynı kalıpla ele alınmaz. Robot, piyasa ortamına göre farklı işlem mantıkları kullanarak daha esnek bir yapı sunar.
+          </p>
+        </Section>
+
+        {/* Dinamik Kâr Koruma */}
+        <Section title="Dinamik Kâr Koruma" icon={<Shield size={18} />}>
+          <p className={s.accordionTextUnified}>
+            Pozisyon kara geçtikçe robot çıkış seviyesini yukarı çekerek kazancı korumaya çalışır. İzleyen koruma mantığı sayesinde, trend devam ettiği sürece pozisyonu taşımayı; beklenmedik dönüşlerde ise pozisyondan disiplinli biçimde çıkmayı hedefler.
+          </p>
+          <p className={s.accordionTextUnified}>
+            Hedeflerine ulaşan pozisyonları zamanında kapatır. Amaç, kârı büyütürken olası kaybı sınırlı tutmaktır.
+          </p>
+        </Section>
+
+        {/* Portföy Entegrasyonu ve Şeffaf Raporlama */}
+        <Section title="Portföy Entegrasyonu ve Şeffaf Raporlama" icon={<BarChart3 size={18} />}>
+          <p className={s.accordionTextUnified}>
+            Robot başlatıldığında mevcut portföydeki hisseleri otomatik olarak tanıyabilir ve yönetim sürecine dahil edebilir. Tüm işlem ve kararlarını detaylı kayıtlarla saklar.
+          </p>
+          <p className={s.accordionTextUnified}>
+            Kullanıcı, gün içinde ve gün sonunda oluşan raporlarla robotun hangi işlemleri yaptığını, hangi kararları aldığını ve portföyün nasıl yönetildiğini şeffaf biçimde takip edebilir.
+          </p>
+        </Section>
+
+        {/* Neler Yapabilirsin? */}
+        <Section title="Fabrika Self-Service ile Neler Yapabilirsin?">
+          <Bullets items={[
+            "Robotu dilediğin zaman açıp kapatabilirsin.",
+            "Kullanılacak bütçeyi belirleyebilir ve portföy üzerindeki kontrolünü koruyabilirsin.",
+            "Trend takibi, alım, satış, kâr koruma ve risk yönetimi süreçlerini otomatik hale getirebilirsin.",
+            "Piyasa açıkken sürekli ekran başında beklemeden, tanımlı stratejiye göre işlem yapılmasını sağlayabilirsin.",
+            "İşlem geçmişini, portföy durumunu ve robot kararlarını raporlar üzerinden takip edebilirsin.",
+          ]} />
+        </Section>
+
+        {/* Kimler İçin Uygun */}
+        <Section title="Kimler İçin Uygundur?">
+          <Bullets items={[
+            "Borsa İstanbul’da trend takip stratejisiyle işlem yapmak isteyen kullanıcılar",
+            "Sürekli ekran başında kalmadan otomatik işlem sistemi kullanmak isteyen yatırımcılar",
+            "Robotun kontrolünü kendi elinde tutmak isteyen self-service kullanıcılar",
+            "Bütçe yönetimi, kademeli alım, izleyen kâr koruma ve piyasa uyumlu işlem mantığından faydalanmak isteyen yatırımcılar",
+            "Manuel kararların duygusal etkisini azaltmak ve disiplinli bir algoritmik yapı kullanmak isteyen kullanıcılar",
+          ]} />
+        </Section>
+
+        {/* Özet */}
+        <div className={s.contentSectionUnified} style={{
+          background: "rgba(96, 165, 250, 0.06)",
+          border: "1px solid rgba(96, 165, 250, 0.2)",
+          borderRadius: "12px",
+          padding: "1rem 1.25rem",
+        }}>
+          <p className={s.accordionTextUnified} style={{ margin: 0, color: "#dbeafe", fontStyle: "italic" }}>
+            Fabrika Self-Service, Borsa İstanbul hisselerinde trend takip stratejisini kullanıcı kontrollü otomasyonla birleştiren akıllı bir işlem robotudur. Kontrol kullanıcıda, işlem disiplini Fabrika algoritmasındadır.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  );
+}
 
 // --- RobotInfoBox -------------------------------------------------------------
 function RobotInfoBox({ robot, t, variant = "default" }: { robot?: RobotDefinition; t: any; variant?: "default" | "glass" }) {
@@ -2285,6 +2437,9 @@ function RobotInfoBox({ robot, t, variant = "default" }: { robot?: RobotDefiniti
   }
   if (robot.id === "TRADEMATE_SELF") {
     return <TrademateSelfPanel t={t} />;
+  }
+  if (robot.id === "FABRIKA_SELF") {
+    return <FabrikaSelfPanel t={t} />;
   }
 
   const getIcon = () => {
