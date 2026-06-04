@@ -1,4 +1,5 @@
 {
+  "blog": "Blog",
   "setupWizard": {
     "title": "Kurulumu Tamamla",
     "stepsCompleted": "{{completed}} / {{total}} adım tamamlandı",

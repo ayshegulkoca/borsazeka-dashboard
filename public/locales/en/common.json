@@ -1,4 +1,5 @@
 {
+  "blog": "Blog",
   "setupWizard": {
     "title": "Complete Setup",
     "stepsCompleted": "{{completed}} of {{total}} steps completed",
