@@ -293,6 +293,14 @@ export default function Navbar() {
             </Link>
           </li>
           <li>
+            <Link
+              href="/veri-setleri"
+              className={pathname.startsWith("/veri-setleri") ? styles.active : ""}
+            >
+              {t("navbar.dataSets")}
+            </Link>
+          </li>
+          <li>
             <Link href="/iletisim" className={pathname === "/iletisim" ? styles.active : ""}>
               {t("navbar.contact")}
             </Link>
@@ -396,6 +404,9 @@ export default function Navbar() {
         </Link>
         <Link href="/blog" onClick={() => setMobileOpen(false)}>
           {t("navbar.blog")}
+        </Link>
+        <Link href="/veri-setleri" onClick={() => setMobileOpen(false)}>
+          {t("navbar.dataSets")}
         </Link>
         <Link href="/iletisim" onClick={() => setMobileOpen(false)}>
           {t("navbar.contact")}
