@@ -74,7 +74,8 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  max-width: 100%;
+  max-width: 95%;
+  margin: 0 auto;
   padding: 0 1.5rem;
   position: relative;
   z-index: 2;
@@ -102,13 +103,12 @@
 .navLinks {
   display: flex;
   align-items: center;
-  gap: 1rem;
   list-style: none;
   justify-content: center;
 }
 
 .navLinks a {
-  font-size: 16px;
+  font-size: inherit;
   font-weight: 500;
   color: #ffffff;
   transition: all 0.3s ease;
@@ -181,7 +181,6 @@
 .navActions {
   display: flex;
   align-items: center;
-  gap: 1rem;
   flex-shrink: 0;
 }
 
@@ -453,7 +452,6 @@
   display: flex;
   align-items: center;
   gap: 0.4rem;
-  padding: 0.375rem 0.75rem;
   border-radius: var(--radius-capsule);
   font-size: 0.7rem;
   font-weight: 400;

@@ -229,7 +229,7 @@ export default function Navbar() {
       </Suspense>
 
       <nav className={`${styles.navbar} ${scrolled ? styles.scrolled : ""} ${pathname === "/robotlar" ? styles.navbarDark : ""}`}>
-        <div className={styles.navInner}>
+        <div className={`${styles.navInner} w-full max-w-[95%] mx-auto lg:px-8 xl:px-12`}>
         {/* Brand: Logo + Dashboard Button (if auth) */}
         <div className={styles.navBrandWrapper}>
           <Link href="/" className={`${styles.navLogo} flex items-center`}>
@@ -255,7 +255,7 @@ export default function Navbar() {
         </div>
 
         {/* Center Links */}
-        <ul className={styles.navLinks}>
+        <ul className={`${styles.navLinks} text-sm lg:text-[13px] xl:text-sm gap-2 lg:gap-3 xl:gap-5`}>
           <li>
             <Link href="/robotlar" className={pathname === "/robotlar" ? styles.active : ""}>
               {t("navbar.ourRobots")}
@@ -300,12 +300,12 @@ export default function Navbar() {
         </ul>
 
         {/* Right Actions */}
-        <div className={styles.navActions}>
+        <div className={`${styles.navActions} pl-2 lg:pl-4 gap-2 lg:gap-3 xl:gap-4`}>
           {/* 📲 Uygulamayı İndir */}
           <Link
             href="/app"
             id="navbar-download-btn"
-            className={styles.btnDownload}
+            className={`${styles.btnDownload} px-4 py-2 lg:px-3 lg:py-1.5 xl:px-4 xl:py-2`}
             aria-label="Uygulamayı İndir bölümüne git"
             onClick={(e) => {
               if (pathname === "/" || pathname === "/app") {
