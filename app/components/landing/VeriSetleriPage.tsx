@@ -44,8 +44,8 @@ export const DATA_PACKAGES: DataPackage[] = [
     timeframeEN: "1 Minute",
     dateRangeTR: "Kas 2012 – Günümüz",
     dateRangeEN: "Nov 2012 – Present",
-    formatTR: "CSV / Parquet",
-    formatEN: "CSV / Parquet",
+    formatTR: "CSV",
+    formatEN: "CSV",
     updateFrequency: "Günlük",
     estimatedSize: "~150 GB",
     featured: true,
@@ -54,14 +54,14 @@ export const DATA_PACKAGES: DataPackage[] = [
       "Açılış, Kapanış, En Yüksek, En Düşük, Hacim (OHLCV)",
       "Şirket birleşme/bölünme ve temettü düzeltmeleri",
       "İşlem seans bilgisi ve devre kesici kayıtları",
-      "Özel formata dönüştürme desteği",
+      "Kolay entegre edilebilir veri yapısı",
     ],
     featuresEN: [
       "Complete data coverage for all 577 stocks",
       "Open, High, Low, Close, Volume (OHLCV)",
       "Adjusted for corporate actions (mergers, splits, dividends)",
       "Trading session info and circuit breaker records",
-      "Custom format conversion support",
+      "Easy-to-integrate data structure",
     ],
     useCasesTR: [
       { title: "Backtest Modelleme", desc: "Stratejinizi 13 yıllık 1 dakikalık granülaritede test edin." },
@@ -78,7 +78,7 @@ export const DATA_PACKAGES: DataPackage[] = [
       { key: "Zaman Dilimi", value: "Europe/Istanbul (UTC+3)" },
       { key: "Aralık", value: "1 Dakika (OHLCV)" },
       { key: "Düzeltme", value: "Bölünme & Temettü" },
-      { key: "Format", value: "CSV, Parquet, JSON" },
+      { key: "Format", value: "CSV" },
       { key: "Sıkıştırma", value: "ZIP / GZIP" },
       { key: "Tahmini Boyut", value: "~150 GB (ham)" },
     ],
@@ -87,7 +87,7 @@ export const DATA_PACKAGES: DataPackage[] = [
       { key: "Timezone", value: "Europe/Istanbul (UTC+3)" },
       { key: "Interval", value: "1 Minute (OHLCV)" },
       { key: "Adjustment", value: "Split & Dividend Adjusted" },
-      { key: "Format", value: "CSV, Parquet, JSON" },
+      { key: "Format", value: "CSV" },
       { key: "Compression", value: "ZIP / GZIP" },
       { key: "Estimated Size", value: "~150 GB (raw)" },
     ],
@@ -104,8 +104,8 @@ export const DATA_PACKAGES: DataPackage[] = [
     timeframeEN: "Daily",
     dateRangeTR: "Ağu 1987 – Günümüz",
     dateRangeEN: "Aug 1987 – Present",
-    formatTR: "CSV / Excel / JSON",
-    formatEN: "CSV / Excel / JSON",
+    formatTR: "CSV",
+    formatEN: "CSV",
     updateFrequency: "Günlük (Kapanış Sonrası)",
     estimatedSize: "~5 GB",
     featuresTR: [
@@ -113,14 +113,14 @@ export const DATA_PACKAGES: DataPackage[] = [
       "Piyasa değeri ve serbest dolaşım oranı",
       "Endeks bileşimi geçmişi (BIST100, BIST50 vb.)",
       "Suspend ve şirket olayı işaretleri",
-      "Excel'e hazır format seçeneği",
+      "Standart CSV dosya formatı",
     ],
     featuresEN: [
       "35+ years of continuous daily data",
       "Market cap and free float rate",
       "Index constituent history (BIST100, BIST50, etc.)",
       "Suspension and corporate event flags",
-      "Excel-ready format option",
+      "Standard CSV file format",
     ],
     useCasesTR: [
       { title: "Uzun Dönem Strateji Araştırması", desc: "Yıllara yayılan trend ve momentum stratejilerini test edin." },
@@ -137,7 +137,7 @@ export const DATA_PACKAGES: DataPackage[] = [
       { key: "Zaman Dilimi", value: "Kapanış Bazlı (Istanbul)" },
       { key: "Aralık", value: "Günlük (OHLCV + Hacim)" },
       { key: "Düzeltme", value: "Tam Kurumsal Aksiyon Düzeltmesi" },
-      { key: "Format", value: "CSV, Excel, JSON" },
+      { key: "Format", value: "CSV" },
       { key: "Tahmini Boyut", value: "~5 GB" },
     ],
     techSpecsEN: [
@@ -145,7 +145,7 @@ export const DATA_PACKAGES: DataPackage[] = [
       { key: "Timezone", value: "Close-based (Istanbul)" },
       { key: "Interval", value: "Daily (OHLCV + Volume)" },
       { key: "Adjustment", value: "Full Corporate Action Adjusted" },
-      { key: "Format", value: "CSV, Excel, JSON" },
+      { key: "Format", value: "CSV" },
       { key: "Estimated Size", value: "~5 GB" },
     ],
   },
@@ -161,40 +161,40 @@ export const DATA_PACKAGES: DataPackage[] = [
     timeframeEN: "Flexible (1m / 5m / 1h / 1d)",
     dateRangeTR: "Esnek — Talep Bazlı",
     dateRangeEN: "Flexible — On Demand",
-    formatTR: "Talep Bazlı",
-    formatEN: "On Demand",
+    formatTR: "CSV",
+    formatEN: "CSV",
     updateFrequency: "Talep Bazlı",
     estimatedSize: "Talep Bazlı",
     featuresTR: [
       "Sadece ihtiyacınız olan sembolleri seçin",
       "1 dakikalık ila günlük arası tüm çözünürlükler",
       "Özel başlangıç ve bitiş tarihi belirleme",
-      "Tercih ettiğiniz formatta teslimat",
+      "CSV formatında hızlı teslimat",
       "Kurumsal müşteriler için özel fiyatlandırma",
     ],
     featuresEN: [
       "Select only the symbols you need",
       "All resolutions from 1-minute to daily",
       "Custom start and end date selection",
-      "Delivery in your preferred format",
+      "Fast delivery in CSV format",
       "Custom pricing for institutional clients",
     ],
     useCasesTR: [
       { title: "Odaklı Araştırma", desc: "Yalnızca analiz ettiğiniz sektör veya endeks için veri alın." },
       { title: "Maliyet Optimizasyonu", desc: "Yüzlerce hisse yerine yalnızca ihtiyacınız olan veriyi satın alın." },
-      { title: "Kurumsal Entegrasyon", desc: "Mevcut sistemlerinizle entegre edebilmek için özel format desteği." },
+      { title: "Kurumsal Entegrasyon", desc: "Mevcut sistemlerinizle entegre edebilmek için standart format desteği." },
     ],
     useCasesEN: [
       { title: "Focused Research", desc: "Get data only for the sector or index you are analyzing." },
       { title: "Cost Optimization", desc: "Purchase only the data you need instead of hundreds of symbols." },
-      { title: "Institutional Integration", desc: "Custom format support for integration with your existing systems." },
+      { title: "Institutional Integration", desc: "Standard format support for integration with your existing systems." },
     ],
     techSpecsTR: [
       { key: "Veri Kaynağı", value: "BIST Resmi Feed" },
       { key: "Semboller", value: "Kullanıcı Tanımlı" },
       { key: "Aralık", value: "1dk / 5dk / 15dk / 30dk / 1s / 1g" },
       { key: "Düzeltme", value: "İsteğe Bağlı" },
-      { key: "Format", value: "CSV, Parquet, JSON, Excel" },
+      { key: "Format", value: "CSV" },
       { key: "Teslimat", value: "FTP / S3 / Doğrudan İndirme" },
     ],
     techSpecsEN: [
@@ -202,7 +202,7 @@ export const DATA_PACKAGES: DataPackage[] = [
       { key: "Symbols", value: "User-defined" },
       { key: "Interval", value: "1m / 5m / 15m / 30m / 1h / 1d" },
       { key: "Adjustment", value: "Optional" },
-      { key: "Format", value: "CSV, Parquet, JSON, Excel" },
+      { key: "Format", value: "CSV" },
       { key: "Delivery", value: "FTP / S3 / Direct Download" },
     ],
   },
@@ -362,7 +362,7 @@ export default function VeriSetleriPage() {
           </div>
           <div className={styles.trustItem}>
             <div className={styles.trustIcon}><HardDrive size={16} /></div>
-            {isTR ? "Parquet & CSV Desteği" : "Parquet & CSV Support"}
+            {isTR ? "CSV Formatı Desteği" : "CSV Format Support"}
           </div>
         </div>
       </div>
