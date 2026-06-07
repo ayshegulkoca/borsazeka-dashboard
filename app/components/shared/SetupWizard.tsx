@@ -138,7 +138,7 @@ export default function SetupWizard({
       <div className={s.glowTopLeft} aria-hidden="true" />
       <div className={s.glowBottomRight} aria-hidden="true" />
 
-      {/* ── Header + Steps: all in one row for dashboard slim bar ───────── */}
+      {/* ── Header Row: title + progress ────────────────────────────────── */}
       <div className={s.header}>
         <div className={s.headerLeft}>
           <div className={s.sparkleIcon}>
@@ -173,9 +173,10 @@ export default function SetupWizard({
           </div>
           <span className={s.progressLabel}>{Math.round(progressPct)}%</span>
         </div>
+      </div>
 
-        {/* Step pills — inline in header for dashboard variant */}
-        <div className={s.stepsRow}>
+      {/* ── Steps Row: 3 pills side by side ─────────────────────────────── */}
+      <div className={s.stepsRow}>
         {steps.map((step, idx) => {
           const Icon = step.icon;
           const isHovered = hoveredStep === step.num;
@@ -393,7 +394,6 @@ export default function SetupWizard({
             </div>
           );
         })}
-        </div>
       </div>
     </div>
   );
