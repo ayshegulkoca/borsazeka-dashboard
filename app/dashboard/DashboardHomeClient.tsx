@@ -58,13 +58,14 @@ export default function DashboardHomeClient({
         </div>
       </div>
 
-      {/* ── Slim Onboarding Bar ────────────────────────────────── */}
+      {/* ── Kurulum Adımları ─────────────────────────────────── */}
       <SetupWizard
         step1Completed={true}
         step2Completed={hasRobots}
         step2Pending={subscriptionStatus === "PENDING"}
         step3Completed={hasBrokerAccounts}
-        variant="dashboard"
+        variant="landing"
+        alwaysVisible={false}
       />
 
       {/* ── Ana İçerik: 3 Kolonlu Grid ─────────────────────────── */}
