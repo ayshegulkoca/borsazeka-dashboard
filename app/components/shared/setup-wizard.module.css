@@ -1,116 +1,121 @@
 /* ============================================================
-   BorsaZeka Setup Wizard — Deep Blue, High Contrast (V6)
-   Dashboard widget: bold, legible, striking
+   BorsaZeka Setup Wizard — Slim Horizontal Progress Bar V7
+   Dashboard: Compact 3-step horizontal stepper, no overflow
    ============================================================ */
 
+/* ── Root ─────────────────────────────────────────────────── */
 .root {
   position: relative;
-  border-radius: 40px;
+  border-radius: 16px;
   overflow: hidden;
-  margin-bottom: 2rem;
-  background: #0A0A0A;
-  border: 1px solid rgba(255, 255, 255, 0.03);
+  margin-bottom: 0;
+  background: rgba(13, 21, 39, 0.75);
+  border: 1px solid rgba(59, 130, 246, 0.12);
   transition: all 0.3s ease;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
 }
 
 .rootDashboard {
-  padding: 1.5rem 2rem;
-  border-radius: 24px;
-  background: rgba(13, 27, 53, 0.7);   /* slate-navy — zemin ile uyumlu */
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(59, 130, 246, 0.10);
+  padding: 0.875rem 1.375rem;
+  border-radius: 16px;
   box-shadow:
-    0 4px 32px rgba(2, 6, 23, 0.5),
-    0 0 0 1px rgba(59, 130, 246, 0.05) inset;
+    0 0 0 1px rgba(59, 130, 246, 0.04) inset,
+    0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
 .rootLanding {
   padding: 3.5rem 2.5rem;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+  background: #0A0A0A;
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
 }
 
-/* ── Ambient Glows ───────────────────────────────────────── */
+/* ── Ambient Glows ─────────────────────────────────────────── */
 .glowTopLeft {
   position: absolute;
-  top: -80px;
-  left: -80px;
-  width: 280px;
-  height: 280px;
-  background: radial-gradient(circle, rgba(29, 78, 216, 0.12) 0%, transparent 70%);
-  filter: blur(50px);
+  top: -40px;
+  left: -40px;
+  width: 160px;
+  height: 160px;
+  background: radial-gradient(circle, rgba(29, 78, 216, 0.1) 0%, transparent 70%);
+  filter: blur(30px);
   pointer-events: none;
 }
 
 .glowBottomRight {
   position: absolute;
-  bottom: -80px;
-  right: -80px;
-  width: 280px;
-  height: 280px;
-  background: radial-gradient(circle, rgba(29, 78, 216, 0.08) 0%, transparent 70%);
-  filter: blur(50px);
+  bottom: -40px;
+  right: -40px;
+  width: 160px;
+  height: 160px;
+  background: radial-gradient(circle, rgba(29, 78, 216, 0.06) 0%, transparent 70%);
+  filter: blur(30px);
   pointer-events: none;
 }
 
-/* ── Header ───────────────────────────────────────────────── */
+/* ══════════════════════════════════════════════════════════════
+   DASHBOARD VARIANT — Slim Horizontal Stepper
+   ══════════════════════════════════════════════════════════════ */
+
+/* Header: Tüm içerik tek satırda */
 .header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  margin-bottom: 1.5rem;
-  gap: 2rem;
+  justify-content: space-between;
+  gap: 1.5rem;
+  /* Dashboard variant'ta header = tüm layout */
 }
 
 .headerLeft {
   display: flex;
   align-items: center;
-  gap: 0.875rem;
+  gap: 0.625rem;
+  flex-shrink: 0;
 }
 
 .sparkleIcon {
-  width: 36px;
-  height: 36px;
+  width: 28px;
+  height: 28px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(29, 78, 216, 0.15);
-  border: 1px solid rgba(96, 165, 250, 0.3);
-  border-radius: 10px;
+  background: rgba(29, 78, 216, 0.12);
+  border: 1px solid rgba(96, 165, 250, 0.2);
+  border-radius: 8px;
   color: #60a5fa;
   flex-shrink: 0;
 }
 
 .headerTitle {
-  font-size: 1rem;        /* Daha büyük */
-  font-weight: 600;       /* Semibold */
-  letter-spacing: -0.02em;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
   color: #ffffff;
-  margin-bottom: 0.15rem;
   line-height: 1.2;
+  white-space: nowrap;
 }
 
 .headerSub {
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: #ffffff;         /* Canlı beyaz — artık gri değil */
-  opacity: 0.75;
+  font-size: 0.68rem;
+  font-weight: 400;
+  color: rgba(148, 163, 184, 0.55);
+  white-space: nowrap;
 }
 
-/* ── Progress Bar ─────────────────────────────────────────── */
+/* Progress Bar */
 .progressBar {
   display: flex;
   align-items: center;
-  gap: 0.875rem;
-  flex: 1;
-  max-width: 280px;
+  gap: 0.625rem;
+  flex-shrink: 0;
 }
 
 .progressTrack {
-  height: 5px;            /* Biraz daha kalın */
-  background: rgba(255, 255, 255, 0.08);
+  height: 4px;
+  width: 80px;
+  background: rgba(255, 255, 255, 0.06);
   border-radius: 100px;
-  flex: 1;
   position: relative;
   overflow: visible;
 }
@@ -119,163 +124,193 @@
   height: 100%;
   background: linear-gradient(90deg, #1d4ed8, #3b82f6, #22d3ee);
   border-radius: 100px;
-  box-shadow: 0 0 12px rgba(59, 130, 246, 0.5);
+  box-shadow: 0 0 8px rgba(59, 130, 246, 0.4);
 }
 
 .progressDot {
   position: absolute;
   top: 50%;
   transform: translate(-50%, -50%);
-  width: 11px;
-  height: 11px;
+  width: 9px;
+  height: 9px;
   background: #ffffff;
   border: 2px solid #3b82f6;
   border-radius: 50%;
-  box-shadow: 0 0 10px rgba(59, 130, 246, 0.6);
+  box-shadow: 0 0 8px rgba(59, 130, 246, 0.6);
 }
 
 .progressLabel {
-  font-size: 0.85rem;
-  font-weight: 700;       /* Bold — dikkat çekici */
-  color: #60a5fa;         /* Mavi vurgu */
-  min-width: 2.5rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #60a5fa;
+  min-width: 2.2rem;
   text-align: right;
 }
 
-/* ── Steps Row ────────────────────────────────────────────── */
+/* ── Steps Row: Horizontal pills ──────────────────────────── */
 .stepsRow {
   display: flex;
-  gap: 0.875rem;
+  align-items: center;
+  gap: 0;
+  flex: 1;
+  justify-content: flex-end;
 }
 
 .stepAndConnector {
-  flex: 1;
   display: flex;
-  flex-direction: column;
+  align-items: center;
 }
 
-.stepCard {
-  flex: 1;
-  background: rgba(10, 18, 40, 0.6);   /* koyu lacivert katman */
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 16px;
-  padding: 1.1rem 1.1rem;
+/* Connector line between steps */
+.connector {
+  width: 24px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.08);
+  flex-shrink: 0;
   position: relative;
-  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.connector::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(90deg, rgba(59, 130, 246, 0.3), transparent);
+}
+
+/* Step Card — Compact horizontal pill */
+.stepCard {
+  flex: none;
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  padding: 0.45rem 0.75rem;
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.55rem;
-  min-height: 130px;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: default;
+  min-width: 0;
 }
 
 .stepCardActive {
   background: rgba(29, 78, 216, 0.08);
-  border-color: rgba(59, 130, 246, 0.30);
-  box-shadow:
-    0 0 0 1px rgba(59, 130, 246, 0.12) inset,
-    0 4px 20px rgba(59, 130, 246, 0.08);
+  border-color: rgba(59, 130, 246, 0.25);
 }
 
 .stepCardDone {
-  background: rgba(29, 78, 216, 0.05);
-  border-color: rgba(59, 130, 246, 0.18);
+  background: rgba(16, 185, 129, 0.07);
+  border-color: rgba(16, 185, 129, 0.2);
 }
 
-/* Kilitli kart: artık neredeyse tamamen saydamlık değil — okunabilir */
 .stepCardLocked {
-  opacity: 0.55;          /* Eskisi 0.4 — daha okunabilir */
-  filter: grayscale(0.4); /* Eskisi 0.8 — biraz daha canlı */
+  opacity: 0.45;
 }
 
+/* Icon Row — now inline */
 .iconRow {
-  width: 100%;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  margin-bottom: 0.1rem;
+  gap: 0.4rem;
 }
 
 .iconBox {
-  width: 34px;
-  height: 34px;
+  width: 22px;
+  height: 22px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 9px;
+  border-radius: 6px;
   background: rgba(255, 255, 255, 0.04);
-  color: rgba(255, 255, 255, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.07);
   transition: all 0.3s;
   flex-shrink: 0;
 }
 
 .iconBoxDone {
-  background: rgba(29, 78, 216, 0.18);
-  color: #60a5fa;
-  border-color: rgba(59, 130, 246, 0.35);
+  background: rgba(16, 185, 129, 0.15);
+  color: #10b981;
+  border-color: rgba(16, 185, 129, 0.3);
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.2);
 }
 
 .iconBoxHovered {
   border-color: #3b82f6;
   color: #ffffff;
-  background: rgba(29, 78, 216, 0.12);
+  background: rgba(29, 78, 216, 0.15);
 }
 
-/* ── Badges ──────────────────────────────────────────────── */
+/* Badges — inline next to icon */
 .badge {
-  padding: 0.2rem 0.55rem;
+  padding: 0.12rem 0.4rem;
   border-radius: 100px;
-  font-size: 0.62rem;
+  font-size: 0.55rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
-  display: flex;
+  letter-spacing: 0.05em;
+  display: inline-flex;
   align-items: center;
-  gap: 0.3rem;
+  gap: 0.2rem;
+  white-space: nowrap;
 }
 
 .badgeDone {
-  background: rgba(29, 78, 216, 0.25);
-  color: #93c5fd;
-  border: 1px solid rgba(59, 130, 246, 0.3);
+  background: rgba(16, 185, 129, 0.15);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.25);
 }
 
 .badgePending {
-  background: rgba(234, 179, 8, 0.15);
+  background: rgba(234, 179, 8, 0.12);
   color: #fde68a;
-  border: 1px solid rgba(234, 179, 8, 0.25);
+  border: 1px solid rgba(234, 179, 8, 0.2);
 }
 
 .badgeLocked {
-  background: rgba(255, 255, 255, 0.05);
-  color: rgba(255, 255, 255, 0.55);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.07);
 }
 
-/* ── Step Meta & Title ───────────────────────────────────── */
+/* Step Meta — hidden in compact mode */
 .stepMeta {
   display: none;
 }
 
+/* Step Title — slim version */
 .stepTitle {
-  font-size: 0.8rem;      /* Daha büyük: 11px → 0.8rem (12.8px) */
-  font-weight: 600;       /* Semibold — artık çok belirgin */
-  color: #ffffff;
-  margin-bottom: 0.1rem;
-  line-height: 1.3;
-  letter-spacing: -0.01em;
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.7);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 120px;
 }
 
+.stepCardDone .stepTitle {
+  color: rgba(52, 211, 153, 0.8);
+}
+
+.stepCardActive .stepTitle {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* Desc — completely hidden in dashboard */
 .stepDesc {
   display: none !important;
 }
 
-/* ── Hover Glow ──────────────────────────────────────────── */
+/* Hover Glow */
 .hoverGlow {
   position: absolute;
   inset: 0;
-  border-radius: 16px;
+  border-radius: 10px;
   background: radial-gradient(
     ellipse at 50% 0%,
     rgba(59, 130, 246, 0.08) 0%,
@@ -284,40 +319,122 @@
   pointer-events: none;
 }
 
-/* ── Lock Overlay ────────────────────────────────────────── */
+/* Lock Overlay */
 .lockOverlay {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 2;
-  pointer-events: none;
-  border-radius: 16px;
-  background: rgba(0, 0, 0, 0.15); /* Çok hafif karartma */
+  display: none; /* compact modda kilidi gizle, sadece opacity yeterli */
 }
 
 .lockIcon {
-  color: rgba(255, 255, 255, 0.35);
+  color: rgba(255, 255, 255, 0.3);
 }
 
-/* Connector - Invisible spacing */
-.connector {
-  display: none;
+/* ── Step 1 Profile Box — HIDDEN in slim mode ─────────────── */
+.step1Content {
+  display: none !important;
 }
 
+/* ── Step 2 Options — HIDDEN in slim mode ─────────────────── */
+.optionList {
+  display: none !important;
+}
+
+/* ── Step 3 Content — HIDDEN in slim mode ─────────────────── */
 .step3Content {
   display: none !important;
 }
 
-/* ── Step 1: Profile Box ─────────────────────────────────── */
-.step1Content {
+/* ── CTA Inline — HIDDEN in slim mode ────────────────────── */
+.ctaInline,
+.ctaStack,
+.ctaPrimary,
+.ctaSecondary {
+  display: none !important;
+}
+
+.ctaArrow {
+  transition: transform 0.2s;
+}
+
+.ctaDisabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   LANDING PAGE VARIANT — Full card layout unchanged
+   ══════════════════════════════════════════════════════════════ */
+.rootLanding .header {
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.rootLanding .stepsRow {
+  flex-direction: row;
+  justify-content: flex-start;
+  flex: none;
+  gap: 0.875rem;
+}
+
+.rootLanding .stepAndConnector {
+  flex: 1;
+  flex-direction: column;
+}
+
+.rootLanding .connector {
+  display: none;
+}
+
+.rootLanding .stepCard {
+  width: 100%;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 1.1rem 1.1rem;
+  min-height: 130px;
+  gap: 0.55rem;
+  cursor: default;
+}
+
+.rootLanding .iconRow {
+  width: 100%;
+  justify-content: space-between;
+  margin-bottom: 0.1rem;
+}
+
+.rootLanding .stepTitle {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #ffffff;
+  white-space: normal;
+  max-width: none;
+}
+
+.rootLanding .step1Content {
   display: flex !important;
   flex-direction: column;
   gap: 0.45rem;
   width: 100%;
 }
 
+.rootLanding .optionList {
+  display: flex !important;
+  flex-direction: column;
+  gap: 0.45rem;
+  width: 100%;
+  margin-top: 0.25rem;
+  pointer-events: auto;
+  z-index: 20;
+}
+
+.rootLanding .step3Content {
+  display: block !important;
+}
+
+.rootLanding .ctaInline {
+  display: inline-flex !important;
+}
+
+/* Profile Box */
 .profileBox {
   background: rgba(255, 255, 255, 0.04);
   border-radius: 12px;
@@ -361,8 +478,8 @@
 }
 
 .profileName {
-  font-size: 0.75rem;     /* Büyütüldü */
-  font-weight: 600;       /* Semibold */
+  font-size: 0.75rem;
+  font-weight: 600;
   color: #ffffff;
   white-space: nowrap;
   overflow: hidden;
@@ -372,7 +489,7 @@
 .profileEmail {
   font-size: 0.68rem;
   font-weight: 400;
-  color: rgba(255, 255, 255, 0.65);
+  color: rgba(255, 255, 255, 0.55);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -396,17 +513,7 @@
   opacity: 0.75;
 }
 
-/* ── Step 2: Option Buttons ──────────────────────────────── */
-.optionList {
-  display: flex !important;
-  flex-direction: column;
-  gap: 0.45rem;
-  width: 100%;
-  margin-top: 0.25rem;
-  pointer-events: auto;
-  z-index: 20;
-}
-
+/* Option Cards */
 .optionCard {
   width: 100%;
   background: rgba(29, 78, 216, 0.12);
@@ -429,13 +536,58 @@
 }
 
 .optionText {
-  font-size: 0.72rem;     /* Büyütüldü: 10px → 0.72rem (11.5px) */
-  font-weight: 600;       /* Semibold — okunaklı */
+  font-size: 0.72rem;
+  font-weight: 600;
   color: #ffffff;
   letter-spacing: -0.01em;
 }
 
-/* ── CTA Inline ──────────────────────────────────────────── */
+/* CTA Buttons (landing) */
+.ctaStack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: auto;
+  width: 100%;
+}
+
+.ctaPrimary {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #0d1117;
+  background: #10b981;
+  border: none;
+  border-radius: 10px;
+  padding: 0.7rem 1rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
+}
+
+.ctaSecondary {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 0.6rem 1rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
 .ctaInline {
   font-size: 0.7rem;
   font-weight: 600;
@@ -443,7 +595,7 @@
   letter-spacing: 0.06em;
   color: #60a5fa;
   text-decoration: none;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 0.3rem;
   margin-top: auto;
@@ -454,23 +606,69 @@
   opacity: 0.8;
 }
 
-.ctaDisabled {
-  opacity: 0.4;
-  cursor: not-allowed;
+/* Step 3 Checklist */
+.checklist {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: 0.75rem;
 }
 
-.ctaArrow {
-  transition: transform 0.2s;
+.checkItem {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: rgba(148, 163, 184, 0.5);
 }
 
-.ctaInline:hover .ctaArrow {
-  transform: translateX(3px);
+.checkItemDone {
+  color: rgba(52, 211, 153, 0.8);
+}
+
+.checkSmall {
+  flex-shrink: 0;
+  opacity: 0.7;
 }
 
 /* ── Responsive ──────────────────────────────────────────── */
 @media (max-width: 1024px) {
-  .stepsRow {
-    flex-direction: column;
+  /* Dashboard: wrap steps */
+  .rootDashboard .stepsRow {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .rootDashboard .stepCard {
+    flex: 1;
+    min-width: 0;
+  }
+  .rootDashboard .stepTitle {
+    max-width: 90px;
+  }
+}
+
+@media (max-width: 768px) {
+  .rootDashboard {
+    padding: 0.75rem 1rem;
+  }
+  .rootDashboard .header {
+    flex-wrap: wrap;
     gap: 0.75rem;
+  }
+  .rootDashboard .stepsRow {
+    width: 100%;
+  }
+  .rootDashboard .stepCard {
+    padding: 0.4rem 0.6rem;
+  }
+  .rootDashboard .stepTitle {
+    display: none; /* Only icons on mobile */
+  }
+  .headerTitle {
+    font-size: 0.72rem;
+  }
+  .rootLanding .stepsRow {
+    flex-direction: column;
   }
 }
