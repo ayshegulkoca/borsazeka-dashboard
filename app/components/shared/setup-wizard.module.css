@@ -348,7 +348,46 @@
   color: rgba(255, 255, 255, 0.35);
 }
 
-/* ── Step 1: Profile Box ─────────────────────────────────── */
+/* ── Step 1: Logged Out & Profile Box ──────────────────────── */
+.step1LoggedOut {
+  display: flex !important;
+  flex-direction: column;
+  gap: 0.6rem;
+  width: 100%;
+  margin-top: 0.25rem;
+}
+
+.loggedOutDesc {
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: rgba(148, 163, 184, 0.65);
+  line-height: 1.35;
+  margin: 0;
+}
+
+.loginBtn {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #ffffff;
+  background: rgba(59, 130, 246, 0.15);
+  border: 1px solid rgba(59, 130, 246, 0.35);
+  border-radius: 8px;
+  padding: 0.5rem 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.loginBtn:hover {
+  background: rgba(59, 130, 246, 0.25);
+  border-color: rgba(59, 130, 246, 0.5);
+  box-shadow: 0 0 12px rgba(59, 130, 246, 0.2);
+}
+
 .step1Content {
   display: flex !important;
   flex-direction: column;

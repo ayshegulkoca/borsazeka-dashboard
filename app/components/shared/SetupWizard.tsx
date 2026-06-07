@@ -313,9 +313,20 @@ export default function SetupWizard({
                   </div>
                 )}
                 
-                {/* Step 1: Default desc when not done */}
+                {/* Step 1: Default desc and sign-in button when not done */}
                 {step.num === 1 && !step.done && (
-                  <div className={s.stepDesc}>{t(step.descKey)}</div>
+                  <div className={s.step1LoggedOut}>
+                    <p className={s.loggedOutDesc}>
+                      {t("onboardingSteps.step1.desc")}
+                    </p>
+                    <button
+                      className={s.loginBtn}
+                      onClick={() => signIn("google", { callbackUrl: "/dashboard", prompt: "select_account" })}
+                    >
+                      <LogIn size={14} style={{ marginRight: 6 }} />
+                      {t("onboardingSteps.step1.googleBtn")}
+                    </button>
+                  </div>
                 )}
 
                 {/* Step 2: Multi-option paths when active */}
