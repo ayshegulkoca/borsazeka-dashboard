@@ -12,10 +12,14 @@ export interface DataPackage {
   titleEN: string;
   descriptionTR: string;
   descriptionEN: string;
-  coverage: string;
-  timeframe: string;
-  dateRange: string;
-  format: string;
+  coverageTR: string;
+  coverageEN: string;
+  timeframeTR: string;
+  timeframeEN: string;
+  dateRangeTR: string;
+  dateRangeEN: string;
+  formatTR: string;
+  formatEN: string;
   updateFrequency: string;
   estimatedSize: string;
   featured?: boolean;
@@ -32,20 +36,24 @@ export const DATA_PACKAGES: DataPackage[] = [
     id: "bist-1min",
     titleTR: "BIST Tam Liste — 1 Dakikalık",
     titleEN: "BIST Full List — 1-Minute",
-    descriptionTR: "BIST'teki tüm 577 hissenin 2015 Temmuz'dan günümüze yüksek çözünürlüklü 1 dakikalık OHLCV verisi.",
-    descriptionEN: "High-resolution 1-minute OHLCV data for all 577 BIST stocks from July 2015 to present.",
-    coverage: "BIST TÜM — 577 Hisse",
-    timeframe: "1 Dakika",
-    dateRange: "Tem 2015 – Günümüz",
-    format: "CSV / Parquet",
+    descriptionTR: "BIST'teki tüm 577 hissenin Kasım 2012'den günümüze yüksek çözünürlüklü 1 dakikalık OHLCV verisi.",
+    descriptionEN: "High-resolution 1-minute OHLCV data for all 577 BIST stocks from November 2012 to present.",
+    coverageTR: "BIST TÜM — 577 Hisse",
+    coverageEN: "BIST ALL — 577 Equities",
+    timeframeTR: "1 Dakika",
+    timeframeEN: "1 Minute",
+    dateRangeTR: "Kas 2012 – Günümüz",
+    dateRangeEN: "Nov 2012 – Present",
+    formatTR: "CSV / Parquet",
+    formatEN: "CSV / Parquet",
     updateFrequency: "Günlük",
-    estimatedSize: "~120 GB",
+    estimatedSize: "~150 GB",
     featured: true,
     featuresTR: [
       "577 hissenin tamamında eksiksiz veri",
       "Açılış, Kapanış, En Yüksek, En Düşük, Hacim (OHLCV)",
       "Şirket birleşme/bölünme ve temettü düzeltmeleri",
-      "Işlem seans bilgisi ve devre kesici kayıtları",
+      "İşlem seans bilgisi ve devre kesici kayıtları",
       "Özel formata dönüştürme desteği",
     ],
     featuresEN: [
@@ -56,12 +64,12 @@ export const DATA_PACKAGES: DataPackage[] = [
       "Custom format conversion support",
     ],
     useCasesTR: [
-      { title: "Backtest Modelleme", desc: "Stratejinizi 10 yıllık 1 dakikalık granülaritede test edin." },
+      { title: "Backtest Modelleme", desc: "Stratejinizi 13 yıllık 1 dakikalık granülaritede test edin." },
       { title: "Yapay Zeka Eğitimi", desc: "Derin öğrenme modelleriniz için yüksek frekanslı etiketli veri." },
       { title: "Piyasa Analizi", desc: "Seans içi volatilite ve likidite örüntülerini keşfedin." },
     ],
     useCasesEN: [
-      { title: "Backtest Modeling", desc: "Test your strategy with 10 years of 1-minute granularity." },
+      { title: "Backtest Modeling", desc: "Test your strategy with 13 years of 1-minute granularity." },
       { title: "AI Training", desc: "High-frequency labeled data for deep learning models." },
       { title: "Market Analysis", desc: "Explore intraday volatility and liquidity patterns." },
     ],
@@ -72,7 +80,7 @@ export const DATA_PACKAGES: DataPackage[] = [
       { key: "Düzeltme", value: "Bölünme & Temettü" },
       { key: "Format", value: "CSV, Parquet, JSON" },
       { key: "Sıkıştırma", value: "ZIP / GZIP" },
-      { key: "Tahmini Boyut", value: "~120 GB (ham)" },
+      { key: "Tahmini Boyut", value: "~150 GB (ham)" },
     ],
     techSpecsEN: [
       { key: "Data Source", value: "BIST Official Feed" },
@@ -81,30 +89,34 @@ export const DATA_PACKAGES: DataPackage[] = [
       { key: "Adjustment", value: "Split & Dividend Adjusted" },
       { key: "Format", value: "CSV, Parquet, JSON" },
       { key: "Compression", value: "ZIP / GZIP" },
-      { key: "Estimated Size", value: "~120 GB (raw)" },
+      { key: "Estimated Size", value: "~150 GB (raw)" },
     ],
   },
   {
     id: "bist-daily",
     titleTR: "BIST Tam Liste — Günlük",
     titleEN: "BIST Full List — Daily",
-    descriptionTR: "2000 yılından bu yana tüm BIST hisselerinin günlük OHLCV, hacim ve piyasa değeri verisi.",
-    descriptionEN: "Daily OHLCV, volume and market cap data for all BIST equities since year 2000.",
-    coverage: "BIST TÜM — Tüm Semboller",
-    timeframe: "Günlük (Daily)",
-    dateRange: "Oca 2000 – Günümüz",
-    format: "CSV / Excel / JSON",
+    descriptionTR: "Ağustos 1987'den bu yana tüm BIST hisselerinin günlük OHLCV, hacim ve piyasa değeri verisi.",
+    descriptionEN: "Daily OHLCV, volume and market cap data for all BIST equities since August 1987.",
+    coverageTR: "BIST TÜM — Tüm Semboller",
+    coverageEN: "BIST ALL — All Symbols",
+    timeframeTR: "Günlük",
+    timeframeEN: "Daily",
+    dateRangeTR: "Ağu 1987 – Günümüz",
+    dateRangeEN: "Aug 1987 – Present",
+    formatTR: "CSV / Excel / JSON",
+    formatEN: "CSV / Excel / JSON",
     updateFrequency: "Günlük (Kapanış Sonrası)",
-    estimatedSize: "~3.5 GB",
+    estimatedSize: "~5 GB",
     featuresTR: [
-      "25+ yıllık kesintisiz günlük veri",
+      "35+ yıllık kesintisiz günlük veri",
       "Piyasa değeri ve serbest dolaşım oranı",
       "Endeks bileşimi geçmişi (BIST100, BIST50 vb.)",
       "Suspend ve şirket olayı işaretleri",
       "Excel'e hazır format seçeneği",
     ],
     featuresEN: [
-      "25+ years of continuous daily data",
+      "35+ years of continuous daily data",
       "Market cap and free float rate",
       "Index constituent history (BIST100, BIST50, etc.)",
       "Suspension and corporate event flags",
@@ -126,7 +138,7 @@ export const DATA_PACKAGES: DataPackage[] = [
       { key: "Aralık", value: "Günlük (OHLCV + Hacim)" },
       { key: "Düzeltme", value: "Tam Kurumsal Aksiyon Düzeltmesi" },
       { key: "Format", value: "CSV, Excel, JSON" },
-      { key: "Tahmini Boyut", value: "~3.5 GB" },
+      { key: "Tahmini Boyut", value: "~5 GB" },
     ],
     techSpecsEN: [
       { key: "Data Source", value: "BIST Official Feed" },
@@ -134,19 +146,23 @@ export const DATA_PACKAGES: DataPackage[] = [
       { key: "Interval", value: "Daily (OHLCV + Volume)" },
       { key: "Adjustment", value: "Full Corporate Action Adjusted" },
       { key: "Format", value: "CSV, Excel, JSON" },
-      { key: "Estimated Size", value: "~3.5 GB" },
+      { key: "Estimated Size", value: "~5 GB" },
     ],
   },
   {
     id: "bist-custom",
     titleTR: "Özel Sembol & Çözünürlük Paketi",
     titleEN: "Custom Symbol & Resolution Package",
-    descriptionTR: "Kendi sembol listenz ve istediğiniz çözünürlük için (1dk / 5dk / 1s / 1g) özelleştirilmiş veri paketi.",
+    descriptionTR: "Kendi sembol listeniz ve istediğiniz çözünürlük için (1dk / 5dk / 1s / 1g) özelleştirilmiş veri paketi.",
     descriptionEN: "Customized data package for your own symbol list and preferred resolution (1m / 5m / 1h / 1d).",
-    coverage: "Kullanıcı Tanımlı Semboller",
-    timeframe: "Esnek (1dk / 5dk / 1s / 1g)",
-    dateRange: "Esnek — Talep Bazlı",
-    format: "Talep Bazlı",
+    coverageTR: "Kullanıcı Tanımlı Semboller",
+    coverageEN: "User-defined Symbols",
+    timeframeTR: "Esnek (1dk / 5dk / 1s / 1g)",
+    timeframeEN: "Flexible (1m / 5m / 1h / 1d)",
+    dateRangeTR: "Esnek — Talep Bazlı",
+    dateRangeEN: "Flexible — On Demand",
+    formatTR: "Talep Bazlı",
+    formatEN: "On Demand",
     updateFrequency: "Talep Bazlı",
     estimatedSize: "Talep Bazlı",
     featuresTR: [
@@ -281,19 +297,19 @@ export default function VeriSetleriPage() {
               <div className={styles.cardSpecs}>
                 <div className={styles.cardSpecRow}>
                   <span className={styles.cardSpecLabel}>{t("dataSets.coverageLabel")}</span>
-                  <span className={styles.cardSpecValue}>{pkg.coverage}</span>
+                  <span className={styles.cardSpecValue}>{isTR ? pkg.coverageTR : pkg.coverageEN}</span>
                 </div>
                 <div className={styles.cardSpecRow}>
                   <span className={styles.cardSpecLabel}>{t("dataSets.timeframeLabel")}</span>
-                  <span className={styles.cardSpecValue}>{pkg.timeframe}</span>
+                  <span className={styles.cardSpecValue}>{isTR ? pkg.timeframeTR : pkg.timeframeEN}</span>
                 </div>
                 <div className={styles.cardSpecRow}>
                   <span className={styles.cardSpecLabel}>{t("dataSets.dateRangeLabel")}</span>
-                  <span className={styles.cardSpecValue}>{pkg.dateRange}</span>
+                  <span className={styles.cardSpecValue}>{isTR ? pkg.dateRangeTR : pkg.dateRangeEN}</span>
                 </div>
                 <div className={styles.cardSpecRow}>
                   <span className={styles.cardSpecLabel}>{t("dataSets.formatLabel")}</span>
-                  <span className={styles.cardSpecValue}>{pkg.format}</span>
+                  <span className={styles.cardSpecValue}>{isTR ? pkg.formatTR : pkg.formatEN}</span>
                 </div>
               </div>
 
