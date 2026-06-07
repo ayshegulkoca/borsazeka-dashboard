@@ -4,7 +4,7 @@ import { useState } from "react";
 import {
   Eye, EyeOff, Bot, ClipboardList,
   TrendingUp, TrendingDown, ArrowRight, Plus, Activity,
-  Zap, BarChart3, Wifi,
+  Zap, BarChart3, Wifi, Link2,
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import s from "./page.module.css";
@@ -26,6 +26,7 @@ interface Props {
   robots: RobotWithMeta[];
   hasRobots: boolean;
   hasBrokerAccounts: boolean;
+  brokerAccountsCount: number;
   subscriptionStatus?: string;
 }
 
@@ -35,6 +36,7 @@ export default function DashboardHomeClient({
   robots,
   hasRobots,
   hasBrokerAccounts,
+  brokerAccountsCount,
   subscriptionStatus,
 }: Props) {
   const { t } = useTranslation("common");
@@ -51,10 +53,6 @@ export default function DashboardHomeClient({
             <p className={s.greetingLabel}>{t("dashboard.home.welcome")}</p>
             <h1 className={s.greetingName}>{displayName}</h1>
           </div>
-        </div>
-        <div className={s.headerBadge}>
-          <Wifi size={12} strokeWidth={2} />
-          <span>Canlı</span>
         </div>
       </div>
 
@@ -164,22 +162,6 @@ export default function DashboardHomeClient({
                       </div>
                     </div>
                   ))}
-
-                  {/* BIST 100 Market Kartı */}
-                  <div className={`${s.robotCard} ${s.marketCard}`}>
-                    <div className={s.robotCardTop}>
-                      <div className={`${s.robotIconBox} ${s.robotIconRed}`}>
-                        <TrendingDown size={16} strokeWidth={1.5} />
-                      </div>
-                      <span className={s.marketClosedBadge}>{t("dashboard.home.marketClosed")}</span>
-                    </div>
-                    <div className={s.robotName}>BIST 100</div>
-                    <div className={s.robotTagline}>Borsa İstanbul Endeksi</div>
-                    <div className={s.robotFooter}>
-                      <span className={s.robotReturn} style={{ color: '#ef4444' }}>-0.4%</span>
-                      <span className={s.robotReturnLabel}>8.100</span>
-                    </div>
-                  </div>
                 </div>
               </div>
             )}
@@ -200,42 +182,14 @@ export default function DashboardHomeClient({
               <div className={s.metricPulse} />
             </div>
 
-            {/* Bekleyen Emir Kartı */}
+            {/* Bağlı Hesap Kartı */}
             <div className={s.metricCard}>
-              <div className={`${s.metricIconBox} ${s.metricIconYellow}`}>
-                <ClipboardList size={16} strokeWidth={1.5} />
+              <div className={`${s.metricIconBox} ${s.metricIconGreen}`}>
+                <Link2 size={16} strokeWidth={1.5} />
               </div>
               <div className={s.metricContent}>
-                <span className={s.metricValue}>2</span>
-                <span className={s.metricLabel}>{t("dashboard.home.pendingOrders")}</span>
-              </div>
-            </div>
-
-            {/* Performans Mini Kartı */}
-            <div className={s.performanceCard}>
-              <div className={s.performanceTitle}>
-                <Zap size={13} strokeWidth={2} />
-                Sistem Durumu
-              </div>
-              <div className={s.performanceRows}>
-                <div className={s.perfRow}>
-                  <span className={s.perfLabel}>Robot Uptime</span>
-                  <span className={s.perfValue}>99.8%</span>
-                </div>
-                <div className={s.perfRowBar}>
-                  <div className={s.perfBarTrack}>
-                    <div className={s.perfBarFill} style={{ width: '99.8%' }} />
-                  </div>
-                </div>
-                <div className={s.perfRow}>
-                  <span className={s.perfLabel}>API Latency</span>
-                  <span className={s.perfValue}>12ms</span>
-                </div>
-                <div className={s.perfRowBar}>
-                  <div className={s.perfBarTrack}>
-                    <div className={s.perfBarFill} style={{ width: '95%' }} />
-                  </div>
-                </div>
+                <span className={s.metricValue}>{brokerAccountsCount}</span>
+                <span className={s.metricLabel}>{t("dashboard.home.connectedAccounts")}</span>
               </div>
             </div>
 

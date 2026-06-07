@@ -553,6 +553,12 @@
   color: #facc15;
 }
 
+.metricIconGreen {
+  background: rgba(16, 185, 129, 0.12);
+  border-color: rgba(16, 185, 129, 0.25);
+  color: #10b981;
+}
+
 .metricContent {
   display: flex;
   flex-direction: column;

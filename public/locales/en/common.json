@@ -1078,6 +1078,7 @@
       "dailyPnl": "Daily P&L",
       "activeRobots": "Active Robots",
       "pendingOrders": "Pending Orders",
+      "connectedAccounts": "Connected Account",
       "myActiveRobots": "My Active Robots",
       "quickActions": "Quick Actions",
       "addRobot": "Add / Explore Robots",
