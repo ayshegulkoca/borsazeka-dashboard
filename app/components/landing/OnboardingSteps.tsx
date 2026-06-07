@@ -6,7 +6,8 @@ import { useTranslation } from "react-i18next";
 import { Zap } from "lucide-react";
 import { motion } from "framer-motion";
 
-import { getSubscriptionStatus } from "@/app/actions/robots";
+import { getUserRobots } from "@/app/actions/robots";
+import { ROBOT_BY_ID, getRobotNormalizedId } from "@/lib/robots";
 import SetupWizard from "@/app/components/shared/SetupWizard";
 import s from "./onboarding.module.css";
 
@@ -17,37 +18,38 @@ export default function OnboardingSteps() {
 
   const isLoggedIn = !!session;
 
-  const [selectionDone, setSelectionDone] = useState(false);
-  const [isPending, setIsPending] = useState(false);
+  const [hasRobots, setHasRobots] = useState(false);
+  const [firstRobotName, setFirstRobotName] = useState<string | undefined>(undefined);
 
-  // Fetch subscription status from DB so PENDING/ACTIVE is reflected in real time
-  const syncStatus = useCallback(async () => {
+  // getUserRobots() → Prisma: dashboard ile aynı veri kaynağı
+  const syncRobots = useCallback(async () => {
     if (!isLoggedIn) return;
     try {
-      const sub = await getSubscriptionStatus();
-      if (sub?.status === "PENDING") {
-        setIsPending(true);
-        setSelectionDone(true);
-      } else if (sub?.status === "ACTIVE") {
-        setIsPending(false);
-        setSelectionDone(true);
+      const robots = await getUserRobots();
+      if (robots && robots.length > 0) {
+        setHasRobots(true);
+        // İlk robotun display adını bul
+        const firstRobotId = getRobotNormalizedId(robots[0].robotId ?? "");
+        const meta = ROBOT_BY_ID[firstRobotId as keyof typeof ROBOT_BY_ID];
+        setFirstRobotName(meta?.name ?? robots[0].robotId ?? undefined);
+      } else {
+        setHasRobots(false);
+        setFirstRobotName(undefined);
       }
     } catch (e) {
-      console.warn("Status sync failed:", e);
+      console.warn("Robot sync failed:", e);
     }
   }, [isLoggedIn]);
 
   useEffect(() => {
-    syncStatus();
-    // Re-sync when user navigates back (e.g. from Stripe)
-    window.addEventListener("focus", syncStatus);
-    return () => window.removeEventListener("focus", syncStatus);
-  }, [syncStatus]);
+    syncRobots();
+    window.addEventListener("focus", syncRobots);
+    return () => window.removeEventListener("focus", syncRobots);
+  }, [syncRobots]);
 
   // ── Derived step states ───────────────────────────────────────────────────
   const step1Completed = isLoggedIn;
-  const step2Completed = selectionDone && !isPending; // only ACTIVE counts as done
-  const step2Pending   = isPending;
+  const step2Completed = hasRobots;
 
   // ─────────────────────────────────────────────────────────────────────────
   return (
@@ -84,8 +86,9 @@ export default function OnboardingSteps() {
           <SetupWizard
             step1Completed={step1Completed}
             step2Completed={step2Completed}
-            step2Pending={step2Pending}
+            step2Pending={false}
             step3Completed={false}
+            step2RobotName={firstRobotName}
             variant="landing"
             alwaysVisible={true}
           />

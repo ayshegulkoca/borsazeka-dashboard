@@ -6,6 +6,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import type { RobotId } from "@/lib/robots";
 import { createPlaceholderServer } from "./servers";
+import { getMyRobots } from "@/lib/api";
 
 async function getAuthedUserId(): Promise<string> {
   const session = await auth();
@@ -15,11 +16,14 @@ async function getAuthedUserId(): Promise<string> {
 
 /** Kullanıcının aktif robotlarını döndürür */
 export async function getUserRobots() {
-  const userId = await getAuthedUserId();
-  return prisma.userRobot.findMany({
-    where: { userId, isActive: true },
-    orderBy: { addedAt: "asc" },
-  });
+  const session = await auth();
+  if (!session?.user?.email) return [];
+
+  const apiRobots = await getMyRobots(session.user.email);
+  return (apiRobots ?? []).map((ur: any) => ({
+    robotId: ur.robotName,
+    isActive: ur.isActive ?? true,
+  }));
 }
 
 /** Robotu kullanıcıya ekler (zaten varsa aktif eder) */

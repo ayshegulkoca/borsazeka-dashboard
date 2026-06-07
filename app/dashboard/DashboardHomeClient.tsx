@@ -64,6 +64,7 @@ export default function DashboardHomeClient({
         step2Completed={hasRobots}
         step2Pending={subscriptionStatus === "PENDING"}
         step3Completed={hasBrokerAccounts}
+        step2RobotName={robots[0]?.meta?.name || robots[0]?.robotId}
         variant="landing"
         alwaysVisible={false}
       />

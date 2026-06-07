@@ -286,6 +286,38 @@
   display: none !important;
 }
 
+/* ── Step 2 Done: Robot Adı ──────────────────────────────── */
+.step2DoneContent {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  width: 100%;
+  margin-top: 0.25rem;
+}
+
+.step2DoneLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: rgba(148, 163, 184, 0.65);
+}
+
+.step2RobotName {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #60a5fa;
+  letter-spacing: -0.01em;
+  padding: 0.35rem 0.65rem;
+  background: rgba(29, 78, 216, 0.12);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 /* ── Hover Glow ──────────────────────────────────────────── */
 .hoverGlow {
   position: absolute;

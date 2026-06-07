@@ -15,6 +15,7 @@
       "title": "Robot Seçin ve Abone Olun",
       "desc": "Size uygun robotu seçin ve aboneliğinizi başlatın.",
       "descPending": "Stripe ödemeniz doğrulanıyor. Bu işlem birkaç dakika sürebilir.",
+      "doneLine": "Bir robota abone oldunuz",
       "cta": "Robota Abone Ol",
       "ctaPending": "Ödeme Kontrol Ediliyor"
     },

@@ -30,6 +30,8 @@ export interface SetupWizardProps {
   step2Pending?: boolean;
   /** Step 3 — Connect broker account. */
   step3Completed: boolean;
+  /** Step 2 tamamlandığında gösterilecek robot display adı. */
+  step2RobotName?: string;
   /**
    * Variant controls layout context.
    * "landing"   → compact card inside existing section, used inside OnboardingSteps
@@ -58,6 +60,7 @@ export default function SetupWizard({
   step2Completed,
   step2Pending = false,
   step3Completed,
+  step2RobotName,
   variant = "dashboard",
   alwaysVisible = false,
   className = "",
@@ -332,7 +335,20 @@ export default function SetupWizard({
                 )}
 
                 {/* Step 2: Default desc when done, locked or pending */}
-                {step.num === 2 && (step.done || step.locked || step.pending) && (
+                {step.num === 2 && step.done && (
+                  <div className={s.step2DoneContent}>
+                    <div className={s.step2DoneLabel}>
+                      <Check size={12} style={{ color: '#60a5fa', flexShrink: 0 }} />
+                      {t("setupWizard.step2.doneLine")}
+                    </div>
+                    {step2RobotName && (
+                      <div className={s.step2RobotName}>
+                        {step2RobotName}
+                      </div>
+                    )}
+                  </div>
+                )}
+                {step.num === 2 && (step.locked || step.pending) && (
                   <div className={s.stepDesc}>{t(step.descKey)}</div>
                 )}
 

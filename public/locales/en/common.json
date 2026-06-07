@@ -15,6 +15,7 @@
       "title": "Choose & Subscribe to a Robot",
       "desc": "Browse the catalog and subscribe to the robot that fits your strategy.",
       "descPending": "Your Stripe payment is being verified. This usually takes a few minutes.",
+      "doneLine": "You have subscribed to a robot",
       "cta": "Subscribe to a Robot",
       "ctaPending": "Payment Under Review"
     },
