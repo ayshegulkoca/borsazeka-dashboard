@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Navbar from "../../components/landing/Navbar";
 import VeriSetleriDetay from "../../components/landing/VeriSetleriDetay";
-import { DATA_PACKAGES } from "../../components/landing/VeriSetleriPage";
+import { DATA_PACKAGES } from "../../components/landing/dataPackages";
 
 interface Props {
   params: Promise<{ id: string }>;

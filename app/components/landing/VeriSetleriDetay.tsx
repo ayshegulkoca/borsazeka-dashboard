@@ -19,7 +19,7 @@ import {
   TrendingUp,
 } from "lucide-react";
 import styles from "./veri-setleri.module.css";
-import { DATA_PACKAGES } from "./VeriSetleriPage";
+import { DATA_PACKAGES } from "./dataPackages";
 
 // ── Icon Map ───────────────────────────────────────────────────
 const CARD_ICONS: Record<string, React.ReactNode> = {
