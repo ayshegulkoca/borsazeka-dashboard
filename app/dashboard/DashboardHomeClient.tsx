@@ -62,7 +62,7 @@ export default function DashboardHomeClient({
         step2Completed={hasRobots}
         step2Pending={subscriptionStatus === "PENDING"}
         step3Completed={hasBrokerAccounts}
-        step2RobotName={robots[0]?.meta?.name || robots[0]?.robotId}
+        step2RobotName={robots[0]?.robotId ? t(`robotsCatalog.${robots[0].robotId}.name`, { defaultValue: robots[0]?.meta?.name || robots[0]?.robotId }) : undefined}
         variant="landing"
         alwaysVisible={false}
       />
@@ -114,23 +114,23 @@ export default function DashboardHomeClient({
                   <span className={s.pnlLabel}>{t("dashboard.home.dailyPnl")}</span>
                   <span className={s.pnlValue}>+₺1.250 <em>(%0.85)</em></span>
                 </div>
-                <div className={s.pnlBadge}>▲ Yükselen</div>
+                <div className={s.pnlBadge}>{t("dashboard.home.pnlTrendRising")}</div>
               </div>
 
               {/* Alt mini metrikler */}
               <div className={s.balanceMinis}>
                 <div className={s.balanceMini}>
-                  <span className={s.balanceMiniLabel}>Haftalık</span>
+                  <span className={s.balanceMiniLabel}>{t("dashboard.home.weekly")}</span>
                   <span className={s.balanceMiniPos}>+₺4.320</span>
                 </div>
                 <div className={s.balanceMiniDivider} />
                 <div className={s.balanceMini}>
-                  <span className={s.balanceMiniLabel}>Aylık</span>
+                  <span className={s.balanceMiniLabel}>{t("dashboard.home.monthly")}</span>
                   <span className={s.balanceMiniPos}>+₺18.750</span>
                 </div>
                 <div className={s.balanceMiniDivider} />
                 <div className={s.balanceMini}>
-                  <span className={s.balanceMiniLabel}>Yıllık</span>
+                  <span className={s.balanceMiniLabel}>{t("dashboard.home.yearly")}</span>
                   <span className={s.balanceMiniPos}>+%23.4</span>
                 </div>
               </div>
@@ -142,7 +142,7 @@ export default function DashboardHomeClient({
                 <div className={s.sectionTitleRow}>
                   <h2 className={s.sectionTitle}>{t("dashboard.home.myActiveRobots")}</h2>
                   <Link href="/dashboard/robots" className={s.sectionLink}>
-                    Tümünü gör <ArrowRight size={13} strokeWidth={2} />
+                    {t("dashboard.home.viewAll")} <ArrowRight size={13} strokeWidth={2} />
                   </Link>
                 </div>
                 <div className={s.robotGrid}>
@@ -154,11 +154,15 @@ export default function DashboardHomeClient({
                         </div>
                         <div className={`${s.robotStatusDot} ${r.isActive ? s.robotStatusActive : s.robotStatusOff}`} />
                       </div>
-                      <div className={s.robotName}>{r.meta?.name ?? r.robotId}</div>
-                      <div className={s.robotTagline}>{r.meta?.tagline}</div>
+                      <div className={s.robotName}>
+                        {t(`robotsCatalog.${r.robotId}.name`, { defaultValue: r.meta?.name ?? r.robotId })}
+                      </div>
+                      <div className={s.robotTagline}>
+                        {t(`robotsCatalog.${r.robotId}.tagline`, { defaultValue: r.meta?.tagline })}
+                      </div>
                       <div className={s.robotFooter}>
                         <span className={s.robotReturn}>{r.meta?.monthlyReturn ?? "—"}</span>
-                        <span className={s.robotReturnLabel}>/ ay</span>
+                        <span className={s.robotReturnLabel}>{t("dashboard.home.perMonthLabel")}</span>
                       </div>
                     </div>
                   ))}
@@ -205,7 +209,7 @@ export default function DashboardHomeClient({
                       ? t("dashboard.home.addRobot")
                       : t("dashboard.home.addNewRobot")}
                   </span>
-                  <span className={s.addRobotSub}>Robot portföyünü genişlet</span>
+                  <span className={s.addRobotSub}>{t("dashboard.home.addRobotSub")}</span>
                 </div>
               </div>
               <ArrowRight size={16} strokeWidth={1.5} className={s.addRobotArrow} />

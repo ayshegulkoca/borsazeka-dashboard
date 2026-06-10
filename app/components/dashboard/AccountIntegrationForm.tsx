@@ -152,42 +152,42 @@ export default function AccountIntegrationForm({ initialEmail, initialMarket, ow
     let ok = true;
 
     if (step === 1) {
-      if (!form.email) { setError("email", "E-posta adresi zorunludur."); ok = false; }
-      else if (!isValidEmail(form.email)) { setError("email", "Geçerli bir e-posta formatı giriniz."); ok = false; }
-      if (!form.fullName.trim()) { setError("fullName", "Ad Soyad zorunludur."); ok = false; }
+      if (!form.email) { setError("email", t("dashboard.accounts.valEmailRequired")); ok = false; }
+      else if (!isValidEmail(form.email)) { setError("email", t("dashboard.accounts.valEmailInvalid")); ok = false; }
+      if (!form.fullName.trim()) { setError("fullName", t("dashboard.accounts.valFullNameRequired")); ok = false; }
     }
 
     if (step === 2) {
-      if (!form.market) { setError("market", "Lütfen bir piyasa seçiniz."); ok = false; }
-      if (!form.robot) { setError("robot", "Lütfen bir robot seçiniz."); ok = false; }
+      if (!form.market) { setError("market", t("dashboard.accounts.valMarketRequired")); ok = false; }
+      if (!form.robot) { setError("robot", t("dashboard.accounts.valRobotRequired")); ok = false; }
     }
 
     if (step === 3) {
       if (form.market === "BINANCE") {
         if (!form.binanceAccountNo || !/^\d+$/.test(form.binanceAccountNo)) {
-          setError("binanceAccountNo", "Hesap numarası sadece rakamlardan oluşmalıdır.");
+          setError("binanceAccountNo", t("dashboard.accounts.valAccountNoNumeric"));
           ok = false;
         }
-        if (!form.binanceApiKey) { setError("binanceApiKey", "API Key zorunludur."); ok = false; }
-        if (!form.binanceSecretKey) { setError("binanceSecretKey", "Secret Key zorunludur."); ok = false; }
+        if (!form.binanceApiKey) { setError("binanceApiKey", t("dashboard.accounts.valApiKeyRequired")); ok = false; }
+        if (!form.binanceSecretKey) { setError("binanceSecretKey", t("dashboard.accounts.valSecretKeyRequired")); ok = false; }
       }
       if (form.market === "BIST") {
-        if (!form.broker) { setError("broker", "Aracı kurum seçiniz."); ok = false; }
+        if (!form.broker) { setError("broker", t("dashboard.accounts.valBrokerRequired")); ok = false; }
         if (!form.brokerAccountNo || !/^\d+$/.test(form.brokerAccountNo)) {
-          setError("brokerAccountNo", "Hesap numarası sadece rakamlardan oluşmalıdır.");
+          setError("brokerAccountNo", t("dashboard.accounts.valAccountNoNumeric"));
           ok = false;
         }
-        if (!form.brokerPassword) { setError("brokerPassword", "Hesap şifresi zorunludur."); ok = false; }
-        if (!form.phone) { setError("phone", "Telefon numarası zorunludur."); ok = false; }
+        if (!form.brokerPassword) { setError("brokerPassword", t("dashboard.accounts.valBrokerPasswordRequired")); ok = false; }
+        if (!form.phone) { setError("phone", t("dashboard.accounts.valPhoneRequired")); ok = false; }
         if (!form.tcNo || !/^\d{11}$/.test(form.tcNo)) {
-          setError("tcNo", "TC Kimlik No tam 11 haneli rakam olmalıdır.");
+          setError("tcNo", t("dashboard.accounts.valTcNoLength"));
           ok = false;
         }
       }
     }
 
     if (step === 4) {
-      if (!form.consent) { setError("consent", "Devam etmek için onaylamanız gerekmektedir."); ok = false; }
+      if (!form.consent) { setError("consent", t("dashboard.accounts.valConsentRequired")); ok = false; }
     }
 
     return ok;
@@ -314,10 +314,9 @@ export default function AccountIntegrationForm({ initialEmail, initialMarket, ow
         <div className={s.successRing}>
           <CheckCircle2 size={44} />
         </div>
-        <h2 className={s.successTitle}>Hesabınız Bağlandı</h2>
+        <h2 className={s.successTitle}>{t("dashboard.accounts.integrationSuccessTitle")}</h2>
         <p className={s.successDesc}>
-          Hesap bilgileriniz AES-256 ile şifrelenerek güvenle iletildi. 
-          Robotunuz en kısa sürede aktif edilecektir.
+          {t("dashboard.accounts.integrationSuccessDesc")}
         </p>
       </div>
     );
@@ -329,12 +328,12 @@ export default function AccountIntegrationForm({ initialEmail, initialMarket, ow
         {step === 1 && (
           <motion.div key="s1" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
             <div className={s.questionBlock}>
-              <h2 className={s.questionTitle}>Temel Bilgiler</h2>
-              <p className={s.questionDesc}>BorsaZeka hesabınızla eşleşen bilgileri giriniz.</p>
+              <h2 className={s.questionTitle}>{t("dashboard.accounts.basicInfo")}</h2>
+              <p className={s.questionDesc}>{t("dashboard.accounts.basicInfoDesc")}</p>
 
               <div className={s.fieldGroup}>
                 <label className={s.label}>
-                  E-Posta Adresi
+                  {t("dashboard.accounts.fields.email")}
                   {initialEmail && (
                     <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)', background: 'rgba(255,255,255,0.05)', padding: '0.1rem 0.4rem', borderRadius: '4px', marginLeft: '0.5rem', display: 'inline-flex', alignItems: 'center', gap: '0.2rem' }}>
                       <Lock size={10} /> {t('dashboard.settings.emailLocked')}
@@ -357,14 +356,14 @@ export default function AccountIntegrationForm({ initialEmail, initialMarket, ow
                 <Err field="email" />
               </div>
               <div className={s.fieldGroup}>
-                <label className={s.label}>Ad Soyad</label>
-                <input className={`${s.input} ${errors.fullName ? s.inputError : ""}`} type="text" placeholder="Ad Soyad" value={form.fullName} onChange={e => update({ fullName: e.target.value })} />
+                <label className={s.label}>{t("dashboard.accounts.fields.fullName")}</label>
+                <input className={`${s.input} ${errors.fullName ? s.inputError : ""}`} type="text" placeholder={t("dashboard.accounts.fields.fullName")} value={form.fullName} onChange={e => update({ fullName: e.target.value })} />
                 <Err field="fullName" />
               </div>
             </div>
             <div className={s.nav} style={{ borderTop: "none", marginTop: "1rem" }}>
               <div />
-              <button className={s.btnNext} onClick={goNext}>Devam Et <ArrowRight size={16} /></button>
+              <button className={s.btnNext} onClick={goNext}>{t("kurulum.next")} <ArrowRight size={16} /></button>
             </div>
           </motion.div>
         )}
@@ -372,11 +371,11 @@ export default function AccountIntegrationForm({ initialEmail, initialMarket, ow
         {step === 2 && !initialMarket && (
           <motion.div key="s2" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
             <div className={s.questionBlock}>
-              <h2 className={s.questionTitle}>Piyasa & Robot</h2>
+              <h2 className={s.questionTitle}>{t("dashboard.accounts.marketAndRobot")}</h2>
               <div className={s.marketGrid}>
                 <div className={`${s.marketCard} ${form.market === "BIST" ? s.marketCardActive : ""}`} onClick={() => update({ market: "BIST" })}>
                   <TrendingUp size={24} color={form.market === "BIST" ? "#10b981" : "rgba(255,255,255,0.4)"} />
-                  <div className={s.marketName}>Borsa İstanbul</div>
+                  <div className={s.marketName}>{t("dashboard.accounts.bistExchange")}</div>
                 </div>
                 <div className={`${s.marketCard} ${form.market === "BINANCE" ? s.marketCardActive : ""}`} onClick={() => update({ market: "BINANCE" })}>
                   <Globe size={24} color={form.market === "BINANCE" ? "#10b981" : "rgba(255,255,255,0.4)"} />
@@ -386,7 +385,7 @@ export default function AccountIntegrationForm({ initialEmail, initialMarket, ow
               <Err field="market" />
               <div className={s.divider} />
               <div className={s.fieldGroup}>
-                <label className={s.label}>Robot Adı</label>
+                <label className={s.label}>{t("dashboard.accounts.fields.robotName")}</label>
                 <select
                   className={`${s.select} ${errors.robot ? s.inputError : ""}`}
                   value={form.robot}
@@ -394,12 +393,12 @@ export default function AccountIntegrationForm({ initialEmail, initialMarket, ow
                   disabled={!form.market || !hasRobots}
                 >
                   {!form.market ? (
-                    <option value="">Önce piyasa seçiniz...</option>
+                    <option value="">{t("dashboard.accounts.selectMarketFirst")}</option>
                   ) : !hasRobots ? (
-                    <option value="">Bu piyasada aktif robotunuz bulunamadı</option>
+                    <option value="">{t("dashboard.accounts.noActiveRobotFound")}</option>
                   ) : (
                     <>
-                      <option value="">Robot seçiniz...</option>
+                      <option value="">{t("dashboard.accounts.selectRobot")}</option>
                       {availableRobots.map(r => (
                         <option key={r.robotId} value={r.name}>{r.name}</option>
                       ))}
@@ -409,15 +408,15 @@ export default function AccountIntegrationForm({ initialEmail, initialMarket, ow
                 {!hasRobots && form.market && (
                   <p style={{ fontSize: "0.78rem", color: "#f59e0b", display: "flex", alignItems: "center", gap: "0.3rem", marginTop: "0.35rem" }}>
                     <AlertCircle size={13} />
-                    Bu piyasada aktif robotunuz yok. Robotu önce satın almanız gerekmektedir.
+                    {t("dashboard.accounts.noActiveRobotWarning")}
                   </p>
                 )}
                 <Err field="robot" />
               </div>
             </div>
             <div className={s.nav} style={{ borderTop: "none", marginTop: "1rem" }}>
-              <button className={s.btnBack} onClick={goBack}>Geri</button>
-              <button className={s.btnNext} onClick={goNext}>Devam Et <ArrowRight size={16} /></button>
+              <button className={s.btnBack} onClick={goBack}>{t("kurulum.back")}</button>
+              <button className={s.btnNext} onClick={goNext}>{t("kurulum.next")} <ArrowRight size={16} /></button>
             </div>
           </motion.div>
         )}
@@ -425,11 +424,13 @@ export default function AccountIntegrationForm({ initialEmail, initialMarket, ow
         {step === 3 && (
           <motion.div key="s3" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
             <div className={s.questionBlock}>
-              <h2 className={s.questionTitle}>{form.market === "BINANCE" ? "Binance Bilgileri" : "Aracı Kurum Bilgileri"}</h2>
+              <h2 className={s.questionTitle}>
+                {form.market === "BINANCE" ? t("dashboard.accounts.binanceInfo") : t("dashboard.accounts.brokerInfo")}
+              </h2>
               
               {initialMarket && (
                 <div className={s.fieldGroup}>
-                  <label className={s.label}>Robot Adı</label>
+                  <label className={s.label}>{t("dashboard.accounts.fields.robotName")}</label>
                   <select
                     className={`${s.select} ${errors.robot ? s.inputError : ""}`}
                     value={form.robot}
@@ -437,10 +438,10 @@ export default function AccountIntegrationForm({ initialEmail, initialMarket, ow
                     disabled={!hasRobots}
                   >
                     {!hasRobots ? (
-                      <option value="">Bu piyasada aktif robotunuz bulunamadı</option>
+                      <option value="">{t("dashboard.accounts.noActiveRobotFound")}</option>
                     ) : (
                       <>
-                        <option value="">Robot seçiniz...</option>
+                        <option value="">{t("dashboard.accounts.selectRobot")}</option>
                         {availableRobots.map(r => (
                           <option key={r.robotId} value={r.name}>{r.name}</option>
                         ))}
@@ -450,7 +451,7 @@ export default function AccountIntegrationForm({ initialEmail, initialMarket, ow
                   {!hasRobots && (
                     <p style={{ fontSize: "0.78rem", color: "#f59e0b", display: "flex", alignItems: "center", gap: "0.3rem", marginTop: "0.35rem" }}>
                       <AlertCircle size={13} />
-                      Bu piyasada aktif robotunuz yok. Robotu önce satın almanız gerekmektedir.
+                      {t("dashboard.accounts.noActiveRobotWarning")}
                     </p>
                   )}
                   <Err field="robot" />
@@ -460,17 +461,17 @@ export default function AccountIntegrationForm({ initialEmail, initialMarket, ow
               {form.market === "BINANCE" ? (
                 <>
                   <div className={s.fieldGroup}>
-                    <label className={s.label}>Binance Hesap No</label>
+                    <label className={s.label}>{t("dashboard.accounts.binanceAccountNo")}</label>
                     <input className={`${s.input} ${errors.binanceAccountNo ? s.inputError : ""}`} type="text" value={form.binanceAccountNo} onChange={e => update({ binanceAccountNo: e.target.value.replace(/\D/g, "") })} />
                     <Err field="binanceAccountNo" />
                   </div>
                   <div className={s.fieldGroup}>
-                    <label className={s.label}>API Key</label>
+                    <label className={s.label}>{t("kurulum.fields.apiKey")}</label>
                     <input className={`${s.input} ${errors.binanceApiKey ? s.inputError : ""}`} type="text" value={form.binanceApiKey} onChange={e => update({ binanceApiKey: e.target.value })} />
                     <Err field="binanceApiKey" />
                   </div>
                   <div className={s.fieldGroup}>
-                    <label className={s.label}>Secret Key</label>
+                    <label className={s.label}>{t("kurulum.fields.apiSecret")}</label>
                     <SecureInput value={form.binanceSecretKey} onChange={v => update({ binanceSecretKey: v })} show={showSecret} onToggle={() => setShowSecret(p => !p)} field="binanceSecretKey" />
                     <Err field="binanceSecretKey" />
                   </div>
@@ -478,30 +479,30 @@ export default function AccountIntegrationForm({ initialEmail, initialMarket, ow
               ) : (
                 <>
                   <div className={s.fieldGroup}>
-                    <label className={s.label}>Aracı Kurum</label>
+                    <label className={s.label}>{t("dashboard.accounts.fields.broker")}</label>
                     <select className={`${s.select} ${errors.broker ? s.inputError : ""}`} value={form.broker} onChange={e => update({ broker: e.target.value })}>
-                      <option value="">Seçiniz...</option>
+                      <option value="">{t("dashboard.accounts.select")}</option>
                       {BIST_BROKERS.map(b => <option key={b} value={b}>{b}</option>)}
                     </select>
                     <Err field="broker" />
                   </div>
                   <div className={s.fieldGroup}>
-                    <label className={s.label}>Hesap Numarası</label>
+                    <label className={s.label}>{t("dashboard.accounts.accountNumber")}</label>
                     <input className={`${s.input} ${errors.brokerAccountNo ? s.inputError : ""}`} type="text" value={form.brokerAccountNo} onChange={e => update({ brokerAccountNo: e.target.value.replace(/\D/g, "") })} />
                     <Err field="brokerAccountNo" />
                   </div>
                   <div className={s.fieldGroup}>
-                    <label className={s.label}>Hesap Şifresi</label>
+                    <label className={s.label}>{t("dashboard.accounts.fields.password")}</label>
                     <SecureInput value={form.brokerPassword} onChange={v => update({ brokerPassword: v })} show={showBrokerPw} onToggle={() => setShowBrokerPw(p => !p)} field="brokerPassword" />
                     <Err field="brokerPassword" />
                   </div>
                   <div className={s.fieldGroup}>
-                    <label className={s.label}>TC No</label>
+                    <label className={s.label}>{t("kurulum.fields.tcNo")}</label>
                     <input className={`${s.input} ${errors.tcNo ? s.inputError : ""}`} type="text" maxLength={11} value={form.tcNo} onChange={e => update({ tcNo: e.target.value.replace(/\D/g, "") })} />
                     <Err field="tcNo" />
                   </div>
                   <div className={s.fieldGroup}>
-                    <label className={s.label}>Telefon</label>
+                    <label className={s.label}>{t("dashboard.settings.phone")}</label>
                     <div className={s.phoneRow}>
                       <select className={s.select} value={form.phoneCode} onChange={e => update({ phoneCode: e.target.value })}>
                         {PHONE_CODES.map(pc => <option key={pc.code} value={pc.code}>{pc.label}</option>)}
@@ -514,8 +515,8 @@ export default function AccountIntegrationForm({ initialEmail, initialMarket, ow
               )}
             </div>
             <div className={s.nav} style={{ borderTop: "none", marginTop: "1rem" }}>
-              <button className={s.btnBack} onClick={goBack}>Geri</button>
-              <button className={s.btnNext} onClick={goNext}>Devam Et <ArrowRight size={16} /></button>
+              <button className={s.btnBack} onClick={goBack}>{t("kurulum.back")}</button>
+              <button className={s.btnNext} onClick={goNext}>{t("kurulum.next")} <ArrowRight size={16} /></button>
             </div>
           </motion.div>
         )}
@@ -523,29 +524,29 @@ export default function AccountIntegrationForm({ initialEmail, initialMarket, ow
         {step === 4 && (
           <motion.div key="s4" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
             <div className={s.questionBlock}>
-              <h2 className={s.questionTitle}>Son Onay</h2>
+              <h2 className={s.questionTitle}>{t("dashboard.accounts.finalConfirmation")}</h2>
               <div className={s.summaryBox} style={{ background: "rgba(255,255,255,0.05)" }}>
-                <div className={s.summaryRow}><span>Robot</span> <span>{form.robot}</span></div>
-                <div className={s.summaryRow}><span>Piyasa</span> <span>{form.market}</span></div>
+                <div className={s.summaryRow}><span>{t("dashboard.accounts.robot")}</span> <span>{form.robot}</span></div>
+                <div className={s.summaryRow}><span>{t("dashboard.accounts.market")}</span> <span>{form.market}</span></div>
                 {form.market === "BINANCE" ? (
-                  <div className={s.summaryRow}><span>Hesap No</span> <span>{form.binanceAccountNo}</span></div>
+                  <div className={s.summaryRow}><span>{t("dashboard.accounts.accountNo")}</span> <span>{form.binanceAccountNo}</span></div>
                 ) : (
                   <>
-                    <div className={s.summaryRow}><span>Kurum</span> <span>{form.broker}</span></div>
-                    <div className={s.summaryRow}><span>Hesap No</span> <span>{form.brokerAccountNo}</span></div>
+                    <div className={s.summaryRow}><span>{t("dashboard.accounts.institution")}</span> <span>{form.broker}</span></div>
+                    <div className={s.summaryRow}><span>{t("dashboard.accounts.accountNo")}</span> <span>{form.brokerAccountNo}</span></div>
                   </>
                 )}
               </div>
               <label className={s.consentBox}>
                 <input type="checkbox" className={s.checkbox} checked={form.consent} onChange={e => update({ consent: e.target.checked })} />
-                <span className={s.consentText}>Bilgilerin doğruluğunu ve BorsaZeka kullanım koşullarını onaylıyorum.</span>
+                <span className={s.consentText}>{t("dashboard.accounts.consentText")}</span>
               </label>
               <Err field="consent" />
             </div>
             <div className={s.nav} style={{ borderTop: "none", marginTop: "1rem" }}>
-              <button className={s.btnBack} onClick={goBack}>Geri</button>
+              <button className={s.btnBack} onClick={goBack}>{t("kurulum.back")}</button>
               <button className={s.btnNext} onClick={handleSubmit} disabled={isSubmitting}>
-                {isSubmitting ? "Gönderiliyor..." : "Tamamla"}
+                {isSubmitting ? t("kurulum.submitting") : t("kurulum.submit")}
               </button>
             </div>
           </motion.div>

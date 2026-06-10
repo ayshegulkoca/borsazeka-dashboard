@@ -1085,7 +1085,14 @@
       "addNewRobot": "Add New Robot",
       "marketClosed": "CLOSED",
       "noRobotsTitle": "You must subscribe to a robot to start algorithmic trading.",
-      "noRobotsDesc": "Follow the wizard above to choose the best robot for you, or browse the entire list in our robots catalog."
+      "noRobotsDesc": "Follow the wizard above to choose the best robot for you, or browse the entire list in our robots catalog.",
+      "pnlTrendRising": "▲ Rising",
+      "weekly": "Weekly",
+      "monthly": "Monthly",
+      "yearly": "Yearly",
+      "viewAll": "View All",
+      "addRobotSub": "Expand robot portfolio",
+      "perMonthLabel": "/ mo"
     },
     "onboarding": {
       "widgetTitle": "Complete Setup",
@@ -1171,6 +1178,40 @@
       "modalCryptoTitle": "Crypto Exchange Integration",
       "addForexTitle": "Add Forex Account",
       "addForexSubtitle": "Connect your Tickmill account to our robot and start automated trading in forex markets.",
+      "integrationSuccessTitle": "Account Connected",
+      "integrationSuccessDesc": "Your account details have been securely transmitted using AES-256 encryption. Your robot will be activated shortly.",
+      "basicInfo": "Basic Information",
+      "basicInfoDesc": "Enter the details matching your BorsaZeka account.",
+      "marketAndRobot": "Market & Robot",
+      "bistExchange": "Borsa Istanbul",
+      "selectMarketFirst": "Select market first...",
+      "noActiveRobotFound": "No active robot found in this market",
+      "selectRobot": "Select robot...",
+      "noActiveRobotWarning": "You don't have an active robot in this market. You must subscribe to a robot first.",
+      "binanceInfo": "Binance Information",
+      "brokerInfo": "Broker Information",
+      "binanceAccountNo": "Binance Account No",
+      "select": "Select...",
+      "accountNumber": "Account Number",
+      "finalConfirmation": "Final Confirmation",
+      "robot": "Robot",
+      "market": "Market",
+      "accountNo": "Account No",
+      "institution": "Institution",
+      "consentText": "I confirm the accuracy of the information and accept the BorsaZeka Terms of Service.",
+      "valEmailRequired": "Email is required.",
+      "valEmailInvalid": "Please enter a valid email address.",
+      "valFullNameRequired": "Full Name is required.",
+      "valMarketRequired": "Please select a market.",
+      "valRobotRequired": "Please select a robot.",
+      "valAccountNoNumeric": "Account number must contain digits only.",
+      "valApiKeyRequired": "API Key is required.",
+      "valSecretKeyRequired": "Secret Key is required.",
+      "valBrokerRequired": "Please select a broker.",
+      "valBrokerPasswordRequired": "Account password is required.",
+      "valPhoneRequired": "Phone number is required.",
+      "valTcNoLength": "ID number must be exactly 11 digits.",
+      "valConsentRequired": "You must confirm to proceed.",
       "fields": {
         "broker": "Broker",
         "login": "Login (Account No)",
@@ -1178,7 +1219,10 @@
         "server": "Server",
         "robot": "Connected Robot",
         "save": "Save",
-        "success": "Data received successfully"
+        "success": "Data received successfully",
+        "email": "Email Address",
+        "fullName": "Full Name",
+        "robotName": "Robot Name"
       }
     },
     "settings": {
@@ -1266,5 +1310,27 @@
     "chipRight": "Robot Active",
     "mockPortfolio": "Portfolio",
     "mockStatus": "Running"
+  },
+  "riskLevels": {
+    "Düşük": "Low",
+    "Orta": "Medium",
+    "Yüksek": "High"
+  },
+  "robotsCatalog": {
+    "darkroom": {
+      "name": "DarkRoom Self-Service",
+      "tagline": "Quiet but powerful momentum strategy",
+      "description": "DarkRoom is an advanced momentum engine that quietly builds positions in low-volatility environments and follows trends. Powered by an AI model trained on 5000+ historical trading days, it filters out noise."
+    },
+    "highway": {
+      "name": "Highway Self-Service",
+      "tagline": "Catching trends in high-volume markets",
+      "description": "Highway is an aggressive trend follower that opens and closes positions quickly in high-volume market conditions. It performs exceptionally well during opening hours and major news flows."
+    },
+    "trademate": {
+      "name": "TradeMate Self-Service",
+      "tagline": "Customizable flexible strategy engine",
+      "description": "TradeMate is a hybrid robot platform that can be adjusted to the user's risk profile and preferences. It provides AI recommendations while leaving the final decisions to the user. Ideal for beginners."
+    }
   }
 }

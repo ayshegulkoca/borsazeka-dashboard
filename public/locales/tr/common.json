@@ -1100,7 +1100,14 @@
       "addNewRobot": "Yeni Robot Ekle",
       "marketClosed": "KAPALI",
       "noRobotsTitle": "Algoritmik trade’e başlamak için bir robota abone olmalısınız.",
-      "noRobotsDesc": "Hemen yukarıdaki sihirbazı takip ederek size en uygun robotu seçebilir veya robotlar sayfamızdan tüm listeyi inceleyebilirsiniz."
+      "noRobotsDesc": "Hemen yukarıdaki sihirbazı takip ederek size en uygun robotu seçebilir veya robotlar sayfamızdan tüm listeyi inceleyebilirsiniz.",
+      "pnlTrendRising": "▲ Yükselen",
+      "weekly": "Haftalık",
+      "monthly": "Aylık",
+      "yearly": "Yıllık",
+      "viewAll": "Tümünü gör",
+      "addRobotSub": "Robot portföyünü genişlet",
+      "perMonthLabel": "/ ay"
     },
     "onboarding": {
       "widgetTitle": "Kurulumu Tamamla",
@@ -1186,6 +1193,40 @@
       "modalCryptoTitle": "Kripto Borsa Entegrasyonu",
       "addForexTitle": "Forex Hesabı Ekle",
       "addForexSubtitle": "Tickmill hesabınızı robotumuza bağlayarak forex piyasalarında otomatik işleme başlayın.",
+      "integrationSuccessTitle": "Hesabınız Bağlandı",
+      "integrationSuccessDesc": "Hesap bilgileriniz AES-256 ile şifrelenerek güvenle iletildi. Robotunuz en kısa sürede aktif edilecektir.",
+      "basicInfo": "Temel Bilgiler",
+      "basicInfoDesc": "BorsaZeka hesabınızla eşleşen bilgileri giriniz.",
+      "marketAndRobot": "Piyasa & Robot",
+      "bistExchange": "Borsa İstanbul",
+      "selectMarketFirst": "Önce piyasa seçiniz...",
+      "noActiveRobotFound": "Bu piyasada aktif robotunuz bulunamadı",
+      "selectRobot": "Robot seçiniz...",
+      "noActiveRobotWarning": "Bu piyasada aktif robotunuz yok. Robotu önce satın almanız gerekmektedir.",
+      "binanceInfo": "Binance Bilgileri",
+      "brokerInfo": "Aracı Kurum Bilgileri",
+      "binanceAccountNo": "Binance Hesap No",
+      "select": "Seçiniz...",
+      "accountNumber": "Hesap Numarası",
+      "finalConfirmation": "Son Onay",
+      "robot": "Robot",
+      "market": "Piyasa",
+      "accountNo": "Hesap No",
+      "institution": "Kurum",
+      "consentText": "Bilgilerin doğruluğunu ve BorsaZeka kullanım koşullarını onaylıyorum.",
+      "valEmailRequired": "E-posta adresi zorunludur.",
+      "valEmailInvalid": "Geçerli bir e-posta formatı giriniz.",
+      "valFullNameRequired": "Ad Soyad zorunludur.",
+      "valMarketRequired": "Lütfen bir piyasa seçiniz.",
+      "valRobotRequired": "Lütfen bir robot seçiniz.",
+      "valAccountNoNumeric": "Hesap numarası sadece rakamlardan oluşmalıdır.",
+      "valApiKeyRequired": "API Key zorunludur.",
+      "valSecretKeyRequired": "Secret Key zorunludur.",
+      "valBrokerRequired": "Aracı kurum seçiniz.",
+      "valBrokerPasswordRequired": "Hesap şifresi zorunludur.",
+      "valPhoneRequired": "Telefon numarası zorunludur.",
+      "valTcNoLength": "TC Kimlik No tam 11 haneli rakam olmalıdır.",
+      "valConsentRequired": "Devam etmek için onaylamanız gerekmektedir.",
       "fields": {
         "broker": "Broker",
         "login": "Login (Hesap No)",
@@ -1193,7 +1234,10 @@
         "server": "Sunucu",
         "robot": "Bağlı Robot",
         "save": "Kaydet",
-        "success": "Veriler başarıyla alındı"
+        "success": "Veriler başarıyla alındı",
+        "email": "E-Posta Adresi",
+        "fullName": "Ad Soyad",
+        "robotName": "Robot Adı"
       }
     },
     "settings": {
@@ -1281,5 +1325,27 @@
     "chipRight": "Robot Aktif",
     "mockPortfolio": "Portföy",
     "mockStatus": "Çalışıyor"
+  },
+  "riskLevels": {
+    "Düşük": "Düşük",
+    "Orta": "Orta",
+    "Yüksek": "Yüksek"
+  },
+  "robotsCatalog": {
+    "darkroom": {
+      "name": "DarkRoom Self-Service",
+      "tagline": "Sessiz ama güçlü momentum stratejisi",
+      "description": "DarkRoom, düşük volatilite dönemlerinde sessizce pozisyon alarak, trendi takip eden gelişmiş bir momentum motorudur. Geçmiş 5000+ işlem günü verisiyle beslenen AI modeli sayesinde zararlı gürültüyü filtreler."
+    },
+    "highway": {
+      "name": "Highway Self-Service",
+      "tagline": "Yüksek hacimli piyasalarda trend yakalaması",
+      "description": "Highway, yüksek işlem hacminin olduğu piyasa koşullarında hızlı pozisyon alıp kapatan agresif bir trend takipçisidir. Özellikle açılış saatlerinde ve önemli haber akışlarında yüksek performans gösterir."
+    },
+    "trademate": {
+      "name": "TradeMate Self-Service",
+      "tagline": "Kişiselleştirilebilir esnek strateji motoru",
+      "description": "TradeMate, kullanıcının kendi risk profiline ve tercihlerine göre ayarlanabilen hibrit bir robot platformudur. AI önerileri sunarken nihai kararı kullanıcıya bırakır. Yeni başlayanlar için ideal."
+    }
   }
 }

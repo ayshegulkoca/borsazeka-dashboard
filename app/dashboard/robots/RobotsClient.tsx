@@ -126,8 +126,12 @@ export default function RobotsClient({ ownedRobots, hasOwnedRobots }: Props) {
                 </span>
               </div>
 
-              <h3 className={styles.robotCardTitle}>{robot.name}</h3>
-              <p className={styles.robotCardTagline}>{robot.tagline}</p>
+              <h3 className={styles.robotCardTitle}>
+                {t(`robotsCatalog.${robot.id}.name`, { defaultValue: robot.name })}
+              </h3>
+              <p className={styles.robotCardTagline}>
+                {t(`robotsCatalog.${robot.id}.tagline`, { defaultValue: robot.tagline })}
+              </p>
 
               <div className={styles.robotCardStatsContainer}>
                 <div className={styles.robotCardStat}>
@@ -136,7 +140,9 @@ export default function RobotsClient({ ownedRobots, hasOwnedRobots }: Props) {
                 </div>
                 <div className={styles.robotCardStat}>
                   <span className={styles.robotCardStatLabel}>{t("dashboard.robots.riskLevel")}</span>
-                  <span className={styles.robotCardStatValue} style={{ color: "var(--text-primary)" }}>{robot.riskLevel}</span>
+                  <span className={styles.robotCardStatValue} style={{ color: "var(--text-primary)" }}>
+                    {t(`riskLevels.${robot.riskLevel}`, { defaultValue: robot.riskLevel })}
+                  </span>
                 </div>
               </div>
 

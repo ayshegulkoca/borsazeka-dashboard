@@ -2,6 +2,7 @@
 
 import { useTranslation } from "react-i18next";
 import { Server, ArrowRight, Zap, ShieldCheck, Star, Cpu, Activity } from "lucide-react";
+import { getRobotNormalizedId } from "@/lib/robots";
 import styles from "./page.module.css";
 
 const PACKAGE_ICONS = {
@@ -80,7 +81,7 @@ export default function ServersClient({ myServers, packages }: Props) {
                         {t("dashboard.servers.serverLabel")}
                       </span>
                       <span className="text-base font-bold text-white tracking-wide font-mono">
-                        {srv.name}
+                        {srv.name === "Sunucu" || srv.name === "Server" ? t("dashboard.servers.serverLabel") : srv.name}
                       </span>
                     </div>
                   </div>
@@ -92,7 +93,12 @@ export default function ServersClient({ myServers, packages }: Props) {
                     </span>
                     <div className="flex items-center gap-2 flex-wrap min-h-[32px]">
                       <span className="text-sm font-semibold text-white">
-                        {srv.robotDisplayName || srv.latency}
+                        {(() => {
+                          const normalizedRobotId = srv.robotDisplayName ? getRobotNormalizedId(srv.robotDisplayName) : "";
+                          return normalizedRobotId
+                            ? t(`robotsCatalog.${normalizedRobotId}.name`, { defaultValue: srv.robotDisplayName })
+                            : (srv.robotDisplayName || srv.latency);
+                        })()}
                       </span>
                       
                       <span className="text-slate-700 text-xs font-bold">•</span>

@@ -30,8 +30,7 @@ export default function OnboardingSteps() {
         setHasRobots(true);
         // İlk robotun display adını bul
         const firstRobotId = getRobotNormalizedId(robots[0].robotId ?? "");
-        const meta = ROBOT_BY_ID[firstRobotId as keyof typeof ROBOT_BY_ID];
-        setFirstRobotName(meta?.name ?? robots[0].robotId ?? undefined);
+        setFirstRobotName(firstRobotId || undefined);
       } else {
         setHasRobots(false);
         setFirstRobotName(undefined);
@@ -88,7 +87,7 @@ export default function OnboardingSteps() {
             step2Completed={step2Completed}
             step2Pending={false}
             step3Completed={false}
-            step2RobotName={firstRobotName}
+            step2RobotName={firstRobotName ? t(`robotsCatalog.${firstRobotName}.name`, { defaultValue: firstRobotName }) : undefined}
             variant="landing"
             alwaysVisible={true}
           />
