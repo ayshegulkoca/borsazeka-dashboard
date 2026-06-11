@@ -100,7 +100,7 @@ export default function DashboardShell({ children, userName, userEmail, userImag
   const navItems = [
     { label: t("dashboard.nav.home"),     href: "/dashboard",          icon: Home },
     { label: t("dashboard.nav.robots"),   href: "/dashboard/robots",   icon: Bot },
-    { label: t("dashboard.nav.accounts"), href: "/dashboard/accounts", icon: Wallet },
+    { label: t("dashboard.nav.accounts"), href: "/dashboard/hesaplarim", icon: Wallet },
     { label: t("dashboard.nav.servers"),  href: "/dashboard/servers",  icon: Server },
     { label: t("dashboard.settings.tabProfile"), href: "/dashboard/settings/profile", icon: User },
     { label: t("dashboard.settings.tabBilling"), href: "/dashboard/settings/billing", icon: CreditCard },
