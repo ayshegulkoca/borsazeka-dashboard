@@ -1,130 +1,305 @@
-BorsaZeka Dashboard
+# BorsaZeka Dashboard
 
-An enterprise-grade, high-performance FinTech workspace designed for automated trading management, secure broker API synchronization, and remote VPS infrastructure monitoring. Built with Next.js 15, TypeScript, and Tailwind CSS, this platform bridges the gap between landing page catalog interactions and secure exchange executions with real-time feedback.
+An enterprise-grade, high-performance FinTech workspace designed for automated trading management, secure broker API synchronization, and remote VPS infrastructure monitoring.
 
-Technical Stack
+Built with **Next.js 15**, **TypeScript**, and **Tailwind CSS**, this platform bridges the gap between landing page catalog interactions and secure exchange executions with real-time feedback.
 
-Frontend Framework: Next.js 15+ (App Router, leveraging Server-Side Rendering (SSR) and dynamic Client Components)
+---
 
-Language: TypeScript (Strict type safety across API integrations and broker payload handling)
+# Technical Stack
 
-Styling & Theme: Tailwind CSS & responsive CSS utility variables (Custom Royal Obsidian Design Language)
+| Category           | Technology                                          |
+| ------------------ | --------------------------------------------------- |
+| Frontend Framework | Next.js 15+ (App Router, SSR & Client Components)   |
+| Language           | TypeScript                                          |
+| Styling & Theme    | Tailwind CSS, Custom Royal Obsidian Design Language |
+| Database & ORM     | PostgreSQL (Neon Serverless) + Prisma ORM           |
+| Authentication     | NextAuth.js (Auth.js v5) + Google OAuth             |
+| Session Management | Refresh Tokens + Sliding Session Expiration         |
 
-Database & ORM: PostgreSQL (Neon Serverless backend) and Prisma ORM
+---
 
-Authentication & Session: NextAuth.js (Auth.js v5) with Google OAuth integration, token rotation (refresh tokens), and sliding-window expiration management
+# Core Features & Engineering Solutions
 
-Core Features & Engineering Solutions
+## 1. Unified Onboarding Wizard
 
-1. Unified Onboarding Wizard
+A modular **6-step onboarding workflow** guiding users through:
 
-A seamless, modular 6-step interactive workflow guiding clients through robot selection, server configurations, secure broker credentials binding, and payment setups. This setup guarantees that both the public Landing Page and the secure user Dashboard share an identical, synchronized progress tracking system to reduce onboarding friction.
+* Robot selection
+* Server configuration
+* Broker credential binding
+* Payment setup
 
-2. Secure Broker Integration & Communication
+Both the Landing Page and Dashboard share the same synchronized progress-tracking system to reduce onboarding friction.
 
-Strict Numeric String Transmission: To eliminate potential precision loss on large integers handled by JavaScript on the client side, sensitive numerical parameters like accountNo and subAccountNo are validated using strict regex (/^\d+$/) and transmitted solely as strict string objects.
+---
 
-AES-256 Client-Side Protection: High-security integration parameters (API keys, passwords) utilize client-side AES-256 encryption warnings to build user trust, accompanied by a clean visual "Shield Warning Banner."
+## 2. Secure Broker Integration & Communication
 
-Cached Database Metadata: To ensure robust data privacy, the PostgreSQL database (BrokerAccount model) does not store raw API keys or trade execution passwords. It only caches structural meta-information (e.g., Institution name, masked account numbers, activated robot name) for display verification inside the UI.
+### Strict Numeric String Transmission
 
-3. Dynamic Balance Caching Strategy
+To prevent precision loss on large numeric identifiers:
 
-Avoiding Synchronous Broker Loops: Continuous, real-time polling to external broker live APIs on every dashboard refresh induces severe network latency and triggers provider rate-limiting.
+```ts
+/^\d+$/
+```
 
-PostgreSQL Fast Cache: User overall balances are calculated and cached securely inside the database, served instantly via a lightning-fast /user/dashboard-summary endpoint.
+Fields such as:
 
-React State Visibility: A local toggleable state (Eye/EyeOff button) allows users to mask or reveal their account metrics instantly on the client UI without redundant network queries.
+* accountNo
+* subAccountNo
 
-4. Responsive Viewport Optimization (The 100% Zoom Bug Fix)
+are validated and transmitted strictly as strings.
 
-Layout Grid Reconstruction: The crowded layout on standard screens has been dismantled. The workspace has been rebuilt using a hardware-accelerated 3-column fluid grid layout (lg:grid-cols-3) to protect typographic hierarchy, preserve button alignments, and eliminate component overlaps at 100% zoom.
+### AES-256 Security Layer
 
-5. Iframe Overlay Protection (Visual Noise Patch)
+Sensitive credentials such as:
 
-Click-Through CSS Masking: External third-party iframe widgets often inject unwanted advertisements or unapproved public user images that degrade brand consistency.
+* API Keys
+* Broker Passwords
 
-Seamless Overlay: Since browser cross-origin policies block modifying DOM elements inside external iframes directly, an absolute-positioned CSS mask was engineered directly over the target media container. This overlays the BorsaZeka branding mark on the visual noise while using pointer-events-none to keep underlying click triggers and navigation fully functional.
+are protected through client-side encryption warnings and visual security indicators.
 
-6. Stripe Pre-filled Checkout Pipeline
+### Cached Database Metadata
 
-Matching Authentication Entities: The getPrefilledStripeLink utility automatically extracts and locks the authenticated Google user's email within the checkout URL, ensuring that subscription logs strictly match the portal profile.
+The database never stores:
 
-Developer Sandbox: Integrated Stripe Test Mode parameters for billing testing and simulation:
+* Raw API Keys
+* Trade Execution Passwords
 
-Card Number: 4242 4242 4242 4242
+Instead, only metadata is cached:
 
-Expiration Date: Any date in the future (e.g., 12/30)
+* Institution Name
+* Masked Account Number
+* Active Robot Name
 
-CVC: 123
+---
 
-Postal Code: 34000
+## 3. Dynamic Balance Caching Strategy
 
-Directory Mapping & Project Structure
+### Problem
 
-The critical codebase boundaries and schemas are distributed across the following architectural structure:
+Directly querying broker APIs on every dashboard refresh causes:
 
+* Network latency
+* Rate limiting
+* Poor user experience
+
+### Solution
+
+Balances are cached inside PostgreSQL and served through:
+
+```http
+/user/dashboard-summary
+```
+
+### UI Privacy Controls
+
+Users can instantly hide or reveal balance information using:
+
+* Eye
+* EyeOff
+
+visibility toggles without triggering new API requests.
+
+---
+
+## 4. Responsive Viewport Optimization
+
+### The 100% Zoom Bug Fix
+
+The dashboard layout was rebuilt using:
+
+```css
+lg:grid-cols-3
+```
+
+Benefits:
+
+* Preserved typography hierarchy
+* Stable button alignment
+* No overlapping components
+* Improved desktop usability
+
+---
+
+## 5. Iframe Overlay Protection
+
+### Problem
+
+Third-party iframes may inject:
+
+* Advertisements
+* Public user images
+* Unwanted visual elements
+
+### Solution
+
+A CSS overlay mask is positioned above the iframe media layer.
+
+Implementation highlights:
+
+```css
+position: absolute;
+pointer-events: none;
+```
+
+This preserves:
+
+* Branding consistency
+* Click functionality
+* Navigation behavior
+
+---
+
+## 6. Stripe Pre-filled Checkout Pipeline
+
+Authenticated Google user emails are automatically injected into checkout URLs.
+
+### Stripe Test Mode
+
+| Field           | Value               |
+| --------------- | ------------------- |
+| Card Number     | 4242 4242 4242 4242 |
+| Expiration Date | Any future date     |
+| CVC             | 123                 |
+| Postal Code     | 34000               |
+
+---
+
+# Project Structure
+
+```text
 ├── prisma/
-│   └── schema.prisma        # PostgreSQL database schemas (User, BrokerAccount, Server, UserRobot)
-├── auth.config.ts           # Google OAuth, token handshake and sliding JWT refresh algorithms
+│   └── schema.prisma
+│
+├── auth.config.ts
+│
 ├── src/
 │   ├── app/
 │   │   ├── actions/
-│   │   │   └── broker.ts    # Server actions coordinating broker registration and DB persistence
-│   │   └── dashboard/       # Responsive layouts, workspace screens, and user settings
+│   │   │   └── broker.ts
+│   │   │
+│   │   └── dashboard/
+│   │
 │   ├── data/
-│   │   └── products.ts      # Premium tier pricing indices and pre-configured Stripe URLs
+│   │   └── products.ts
+│   │
 │   └── lib/
-│   │   ├── api.ts           # Unified apiFetch engine, token auto-refresh, and 401 interception
-│   │   └── stripe.ts        # Stripe URL generation and secure email pre-fill helpers
+│       ├── api.ts
+│       └── stripe.ts
+```
 
+### Important Files
 
-Installation & Local Development Guidelines
+| File           | Purpose                             |
+| -------------- | ----------------------------------- |
+| schema.prisma  | Database schemas                    |
+| auth.config.ts | OAuth & JWT handling                |
+| broker.ts      | Broker registration & persistence   |
+| products.ts    | Stripe pricing configuration        |
+| api.ts         | API client and token refresh engine |
+| stripe.ts      | Checkout URL generation             |
 
-Follow these commands to deploy a local instance of the BorsaZeka Dashboard:
+---
 
-1. Install Project Dependencies
+# Installation
 
+## 1. Install Dependencies
+
+```bash
 npm install
+```
 
+---
 
-2. Configure Environment Variables
+## 2. Configure Environment Variables
 
-Create a .env (or .env.local for development environments) file in the root directory. Follow this template:
+Create:
 
-# Relational Database Connection (Neon PostgreSQL or Local Server)
+```bash
+.env
+```
+
+or
+
+```bash
+.env.local
+```
+
+```env
+# PostgreSQL
 DATABASE_URL="postgresql://username:password@hostname:port/database?sslmode=require"
 
-# NextAuth Authorization Keys (Generate with: openssl rand -hex 32)
+# NextAuth
 NEXTAUTH_SECRET="your_generated_secret_key"
 NEXTAUTH_URL="http://localhost:3000"
 
-# Alternative Auth.js Keys
+# Auth.js
 AUTH_SECRET="your_generated_secret_key"
 AUTH_URL="http://localhost:3000/api/auth"
 
-# Google Developer Console Credentials
+# Google OAuth
 GOOGLE_CLIENT_ID="your_google_client_id"
 GOOGLE_CLIENT_SECRET="your_google_client_secret"
 
-# BorsaZeka Remote API Service Address
-NEXT_PUBLIC_API_BASE_URL="http://api.borsazeka.com:5072/api"
+```
 
+---
 
-3. Generate Prisma DB Client
+## 3. Generate Prisma Client
 
-Compile database models and map relationships into the local node modules:
-
+```bash
 npx prisma generate
+```
 
+---
 
-4. Run the Development Server
+## 4. Start Development Server
 
+```bash
 npm run dev
+```
 
+Application URL:
 
-The application will be accessible inside your browser at http://localhost:3000.
+```text
+http://localhost:3000
+```
 
-Security & Compliance Standard
+---
 
-To guarantee data confidentiality, BorsaZeka structures web operations using strict boundaries. Sensitive credentials never persist in browser state or local storage. Database connections utilize secure parameters (sslmode=require), and session tracking employs cryptographically signed JSON Web Tokens (JWT) rotating dynamically prior to expiry limits.
+# Security & Compliance
+
+BorsaZeka follows strict security boundaries:
+
+* No sensitive credentials stored in browser local storage
+* No raw broker passwords persisted in the database
+* SSL-secured database connections
+* Cryptographically signed JWT sessions
+* Automatic token refresh mechanisms
+* Metadata-only persistence strategy
+
+Database connections enforce:
+
+```env
+sslmode=require
+```
+
+to guarantee encrypted communication with PostgreSQL infrastructure.
+
+---
+
+# Architecture Highlights
+
+* Next.js 15 App Router
+* TypeScript Strict Mode
+* Prisma ORM
+* Neon PostgreSQL
+* Google OAuth
+* JWT Session Rotation
+* Stripe Integration
+* Broker API Synchronization
+* VPS Monitoring
+* Responsive Dashboard Workspace
+* Enterprise Security Standards
